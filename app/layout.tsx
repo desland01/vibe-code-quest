@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Vibe Tutor',
-  description: 'A post-AI builder map for learning the development landscape strategically.'
+  title: 'code-tutor — A Map for Post-AI Builders',
+  description: 'code-tutor — A Map for Post-AI Builders'
 };
 
 export default function RootLayout({

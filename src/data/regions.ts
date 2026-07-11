@@ -1,41 +1,7 @@
-export type RegionStatus = 'deep' | 'stub';
+import type { Landmark, Region } from '../content/schema';
+
+export type { Landmark, Region, RegionStatus } from '../content/schema';
 export type ContentFormat = 'overview' | 'lesson' | 'quiz';
-
-export interface Landmark {
-  id: string;
-  title: string;
-  hook: string;
-  definition: string;
-  whenToUse: string[];
-  tradeoffs: {
-    pros: string[];
-    cons: string[];
-  };
-  example: string;
-  gotchas: string[];
-  vibeCoderDefault: string;
-  quiz: {
-    question: string;
-    options: string[];
-    answer: string;
-    explanation: string;
-  };
-}
-
-export interface Region {
-  id: string;
-  title: string;
-  label: string;
-  status: RegionStatus;
-  description: string;
-  mapArea: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-  landmarks: Landmark[];
-}
 
 const sqlLandmark: Landmark = {
   id: 'sql',
@@ -150,7 +116,7 @@ export const regions: Region[] = [
     id: 'languages',
     title: 'Languages',
     label: 'Syntax is the road sign, not the road.',
-    status: 'stub',
+    status: 'deep',
     description: 'JavaScript, TypeScript, Python, SQL, and why agents made syntax less central but not irrelevant.',
     mapArea: { x: 8, y: 12, width: 20, height: 28 },
     landmarks: []
@@ -177,7 +143,7 @@ export const regions: Region[] = [
     id: 'ai-types',
     title: 'AI Types',
     label: 'Chat, agents, RAG, tools, evals, and model routing.',
-    status: 'stub',
+    status: 'deep',
     description: 'The difference between a model call, an agent, a workflow, and a product feature.',
     mapArea: { x: 11, y: 50, width: 26, height: 30 },
     landmarks: []
@@ -186,7 +152,7 @@ export const regions: Region[] = [
     id: 'pm-tools',
     title: 'PM Tools',
     label: 'Linear, issues, specs, and the work graph agents read.',
-    status: 'stub',
+    status: 'deep',
     description: 'Project management as machine-readable product memory, not just human planning.',
     mapArea: { x: 42, y: 52, width: 19, height: 25 },
     landmarks: []
@@ -195,7 +161,7 @@ export const regions: Region[] = [
     id: 'git',
     title: 'Git',
     label: 'The time machine every serious builder eventually needs.',
-    status: 'stub',
+    status: 'deep',
     description: 'Branches, commits, PRs, reviews, and why agents need clean version control.',
     mapArea: { x: 66, y: 55, width: 21, height: 20 },
     landmarks: []
@@ -204,7 +170,7 @@ export const regions: Region[] = [
     id: 'security',
     title: 'Security',
     label: 'Secrets, permissions, trust boundaries, and blast radius.',
-    status: 'stub',
+    status: 'deep',
     description: 'The minimum safety map for apps built with fast-moving AI assistance.',
     mapArea: { x: 20, y: 82, width: 26, height: 13 },
     landmarks: []
@@ -213,7 +179,7 @@ export const regions: Region[] = [
     id: 'design',
     title: 'Design Systems',
     label: 'The layer between a working app and a believable app.',
-    status: 'stub',
+    status: 'deep',
     description: 'Tokens, components, patterns, accessibility, and professional visual consistency.',
     mapArea: { x: 53, y: 82, width: 28, height: 13 },
     landmarks: []

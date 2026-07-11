@@ -1,0 +1,8 @@
+# Handoff — ISSUE-001 (scaffold normalization + repo truth)
+
+- Completed work: package renamed code-tutor; CLAUDE.md/AGENTS.md rewritten + synchronized with mission pointer; CONTEXT.md glossary (8 terms, no implementation); invariant tests replace 2-deep test (8 regions, landmarks arrays, unique ids); `stub` removed from RegionStatus; Zod schema src/content/schema.ts + parse test; missing MapExperience placeholder created and app/page.tsx resolves; layout metadata neutral branding; eslint.config.mjs repaired (native eslint-config-next 16 flat imports).
+- Unresolved work: none. Note for ISSUE-002: set turbopack.root (stray ~/package-lock.json workspace-root warning).
+- Files touched: package.json, package-lock.json, CLAUDE.md, AGENTS.md, CONTEXT.md, WORK_LEDGER.md, app/layout.tsx, app/page.tsx, src/data/regions.ts, src/__tests__/regions.test.ts (+, regionStats.test.ts −), src/content/schema.ts, src/components/MapExperience.tsx, eslint.config.mjs, next-env.d.ts + tsconfig.json (build-generated), src/lib/regionStats.ts (see diff).
+- Commands run (with exit codes): worker: npm install --package-lock-only (0), test (0), typecheck/build (0); orchestrator gate rerun: typecheck 0, lint 0, test 0 (3 pass), build 0.
+- Issues / surprises discovered: codex default sandbox is read-only — workers need `--sandbox workspace-write` (dispatcher gap, worked around); FlatCompat broken with eslint-config-next 16; Vitest doesn't resolve `@/` alias (tests use relative imports); layout imported nonexistent globals.css (removed).
+- Next Context Slice: ISSUE-002 Vercel project + CI + preview deploys (bound: vercel config, next.config.ts, .gitignore).

@@ -1,0 +1,11 @@
+=== VAL-001 gate run (orchestrator, 2026-07-11) ===
+> tsc --noEmit
+
+> eslint
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+
+○  (Static)  prerendered as static content
+
+all exit codes 0

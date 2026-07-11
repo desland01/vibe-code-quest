@@ -42,7 +42,7 @@
       "status": "complete",
       "started_at": "2026-07-11T00:20:49Z",
       "worker": "orchestrator-in-session (credentialed infra slice)",
-      "commit": "pending",
+      "commit": "3904d824f9e2a6ecba82ad7488d294c0b40f5ecf",
       "evidence": [
         "evidence/ISSUE-002/VAL-060-preview.txt",
         "handoffs/ISSUE-002.md"

@@ -1,0 +1,7 @@
+commit: 9d3e4ee937279b3cf4e391783ee44b5c445de657
+--- git status --porcelain=v1 -uall ---
+?? docs/missions/2026-07-10-code-tutor-v1/evidence/ISSUE-000/VAL-003-clean-tree.txt
+(empty = clean tree)
+--- git log -2 ---
+9d3e4ee chore(mission): commit code-tutor v1 mission packet (ISSUE-000 pre-flight)
+894a638 chore: import vibe-tutor scaffold as code-tutor

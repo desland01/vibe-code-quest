@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-11T00:06:29Z",
+  "updated_at": "2026-07-11T00:07:33Z",
   "phase": "execution",
   "status": "approved",
   "mission_volume": {
@@ -13,11 +13,16 @@
   "context_slices": [
     {
       "issue": "ISSUE-000",
-      "status": "in_progress",
+      "status": "complete",
       "started_at": "2026-07-11T00:06:29Z",
       "worker": "orchestrator-in-session (mechanical slice)",
-      "commit": null,
-      "evidence": []
+      "commit": "9d3e4ee937279b3cf4e391783ee44b5c445de657",
+      "evidence": [
+        "evidence/ISSUE-000/VAL-003-clean-tree.txt",
+        "handoffs/ISSUE-000.md"
+      ],
+      "completed_at": "2026-07-11T00:07:33Z",
+      "notes": "Baseline typecheck red (missing @/components/MapExperience) \u2014 routed to ISSUE-001."
     }
   ],
   "artifact_paths": {

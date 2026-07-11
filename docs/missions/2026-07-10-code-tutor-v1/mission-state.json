@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-11T00:20:08Z",
+  "updated_at": "2026-07-11T00:25:16Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -36,6 +36,19 @@
       ],
       "completed_at": "2026-07-11T00:20:08Z",
       "validator": "fresh-context codex sol: criteria PASS; command-run FAILs were validator-sandbox EPERM, superseded by orchestrator gate run"
+    },
+    {
+      "issue": "ISSUE-002",
+      "status": "complete",
+      "started_at": "2026-07-11T00:20:49Z",
+      "worker": "orchestrator-in-session (credentialed infra slice)",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-002/VAL-060-preview.txt",
+        "handoffs/ISSUE-002.md"
+      ],
+      "completed_at": "2026-07-11T00:25:16Z",
+      "notes": "HITL pending: disable Vercel SSO deployment protection (classifier-denied); site 302 until then."
     }
   ],
   "artifact_paths": {

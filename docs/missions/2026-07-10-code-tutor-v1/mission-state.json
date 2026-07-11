@@ -1,0 +1,51 @@
+{
+  "schema": "mission-state-v1",
+  "mission_id": "2026-07-10-code-tutor-v1",
+  "created_at": "2026-07-10T16:20:00Z",
+  "updated_at": "2026-07-11T00:06:29Z",
+  "phase": "execution",
+  "status": "approved",
+  "mission_volume": {
+    "duration_estimate": "27 issues / 7 milestones; M4 content is the long pole; design-doc human equivalent ~20+ weeks, agent-executed serially",
+    "milestone_count": 7,
+    "issue_count": 27
+  },
+  "context_slices": [
+    {
+      "issue": "ISSUE-000",
+      "status": "in_progress",
+      "started_at": "2026-07-11T00:06:29Z",
+      "worker": "orchestrator-in-session (mechanical slice)",
+      "commit": null,
+      "evidence": []
+    }
+  ],
+  "artifact_paths": {
+    "interview": "INTERVIEW.md",
+    "context": "MISSION_CONTEXT.md",
+    "validation_contract": "VALIDATION_CONTRACT.md",
+    "prd": "PRD.md",
+    "issues": "ISSUES.md",
+    "execution_plan": "EXECUTION_PLAN.md",
+    "agent_roster": "AGENT_ROSTER.md",
+    "handoff": "HANDOFF.md"
+  },
+  "reviews": {
+    "adversarial": "pass",
+    "issues": "pass",
+    "eng": "pass"
+  },
+  "open_questions": [
+    "HITL-PRICE: decide at launch (build with $9/mo test-mode placeholder) \u2014 approved default 2026-07-10",
+    "HITL-NAME: decide at launch; build with neutral placeholder branding \u2014 approved default 2026-07-10",
+    "D7 deploy grant: RE-CONFIRMED with legal-page gate (VAL-043) \u2014 2026-07-10",
+    "HITL-LEGAL: user reviews drafted ToS/privacy/refund pages before launch",
+    "HITL-LIVE: stripe live mode + launch posts \u2014 held for user"
+  ],
+  "blocked_reason": null,
+  "approval": {
+    "granted_by": "user",
+    "granted_at": "2026-07-11T00:02:33Z",
+    "scope": "full packet, recommended defaults for D6/D7/D8"
+  }
+}

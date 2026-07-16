@@ -41,3 +41,4 @@
 - 2026-07-15: ISSUE-003 UNBLOCKED — user provisioned new GEMINI_API_KEY in ~/.zshenv; generativelanguage API 200; ask-gemini verification call returned VISION-BACKEND-OK. NOTE: key value was pasted into chat by user — rotate or scrub after mission (scrub-leaked-secret).
 - 2026-07-15: ISSUE-003 complete. 5 comps (Gemini imagegen REST; nano-banana MCP broken — mkdir /generated_imgs); Gemini 2.5 Pro vision judge; winner cozy-pixel (10/9/10/9); renderer Pixi.js recorded in designs/map-style.md. M0 exit still pending ISSUE-002 HITL (SSO protection → preview 302).
 - 2026-07-15: Tree hygiene: gitignored .serena/ (Serena MCP auto-onboarding artifacts, this session) and .remember/ (memory-hook scratch; caused a stray eslint warning). Tool-generated provenance, both.
+- 2026-07-16: ISSUE-002 HITL resolved — user approved disabling Vercel SSO deployment protection (AskUserQuestion); PATCH ssoProtection=null; site now public http 200. M0 exit complete.

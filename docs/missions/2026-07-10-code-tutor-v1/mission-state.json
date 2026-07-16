@@ -55,7 +55,7 @@
       "status": "complete",
       "started_at": null,
       "worker": "orchestrator + gemini vision + nano-banana imagegen",
-      "commit": "pending",
+      "commit": "1a5b03d14476a7034e35238f7857c5c57fdfe19f",
       "evidence": [
         "evidence/ISSUE-003/gemini-judgement.md",
         "handoffs/ISSUE-003.md",

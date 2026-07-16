@@ -42,3 +42,4 @@
 - 2026-07-15: ISSUE-003 complete. 5 comps (Gemini imagegen REST; nano-banana MCP broken — mkdir /generated_imgs); Gemini 2.5 Pro vision judge; winner cozy-pixel (10/9/10/9); renderer Pixi.js recorded in designs/map-style.md. M0 exit still pending ISSUE-002 HITL (SSO protection → preview 302).
 - 2026-07-15: Tree hygiene: gitignored .serena/ (Serena MCP auto-onboarding artifacts, this session) and .remember/ (memory-hook scratch; caused a stray eslint warning). Tool-generated provenance, both.
 - 2026-07-16: ISSUE-002 HITL resolved — user approved disabling Vercel SSO deployment protection (AskUserQuestion); PATCH ssoProtection=null; site now public http 200. M0 exit complete.
+- 2026-07-16: AMENDMENT A1 (user): Neon replaces Supabase for all data/auth issues. Recorded in docs/missions/2026-07-10-code-tutor-v1/AMENDMENTS.md; ISSUE-004 re-scoped to Neon + RLS + Neon-branch test stack.

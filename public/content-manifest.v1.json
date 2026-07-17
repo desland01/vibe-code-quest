@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-17T17:54:56.491Z",
+  "generatedAt": "2026-07-17T18:06:13.855Z",
   "regions": [
     {
       "id": "languages",
@@ -229,42 +229,54 @@
         {
           "id": "sql",
           "title": "SQL",
-          "draft": true,
+          "draft": false,
           "hook": "The durable database choice that is often right.",
-          "definition": "SQL stores durable records in related tables and is a strong default for transactional applications.",
+          "definition": "SQL databases store durable records in tables with explicit relationships. They are a strong default when your app needs transactions, constraints, and flexible queries across connected data.",
           "when_to_use": [
-            "You need related records and transactions.",
-            "You need predictable querying and migrations."
+            "You need related records such as users, teams, projects, and invoices.",
+            "Several writes must succeed or fail together.",
+            "You need reporting or filters that cross multiple kinds of records.",
+            "Your data rules matter more than accepting any document shape."
           ],
           "tradeoffs": {
             "pros": [
-              "Mature relational model",
-              "Strong transactional guarantees"
+              "Transactions protect multi-step changes.",
+              "Constraints catch invalid data at the database boundary.",
+              "Joins support questions you did not predict when designing the schema."
             ],
             "cons": [
-              "Schema changes require migrations",
-              "Operations still need care"
+              "Schema changes require reviewed migrations.",
+              "Indexes and slow queries still need deliberate maintenance."
             ]
           },
-          "example": "A client portal relates users, companies, projects, invoices, and messages.",
+          "example": "A client portal relates users, companies, projects, invoices, and messages. Tell your agent to model those relationships in PostgreSQL, enforce ownership with constraints, and wrap invoice creation in a transaction.",
           "gotchas": [
-            "Keep database credentials server-side.",
-            "Apply reviewed migrations once users depend on the data."
+            "Keep database credentials and privileged queries server-side.",
+            "Require your agent to generate and review migrations; never let it edit production tables ad hoc.",
+            "Add indexes from measured query patterns, not guesses."
           ],
-          "vibe_coder_default": "Start with PostgreSQL for relational application data, then add abstractions only when they help.",
+          "vibe_coder_default": "Start with PostgreSQL for application records, and keep it until a measured need proves another store fits better.",
           "quiz": {
             "question": "Which app is the cleanest fit for SQL?",
             "options": [
-              "A static landing page",
-              "A client portal with related records",
+              "A client portal with related records and invoices",
+              "A static landing page with no saved data",
               "A local image cropper"
             ],
-            "answer": "A client portal with related records",
-            "explanation": "Relational records and transactions are SQL strengths."
+            "answer": "A client portal with related records and invoices",
+            "explanation": "Related records, constraints, and transactional billing changes are core SQL strengths."
           },
           "sources": [
             {
-              "url": "https://www.postgresql.org/docs/current/tutorial-relational.html",
+              "url": "https://www.postgresql.org/docs/current/tutorial-concepts.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
               "checked": "2026-07-17"
             }
           ]
@@ -272,75 +284,115 @@
         {
           "id": "nosql-document",
           "title": "NoSQL document",
-          "draft": true,
-          "hook": "A short starting point for understanding NoSQL document.",
-          "definition": "Document storage keeps related data together when its shape is still changing or does not fit relational tables cleanly.",
+          "draft": false,
+          "hook": "Keep one thing together when rows would pull it apart.",
+          "definition": "A document database stores records as nested, JSON-like documents instead of related tables. It works well when each document is usually read as a whole and shapes vary, but it shifts more consistency work into your application.",
           "when_to_use": [
-            "Use this lesson when NoSQL document affects a product or implementation decision."
+            "Each record is a self-contained catalog item, form response, or content entry.",
+            "Different records legitimately have different optional fields.",
+            "Your access patterns mostly fetch one document by its ID or a known field.",
+            "You need Firebase Firestore client sync for a mobile or web experience."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Nested data can match the object your interface already uses.",
+              "Flexible fields make uneven record shapes easier to represent.",
+              "MongoDB and Firestore provide managed document-database options."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Duplicated data can drift across documents.",
+              "Cross-document relationships and reporting become awkward sooner than agents expect.",
+              "Flexible shape does not remove the need for validation and migrations."
             ]
           },
-          "example": "A builder asks an agent to explain how NoSQL document changes the proposed implementation.",
+          "example": "A field-inspection app stores one report with its answers, photos, device details, and optional equipment fields. Tell your agent to keep the report self-contained, validate every write, and document which fields are queryable.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Make your agent design access patterns before choosing document keys and indexes.",
+            "Validate document shape at every write boundary; schema flexibility is not permission for random fields.",
+            "Do not embed unbounded arrays that grow forever."
           ],
-          "vibe_coder_default": "Ask the agent to state its NoSQL document assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use PostgreSQL by default; choose MongoDB for genuinely document-shaped server data or Firebase Firestore when its client sync is the deciding requirement.",
           "quiz": {
-            "question": "What is the safest current use of this NoSQL document draft?",
+            "question": "Which workload best fits a document database?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Self-contained inspection reports with varying fields",
+              "A ledger requiring many relational constraints",
+              "A page with no persistent data"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Self-contained inspection reports with varying fields",
+            "explanation": "Each report is usually handled as one nested record, and optional fields can vary by inspection type."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://www.mongodb.com/docs/manual/core/document/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.mongodb.com/docs/manual/data-modeling/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://firebase.google.com/docs/firestore/data-model",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://firebase.google.com/docs/firestore/query-data/indexing",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "vector",
           "title": "Vector",
-          "draft": true,
-          "hook": "The retrieval shape for semantic search.",
-          "definition": "Vector storage supports meaning-based retrieval over embedded content for search and AI context.",
+          "draft": false,
+          "hook": "Find what means the same thing, not only what uses the same words.",
+          "definition": "A vector store indexes numeric embeddings so you can retrieve items by similarity. It powers semantic search and retrieval for AI context, but it does not replace your primary database or prove an answer is correct.",
           "when_to_use": [
-            "You need meaning-based search over documents.",
-            "You need retrieved context for an AI answer."
+            "Users search documents with concepts instead of exact keywords.",
+            "An AI assistant needs relevant source passages before answering.",
+            "You need recommendations based on content similarity.",
+            "Keyword search has a measured recall problem that embeddings can address."
           ],
           "tradeoffs": {
             "pros": [
-              "Supports semantic recall",
-              "Can complement relational storage"
+              "Semantic retrieval can match related wording.",
+              "Metadata filters can narrow retrieval to the right tenant or content type.",
+              "pgvector can keep embeddings beside PostgreSQL records."
             ],
             "cons": [
-              "Does not replace relational data",
-              "Quality depends on chunking and evaluation"
+              "Retrieval quality depends on chunking, embeddings, filters, and evaluation.",
+              "Embedding and index updates add cost and synchronization work.",
+              "Similarity scores are not truth or authorization checks."
             ]
           },
-          "example": "A proposal assistant retrieves relevant call notes before drafting an answer.",
+          "example": "A support copilot searches product manuals before drafting a cited response. Tell your agent to chunk by meaningful sections, filter by product version, return source IDs, and test retrieval against a labeled question set.",
           "gotchas": [
-            "Evaluate retrieval quality.",
-            "Preserve source links when retrieved text supports an answer."
+            "Keep canonical records in their natural store; index only the text needed for retrieval.",
+            "Require tenant and permission filters before similarity search.",
+            "Make your agent evaluate missed and irrelevant results before tuning top-k."
           ],
-          "vibe_coder_default": "Keep primary records in their natural store and add vector retrieval only for a measured semantic-search need.",
+          "vibe_coder_default": "Start with pgvector inside PostgreSQL; move to Pinecone when a measured scale or managed-vector requirement justifies another service.",
           "quiz": {
-            "question": "When are vectors relevant?",
+            "question": "What should a vector index store for a support copilot?",
             "options": [
-              "Meaning-based document retrieval",
-              "A contact form",
-              "A CSS hover state"
+              "Retrievable manual passages linked to their sources",
+              "The only copy of customer billing records",
+              "User passwords for similarity matching"
             ],
-            "answer": "Meaning-based document retrieval",
-            "explanation": "Vectors support similarity retrieval rather than generic application storage."
+            "answer": "Retrievable manual passages linked to their sources",
+            "explanation": "Vector search is useful for finding relevant text, while source links preserve traceability."
           },
           "sources": [
             {
               "url": "https://github.com/pgvector/pgvector",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.pinecone.io/guides/get-started/overview",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.pinecone.io/guides/search/filter-by-metadata",
               "checked": "2026-07-17"
             }
           ]
@@ -348,101 +400,178 @@
         {
           "id": "graph",
           "title": "Graph",
-          "draft": true,
-          "hook": "A short starting point for understanding Graph.",
-          "definition": "Graph storage centers relationships when connections between entities are the main data.",
+          "draft": false,
+          "hook": "Use a graph when the connections are the product.",
+          "definition": "A graph database stores entities as nodes and their connections as relationships. It shines when your core questions follow several relationship hops and those paths would be painful to express or optimize as joins.",
           "when_to_use": [
-            "Use this lesson when Graph affects a product or implementation decision."
+            "You are building fraud detection across accounts, devices, cards, and addresses.",
+            "Recommendations depend on several degrees of connection.",
+            "Permissions or dependencies form deep, changing networks.",
+            "The product must explain the path connecting two entities."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Relationship traversal is a first-class operation.",
+              "The model maps naturally to networks and paths.",
+              "Neo4j supports property graphs and Cypher queries."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "It adds a specialized query language and operational surface.",
+              "Ordinary CRUD and tabular reporting may remain clearer in SQL.",
+              "Keeping a graph synchronized with a primary store can create consistency work."
             ]
           },
-          "example": "A builder asks an agent to explain how Graph changes the proposed implementation.",
+          "example": "A marketplace flags seller accounts connected through reused devices, payout accounts, and shipping addresses. Tell your agent to model those links explicitly in Neo4j and return the suspicious path, not only a risk score.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Prove you need multi-hop traversal before adding a second database.",
+            "Make your agent cap traversal depth and profile expensive queries.",
+            "Define which store owns each fact before synchronizing SQL and graph data."
           ],
-          "vibe_coder_default": "Ask the agent to state its Graph assumptions and verify them before shipping.",
+          "vibe_coder_default": "Keep normal app data in PostgreSQL; add Neo4j only when multi-hop relationship queries are a proven core feature.",
           "quiz": {
-            "question": "What is the safest current use of this Graph draft?",
+            "question": "Which feature most strongly suggests a graph database?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Explaining a fraud path across shared devices and accounts",
+              "Saving a user profile by ID",
+              "Rendering a static pricing page"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Explaining a fraud path across shared devices and accounts",
+            "explanation": "The value comes from traversing and explaining several kinds of connected entities."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://neo4j.com/docs/getting-started/graph-database/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://neo4j.com/docs/cypher-manual/current/introduction/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://neo4j.com/docs/cypher-manual/current/patterns/",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "orm-vs-raw-sql",
           "title": "ORM vs raw SQL",
-          "draft": true,
-          "hook": "A short starting point for understanding ORM vs raw SQL.",
-          "definition": "ORMs provide generated query abstractions while raw SQL gives direct control over database operations.",
+          "draft": false,
+          "hook": "Use the abstraction until the query needs to speak for itself.",
+          "definition": "An ORM gives application code typed models, query builders, and migration workflows. Raw SQL gives direct access to database features and query shape; healthy projects often use both instead of treating the choice as permanent.",
           "when_to_use": [
-            "Use this lesson when ORM vs raw SQL affects a product or implementation decision."
+            "Use an ORM for routine create, read, update, and delete flows.",
+            "Use raw SQL for complex reports, bulk operations, or database-specific features.",
+            "Use an ORM when generated types reduce drift between code and schema.",
+            "Drop to SQL when you need to inspect and tune the exact query plan."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "ORMs reduce repetitive mapping code.",
+              "Typed query APIs catch many mistakes before runtime.",
+              "Raw SQL exposes the database without abstraction leaks."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Agents can generate inefficient ORM queries that look harmless.",
+              "Raw SQL needs careful parameterization and result typing.",
+              "ORM migrations still require human review."
             ]
           },
-          "example": "A builder asks an agent to explain how ORM vs raw SQL changes the proposed implementation.",
+          "example": "A subscription app uses Drizzle for accounts, plans, and ordinary updates, then uses a parameterized SQL query for a monthly retention report. Tell your agent to show the generated SQL and query plan before optimizing either path.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Require parameterized queries; never interpolate user input into SQL strings.",
+            "Make your agent inspect generated queries for N+1 reads and missing indexes.",
+            "Review every generated migration before it touches shared data."
           ],
-          "vibe_coder_default": "Ask the agent to state its ORM vs raw SQL assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use Drizzle for TypeScript projects that want a SQL-shaped typed API; choose Prisma when its generated client and workflow fit the team, then allow reviewed raw SQL for exceptional queries.",
           "quiz": {
-            "question": "What is the safest current use of this ORM vs raw SQL draft?",
+            "question": "What is the best response to one complex reporting query in an ORM-based app?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Use reviewed parameterized SQL for that query",
+              "Replace the entire data layer immediately",
+              "Build the SQL by concatenating user input"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Use reviewed parameterized SQL for that query",
+            "explanation": "ORM and raw SQL can coexist, and a bounded escape hatch preserves clarity without a rewrite."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://orm.drizzle.team/docs/overview",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://orm.drizzle.team/docs/sql",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.prisma.io/docs/orm",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.prisma.io/docs/orm/prisma-client/using-raw-sql/raw-queries",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "hosted-vs-self-hosted-databases",
           "title": "Hosted vs self-hosted",
-          "draft": true,
-          "hook": "A short starting point for understanding Hosted vs self-hosted.",
-          "definition": "Hosted databases reduce operational work; self-hosting trades that convenience for greater control and responsibility.",
+          "draft": false,
+          "hook": "Pay with money or pay with operational attention.",
+          "definition": "A hosted database delegates backups, updates, and much of availability work to a provider. Self-hosting gives you deeper control, but your team owns patching, recovery, monitoring, and every late-night failure.",
           "when_to_use": [
-            "Use this lesson when Hosted vs self-hosted affects a product or implementation decision."
+            "Choose hosted when a small team needs to ship without a database operator.",
+            "Choose hosted when managed backups and easy branch environments reduce delivery risk.",
+            "Consider self-hosting when regulation, networking, or specialized extensions require it.",
+            "Consider self-hosting when proven scale economics outweigh staffing and reliability costs."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Hosted services reduce routine operational work.",
+              "Neon provides managed serverless Postgres with database branching.",
+              "Self-hosting offers control over placement, versions, and infrastructure."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Hosted services introduce provider limits, pricing exposure, and migration friction.",
+              "Self-hosting makes backups, upgrades, failover, and monitoring your responsibility.",
+              "Either option still needs restore drills and least-privilege access."
             ]
           },
-          "example": "A builder asks an agent to explain how Hosted vs self-hosted changes the proposed implementation.",
+          "example": "A two-person SaaS team launches on Neon and creates a database branch for risky migration tests. Tell your agent to keep connection strings server-side, configure pooled connections, and document a restore drill before launch.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Verify backups by restoring them; a dashboard checkbox is not recovery proof.",
+            "Make your agent respect connection limits and use the provider-recommended pooling path.",
+            "Do not self-host because a container starts locally; assign patching, alerts, failover, and recovery first."
           ],
-          "vibe_coder_default": "Ask the agent to state its Hosted vs self-hosted assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use managed PostgreSQL on Neon for new apps; consider Supabase when its broader platform is required, and self-host only with a written operational owner and recovery plan.",
           "quiz": {
-            "question": "What is the safest current use of this Hosted vs self-hosted draft?",
+            "question": "What is the sensible database choice for a two-person SaaS team?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Managed PostgreSQL with tested backups",
+              "Self-hosted PostgreSQL with no on-call owner",
+              "No persistence because operations are difficult"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Managed PostgreSQL with tested backups",
+            "explanation": "A managed service removes routine work, while restore testing confirms the backup can actually recover data."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://neon.com/docs/introduction",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://neon.com/docs/introduction/branching",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://neon.com/docs/connect/connection-pooling",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://supabase.com/docs/guides/database/overview",
+              "checked": "2026-07-17"
+            }
+          ]
         }
       ]
     },

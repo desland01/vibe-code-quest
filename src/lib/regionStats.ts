@@ -1,7 +1,7 @@
-import type { Region } from '@/data/regions';
+import type { Region } from '@/content/schema';
 
 export function countDeepRegions(regions: Region[]) {
-  return regions.filter((region) => region.status === 'deep').length;
+  return regions.length;
 }
 
 export function countLandmarks(regions: Region[]) {

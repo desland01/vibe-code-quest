@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build:manifest && next build",
+    "build:manifest": "node --experimental-strip-types scripts/build-manifest.ts",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",

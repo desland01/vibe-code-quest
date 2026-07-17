@@ -1,0 +1,1742 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-17T16:25:00.231Z",
+  "regions": [
+    {
+      "id": "languages",
+      "title": "Languages",
+      "label": "Syntax is the road sign, not the road.",
+      "description": "JavaScript, TypeScript, Python, SQL, and why agents made syntax less central but not irrelevant.",
+      "mapArea": {
+        "x": 8,
+        "y": 12,
+        "width": 20,
+        "height": 28
+      },
+      "landmarks": [
+        {
+          "id": "javascript-typescript",
+          "title": "JavaScript and TypeScript",
+          "draft": true,
+          "hook": "A short starting point for understanding JavaScript and TypeScript.",
+          "definition": "JavaScript runs widely on the web, while TypeScript adds contracts that expose mismatches before runtime.",
+          "when_to_use": [
+            "Use this lesson when JavaScript and TypeScript affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how JavaScript and TypeScript changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its JavaScript and TypeScript assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this JavaScript and TypeScript draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "python",
+          "title": "Python",
+          "draft": true,
+          "hook": "A short starting point for understanding Python.",
+          "definition": "Python is a direct, library-rich language suited to scripts, data work, and many AI services.",
+          "when_to_use": [
+            "Use this lesson when Python affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Python changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Python assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Python draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "html-css",
+          "title": "HTML and CSS",
+          "draft": true,
+          "hook": "A short starting point for understanding HTML and CSS.",
+          "definition": "HTML gives interfaces meaning and CSS controls their presentation, layout, and responsiveness.",
+          "when_to_use": [
+            "Use this lesson when HTML and CSS affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how HTML and CSS changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its HTML and CSS assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this HTML and CSS draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "types-and-contracts",
+          "title": "Types and contracts",
+          "draft": true,
+          "hook": "A short starting point for understanding Types and contracts.",
+          "definition": "Types describe the shapes that cross functions, components, APIs, and other important boundaries.",
+          "when_to_use": [
+            "Use this lesson when Types and contracts affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Types and contracts changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Types and contracts assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Types and contracts draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "runtimes-and-packages",
+          "title": "Runtimes and packages",
+          "draft": true,
+          "hook": "A short starting point for understanding Runtimes and packages.",
+          "definition": "Code depends on the environment that executes it and the package ecosystem it borrows from.",
+          "when_to_use": [
+            "Use this lesson when Runtimes and packages affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Runtimes and packages changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Runtimes and packages assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Runtimes and packages draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "reading-generated-code",
+          "title": "Reading code you did not write",
+          "draft": true,
+          "hook": "A short starting point for understanding Reading code you did not write.",
+          "definition": "Trace inputs, outputs, side effects, and failures so generated code can be verified before shipping.",
+          "when_to_use": [
+            "Use this lesson when Reading code you did not write affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Reading code you did not write changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Reading code you did not write assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Reading code you did not write draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "databases",
+      "title": "Databases",
+      "label": "Where app memory becomes product memory.",
+      "description": "SQL, NoSQL, vector, graph, ORMs, and hosted-vs-self-hosted defaults.",
+      "mapArea": {
+        "x": 33,
+        "y": 10,
+        "width": 26,
+        "height": 34
+      },
+      "landmarks": [
+        {
+          "id": "sql",
+          "title": "SQL",
+          "draft": true,
+          "hook": "The durable database choice that is often right.",
+          "definition": "SQL stores durable records in related tables and is a strong default for transactional applications.",
+          "when_to_use": [
+            "You need related records and transactions.",
+            "You need predictable querying and migrations."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Mature relational model",
+              "Strong transactional guarantees"
+            ],
+            "cons": [
+              "Schema changes require migrations",
+              "Operations still need care"
+            ]
+          },
+          "example": "A client portal relates users, companies, projects, invoices, and messages.",
+          "gotchas": [
+            "Keep database credentials server-side.",
+            "Apply reviewed migrations once users depend on the data."
+          ],
+          "vibe_coder_default": "Start with PostgreSQL for relational application data, then add abstractions only when they help.",
+          "quiz": {
+            "question": "Which app is the cleanest fit for SQL?",
+            "options": [
+              "A static landing page",
+              "A client portal with related records",
+              "A local image cropper"
+            ],
+            "answer": "A client portal with related records",
+            "explanation": "Relational records and transactions are SQL strengths."
+          },
+          "sources": [
+            {
+              "url": "https://www.postgresql.org/docs/current/tutorial-relational.html",
+              "checked": "2026-07-17"
+            }
+          ]
+        },
+        {
+          "id": "nosql-document",
+          "title": "NoSQL document",
+          "draft": true,
+          "hook": "A short starting point for understanding NoSQL document.",
+          "definition": "Document storage keeps related data together when its shape is still changing or does not fit relational tables cleanly.",
+          "when_to_use": [
+            "Use this lesson when NoSQL document affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how NoSQL document changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its NoSQL document assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this NoSQL document draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "vector",
+          "title": "Vector",
+          "draft": true,
+          "hook": "The retrieval shape for semantic search.",
+          "definition": "Vector storage supports meaning-based retrieval over embedded content for search and AI context.",
+          "when_to_use": [
+            "You need meaning-based search over documents.",
+            "You need retrieved context for an AI answer."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Supports semantic recall",
+              "Can complement relational storage"
+            ],
+            "cons": [
+              "Does not replace relational data",
+              "Quality depends on chunking and evaluation"
+            ]
+          },
+          "example": "A proposal assistant retrieves relevant call notes before drafting an answer.",
+          "gotchas": [
+            "Evaluate retrieval quality.",
+            "Preserve source links when retrieved text supports an answer."
+          ],
+          "vibe_coder_default": "Keep primary records in their natural store and add vector retrieval only for a measured semantic-search need.",
+          "quiz": {
+            "question": "When are vectors relevant?",
+            "options": [
+              "Meaning-based document retrieval",
+              "A contact form",
+              "A CSS hover state"
+            ],
+            "answer": "Meaning-based document retrieval",
+            "explanation": "Vectors support similarity retrieval rather than generic application storage."
+          },
+          "sources": [
+            {
+              "url": "https://github.com/pgvector/pgvector",
+              "checked": "2026-07-17"
+            }
+          ]
+        },
+        {
+          "id": "graph",
+          "title": "Graph",
+          "draft": true,
+          "hook": "A short starting point for understanding Graph.",
+          "definition": "Graph storage centers relationships when connections between entities are the main data.",
+          "when_to_use": [
+            "Use this lesson when Graph affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Graph changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Graph assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Graph draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "orm-vs-raw-sql",
+          "title": "ORM vs raw SQL",
+          "draft": true,
+          "hook": "A short starting point for understanding ORM vs raw SQL.",
+          "definition": "ORMs provide generated query abstractions while raw SQL gives direct control over database operations.",
+          "when_to_use": [
+            "Use this lesson when ORM vs raw SQL affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how ORM vs raw SQL changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its ORM vs raw SQL assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this ORM vs raw SQL draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "hosted-vs-self-hosted-databases",
+          "title": "Hosted vs self-hosted",
+          "draft": true,
+          "hook": "A short starting point for understanding Hosted vs self-hosted.",
+          "definition": "Hosted databases reduce operational work; self-hosting trades that convenience for greater control and responsibility.",
+          "when_to_use": [
+            "Use this lesson when Hosted vs self-hosted affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Hosted vs self-hosted changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Hosted vs self-hosted assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Hosted vs self-hosted draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "infra",
+      "title": "Infra / Hosting",
+      "label": "The deployment terrain under every working app.",
+      "description": "Serverless, VPS, containers, edge, static CDN, and managed platforms.",
+      "mapArea": {
+        "x": 64,
+        "y": 16,
+        "width": 27,
+        "height": 30
+      },
+      "landmarks": [
+        {
+          "id": "serverless-functions",
+          "title": "Serverless functions",
+          "draft": true,
+          "hook": "A low-operations shape for bounded request work.",
+          "definition": "Serverless functions run bounded backend work on demand without requiring the team to manage servers directly.",
+          "when_to_use": [
+            "Backend work is request-response shaped.",
+            "You do not need an always-on worker."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Low server-management burden",
+              "Scales per request"
+            ],
+            "cons": [
+              "Runtime and duration limits apply",
+              "Long-running work needs another shape"
+            ]
+          },
+          "example": "A route validates a form submission, writes a record, and returns a status.",
+          "gotchas": [
+            "Check platform limits.",
+            "Move long-running jobs outside the request path."
+          ],
+          "vibe_coder_default": "Use bounded functions for ordinary request handlers and introduce workers only when requirements demand them.",
+          "quiz": {
+            "question": "What fits a serverless function?",
+            "options": [
+              "A short form handler",
+              "A permanent process",
+              "A long media render"
+            ],
+            "answer": "A short form handler",
+            "explanation": "Functions fit bounded request-response work."
+          },
+          "sources": [
+            {
+              "url": "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-concepts.html",
+              "checked": "2026-07-17"
+            }
+          ]
+        },
+        {
+          "id": "vps-single-server",
+          "title": "VPS / single server",
+          "draft": true,
+          "hook": "A short starting point for understanding VPS / single server.",
+          "definition": "A single virtual server offers a straightforward always-on runtime with explicit operational responsibility.",
+          "when_to_use": [
+            "Use this lesson when VPS / single server affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how VPS / single server changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its VPS / single server assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this VPS / single server draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "containers",
+          "title": "Containers",
+          "draft": true,
+          "hook": "A repeatable runtime unit for work that needs more control.",
+          "definition": "Containers package an application and its runtime into a repeatable unit for workers and long-running services.",
+          "when_to_use": [
+            "You need a long-running service or worker.",
+            "Runtime binaries and dependencies must be explicit."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Repeatable runtime",
+              "Suitable for workers and services"
+            ],
+            "cons": [
+              "Adds operational surface",
+              "Scaling remains a separate concern"
+            ]
+          },
+          "example": "A media worker processes uploads outside the web request path.",
+          "gotchas": [
+            "Keep secrets outside images.",
+            "Define persistence and networking explicitly."
+          ],
+          "vibe_coder_default": "Reach for containers when runtime or execution requirements no longer fit bounded functions.",
+          "quiz": {
+            "question": "What suggests a container may be useful?",
+            "options": [
+              "Long-running background processing",
+              "A static heading",
+              "A button hover"
+            ],
+            "answer": "Long-running background processing",
+            "explanation": "Containers suit controlled, long-lived runtime processes."
+          },
+          "sources": [
+            {
+              "url": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/",
+              "checked": "2026-07-17"
+            }
+          ]
+        },
+        {
+          "id": "edge-compute",
+          "title": "Edge compute",
+          "draft": true,
+          "hook": "A short starting point for understanding Edge compute.",
+          "definition": "Edge compute runs bounded logic near users when latency and geographic distribution matter.",
+          "when_to_use": [
+            "Use this lesson when Edge compute affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Edge compute changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Edge compute assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Edge compute draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "static-cdn",
+          "title": "Static + CDN",
+          "draft": true,
+          "hook": "A short starting point for understanding Static + CDN.",
+          "definition": "Static hosting and a content delivery network suit sites that do not need a request-time backend.",
+          "when_to_use": [
+            "Use this lesson when Static + CDN affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Static + CDN changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Static + CDN assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Static + CDN draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "managed-platforms",
+          "title": "Managed platforms",
+          "draft": true,
+          "hook": "A short starting point for understanding Managed platforms.",
+          "definition": "Managed application platforms run services while taking on much of the infrastructure operations burden.",
+          "when_to_use": [
+            "Use this lesson when Managed platforms affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Managed platforms changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Managed platforms assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Managed platforms draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "ai-types",
+      "title": "AI Types",
+      "label": "Chat, agents, RAG, tools, evals, and model routing.",
+      "description": "The difference between a model call, an agent, a workflow, and a product feature.",
+      "mapArea": {
+        "x": 11,
+        "y": 50,
+        "width": 26,
+        "height": 30
+      },
+      "landmarks": [
+        {
+          "id": "model-call-vs-agent",
+          "title": "Model call vs agent",
+          "draft": true,
+          "hook": "A short starting point for understanding Model call vs agent.",
+          "definition": "A model call produces one bounded response, while an agent can choose and execute multiple steps toward a goal.",
+          "when_to_use": [
+            "Use this lesson when Model call vs agent affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Model call vs agent changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Model call vs agent assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Model call vs agent draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "retrieval-augmented-generation",
+          "title": "Retrieval-augmented generation",
+          "draft": true,
+          "hook": "A short starting point for understanding Retrieval-augmented generation.",
+          "definition": "Retrieval supplies relevant private or current context before a model produces an answer.",
+          "when_to_use": [
+            "Use this lesson when Retrieval-augmented generation affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Retrieval-augmented generation changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Retrieval-augmented generation assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Retrieval-augmented generation draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "tool-use",
+          "title": "Tool use",
+          "draft": true,
+          "hook": "A short starting point for understanding Tool use.",
+          "definition": "Tool use lets a model request narrowly defined actions through validated schemas.",
+          "when_to_use": [
+            "Use this lesson when Tool use affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Tool use changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Tool use assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Tool use draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "workflows-vs-agents",
+          "title": "Workflows vs agents",
+          "draft": true,
+          "hook": "A short starting point for understanding Workflows vs agents.",
+          "definition": "Workflows follow code-defined steps, while agents dynamically choose what to do next.",
+          "when_to_use": [
+            "Use this lesson when Workflows vs agents affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Workflows vs agents changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Workflows vs agents assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Workflows vs agents draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "ai-evals",
+          "title": "Evals",
+          "draft": true,
+          "hook": "A short starting point for understanding Evals.",
+          "definition": "Evals are repeatable checks for whether AI behavior remains useful, correct, and safe enough.",
+          "when_to_use": [
+            "Use this lesson when Evals affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Evals changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Evals assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Evals draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "model-selection-routing",
+          "title": "Model selection and routing",
+          "draft": true,
+          "hook": "A short starting point for understanding Model selection and routing.",
+          "definition": "Model routing chooses among capability, speed, cost, and modality for each request.",
+          "when_to_use": [
+            "Use this lesson when Model selection and routing affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Model selection and routing changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Model selection and routing assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Model selection and routing draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "pm-tools",
+      "title": "PM Tools",
+      "label": "Linear, issues, specs, and the work graph agents read.",
+      "description": "Project management as machine-readable product memory, not just human planning.",
+      "mapArea": {
+        "x": 42,
+        "y": 52,
+        "width": 19,
+        "height": 25
+      },
+      "landmarks": [
+        {
+          "id": "issues-as-specs",
+          "title": "Issues as executable specs",
+          "draft": true,
+          "hook": "A short starting point for understanding Issues as executable specs.",
+          "definition": "A strong issue states an outcome, boundaries, acceptance checks, and the context needed to verify completion.",
+          "when_to_use": [
+            "Use this lesson when Issues as executable specs affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Issues as executable specs changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Issues as executable specs assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Issues as executable specs draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "prd-lite",
+          "title": "PRD-lite",
+          "draft": true,
+          "hook": "A short starting point for understanding PRD-lite.",
+          "definition": "A lightweight product brief aligns the user, problem, promise, constraints, and success signal.",
+          "when_to_use": [
+            "Use this lesson when PRD-lite affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how PRD-lite changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its PRD-lite assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this PRD-lite draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "vertical-slices",
+          "title": "Scope as vertical slices",
+          "draft": true,
+          "hook": "A short starting point for understanding Scope as vertical slices.",
+          "definition": "A vertical slice delivers the smallest testable user outcome across every necessary layer.",
+          "when_to_use": [
+            "Use this lesson when Scope as vertical slices affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Scope as vertical slices changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Scope as vertical slices assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Scope as vertical slices draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "dependencies-and-work-graphs",
+          "title": "Dependencies and work graphs",
+          "draft": true,
+          "hook": "A short starting point for understanding Dependencies and work graphs.",
+          "definition": "A work graph makes prerequisites, parallel-safe tasks, and blockers explicit.",
+          "when_to_use": [
+            "Use this lesson when Dependencies and work graphs affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Dependencies and work graphs changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Dependencies and work graphs assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Dependencies and work graphs draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "decision-logs",
+          "title": "Decision logs",
+          "draft": true,
+          "hook": "A short starting point for understanding Decision logs.",
+          "definition": "A decision log preserves what was chosen, why, and what would trigger reconsideration.",
+          "when_to_use": [
+            "Use this lesson when Decision logs affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Decision logs changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Decision logs assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Decision logs draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "backlog-vs-now",
+          "title": "Backlog vs now",
+          "draft": true,
+          "hook": "A short starting point for understanding Backlog vs now.",
+          "definition": "A backlog preserves possibilities while a small active queue keeps current execution focused.",
+          "when_to_use": [
+            "Use this lesson when Backlog vs now affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Backlog vs now changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Backlog vs now assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Backlog vs now draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "git",
+      "title": "Git",
+      "label": "The time machine every serious builder eventually needs.",
+      "description": "Branches, commits, PRs, reviews, and why agents need clean version control.",
+      "mapArea": {
+        "x": 66,
+        "y": 55,
+        "width": 21,
+        "height": 20
+      },
+      "landmarks": [
+        {
+          "id": "commits-as-checkpoints",
+          "title": "Commits as checkpoints",
+          "draft": true,
+          "hook": "A short starting point for understanding Commits as checkpoints.",
+          "definition": "A commit is a named, inspectable snapshot of one coherent change.",
+          "when_to_use": [
+            "Use this lesson when Commits as checkpoints affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Commits as checkpoints changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Commits as checkpoints assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Commits as checkpoints draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "branches-as-isolation",
+          "title": "Branches as isolation",
+          "draft": true,
+          "hook": "A short starting point for understanding Branches as isolation.",
+          "definition": "A branch isolates a line of work until it is ready to combine with other changes.",
+          "when_to_use": [
+            "Use this lesson when Branches as isolation affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Branches as isolation changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Branches as isolation assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Branches as isolation draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "pull-requests-and-review",
+          "title": "Pull requests and review",
+          "draft": true,
+          "hook": "A short starting point for understanding Pull requests and review.",
+          "definition": "A pull request presents a proposed change, its evidence, and the review conversation around it.",
+          "when_to_use": [
+            "Use this lesson when Pull requests and review affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Pull requests and review changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Pull requests and review assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Pull requests and review draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "merge-conflicts",
+          "title": "Merge conflicts",
+          "draft": true,
+          "hook": "A short starting point for understanding Merge conflicts.",
+          "definition": "A merge conflict means two histories changed the same area and require an intentional combined result.",
+          "when_to_use": [
+            "Use this lesson when Merge conflicts affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Merge conflicts changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Merge conflicts assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Merge conflicts draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "working-tree-hygiene",
+          "title": "Working-tree hygiene",
+          "draft": true,
+          "hook": "A short starting point for understanding Working-tree hygiene.",
+          "definition": "Working-tree state distinguishes tracked, untracked, generated, ignored, and modified project files.",
+          "when_to_use": [
+            "Use this lesson when Working-tree hygiene affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Working-tree hygiene changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Working-tree hygiene assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Working-tree hygiene draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "revert-and-recovery",
+          "title": "Revert and recovery",
+          "draft": true,
+          "hook": "A short starting point for understanding Revert and recovery.",
+          "definition": "Version-control recovery can back out bad changes or locate earlier working states without erasing history.",
+          "when_to_use": [
+            "Use this lesson when Revert and recovery affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Revert and recovery changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Revert and recovery assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Revert and recovery draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Security",
+      "label": "Secrets, permissions, trust boundaries, and blast radius.",
+      "description": "The minimum safety map for apps built with fast-moving AI assistance.",
+      "mapArea": {
+        "x": 20,
+        "y": 82,
+        "width": 26,
+        "height": 13
+      },
+      "landmarks": [
+        {
+          "id": "secrets-and-environment",
+          "title": "Secrets and environment",
+          "draft": true,
+          "hook": "A short starting point for understanding Secrets and environment.",
+          "definition": "Secrets are credentials that belong in protected server-side stores, never source, browsers, prompts, or logs.",
+          "when_to_use": [
+            "Use this lesson when Secrets and environment affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Secrets and environment changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Secrets and environment assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Secrets and environment draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "authentication-vs-authorization",
+          "title": "Authentication vs authorization",
+          "draft": true,
+          "hook": "A short starting point for understanding Authentication vs authorization.",
+          "definition": "Authentication identifies an actor; authorization determines which actions and records that identity may access.",
+          "when_to_use": [
+            "Use this lesson when Authentication vs authorization affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Authentication vs authorization changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Authentication vs authorization assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Authentication vs authorization draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "trust-boundaries",
+          "title": "Trust boundaries",
+          "draft": true,
+          "hook": "A short starting point for understanding Trust boundaries.",
+          "definition": "A trust boundary marks where data or control crosses between differently trusted systems.",
+          "when_to_use": [
+            "Use this lesson when Trust boundaries affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Trust boundaries changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Trust boundaries assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Trust boundaries draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "input-validation-and-injection",
+          "title": "Input validation and injection",
+          "draft": true,
+          "hook": "A short starting point for understanding Input validation and injection.",
+          "definition": "Untrusted input must be validated and passed through safe APIs at every boundary.",
+          "when_to_use": [
+            "Use this lesson when Input validation and injection affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Input validation and injection changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Input validation and injection assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Input validation and injection draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "dependency-supply-chain",
+          "title": "Dependency and supply-chain risk",
+          "draft": true,
+          "hook": "A short starting point for understanding Dependency and supply-chain risk.",
+          "definition": "Every dependency and external build step adds code, provenance, and maintenance risk.",
+          "when_to_use": [
+            "Use this lesson when Dependency and supply-chain risk affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Dependency and supply-chain risk changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Dependency and supply-chain risk assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Dependency and supply-chain risk draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "least-privilege-blast-radius",
+          "title": "Least privilege and blast radius",
+          "draft": true,
+          "hook": "A short starting point for understanding Least privilege and blast radius.",
+          "definition": "Limit every user, service, and agent to only the authority and resources its job requires.",
+          "when_to_use": [
+            "Use this lesson when Least privilege and blast radius affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Least privilege and blast radius changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Least privilege and blast radius assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Least privilege and blast radius draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "title": "Design Systems",
+      "label": "The layer between a working app and a believable app.",
+      "description": "Tokens, components, patterns, accessibility, and professional visual consistency.",
+      "mapArea": {
+        "x": 53,
+        "y": 82,
+        "width": 28,
+        "height": 13
+      },
+      "landmarks": [
+        {
+          "id": "design-tokens",
+          "title": "Design tokens",
+          "draft": true,
+          "hook": "A short starting point for understanding Design tokens.",
+          "definition": "Tokens name recurring visual decisions such as color roles, spacing steps, and radii.",
+          "when_to_use": [
+            "Use this lesson when Design tokens affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Design tokens changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Design tokens assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Design tokens draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "component-libraries",
+          "title": "Component libraries",
+          "draft": true,
+          "hook": "A short starting point for understanding Component libraries.",
+          "definition": "A component library packages repeated interface behavior and appearance into maintained building blocks.",
+          "when_to_use": [
+            "Use this lesson when Component libraries affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Component libraries changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Component libraries assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Component libraries draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "layout-and-spacing-rhythm",
+          "title": "Layout and spacing rhythm",
+          "draft": true,
+          "hook": "A short starting point for understanding Layout and spacing rhythm.",
+          "definition": "Layout rules create consistent alignment, density, and responsive structure across screens.",
+          "when_to_use": [
+            "Use this lesson when Layout and spacing rhythm affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Layout and spacing rhythm changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Layout and spacing rhythm assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Layout and spacing rhythm draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "typography-and-hierarchy",
+          "title": "Typography and hierarchy",
+          "draft": true,
+          "hook": "A short starting point for understanding Typography and hierarchy.",
+          "definition": "Type scale, weight, line length, and contrast communicate importance and grouping.",
+          "when_to_use": [
+            "Use this lesson when Typography and hierarchy affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Typography and hierarchy changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Typography and hierarchy assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Typography and hierarchy draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "accessibility-floor",
+          "title": "Accessibility floor",
+          "draft": true,
+          "hook": "A short starting point for understanding Accessibility floor.",
+          "definition": "Semantic controls, keyboard access, focus, contrast, and reduced motion form a minimum interaction contract.",
+          "when_to_use": [
+            "Use this lesson when Accessibility floor affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Accessibility floor changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Accessibility floor assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Accessibility floor draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        },
+        {
+          "id": "consistency-vs-novelty",
+          "title": "Consistency vs novelty",
+          "draft": true,
+          "hook": "A short starting point for understanding Consistency vs novelty.",
+          "definition": "Routine interactions should remain predictable while a few meaningful moments can express product character.",
+          "when_to_use": [
+            "Use this lesson when Consistency vs novelty affects a product or implementation decision."
+          ],
+          "tradeoffs": {
+            "pros": [
+              "Makes the relevant decision explicit."
+            ],
+            "cons": [
+              "This draft needs deeper examples and accuracy review before publication."
+            ]
+          },
+          "example": "A builder asks an agent to explain how Consistency vs novelty changes the proposed implementation.",
+          "gotchas": [
+            "Treat this draft as a map marker, not complete guidance."
+          ],
+          "vibe_coder_default": "Ask the agent to state its Consistency vs novelty assumptions and verify them before shipping.",
+          "quiz": {
+            "question": "What is the safest current use of this Consistency vs novelty draft?",
+            "options": [
+              "Use it as an orientation stub",
+              "Treat it as final expert guidance"
+            ],
+            "answer": "Use it as an orientation stub",
+            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+          },
+          "sources": []
+        }
+      ]
+    }
+  ]
+}

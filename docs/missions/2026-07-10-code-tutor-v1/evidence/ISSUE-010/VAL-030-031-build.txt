@@ -1,0 +1,19 @@
+=== ISSUE-010 gate 2026-07-17T16:24:54Z ===
+> node --experimental-strip-types scripts/build-manifest.ts
+
+Validated 8 regions and 48 landmarks; wrote /Users/thebeast/code-tutor/public/content-manifest.v1.json
+build:manifest exit=0
+forbid-drafts exit=1 (expected nonzero: 48 drafts present pre-M4)
+
+typecheck exit=0
+
+lint exit=0
+      Tests  30 passed | 19 skipped (49)
+   Start at  12:24:59
+   Duration  413ms (transform 616ms, setup 0ms, import 1.01s, tests 43ms, environment 0ms)
+
+test exit=0
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+build exit=0

@@ -1,4 +1,4 @@
-import { regions } from '@/data/regions';
+import { regions } from '@/lib/content';
 import { UpgradeAccountModal } from '@/components/UpgradeAccountModal';
 
 export function MapExperience() {

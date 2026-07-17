@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-17T17:15:00Z",
+  "updated_at": "2026-07-17T18:20:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -153,6 +153,20 @@
       "completed_at": "2026-07-17T17:15:00Z",
       "validator": "orchestrator sign-off recorded in artifact (VAL-036); HITL escape hatch not triggered",
       "notes": "48 slots locked. Databases/Infra verbatim upstream; 6 regions authored; overlap seams reviewed and clean."
+    },
+    {
+      "issue": "ISSUE-010",
+      "status": "complete",
+      "started_at": "2026-07-17T17:20:00Z",
+      "worker": "codex gpt-5.6-sol (2 slices; two-failure stop honored + resume)",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-010/VAL-030-031-build.txt",
+        "handoffs/ISSUE-010.md"
+      ],
+      "completed_at": "2026-07-17T18:20:00Z",
+      "validator": "fresh-context codex sol: PASS after closeout commit includes the manifest (sole flag was manifest-untracked, resolved by commit)",
+      "notes": "48 taxonomy-locked draft modules, versioned manifest v1 committed, forbid-drafts M4 gate proven, loader + removed-landmark rule. M2 COMPLETE."
     }
   ],
   "artifact_paths": {

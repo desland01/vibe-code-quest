@@ -1,27 +1,29 @@
 import { describe, expect, it } from 'vitest';
-import { regionsSchema } from '../content/schema';
-import { regions } from '../data/regions';
+import { buildContentManifest } from '../content/manifest';
+import { manifestSchema } from '../content/schema';
+import { getLandmark, getRegion, loadManifest, resolveLandmarkAnyVersion } from '../lib/content';
 
-describe('regions', () => {
-  it('contains exactly eight regions with landmark arrays', () => {
-    expect(regions).toHaveLength(8);
-
-    for (const region of regions) {
-      expect(Array.isArray(region.landmarks)).toBe(true);
-    }
+describe('content manifest', () => {
+  it('validates exactly eight regions with six unique landmarks each', () => {
+    const built = buildContentManifest('2026-07-17T00:00:00.000Z');
+    expect(built.regions).toHaveLength(8);
+    expect(built.regions.every((region) => region.landmarks.length === 6)).toBe(true);
+    const ids = built.regions.flatMap((region) => region.landmarks.map(({ id }) => id));
+    expect(ids).toHaveLength(48);
+    expect(new Set(ids).size).toBe(48);
+    expect(manifestSchema.parse(built)).toEqual(built);
   });
 
-  it('uses unique region and landmark ids', () => {
-    const regionIds = regions.map((region) => region.id);
-    const landmarkIds = regions.flatMap((region) =>
-      region.landmarks.map((landmark) => landmark.id)
-    );
-
-    expect(new Set(regionIds).size).toBe(regionIds.length);
-    expect(new Set(landmarkIds).size).toBe(landmarkIds.length);
+  it('keeps the committed manifest structurally fresh with the registry', () => {
+    const committed = loadManifest();
+    const built = buildContentManifest(committed.generatedAt, committed.version);
+    expect(built).toEqual(committed);
   });
 
-  it('parses the existing sample data with the runtime schema', () => {
-    expect(regionsSchema.parse(regions)).toEqual(regions);
+  it('loads regions and resolves current or prior-version landmarks', () => {
+    expect(getRegion('databases')?.title).toBe('Databases');
+    expect(getLandmark('databases', 'sql')?.id).toBe('sql');
+    expect(resolveLandmarkAnyVersion('databases', 'sql')?.id).toBe('sql');
+    expect(resolveLandmarkAnyVersion('databases', 'missing')).toBeUndefined();
   });
 });

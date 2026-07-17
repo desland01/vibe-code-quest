@@ -1,0 +1,84 @@
+.map-skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 16px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border: 3px solid var(--ink);
+  background: var(--banner);
+  color: var(--ink);
+  padding: 8px 12px;
+  transform: translateY(-120%);
+}
+
+.map-skip-link:focus {
+  transform: translateY(8px);
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.sr-map-alternative:focus-within {
+  z-index: 90;
+  top: 60px;
+  left: 16px;
+  width: min(360px, calc(100vw - 32px));
+  height: auto;
+  margin: 0;
+  clip: auto;
+  white-space: normal;
+  overflow: visible;
+  border: 3px solid var(--ink);
+  background: var(--banner);
+  padding: 16px;
+}
+
+.sr-map-alternative a,
+.region-panel a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.map-experience :is(a, button, [tabindex="0"]):focus-visible,
+.region-panel:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.region-control {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.region-control:focus-visible {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 4px var(--banner);
+}
+
+.panel-close,
+.map-header button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+@media (max-width: 400px) {
+  .map-experience {
+    padding-inline: 8px;
+  }
+
+  .map-shell,
+  .map-header {
+    min-width: 0;
+  }
+
+  .map-viewport {
+    width: 100%;
+  }
+
+  .region-panel {
+    max-height: none;
+    width: 100%;
+  }
+}

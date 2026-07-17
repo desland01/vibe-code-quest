@@ -60,11 +60,13 @@ function darken(color: number, amount: number) {
   return (channel(16) << 16) | (channel(8) << 8) | channel(0);
 }
 
-export function MapCanvas({ regions, state, dispatch, reducedMotion }: {
+export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onSelect }: {
   regions: readonly Region[];
   state: MapState;
   dispatch: Dispatch<MapAction>;
   reducedMotion: boolean;
+  onZoom: (scale: number) => void;
+  onSelect: (title: string) => void;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<import('pixi.js').Container | null>(null);
@@ -129,7 +131,10 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion }: {
           island.hitArea = new PIXI.Rectangle(0, 0, width, height);
           island.on('pointerover', () => dispatch({ type: 'hover', regionId: region.id }));
           island.on('pointerout', () => dispatch({ type: 'unhover', regionId: region.id }));
-          island.on('pointertap', () => dispatch({ type: 'select', regionId: region.id }));
+          island.on('pointertap', () => {
+            dispatch({ type: 'select', regionId: region.id });
+            onSelect(region.title);
+          });
 
           const accent = accents[region.id] ?? Object.values(accents)[index];
           const columns = Math.max(5, Math.floor(width / GRID));
@@ -196,7 +201,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion }: {
       islands.clear();
       app?.destroy(true, { children: true });
     };
-  }, [dispatch, regions]);
+  }, [dispatch, onSelect, regions]);
 
   useEffect(() => {
     const world = worldRef.current;
@@ -222,13 +227,17 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion }: {
   };
   const zoom = (event: WheelEvent) => {
     event.preventDefault();
-    dispatch({ type: 'zoomTo', scale: state.camera.scale + (event.deltaY < 0 ? 1 : -1) });
+    const scale = state.camera.scale + (event.deltaY < 0 ? 1 : -1);
+    dispatch({ type: 'zoomTo', scale });
+    onZoom(Math.max(1, Math.min(3, scale)));
   };
 
   return (
     <div
       className="map-renderer"
+      data-ambient-animation={reducedMotion ? 'disabled' : 'enabled'}
       ref={hostRef}
+      role="group"
       tabIndex={0}
       aria-label="Interactive learning map. Use arrow keys to pan and plus or minus to zoom."
       onWheel={zoom}
@@ -238,8 +247,16 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion }: {
       onKeyDown={(event) => {
         const pans: Record<string, [number, number]> = { ArrowLeft: [32, 0], ArrowRight: [-32, 0], ArrowUp: [0, 32], ArrowDown: [0, -32] };
         if (pans[event.key]) { event.preventDefault(); dispatch({ type: 'panBy', dx: pans[event.key][0], dy: pans[event.key][1] }); }
-        if (event.key === '+' || event.key === '=') dispatch({ type: 'zoomTo', scale: state.camera.scale + 1 });
-        if (event.key === '-' || event.key === '_') dispatch({ type: 'zoomTo', scale: state.camera.scale - 1 });
+        if (event.key === '+' || event.key === '=') {
+          const scale = Math.min(3, state.camera.scale + 1);
+          dispatch({ type: 'zoomTo', scale });
+          onZoom(scale);
+        }
+        if (event.key === '-' || event.key === '_') {
+          const scale = Math.max(1, state.camera.scale - 1);
+          dispatch({ type: 'zoomTo', scale });
+          onZoom(scale);
+        }
       }}
     >
       {fallback && <div className="map-fallback" data-testid="map-fallback" aria-hidden="true">{regions.map((region) => <div key={region.id} className="fallback-island" style={{ left: `${region.mapArea.x}%`, top: `${region.mapArea.y}%`, width: `${region.mapArea.width}%`, height: `${region.mapArea.height}%`, '--region-accent': `#${(accents[region.id] ?? 0xd98f6c).toString(16)}` } as React.CSSProperties}><span>{region.title}</span></div>)}</div>}

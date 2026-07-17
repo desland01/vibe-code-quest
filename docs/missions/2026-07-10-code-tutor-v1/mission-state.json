@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-17T20:30:00Z",
+  "updated_at": "2026-07-17T21:30:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -198,6 +198,22 @@
       "completed_at": "2026-07-17T20:30:00Z",
       "validator": "fresh-context codex sol: 5/5 PASS",
       "notes": "URL contract + sub-map scenes; 9/9 e2e incl deep-link/refresh/history/invalid-id."
+    },
+    {
+      "issue": "ISSUE-013",
+      "status": "complete",
+      "started_at": "2026-07-17T20:35:00Z",
+      "worker": "codex gpt-5.6-sol + terra micro-fixes; orchestrator: axe triage (2 real fixes, 1 methodology fix), e2e runs",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-013/VAL-011-gate.txt",
+        "evidence/ISSUE-013/axe-report.json",
+        "evidence/ISSUE-013/SR-manual-script.md",
+        "handoffs/ISSUE-013.md"
+      ],
+      "completed_at": "2026-07-17T21:30:00Z",
+      "validator": "machine-checked via 16/16 a11y e2e + clean axe report; orchestrator reviewed fixes",
+      "notes": "VAL-011 fully green: keyboard loop x8, aria-live, SR list, touch targets, zoom proxies, axe 0 serious/critical after role=group + kicker contrast fixes."
     }
   ],
   "artifact_paths": {

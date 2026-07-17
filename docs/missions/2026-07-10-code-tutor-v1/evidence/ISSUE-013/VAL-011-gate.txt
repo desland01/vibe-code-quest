@@ -1,0 +1,18 @@
+=== ISSUE-013 gate 2026-07-17T17:34:41Z ===
+
+typecheck exit=0
+
+lint exit=0
+      Tests  34 passed | 19 skipped (53)
+   Start at  13:34:45
+   Duration  333ms (transform 621ms, setup 0ms, import 907ms, tests 39ms, environment 0ms)
+
+test exit=0
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+build exit=0
+--- VAL-011 e2e 16/16 (incl axe clean serious/critical, keyboard-only 8-region loop, reduced motion, nocanvas, zoom proxies) ---
+  ✓  16 e2e/a11y.spec.ts:72:3 › 400% zoom proxy remains scrollable without horizontal region-control clipping (313ms)
+
+  16 passed (6.5s)

@@ -30,7 +30,7 @@ function LandmarkDetail({ landmark, format }: { landmark: Landmark; format: Land
         </div>
         {landmark.draft && <span className="draft-chip">draft</span>}
       </header>
-      <div className="format-switcher" aria-label="Lesson format">
+      <div className="format-switcher" role="group" aria-label="Lesson format">
         {(Object.keys(formatLabels) as LandmarkFormat[]).map((value) => (
           <button
             key={value}
@@ -60,7 +60,8 @@ function LandmarkDetail({ landmark, format }: { landmark: Landmark; format: Land
 export function SubMapScene({ region, landmark, format = 'overview' }: { region: Region; landmark?: Landmark; format?: LandmarkFormat }) {
   const style = { '--region-accent': accents[region.id] ?? '#d98f6c' } as CSSProperties;
   return (
-    <main className={`sub-map-scene ${styles.scene}`} style={style}>
+    <main className={`sub-map-scene ${styles.scene}`} id="main-content" tabIndex={-1} style={style}>
+      <a className="sub-map-skip-link" href="#landmark-list">Skip to landmarks</a>
       <div className="sub-map-zoom">
         <Link className="back-to-map" href="/map">← Back to map</Link>
         <header className="sub-map-banner">
@@ -68,7 +69,7 @@ export function SubMapScene({ region, landmark, format = 'overview' }: { region:
           <h1>{region.title}</h1>
           <p>{region.description}</p>
         </header>
-        <section className="island-detail" aria-label={`${region.title} landmarks`}>
+        <section className="island-detail" id="landmark-list" tabIndex={-1} aria-label={`${region.title} landmarks`}>
           <div className="landmark-grid">
             {region.landmarks.map((item, index) => (
               <Link

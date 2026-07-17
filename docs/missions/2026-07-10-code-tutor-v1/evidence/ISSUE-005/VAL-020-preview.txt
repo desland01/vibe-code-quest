@@ -1,0 +1,7 @@
+# VAL-020 preview run — PLAYWRIGHT_BASE_URL=https://code-tutor-57zf5rm8i-desmond-landrys-projects.vercel.app (deployment dpl_ASn18em7gGKsHpkDDPbLxx59gTjn, READY), 2026-07-17
+
+Running 1 test using 1 worker
+
+  ✓  1 e2e/anon-session.spec.ts:3:1 › anonymous session and progress persist across reload (2.4s)
+
+  1 passed (3.0s)

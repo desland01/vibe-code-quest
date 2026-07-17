@@ -13,3 +13,5 @@ coverage/
 .remember
 !.env.example
 .frugal-fable/
+test-results/
+playwright-report/

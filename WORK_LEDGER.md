@@ -43,3 +43,5 @@
 - 2026-07-15: Tree hygiene: gitignored .serena/ (Serena MCP auto-onboarding artifacts, this session) and .remember/ (memory-hook scratch; caused a stray eslint warning). Tool-generated provenance, both.
 - 2026-07-16: ISSUE-002 HITL resolved — user approved disabling Vercel SSO deployment protection (AskUserQuestion); PATCH ssoProtection=null; site now public http 200. M0 exit complete.
 - 2026-07-16: AMENDMENT A1 (user): Neon replaces Supabase for all data/auth issues. Recorded in docs/missions/2026-07-10-code-tutor-v1/AMENDMENTS.md; ISSUE-004 re-scoped to Neon + RLS + Neon-branch test stack.
+- 2026-07-17: ISSUE-005 implemented app-issued HS256 anonymous sessions, server-side profile creation, RLS-scoped progress APIs, a root SessionProvider, and Playwright coverage for persistence and the absence of signup UI. The repo uses root `app/`, so active API routes were added there rather than the prompt's assumed `src/app/` path.
+- 2026-07-17: ISSUE-005 test-tooling follow-up added Vitest aliases for the `server-only` test stub and the tsconfig-aligned `@/` source path, while keeping `e2e/**` outside the unit-test suite.

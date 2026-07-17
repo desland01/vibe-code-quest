@@ -204,7 +204,7 @@
       "status": "complete",
       "started_at": "2026-07-17T20:35:00Z",
       "worker": "codex gpt-5.6-sol + terra micro-fixes; orchestrator: axe triage (2 real fixes, 1 methodology fix), e2e runs",
-      "commit": "pending",
+      "commit": "e9dbb59",
       "evidence": [
         "evidence/ISSUE-013/VAL-011-gate.txt",
         "evidence/ISSUE-013/axe-report.json",

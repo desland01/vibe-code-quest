@@ -30,6 +30,8 @@
 
 ## Mission 2026-07-10-code-tutor-v1 execution
 
+- 2026-07-17: ISSUE-011 implemented the DOM-canonical eight-region map interaction reducer, lazy Pixi top-map presentation with deterministic CSS fallback, accessible controls and detail panel, keyboard/pointer camera controls, reduced-motion behavior, and unit/e2e coverage.
+
 - 2026-07-17: ISSUE-010 implemented the taxonomy-locked schema-to-manifest content pipeline, 48 draft landmark modules, deterministic build validation and draft gate, committed-manifest runtime resolvers, and manifest-backed region UI/statistics.
 
 - 2026-07-11: ISSUE-000 pre-flight. Dirty tree classified per clean-tree-before-work: 12 untracked files, ALL under docs/missions/2026-07-10-code-tutor-v1/** — mission packet authored by the orchestrator planning session 2026-07-10. No foreign/unknown-provenance files. Staged only packet paths + this ledger entry; no blanket add.

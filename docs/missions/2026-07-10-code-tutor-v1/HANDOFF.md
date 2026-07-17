@@ -52,8 +52,6 @@ Codex `gpt-5.6-sol` default worker / `terra` light (via `~/.claude/bin/codex-wor
 - AI SDK v6 GA status check is the first act of ISSUE-008 (design-doc O3).
 - Supabase/Vercel/Stripe accounts assumed present (user has Vercel; Supabase free tier; Stripe test mode) — if any credential is missing at execution, STOP per required-tools rule.
 
-STOP: Planning packet complete. Do not execute implementation until the user approves this Mission packet and starts a fresh execution session with HANDOFF.md.
-
 ---
 
 ## Session handoff addendum — 2026-07-16 (mid-ISSUE-004)
@@ -78,3 +76,7 @@ Treat this message as go for all AFK issues. STOP only for: taxonomy dispute (IS
 ```
 
 **⚠ DIRTY-TREE WARNING (2026-07-16, post-handoff):** uncommitted ISSUE-004-shaped files exist that THIS orchestrator did not author: db/migrate.ts, db/migrations/0001_schema.sql, 0002_rls.sql, src/lib/db.ts, src/__tests__/rls.integration.test.ts, modified package.json, skills-lock.json, slices/ISSUE-004-prompt.md. Possible parallel-session worker output. FIRST action on resume: classify per ~/.claude/rules-on-demand/clean-tree-before-work.md — if they satisfy ISSUE-004's contract, validate + adopt them WITH provenance recorded ("unattributed parallel session"); otherwise stash to a quarantine branch. Never blanket-commit.
+
+**⚠ DIRTY-TREE WARNING resolved 2026-07-17:** the unattributed ISSUE-004 files were triaged, validated live (4/4 RLS tests on Neon branch), and adopted with provenance in commit d8985a0; skill artifacts committed separately (43bb834). Tree clean.
+
+STOP: Planning packet complete. Do not execute implementation until the user approves this Mission packet and starts a fresh execution session with HANDOFF.md.

@@ -173,7 +173,7 @@
       "status": "complete",
       "started_at": "2026-07-17T18:25:00Z",
       "worker": "codex gpt-5.6-sol (build + 2 aesthetic iterations); Gemini 2.5 Pro vision judge; orchestrator: screenshots, perf trace, disposition",
-      "commit": "pending",
+      "commit": "9936487",
       "evidence": [
         "evidence/ISSUE-011/VAL-010-qa-notes.md",
         "evidence/ISSUE-011/VAL-014-judge-record.md",

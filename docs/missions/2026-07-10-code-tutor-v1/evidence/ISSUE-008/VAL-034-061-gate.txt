@@ -1,0 +1,15 @@
+=== ISSUE-008 gate 2026-07-17T16:06:59Z ===
+AI SDK GA check: ai latest=7.0.31, v6 GA=6.0.230 — pinned ai@^6 per packet (design-doc O3 verified 2026-07-17)
+
+typecheck exit=0
+
+lint exit=0
+      Tests  30 passed | 19 skipped (49)
+   Start at  12:07:02
+   Duration  242ms (transform 408ms, setup 0ms, import 681ms, tests 31ms, environment 0ms)
+
+test exit=0
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+build exit=0

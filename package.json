@@ -15,9 +15,10 @@
     "db:migrate": "node --experimental-strip-types db/migrate.ts"
   },
   "dependencies": {
-    "next": "^16.2.6",
+    "ai": "^6.0.230",
     "dotenv": "^17.2.3",
     "jose": "^6.1.0",
+    "next": "^16.2.6",
     "pg": "^8.16.3",
     "pixi.js": "^8.14.3",
     "react": "^19.2.1",

@@ -11,3 +11,5 @@ coverage/
 .vercel
 .serena
 .remember
+!.env.example
+.frugal-fable/

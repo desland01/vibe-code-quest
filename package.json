@@ -9,10 +9,14 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:rls": "vitest run src/__tests__/rls.integration.test.ts",
+    "db:migrate": "node --experimental-strip-types db/migrate.ts"
   },
   "dependencies": {
     "next": "^16.2.6",
+    "dotenv": "^17.2.3",
+    "pg": "^8.16.3",
     "pixi.js": "^8.14.3",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
@@ -21,6 +25,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@types/node": "^24.10.4",
+    "@types/pg": "^8.15.6",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.4",

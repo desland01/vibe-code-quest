@@ -1,0 +1,21 @@
+=== gate run 2026-07-17T05:56:29Z ===
+> tsc --noEmit
+
+typecheck exit=0
+✖ 1 problem (0 errors, 1 warning)
+
+lint exit=0
+
+ Test Files  1 passed | 1 skipped (2)
+      Tests  3 passed | 4 skipped (7)
+   Start at  01:56:34
+   Duration  177ms (transform 51ms, setup 0ms, import 119ms, tests 5ms, environment 0ms)
+
+test exit=0
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
+build exit=0

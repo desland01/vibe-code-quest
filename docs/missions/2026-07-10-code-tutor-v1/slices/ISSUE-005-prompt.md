@@ -12,7 +12,7 @@ Context (zero chat context assumed):
 - Next.js 16 App Router, React 19, TypeScript, vitest for unit tests, eslint flat config.
 
 Tasks:
-1. src/lib/auth/session.ts (server-only): issueSessionToken(userId) → jose SignJWT HS256 (secret = AUTH_SECRET, required — throw if unset), aud/iss "code-tutor", 400-day expiry; verifySessionToken(token) → { userId } or null (never throws on bad input). Cookie name `ct_session`; cookie options httpOnly, secure in production, sameSite lax, path /, maxAge 400 days.
+1. src/lib/auth/session.ts (server-only): issueSessionToken(userId) → jose SignJWT HS256 (HMAC key from the AUTH_SECRET env var, required — throw if unset), aud/iss "code-tutor", 400-day expiry; verifySessionToken(token) → { userId } or null (never throws on bad input). Cookie name `ct_session`; cookie options httpOnly, secure in production, sameSite lax, path /, maxAge 400 days.
 2. GET /api/session (route handler): read ct_session cookie → verify. If missing/invalid: userId = crypto.randomUUID(), set cookie with fresh token. Either way: ensure profile row exists via `withUserTransaction(userId, …)` with `INSERT INTO profiles (id) VALUES ($1) ON CONFLICT (id) DO NOTHING`. Respond { userId }. No caching (dynamic).
 3. /api/progress route handler, both under the verified cookie (401 JSON if absent/invalid — never create sessions here):
    - GET: return { items: [...] } — all progress rows for the user (region, landmark, state, updated_at) via queryAsUser.

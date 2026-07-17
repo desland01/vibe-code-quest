@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-17T19:45:00Z",
+  "updated_at": "2026-07-17T20:30:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -183,6 +183,21 @@
       "completed_at": "2026-07-17T19:45:00Z",
       "validator": "fresh-context codex sol: 5/5 PASS",
       "notes": "Grid-threshold pixel islands after 3 judge rounds (shape 8/10); ~67fps trace; DOM-canonical architecture proven by e2e. Residual polish deferred to ISSUE-014."
+    },
+    {
+      "issue": "ISSUE-012",
+      "status": "complete",
+      "started_at": "2026-07-17T19:50:00Z",
+      "worker": "codex gpt-5.6-sol + terra micro-fix; orchestrator build/e2e/screenshot",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-012/VAL-012-gate.txt",
+        "evidence/ISSUE-012/submap-databases-1440.png",
+        "handoffs/ISSUE-012.md"
+      ],
+      "completed_at": "2026-07-17T20:30:00Z",
+      "validator": "fresh-context codex sol: 5/5 PASS",
+      "notes": "URL contract + sub-map scenes; 9/9 e2e incl deep-link/refresh/history/invalid-id."
     }
   ],
   "artifact_paths": {

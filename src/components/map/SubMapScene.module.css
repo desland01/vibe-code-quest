@@ -1,0 +1,36 @@
+.panelLinks a { color: var(--ink); text-underline-offset: 3px; }
+.panelLinks :global(.region-explore) { display: inline-block; margin-top: 18px; border: 2px solid var(--ink); background: var(--land); padding: 9px 12px; box-shadow: 3px 3px 0 var(--banner-border); font-family: var(--font-pixel), monospace; }
+.scene { min-height: 100vh; overflow: hidden; padding: clamp(16px, 3vw, 40px); background: var(--sea); }
+.scene :global(.sub-map-zoom) { width: min(1120px, 100%); margin: auto; animation: zoom-in 280ms steps(4, end) both; transform-origin: center 35%; }
+@keyframes zoom-in { from { opacity: .35; transform: scale(.78); } to { opacity: 1; transform: scale(1); } }
+.scene :global(.back-to-map) { display: inline-block; margin-bottom: 16px; border: 3px solid var(--ink); background: var(--banner); color: var(--ink); padding: 9px 13px; box-shadow: 4px 4px 0 var(--banner-border); font: 700 1rem/1 var(--font-pixel), monospace; text-decoration: none; }
+.scene :global(.back-to-map:hover), .scene :global(.back-to-map:focus-visible), .scene :global(.landmark-card:hover), .scene :global(.landmark-card:focus-visible) { transform: translateY(-4px); }
+.scene :global(.sub-map-banner) { position: relative; border: 4px solid var(--ink); background: color-mix(in srgb, var(--region-accent) 28%, var(--banner)); padding: clamp(20px, 4vw, 40px); box-shadow: 8px 8px 0 color-mix(in srgb, var(--region-accent) 55%, var(--banner-border)); }
+.scene :global(.sub-map-banner::after) { content: ''; position: absolute; inset: 8px; border: 2px dashed var(--banner-border); pointer-events: none; }
+.scene :global(.sub-map-banner h1) { position: relative; margin: 4px 0 10px; font: 700 clamp(2rem, 5vw, 4rem)/1 var(--font-pixel), monospace; }
+.scene :global(.sub-map-banner p) { position: relative; max-width: 68ch; margin: 0 0 6px; }
+.scene :global(.sub-map-banner p:first-child) { color: var(--banner-border); font-weight: 700; }
+.scene :global(.island-detail) { margin-top: 24px; border: 5px solid var(--ink); padding: clamp(24px, 5vw, 64px); background: var(--land-shore); box-shadow: 10px 10px 0 var(--sea-deep); clip-path: polygon(3% 6%, 13% 2%, 28% 5%, 42% 1%, 59% 4%, 76% 1%, 94% 7%, 98% 25%, 96% 43%, 99% 61%, 95% 88%, 82% 97%, 64% 94%, 48% 99%, 31% 95%, 12% 98%, 2% 85%, 5% 63%, 1% 45%); }
+.scene :global(.landmark-grid) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 3vw, 28px); padding: clamp(8px, 2vw, 20px); background: color-mix(in srgb, var(--region-accent) 14%, var(--land)); }
+.scene :global(.landmark-card) { position: relative; min-height: 170px; display: flex; flex-direction: column; gap: 9px; justify-content: center; border: 4px solid var(--ink); background: var(--banner); color: var(--ink); padding: 20px; box-shadow: 6px 6px 0 var(--banner-border); text-decoration: none; transition: transform 150ms steps(2, end), box-shadow 150ms steps(2, end); }
+.scene :global(.landmark-card:nth-child(even)) { margin-top: 18px; }
+.scene :global(.landmark-card:hover), .scene :global(.landmark-card:focus-visible) { outline: 4px solid #fff3c4; box-shadow: 10px 10px 0 var(--banner-border); }
+.scene :global(.landmark-card.is-selected) { background: color-mix(in srgb, var(--region-accent) 25%, var(--banner)); outline: 4px solid var(--region-accent); }
+.scene :global(.landmark-card strong) { padding-right: 36px; font: 700 1.15rem/1.2 var(--font-pixel), monospace; }
+.scene :global(.landmark-card > span:not(.marker-number, .draft-chip)) { font-size: .92rem; }
+.scene :global(.marker-number) { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 30px; height: 30px; border: 3px solid var(--ink); background: var(--region-accent); font-family: var(--font-pixel), monospace; }
+.scene :global(.draft-chip) { width: max-content; border: 2px solid var(--banner-border); background: #fff3c4; padding: 2px 7px; color: var(--ink); font: 700 .78rem/1.2 var(--font-pixel), monospace; text-transform: uppercase; }
+.scene :global(.landmark-detail) { margin-top: 28px; border: 4px solid var(--ink); background: var(--banner); padding: clamp(20px, 4vw, 42px); box-shadow: 8px 8px 0 var(--banner-border); }
+.scene :global(.landmark-detail-header) { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+.scene :global(.landmark-detail h2) { margin: 4px 0 10px; font: 700 clamp(1.8rem, 4vw, 3rem)/1 var(--font-pixel), monospace; }
+.scene :global(.landmark-detail h3) { font-family: var(--font-pixel), monospace; }
+.scene :global(.landmark-detail section) { margin-top: 26px; }
+.scene :global(.landmark-hook) { border-left: 8px solid var(--region-accent); padding: 12px 16px; font-size: 1.15rem; font-weight: 700; }
+.scene :global(.format-switcher) { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 12px; }
+.scene :global(.format-switcher button) { border: 3px solid var(--ink); background: #fff8e9; color: var(--ink); padding: 9px 14px; box-shadow: 3px 3px 0 var(--banner-border); cursor: pointer; font-family: var(--font-pixel), monospace; }
+.scene :global(.format-switcher button.is-active) { background: var(--region-accent); box-shadow: 1px 1px 0 var(--banner-border); transform: translate(2px, 2px); }
+.scene :global(.format-note) { background: color-mix(in srgb, var(--region-accent) 15%, white); padding: 12px; }
+.scene :global(.tradeoff-grid) { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.scene :global(.landmark-quiz) { border: 3px dashed var(--banner-border); padding: 18px; background: #fff8e9; }
+@media (prefers-reduced-motion: reduce) { .scene :global(.sub-map-zoom) { animation: none; } .scene :global(.landmark-card), .scene :global(.back-to-map) { transition: none; } .scene :global(.back-to-map:hover), .scene :global(.back-to-map:focus-visible), .scene :global(.landmark-card:hover), .scene :global(.landmark-card:focus-visible) { transform: none; } }
+@media (max-width: 760px) { .scene :global(.landmark-grid) { grid-template-columns: 1fr; } .scene :global(.landmark-card:nth-child(even)) { margin-top: 0; } .scene :global(.tradeoff-grid) { grid-template-columns: 1fr; gap: 0; } }

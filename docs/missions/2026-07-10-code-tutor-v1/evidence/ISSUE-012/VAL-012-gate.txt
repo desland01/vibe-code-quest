@@ -1,0 +1,19 @@
+=== ISSUE-012 gate 2026-07-17T17:03:53Z ===
+
+typecheck exit=0
+
+lint exit=0
+      Tests  34 passed | 19 skipped (53)
+   Start at  13:03:58
+   Duration  335ms (transform 574ms, setup 0ms, import 881ms, tests 39ms, environment 0ms)
+
+test exit=0
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+build exit=0
+--- VAL-012 e2e (9/9 incl 4 sub-map) ---
+  ✓  9 e2e/map-sub.spec.ts:37:1 › back link and browser back return to the eight-region map (538ms)
+  ✓  2 e2e/anon-session.spec.ts:3:1 › anonymous session and progress persist across reload (2.7s)
+
+  9 passed (3.2s)

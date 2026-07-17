@@ -53,3 +53,26 @@ Codex `gpt-5.6-sol` default worker / `terra` light (via `~/.claude/bin/codex-wor
 - Supabase/Vercel/Stripe accounts assumed present (user has Vercel; Supabase free tier; Stripe test mode) — if any credential is missing at execution, STOP per required-tools rule.
 
 STOP: Planning packet complete. Do not execute implementation until the user approves this Mission packet and starts a fresh execution session with HANDOFF.md.
+
+---
+
+## Session handoff addendum — 2026-07-16 (mid-ISSUE-004)
+
+**Done:** M0 complete (ISSUE-000 9d3e4ee, 001 b30aceb, 002 3904d82, 003 1a5b03d). Site public at https://code-tutor-pwio9q8xd-desmond-landrys-projects.vercel.app (SSO protection disabled per user approval). Style artifact designs/map-style.md (cozy-pixel, Pixi.js) gates map work. Gemini vision live via GEMINI_API_KEY in ~/.zshenv (rotate post-mission — value transited chat).
+
+**AMENDMENT A1 (binding):** Neon replaces Supabase everywhere — see AMENDMENTS.md. Neon project rapid-haze-29688965 (org org-soft-forest-80534150, Vercel-managed) provisioned via `vercel integration add neon`, connected to the Vercel project; connection env in .env.local (gitignored) incl. DATABASE_URL + NEON_AUTH_BASE_URL (Neon Auth available for ISSUE-005/006). DB verified live (Postgres 17). Test stacks use Neon branches, not Docker.
+
+**In flight:** ISSUE-004 re-scoped to Neon (schema + per-op RLS matrix + integration tests on a Neon test branch); pre-slice state written; worker NOT yet dispatched.
+
+**Worker dispatch note:** the codex-worker dispatcher runs codex in a read-only sandbox; implementation slices need codex exec with `--sandbox workspace-write` (model gpt-5.6-sol, ChatGPT-plan auth, --ignore-user-config) from the repo root. Validators run read-only; their command-run EPERMs are expected — the orchestrator reruns the gate itself for evidence.
+
+**Standing HITLs unchanged:** taxonomy escape hatch (ISSUE-009), price/name/legal/live-mode (ISSUE-032), Stripe TEST MODE only, nothing posted, spend ≤$5, GLM dead — never dispatch.
+
+## Kickoff (paste into a fresh session)
+
+```text
+Continue executing the approved code-tutor v1 mission AFK through all remaining phases. Read /Users/thebeast/code-tutor/docs/missions/2026-07-10-code-tutor-v1/HANDOFF.md first (this file — entry point incl. the 2026-07-16 addendum and Amendment A1: Neon replaces Supabase), then mission-state.json, AMENDMENTS.md, ISSUES.md, and handoffs/ (last completed: ISSUE-003).
+First action: resume ISSUE-004 (Neon schema + per-op RLS matrix + integration tests on a Neon branch) — provisioning is already done (.env.local has DATABASE_URL; DB verified); dispatch the implementation slice to codex gpt-5.6-sol with a workspace-write sandbox, validate fresh-context, commit on main with the gate green (typecheck, lint, test, build).
+Then proceed strictly serially per ISSUES.md through M1-M6, one issue per slice, evidence + handoffs/ISSUE-<n>.md + mission-state update + commit per issue, packet re-validation (pnpm --dir /Users/thebeast/mission-control-harness mission:validate --mission <mission dir>) after each.
+Treat this message as go for all AFK issues. STOP only for: taxonomy dispute (ISSUE-009 escape hatch), any missing credential, spend >$5, legal-page review, and the ISSUE-032 closeout gate (price/name/legal/live-mode). Stripe TEST MODE only; never post launch assets; GLM is dead — never dispatch to it; Gemini is the only vision backend.
+```

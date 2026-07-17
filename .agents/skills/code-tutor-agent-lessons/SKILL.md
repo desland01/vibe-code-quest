@@ -52,6 +52,36 @@ The mission handoff notes that the codex-worker dispatcher defaulted to a read-o
 - A validator failing to run commands because of read-only `EPERM` is an orchestration limitation, not proof the code is broken. The orchestrator must rerun the gate in a write-capable/local context for evidence.
 - Keep issue execution serial when slices share schema, auth, data, or mission-state files. One issue, one gate, one handoff/ledger update, then the next issue.
 
+### 5. Provider-managed auth claims must be capability-proven before architecture locks
+
+ISSUE-005 proved that "Neon Auth is available" was not enough. Managed BetterAuth supported email OTP/magic links, but not stable per-visitor anonymous identities; `allowAnonymous` produced a shared anonymous role, which could not satisfy the mission's per-profile persistence and Row Level Security (RLS) requirements.
+
+- First act on any auth/provider slice: verify the exact feature shape against current provider docs and a live smoke, then record the result in `AMENDMENTS.md` or the issue handoff.
+- If provider auth cannot issue stable anonymous user identities, use the packet's fallback path rather than bending requirements: app-issued httpOnly session cookie, stable visitor UUID, and server-set database session claims for RLS.
+- Do not make Postgres verify web-app JWTs unless the design explicitly needs it. In code-tutor, RLS binds through `set_config('app.user_id', ...)` inside server routes, so app-issued HS256 cookies are enough and JWKS would be unnecessary surface area.
+- Routes live under the repo's actual root `app/` tree, not the prompt's assumed `src/app/`. Verify path conventions from files before dispatching workers.
+- Browser/e2e proof needs an explicit app port or `PLAYWRIGHT_BASE_URL`; port 3000 can belong to another local app and make `reuseExistingServer` test the wrong product.
+
+### 6. OTP upgrades are account-merge transactions, not just email forms
+
+ISSUE-006 built custom OTP because the auth provider could not cover anonymous upgrade semantics. The durable lesson is the transaction boundary.
+
+- Store only HMAC-hashed OTP codes with short expiry, max attempts, prior-challenge invalidation, and row locks around verification. Never echo codes in routes, logs, evidence, or reports.
+- Verification failures must leave the anonymous session untouched. Only a successful merge should issue a fresh session cookie for the destination profile.
+- Collision handling needs a declared merge rule. Current code-tutor policy is newest-wins inside one transaction; keep that policy explicit in tests and handoffs.
+- Keep the email transport as a seam until the provider decision is approved. Dev/console transport is fine for validation; production without a configured transport should fail loudly rather than silently pretending mail was sent.
+- Treat an apply-upgrade crash after OTP consumption as acceptable only if the user can re-request; document that tradeoff in the handoff.
+
+### 7. LLM budget gates reserve before calls and reconcile after streaming
+
+ISSUE-007 added access/budget controls around LLM tutor usage. The reusable pattern is that spend-control logic must sit in one server-side seam before any model call, not as UI-only counters or post-hoc accounting.
+
+- Reserve the worst-case request cost before calling an LLM, inside an atomic transaction or lock-protected update. If the reservation fails, fail closed before any provider call or streamed response can start.
+- Keep caps server-enforced and shared across all tutor surfaces: anonymous/global/IP-ish fallbacks, per-profile daily/monthly limits, and authenticated profile limits must all use the same ledger and reason codes.
+- Reconcile after the call with actual usage when available, release unused reservation, expire/reset windows deterministically, and record provider failures separately from budget denials.
+- Route gateway/model invocations only through the access seam. Tests should prove direct bypasses are impossible or at least lint-detected, and should cover concurrent reservations, exhausted caps, expired windows, and failure refunds.
+- Do not wire real paid-provider calls from a learning/review run. Prove the budget contract with mocks or configured non-metered fixtures unless the user explicitly approves spend.
+
 ## Verification menu
 
 - Docs/skills only: read back changed files and run `git diff --check`.

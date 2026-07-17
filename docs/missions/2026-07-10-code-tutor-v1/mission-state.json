@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-17T07:05:00Z",
+  "updated_at": "2026-07-17T16:10:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -110,6 +110,21 @@
       "completed_at": "2026-07-17T07:05:00Z",
       "validator": "fresh-context codex sol (read-only): 7/7 PASS",
       "notes": "Custom OTP per A1 (Neon Auth lacks anonymous plugin). 7/7 VAL-022 paths green on rls-test. Email transport seam only \u2014 provider = HITL flag. M1 COMPLETE."
+    },
+    {
+      "issue": "ISSUE-007",
+      "status": "complete",
+      "started_at": "2026-07-17T07:10:00Z",
+      "worker": "codex gpt-5.6-sol (workspace-write) + bounded fix slice; orchestrator: root-cause debug (CHECK-before-ON-CONFLICT), test-branch runs, validation",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-007/VAL-035-ledger-caps.txt",
+        "evidence/ISSUE-007/VAL-001-gate.txt",
+        "handoffs/ISSUE-007.md"
+      ],
+      "completed_at": "2026-07-17T16:10:00Z",
+      "validator": "fresh-context codex sol (read-only): 6/6 PASS",
+      "notes": "Access seam live: atomic reservations w/ advisory locks, caps, anon throttles, banners. 8/8 VAL-035 green after bumpAnon negative-delta fix."
     }
   ],
   "artifact_paths": {

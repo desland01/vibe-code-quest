@@ -159,7 +159,7 @@
       "status": "complete",
       "started_at": "2026-07-17T17:20:00Z",
       "worker": "codex gpt-5.6-sol (2 slices; two-failure stop honored + resume)",
-      "commit": "pending",
+      "commit": "9d38213",
       "evidence": [
         "evidence/ISSUE-010/VAL-030-031-build.txt",
         "handoffs/ISSUE-010.md"

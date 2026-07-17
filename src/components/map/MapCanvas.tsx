@@ -72,17 +72,18 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
   const worldRef = useRef<import('pixi.js').Container | null>(null);
   const islandRefs = useRef(new Map<string, { container: import('pixi.js').Container; baseY: number }>());
   const dragRef = useRef<{ x: number; y: number } | null>(null);
-  const [fallback, setFallback] = useState(false);
+  const [canvasReady, setCanvasReady] = useState(false);
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('nocanvas') === '1') {
-      queueMicrotask(() => setFallback(true));
       return;
     }
     let disposed = false;
     let app: import('pixi.js').Application | undefined;
+    let idleHandle: number | undefined;
+    let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
     const islands = islandRefs.current;
-    void (async () => {
+    const mountCanvas = async () => {
       try {
         const PIXI = await import('pixi.js');
         PIXI.TextureStyle.defaultOptions.scaleMode = 'nearest';
@@ -191,12 +192,27 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
           world.addChild(island);
           islands.set(region.id, { container: island, baseY: y });
         });
+        requestAnimationFrame(() => {
+          if (!disposed) setCanvasReady(true);
+        });
       } catch {
-        if (!disposed) setFallback(true);
+        // The DOM fallback remains available if Pixi cannot initialize.
       }
-    })();
+    };
+    const scheduleIdleMount = () => {
+      if ('requestIdleCallback' in window) {
+        idleHandle = window.requestIdleCallback(() => { void mountCanvas(); });
+      } else {
+        timeoutHandle = setTimeout(() => { void mountCanvas(); }, 200);
+      }
+    };
+    if (document.readyState === 'complete') scheduleIdleMount();
+    else window.addEventListener('load', scheduleIdleMount, { once: true });
     return () => {
       disposed = true;
+      window.removeEventListener('load', scheduleIdleMount);
+      if (idleHandle !== undefined) window.cancelIdleCallback(idleHandle);
+      if (timeoutHandle !== undefined) clearTimeout(timeoutHandle);
       worldRef.current = null;
       islands.clear();
       app?.destroy(true, { children: true });
@@ -259,7 +275,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
         }
       }}
     >
-      {fallback && <div className="map-fallback" data-testid="map-fallback" aria-hidden="true">{regions.map((region) => <div key={region.id} className="fallback-island" style={{ left: `${region.mapArea.x}%`, top: `${region.mapArea.y}%`, width: `${region.mapArea.width}%`, height: `${region.mapArea.height}%`, '--region-accent': `#${(accents[region.id] ?? 0xd98f6c).toString(16)}` } as React.CSSProperties}><span>{region.title}</span></div>)}</div>}
+      <div className={`map-fallback${canvasReady ? ' is-canvas-ready' : ''}`} data-testid="map-fallback" aria-hidden="true">{regions.map((region) => <div key={region.id} className="fallback-island" style={{ left: `${region.mapArea.x}%`, top: `${region.mapArea.y}%`, width: `${region.mapArea.width}%`, height: `${region.mapArea.height}%`, '--region-accent': `#${(accents[region.id] ?? 0xd98f6c).toString(16)}` } as React.CSSProperties}><span>{region.title}</span></div>)}</div>
     </div>
   );
 }

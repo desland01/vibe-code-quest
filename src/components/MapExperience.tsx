@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
-import { regions } from '@/lib/content';
+import { regions } from '@/lib/content-client';
 import { UpgradeAccountModal } from '@/components/UpgradeAccountModal';
 import { MapCanvas } from '@/components/map/MapCanvas';
 import { RegionControls } from '@/components/map/RegionControls';

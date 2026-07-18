@@ -47,3 +47,28 @@ body[data-reduced-motion='true'] *, body[data-reduced-motion='true'] *::before, 
 body[data-reduced-motion='true'] .region-control:hover, body[data-reduced-motion='true'] .region-control.is-active, body[data-reduced-motion='true'] .region-control:focus-visible { transform: none; }
 @media (prefers-reduced-motion: reduce) { .map-renderer::after { animation: none; } }
 @media (max-width: 800px) { .map-shell { grid-template-columns: 1fr; } .region-panel { width: 100%; max-height: none; } .map-header { align-items: flex-start; flex-direction: column; } }
+/* Onboarding floats above the map without owning focus or blocking navigation. */
+.onboarding-chat {
+  position: fixed;
+  z-index: 20;
+  right: 1rem;
+  bottom: 1rem;
+  width: min(24rem, calc(100vw - 2rem));
+  padding: 1rem;
+  border: 3px solid #392f2b;
+  border-radius: 0.75rem;
+  background: #fff8df;
+  box-shadow: 6px 6px 0 rgb(57 47 43 / 25%);
+  color: #392f2b;
+}
+
+.onboarding-chat__header,
+.onboarding-chat__header > div,
+.onboarding-chat form,
+.onboarding-chat__actions { display: flex; gap: 0.5rem; }
+.onboarding-chat__header { align-items: start; justify-content: space-between; }
+.onboarding-chat__header > div { flex-direction: column; }
+.onboarding-chat form input { min-width: 0; flex: 1; }
+.onboarding-chat button,
+.onboarding-chat input { min-height: 44px; }
+.onboarding-chat__actions { margin-top: 0.5rem; }

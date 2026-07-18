@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { regions } from '@/lib/content-client';
 import { UpgradeAccountModal } from '@/components/UpgradeAccountModal';
+import { OnboardingChat } from '@/components/OnboardingChat';
 import { MapCanvas } from '@/components/map/MapCanvas';
 import { RegionControls } from '@/components/map/RegionControls';
 import { RegionPanel } from '@/components/map/RegionPanel';
@@ -55,6 +56,7 @@ export function MapExperience() {
         </div>
         {selectedRegion && <RegionPanel region={selectedRegion} onClose={closePanel} restoreFocus={() => lastTriggerRef.current?.focus()} />}
       </section>
+      <OnboardingChat />
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true" data-testid="map-live-region">
         {liveMessage}
       </p>

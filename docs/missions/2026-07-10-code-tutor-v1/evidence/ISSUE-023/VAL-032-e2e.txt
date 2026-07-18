@@ -1,0 +1,25 @@
+
+Running 17 tests using 5 workers
+
+  ✓   1 e2e/map-top.spec.ts:3:1 › semantic regions open and close landmark details (739ms)
+  ✓   5 e2e/a11y.spec.ts:9:1 › keyboard-only traversal activates all eight regions and restores focus (1.0s)
+  ✓   6 e2e/map-top.spec.ts:16:1 › region map works with keyboard alone (315ms)
+  ✓   3 e2e/map-sub.spec.ts:5:1 › deep link and refresh preserve landmark quiz state (1.2s)
+  ✓   7 e2e/a11y.spec.ts:28:1 › live region announces keyboard zoom and selection (324ms)
+  ✓   8 e2e/map-top.spec.ts:24:1 › DOM fallback preserves interactions (359ms)
+  ✓  11 e2e/map-top.spec.ts:31:1 › reduced motion exposes its deterministic hook (290ms)
+  ✓   9 e2e/map-sub.spec.ts:15:1 › back and forward follow URL-backed map navigation (1.4s)
+[axe] / []
+  ✓  12 e2e/map-sub.spec.ts:28:1 › invalid ids 404 and invalid format falls back to overview (469ms)
+  ✓   4 e2e/anon-session.spec.ts:3:1 › anonymous session and progress persist across reload (3.1s)
+  ✓  13 e2e/map-sub.spec.ts:37:1 › back link and browser back return to the eight-region map (521ms)
+[axe] /map/databases []
+[axe] /map/databases/sql []
+  ✓  10 e2e/a11y.spec.ts:39:1 › axe serious and critical report is clean on map routes (3.0s)
+  ✓  14 e2e/a11y.spec.ts:54:1 › reduced motion disables ambient animation deterministically (244ms)
+  ✓  15 e2e/a11y.spec.ts:63:1 › DOM-only fallback retains map interactions (243ms)
+  ✓  16 e2e/a11y.spec.ts:72:3 › 200% zoom proxy remains scrollable without horizontal region-control clipping (334ms)
+  ✓  17 e2e/a11y.spec.ts:72:3 › 400% zoom proxy remains scrollable without horizontal region-control clipping (332ms)
+  ✓   2 e2e/onboarding.spec.ts:3:1 › onboarding unlocks after Q1, caps at five, and leaves the map browsable (13.6s)
+
+  17 passed (14.2s)

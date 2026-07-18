@@ -38,6 +38,8 @@ export type GenerateWithGatewayParams = {
   transport?: GatewayTransport;
 };
 
+const REAL_MODEL_TIMEOUT_MS = 8_000;
+
 function usageOf(result: GatewayTransportResult): GatewayUsage {
   return {
     inputTokens: result.usage?.inputTokens ?? 0,
@@ -90,21 +92,44 @@ function persistentDrill(): DrillMode | undefined {
 export async function generateWithGateway(
   params: GenerateWithGatewayParams
 ): Promise<GatewayResult> {
-  const transport = params.transport ?? sdkTransport;
   const drill = params.drill ?? persistentDrill();
 
   if (drill === 'force_5xx') return { kind: 'gateway_down' };
+  if (!params.transport && !process.env.AI_GATEWAY_API_KEY) return { kind: 'gateway_down' };
+
+  const transport = params.transport ?? sdkTransport;
+  const callTransport = (model: string) => {
+    const call = transport({ ...params, model });
+    if (params.transport) return call;
+
+    return new Promise<GatewayTransportResult>((resolve, reject) => {
+      const timer = setTimeout(
+        () => reject(new Error('AI gateway timeout')),
+        REAL_MODEL_TIMEOUT_MS
+      );
+      call.then(
+        (result) => {
+          clearTimeout(timer);
+          resolve(result);
+        },
+        (error) => {
+          clearTimeout(timer);
+          reject(error);
+        }
+      );
+    });
+  };
 
   try {
     if (drill === 'force_429') throw Object.assign(new Error('drill rate limit'), { statusCode: 429 });
-    const result = await transport({ ...params, model: AI_MODELS.executor });
+    const result = await callTransport(AI_MODELS.executor);
     return { kind: 'ok', text: result.text, usage: usageOf(result) };
   } catch (error) {
     if (!isRateLimited(error)) return { kind: 'gateway_down' };
   }
 
   try {
-    const result = await transport({ ...params, model: AI_MODELS.fallback });
+    const result = await callTransport(AI_MODELS.fallback);
     return { kind: 'rate_limited_fallback', text: result.text, usage: usageOf(result) };
   } catch {
     return { kind: 'gateway_down' };

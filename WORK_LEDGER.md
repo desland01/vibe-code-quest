@@ -30,6 +30,8 @@
 
 ## Mission 2026-07-10-code-tutor-v1 execution
 
+- 2026-07-18: ISSUE-023 implemented a persisted, server-owned five-step onboarding profile state machine with deterministic access/gateway fallbacks, a non-blocking accessible map chat panel, and unit/e2e coverage for skip, unlock, malformed output, injection, denial, and token guards.
+
 - 2026-07-17: ISSUE-014 bundle-budget slice deferred Pixi initialization until window load plus browser idle time, kept the DOM map fallback interactive immediately with a reduced-motion-aware canvas crossfade, and split client manifest access from server-side Zod validation.
 
 - 2026-07-17: ISSUE-011 implemented the DOM-canonical eight-region map interaction reducer, lazy Pixi top-map presentation with deterministic CSS fallback, accessible controls and detail panel, keyboard/pointer camera controls, reduced-motion behavior, and unit/e2e coverage.

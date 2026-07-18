@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-17T17:55:18.592Z",
+    "timestamp": "2026-07-18T21:57:06.026Z",
     "url": "http://localhost:3100/",
     "toolOptions": {
       "reporter": "v1"
@@ -90,18 +90,6 @@
         "description": "Ensure every ARIA button, link and menuitem has an accessible name",
         "help": "ARIA commands must have an accessible name",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/aria-command-name?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "aria-dialog-name",
-        "impact": null,
-        "tags": [
-          "cat.aria",
-          "best-practice"
-        ],
-        "description": "Ensure every ARIA dialog and alertdialog node has an accessible name",
-        "help": "ARIA dialog and alertdialog nodes should have an accessible name",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/aria-dialog-name?application=playwright",
         "nodes": []
       },
       {
@@ -357,25 +345,6 @@
         "nodes": []
       },
       {
-        "id": "form-field-multiple-labels",
-        "impact": null,
-        "tags": [
-          "cat.forms",
-          "wcag2a",
-          "wcag332",
-          "TTv5",
-          "TT5.c",
-          "EN-301-549",
-          "EN-9.3.3.2",
-          "RGAAv4",
-          "RGAA-11.2.1"
-        ],
-        "description": "Ensure form field does not have multiple label elements",
-        "help": "Form field must not have multiple label elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/form-field-multiple-labels?application=playwright",
-        "nodes": []
-      },
-      {
         "id": "frame-focusable-content",
         "impact": null,
         "tags": [
@@ -544,40 +513,6 @@
         "description": "Ensure <input type=\"image\"> elements have alternative text",
         "help": "Image buttons must have alternative text",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/input-image-alt?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "label-title-only",
-        "impact": null,
-        "tags": [
-          "cat.forms",
-          "best-practice"
-        ],
-        "description": "Ensure that every form element has a visible label and is not solely labeled using hidden labels, or the title or aria-describedby attributes",
-        "help": "Form elements should have a visible label",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/label-title-only?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "label",
-        "impact": null,
-        "tags": [
-          "cat.forms",
-          "wcag2a",
-          "wcag412",
-          "section508",
-          "section508.22.n",
-          "TTv5",
-          "TT5.c",
-          "EN-301-549",
-          "EN-9.4.1.2",
-          "ACT",
-          "RGAAv4",
-          "RGAA-11.1.1"
-        ],
-        "description": "Ensure every form element has a label",
-        "help": "Form elements must have labels",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/label?application=playwright",
         "nodes": []
       },
       {
@@ -1403,6 +1338,72 @@
               }
             ],
             "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
               "p[role=\"status\"]"
@@ -1473,6 +1474,24 @@
             "html": "<div class=\"map-renderer\" data-ambient-animation=\"disabled\" role=\"group\" tabindex=\"0\" aria-label=\"Interactive learning map. Use arrow keys to pan and plus or minus to zoom.\">",
             "target": [
               ".map-renderer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-allowed-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "ARIA role is allowed for given element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
             ]
           },
           {
@@ -1761,6 +1780,42 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
               "p[role=\"status\"]"
@@ -1836,6 +1891,24 @@
               }
             ],
             "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "deprecatedrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "ARIA role is not deprecated"
+              }
+            ],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
               "p[role=\"status\"]"
@@ -1860,6 +1933,37 @@
                 "next-route-announcer",
                 "#__next-route-announcer__"
               ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "aria-dialog-name",
+        "impact": null,
+        "tags": [
+          "cat.aria",
+          "best-practice"
+        ],
+        "description": "Ensure every ARIA dialog and alertdialog node has an accessible name",
+        "help": "ARIA dialog and alertdialog nodes should have an accessible name",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/aria-dialog-name?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "aria-labelledby",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-labelledby attribute exists and references elements that are visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
             ]
           }
         ]
@@ -2266,6 +2370,42 @@
               }
             ],
             "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
               "p[role=\"status\"]"
@@ -2326,6 +2466,24 @@
             "html": "<div class=\"map-renderer\" data-ambient-animation=\"disabled\" role=\"group\" tabindex=\"0\" aria-label=\"Interactive learning map. Use arrow keys to pan and plus or minus to zoom.\">",
             "target": [
               ".map-renderer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-required-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "All required ARIA attributes are present"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
             ]
           },
           {
@@ -2415,6 +2573,38 @@
             "html": "<div class=\"map-renderer\" data-ambient-animation=\"disabled\" role=\"group\" tabindex=\"0\" aria-label=\"Interactive learning map. Use arrow keys to pan and plus or minus to zoom.\">",
             "target": [
               ".map-renderer"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "invalidrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA role is valid"
+              },
+              {
+                "id": "abstractrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Abstract roles are not used"
+              },
+              {
+                "id": "unsupportedrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA role is supported"
+              }
+            ],
+            "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
             ]
           },
           {
@@ -2913,6 +3103,70 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
               "p[role=\"status\"]"
@@ -3185,6 +3439,42 @@
             "html": "<button class=\"region-control\" style=\"left:53%;top:82%;width:28%;height:13%\" aria-label=\"Design Systems\" aria-pressed=\"false\" id=\"region-design\"><span class=\"sr-only\">Explore <!-- -->Design Systems</span></button>",
             "target": [
               "#region-design"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
             ]
           },
           {
@@ -3569,7 +3859,7 @@
             "impact": null,
             "html": "<button type=\"button\">Save progress via email</button>",
             "target": [
-              "button[type=\"button\"]"
+              "header > button[type=\"button\"]"
             ]
           },
           {
@@ -3771,6 +4061,85 @@
             "target": [
               "#region-design"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has inner text that is visible to screen readers"
+              },
+              {
+                "id": "aria-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-label attribute exists and is not empty"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has inner text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"submit\" disabled=\"\">Send</button>",
+            "target": [
+              "button[type=\"submit\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has inner text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" disabled=\"\">Skip</button>",
+            "target": [
+              "button[type=\"button\"]:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has inner text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" disabled=\"\">Finish</button>",
+            "target": [
+              ".onboarding-chat__actions > button[type=\"button\"]:nth-child(2)"
+            ]
           }
         ]
       },
@@ -3939,7 +4308,107 @@
             "impact": null,
             "html": "<button type=\"button\">Save progress via email</button>",
             "target": [
-              "button[type=\"button\"]"
+              "header > button[type=\"button\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#392f2b",
+                  "bgColor": "#fff8df",
+                  "contrastRatio": 12.22,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 12.22"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<strong id=\"onboarding-title\">Make this map yours</strong>",
+            "target": [
+              "#onboarding-title"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#392f2b",
+                  "bgColor": "#fff8df",
+                  "contrastRatio": 12.22,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 12.22"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span>0<!-- -->/5</span>",
+            "target": [
+              ".onboarding-chat__header > div > span"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#000000",
+                  "bgColor": "#efefef",
+                  "contrastRatio": 18.26,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 18.26"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#392f2b",
+                  "bgColor": "#fff8df",
+                  "contrastRatio": 12.22,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 12.22"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>Getting your first question…</p>",
+            "target": [
+              ".onboarding-chat > p"
             ]
           }
         ]
@@ -4016,6 +4485,42 @@
             "target": [
               "#map-alternative-title"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "duplicate-id-aria",
+                "data": "onboarding-title",
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<strong id=\"onboarding-title\">Make this map yours</strong>",
+            "target": [
+              "#onboarding-title"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "duplicate-id-aria",
+                "data": "onboarding-answer",
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<input id=\"onboarding-answer\" disabled=\"\" maxlength=\"1000\" value=\"\">",
+            "target": [
+              "#onboarding-answer"
+            ]
           }
         ]
       },
@@ -4064,6 +4569,51 @@
             "html": "<h1>code-tutor</h1>",
             "target": [
               "h1"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "form-field-multiple-labels",
+        "impact": null,
+        "tags": [
+          "cat.forms",
+          "wcag2a",
+          "wcag332",
+          "TTv5",
+          "TT5.c",
+          "EN-301-549",
+          "EN-9.3.3.2",
+          "RGAAv4",
+          "RGAA-11.2.1"
+        ],
+        "description": "Ensure form field does not have multiple label elements",
+        "help": "Form field must not have multiple label elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/form-field-multiple-labels?application=playwright",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "multiple-label",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<label for=\"onboarding-answer\" class=\"sr-only\">Your answer</label>",
+                    "target": [
+                      "label"
+                    ]
+                  }
+                ],
+                "impact": "moderate",
+                "message": "Form field does not have multiple label elements"
+              }
+            ],
+            "impact": null,
+            "html": "<input id=\"onboarding-answer\" disabled=\"\" maxlength=\"1000\" value=\"\">",
+            "target": [
+              "#onboarding-answer"
             ]
           }
         ]
@@ -4211,6 +4761,93 @@
         ]
       },
       {
+        "id": "label-title-only",
+        "impact": null,
+        "tags": [
+          "cat.forms",
+          "best-practice"
+        ],
+        "description": "Ensure that every form element has a visible label and is not solely labeled using hidden labels, or the title or aria-describedby attributes",
+        "help": "Form elements should have a visible label",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/label-title-only?application=playwright",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "title-only",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Form element does not solely use title attribute for its label"
+              }
+            ],
+            "impact": null,
+            "html": "<input id=\"onboarding-answer\" disabled=\"\" maxlength=\"1000\" value=\"\">",
+            "target": [
+              "#onboarding-answer"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "label",
+        "impact": null,
+        "tags": [
+          "cat.forms",
+          "wcag2a",
+          "wcag412",
+          "section508",
+          "section508.22.n",
+          "TTv5",
+          "TT5.c",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-11.1.1"
+        ],
+        "description": "Ensure every form element has a label",
+        "help": "Form elements must have labels",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/label?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "explicit-label",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<label for=\"onboarding-answer\" class=\"sr-only\">Your answer</label>",
+                    "target": [
+                      "label"
+                    ]
+                  }
+                ],
+                "impact": "critical",
+                "message": "Element has an explicit <label>"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "hidden-explicit-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Form element has a visible explicit <label>"
+              }
+            ],
+            "impact": null,
+            "html": "<input id=\"onboarding-answer\" disabled=\"\" maxlength=\"1000\" value=\"\">",
+            "target": [
+              "#onboarding-answer"
+            ]
+          }
+        ]
+      },
+      {
         "id": "landmark-main-is-top-level",
         "impact": null,
         "tags": [
@@ -4322,14 +4959,7 @@
               {
                 "id": "page-has-main",
                 "data": null,
-                "relatedNodes": [
-                  {
-                    "html": "<main class=\"map-experience\" id=\"main-content\" tabindex=\"-1\">",
-                    "target": [
-                      "#main-content"
-                    ]
-                  }
-                ],
+                "relatedNodes": [],
                 "impact": "moderate",
                 "message": "Document has at least one main landmark"
               }
@@ -4436,6 +5066,27 @@
             "html": "<nav class=\"region-controls\" id=\"region-controls\" aria-label=\"Learning regions\">",
             "target": [
               "#region-controls"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "dialog",
+                  "accessibleText": "make this map yours"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
             ]
           }
         ]
@@ -4998,7 +5649,7 @@
             "impact": null,
             "html": "<button type=\"button\">Save progress via email</button>",
             "target": [
-              "button[type=\"button\"]"
+              "header > button[type=\"button\"]"
             ]
           },
           {
@@ -5144,6 +5795,78 @@
             "target": [
               "#region-design"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"submit\" disabled=\"\">Send</button>",
+            "target": [
+              "button[type=\"submit\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" disabled=\"\">Skip</button>",
+            "target": [
+              "button[type=\"button\"]:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" disabled=\"\">Finish</button>",
+            "target": [
+              ".onboarding-chat__actions > button[type=\"button\"]:nth-child(2)"
+            ]
           }
         ]
       },
@@ -5164,14 +5887,7 @@
               {
                 "id": "page-has-heading-one",
                 "data": null,
-                "relatedNodes": [
-                  {
-                    "html": "<h1>code-tutor</h1>",
-                    "target": [
-                      "h1"
-                    ]
-                  }
-                ],
+                "relatedNodes": [],
                 "impact": "moderate",
                 "message": "Page has at least one level-one heading"
               }
@@ -5715,7 +6431,7 @@
             "impact": null,
             "html": "<button type=\"button\">Save progress via email</button>",
             "target": [
-              "button[type=\"button\"]"
+              "header > button[type=\"button\"]"
             ]
           },
           {
@@ -6133,6 +6849,286 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
+            "target": [
+              ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"onboarding-chat__header\"><div><strong id=\"onboarding-title\">Make this map yours</strong><span>0<!-- -->/5</span></div><button type=\"button\" aria-label=\"Dismiss onboarding\">×</button></div>",
+            "target": [
+              ".onboarding-chat__header"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div><strong id=\"onboarding-title\">Make this map yours</strong><span>0<!-- -->/5</span></div>",
+            "target": [
+              ".onboarding-chat__header > div"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<strong id=\"onboarding-title\">Make this map yours</strong>",
+            "target": [
+              "#onboarding-title"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span>0<!-- -->/5</span>",
+            "target": [
+              ".onboarding-chat__header > div > span"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-label=\"Dismiss onboarding\">×</button>",
+            "target": [
+              "button[aria-label=\"Dismiss onboarding\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>Getting your first question…</p>",
+            "target": [
+              ".onboarding-chat > p"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<form><label for=\"onboarding-answer\" class=\"sr-only\">Your answer</label><input id=\"onboarding-answer\" disabled=\"\" maxlength=\"1000\" value=\"\"><button type=\"submit\" disabled=\"\">Send</button></form>",
+            "target": [
+              "form"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<label for=\"onboarding-answer\" class=\"sr-only\">Your answer</label>",
+            "target": [
+              "label"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<input id=\"onboarding-answer\" disabled=\"\" maxlength=\"1000\" value=\"\">",
+            "target": [
+              "#onboarding-answer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"submit\" disabled=\"\">Send</button>",
+            "target": [
+              "button[type=\"submit\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"onboarding-chat__actions\"><button type=\"button\" disabled=\"\">Skip</button><button type=\"button\" disabled=\"\">Finish</button></div>",
+            "target": [
+              ".onboarding-chat__actions"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" disabled=\"\">Skip</button>",
+            "target": [
+              "button[type=\"button\"]:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" disabled=\"\">Finish</button>",
+            "target": [
+              ".onboarding-chat__actions > button[type=\"button\"]:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
               "p[role=\"status\"]"
@@ -6285,7 +7281,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-17T17:55:19.421Z",
+    "timestamp": "2026-07-18T21:57:06.862Z",
     "url": "http://localhost:3100/map/databases",
     "toolOptions": {
       "reporter": "v1"
@@ -8192,7 +9188,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               "a[href$=\"sql\"]:nth-child(1)"
             ]
@@ -8224,7 +9220,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>A short starting point for understanding NoSQL document.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
             "target": [
               "a[href$=\"nosql-document\"]"
             ]
@@ -8256,7 +9252,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>The retrieval shape for semantic search.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
               "a[href$=\"vector\"]"
             ]
@@ -8288,7 +9284,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>A short starting point for understanding Graph.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
               "a[href$=\"graph\"]"
             ]
@@ -8320,7 +9316,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>A short starting point for understanding ORM vs raw SQL.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"]"
             ]
@@ -8352,7 +9348,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
             ]
@@ -8659,31 +9655,6 @@
                 "id": "color-contrast",
                 "data": {
                   "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"sql\"]:nth-child(1) > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
                   "bgColor": "#d98f6c",
                   "contrastRatio": 4.68,
                   "fontSize": "12.0pt (16px)",
@@ -8748,34 +9719,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding NoSQL document.</span>",
+            "html": "<span>Keep one thing together when rows would pull it apart.</span>",
             "target": [
               "a[href$=\"nosql-document\"] > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"nosql-document\"] > .draft-chip"
             ]
           },
           {
@@ -8848,34 +9794,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>The retrieval shape for semantic search.</span>",
+            "html": "<span>Find what means the same thing, not only what uses the same words.</span>",
             "target": [
               "a[href$=\"vector\"] > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"vector\"] > .draft-chip"
             ]
           },
           {
@@ -8948,34 +9869,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding Graph.</span>",
+            "html": "<span>Use a graph when the connections are the product.</span>",
             "target": [
               "a[href$=\"graph\"] > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"graph\"] > .draft-chip"
             ]
           },
           {
@@ -9048,34 +9944,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding ORM vs raw SQL.</span>",
+            "html": "<span>Use the abstraction until the query needs to speak for itself.</span>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"] > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > .draft-chip"
             ]
           },
           {
@@ -9148,34 +10019,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding Hosted vs self-hosted.</span>",
+            "html": "<span>Pay with money or pay with operational attention.</span>",
             "target": [
               ".landmark-card:nth-child(6) > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              ".landmark-card:nth-child(6) > .draft-chip"
             ]
           }
         ]
@@ -9652,7 +10498,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               "a[href$=\"sql\"]:nth-child(1)"
             ]
@@ -9678,7 +10524,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>A short starting point for understanding NoSQL document.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
             "target": [
               "a[href$=\"nosql-document\"]"
             ]
@@ -9704,7 +10550,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>The retrieval shape for semantic search.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
               "a[href$=\"vector\"]"
             ]
@@ -9730,7 +10576,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>A short starting point for understanding Graph.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
               "a[href$=\"graph\"]"
             ]
@@ -9756,7 +10602,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>A short starting point for understanding ORM vs raw SQL.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"]"
             ]
@@ -9782,7 +10628,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
             ]
@@ -10123,7 +10969,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               "a[href$=\"sql\"]:nth-child(1)"
             ]
@@ -10183,27 +11029,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"sql\"]:nth-child(1) > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>A short starting point for understanding NoSQL document.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
             "target": [
               "a[href$=\"nosql-document\"]"
             ]
@@ -10243,7 +11069,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding NoSQL document.</span>",
+            "html": "<span>Keep one thing together when rows would pull it apart.</span>",
             "target": [
               "a[href$=\"nosql-document\"] > span:nth-child(3)"
             ]
@@ -10263,27 +11089,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"nosql-document\"] > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>The retrieval shape for semantic search.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
               "a[href$=\"vector\"]"
             ]
@@ -10323,7 +11129,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>The retrieval shape for semantic search.</span>",
+            "html": "<span>Find what means the same thing, not only what uses the same words.</span>",
             "target": [
               "a[href$=\"vector\"] > span:nth-child(3)"
             ]
@@ -10343,27 +11149,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"vector\"] > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>A short starting point for understanding Graph.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
               "a[href$=\"graph\"]"
             ]
@@ -10403,7 +11189,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding Graph.</span>",
+            "html": "<span>Use a graph when the connections are the product.</span>",
             "target": [
               "a[href$=\"graph\"] > span:nth-child(3)"
             ]
@@ -10423,27 +11209,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"graph\"] > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>A short starting point for understanding ORM vs raw SQL.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"]"
             ]
@@ -10483,7 +11249,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding ORM vs raw SQL.</span>",
+            "html": "<span>Use the abstraction until the query needs to speak for itself.</span>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"] > span:nth-child(3)"
             ]
@@ -10503,27 +11269,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
             ]
@@ -10563,29 +11309,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding Hosted vs self-hosted.</span>",
+            "html": "<span>Pay with money or pay with operational attention.</span>",
             "target": [
               ".landmark-card:nth-child(6) > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              ".landmark-card:nth-child(6) > .draft-chip"
             ]
           },
           {
@@ -10735,7 +11461,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-17T17:55:20.154Z",
+    "timestamp": "2026-07-18T21:57:07.583Z",
     "url": "http://localhost:3100/map/databases/sql",
     "toolOptions": {
       "reporter": "v1"
@@ -11760,7 +12486,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -12067,7 +12793,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -12574,7 +13300,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -12909,7 +13635,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -13158,7 +13884,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -13350,7 +14076,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -13382,7 +14108,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>A short starting point for understanding NoSQL document.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
             "target": [
               "a[href$=\"nosql-document\"]"
             ]
@@ -13414,7 +14140,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>The retrieval shape for semantic search.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
               "a[href$=\"vector\"]"
             ]
@@ -13446,7 +14172,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>A short starting point for understanding Graph.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
               "a[href$=\"graph\"]"
             ]
@@ -13478,7 +14204,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>A short starting point for understanding ORM vs raw SQL.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"]"
             ]
@@ -13510,7 +14236,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
             ]
@@ -13942,31 +14668,6 @@
                 "id": "color-contrast",
                 "data": {
                   "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              ".is-selected > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
                   "bgColor": "#d98f6c",
                   "contrastRatio": 4.68,
                   "fontSize": "12.0pt (16px)",
@@ -14031,34 +14732,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding NoSQL document.</span>",
+            "html": "<span>Keep one thing together when rows would pull it apart.</span>",
             "target": [
               "a[href$=\"nosql-document\"] > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"nosql-document\"] > .draft-chip"
             ]
           },
           {
@@ -14131,34 +14807,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>The retrieval shape for semantic search.</span>",
+            "html": "<span>Find what means the same thing, not only what uses the same words.</span>",
             "target": [
               "a[href$=\"vector\"] > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"vector\"] > .draft-chip"
             ]
           },
           {
@@ -14231,34 +14882,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding Graph.</span>",
+            "html": "<span>Use a graph when the connections are the product.</span>",
             "target": [
               "a[href$=\"graph\"] > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"graph\"] > .draft-chip"
             ]
           },
           {
@@ -14331,34 +14957,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding ORM vs raw SQL.</span>",
+            "html": "<span>Use the abstraction until the query needs to speak for itself.</span>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"] > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > .draft-chip"
             ]
           },
           {
@@ -14431,34 +15032,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding Hosted vs self-hosted.</span>",
+            "html": "<span>Pay with money or pay with operational attention.</span>",
             "target": [
               ".landmark-card:nth-child(6) > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              ".landmark-card:nth-child(6) > .draft-chip"
             ]
           },
           {
@@ -14509,31 +15085,6 @@
             "html": "<h2 id=\"landmark-title\">SQL</h2>",
             "target": [
               "#landmark-title"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#fff3c4",
-                  "contrastRatio": 10.91,
-                  "fontSize": "9.4pt (12.48px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.91"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              ".landmark-detail-header > .draft-chip"
             ]
           },
           {
@@ -14731,7 +15282,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>SQL stores durable records in related tables and is a strong default for transactional applications.</p>",
+            "html": "<p>SQL databases store durable records in tables with explicit relationships. They are a strong default when your app needs transactions, constraints, and flexible queries across connected data.</p>",
             "target": [
               "section:nth-child(5) > p"
             ]
@@ -14781,7 +15332,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>You need related records and transactions.</li>",
+            "html": "<li>You need related records such as users, teams, projects, and invoices.</li>",
             "target": [
               "section:nth-child(6) > ul > li:nth-child(1)"
             ]
@@ -14806,9 +15357,59 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>You need predictable querying and migrations.</li>",
+            "html": "<li>Several writes must succeed or fail together.</li>",
             "target": [
               "section:nth-child(6) > ul > li:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>You need reporting or filters that cross multiple kinds of records.</li>",
+            "target": [
+              "section:nth-child(6) > ul > li:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>Your data rules matter more than accepting any document shape.</li>",
+            "target": [
+              "li:nth-child(4)"
             ]
           },
           {
@@ -14856,7 +15457,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Mature relational model</li>",
+            "html": "<li>Transactions protect multi-step changes.</li>",
             "target": [
               "div:nth-child(1) > ul > li:nth-child(1)"
             ]
@@ -14881,9 +15482,34 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Strong transactional guarantees</li>",
+            "html": "<li>Constraints catch invalid data at the database boundary.</li>",
             "target": [
               "div:nth-child(1) > ul > li:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>Joins support questions you did not predict when designing the schema.</li>",
+            "target": [
+              "div:nth-child(1) > ul > li:nth-child(3)"
             ]
           },
           {
@@ -14931,7 +15557,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Schema changes require migrations</li>",
+            "html": "<li>Schema changes require reviewed migrations.</li>",
             "target": [
               "div:nth-child(2) > ul > li:nth-child(1)"
             ]
@@ -14956,7 +15582,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Operations still need care</li>",
+            "html": "<li>Indexes and slow queries still need deliberate maintenance.</li>",
             "target": [
               "div:nth-child(2) > ul > li:nth-child(2)"
             ]
@@ -15006,7 +15632,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>A client portal relates users, companies, projects, invoices, and messages.</p>",
+            "html": "<p>A client portal relates users, companies, projects, invoices, and messages. Tell your agent to model those relationships in PostgreSQL, enforce ownership with constraints, and wrap invoice creation in a transaction.</p>",
             "target": [
               "section:nth-child(8) > p"
             ]
@@ -15056,7 +15682,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Keep database credentials server-side.</li>",
+            "html": "<li>Keep database credentials and privileged queries server-side.</li>",
             "target": [
               "section:nth-child(9) > ul > li:nth-child(1)"
             ]
@@ -15081,9 +15707,34 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Apply reviewed migrations once users depend on the data.</li>",
+            "html": "<li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li>",
             "target": [
               "section:nth-child(9) > ul > li:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>Add indexes from measured query patterns, not guesses.</li>",
+            "target": [
+              "section:nth-child(9) > ul > li:nth-child(3)"
             ]
           },
           {
@@ -15131,7 +15782,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>Start with PostgreSQL for relational application data, then add abstractions only when they help.</p>",
+            "html": "<p>Start with PostgreSQL for application records, and keep it until a measured need proves another store fits better.</p>",
             "target": [
               "section:nth-child(10) > p"
             ]
@@ -15413,7 +16064,7 @@
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > header:nth-child(1) > div:nth-child(1) > h2:nth-child(2)"
+                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > header:nth-child(1) > div > h2:nth-child(2)"
                       ],
                       "level": 2
                     },
@@ -15982,7 +16633,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -16008,7 +16659,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>A short starting point for understanding NoSQL document.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
             "target": [
               "a[href$=\"nosql-document\"]"
             ]
@@ -16034,7 +16685,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>The retrieval shape for semantic search.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
               "a[href$=\"vector\"]"
             ]
@@ -16060,7 +16711,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>A short starting point for understanding Graph.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
               "a[href$=\"graph\"]"
             ]
@@ -16086,7 +16737,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>A short starting point for understanding ORM vs raw SQL.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"]"
             ]
@@ -16112,7 +16763,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
             ]
@@ -16148,7 +16799,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul><li>You need related records and transactions.</li><li>You need predictable querying and migrations.</li></ul>",
+            "html": "<ul><li>You need related records such as users, teams, projects, and invoices.</li><li>Several writes must succeed or fail together.</li><li>You need reporting or filters that cross multiple kinds of records.</li><li>Your data rules matter more than accepting any document shape.</li></ul>",
             "target": [
               "section:nth-child(6) > ul"
             ]
@@ -16166,7 +16817,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul><li>Mature relational model</li><li>Strong transactional guarantees</li></ul>",
+            "html": "<ul><li>Transactions protect multi-step changes.</li><li>Constraints catch invalid data at the database boundary.</li><li>Joins support questions you did not predict when designing the schema.</li></ul>",
             "target": [
               "div:nth-child(1) > ul"
             ]
@@ -16184,7 +16835,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul><li>Schema changes require migrations</li><li>Operations still need care</li></ul>",
+            "html": "<ul><li>Schema changes require reviewed migrations.</li><li>Indexes and slow queries still need deliberate maintenance.</li></ul>",
             "target": [
               "div:nth-child(2) > ul"
             ]
@@ -16202,7 +16853,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul><li>Keep database credentials server-side.</li><li>Apply reviewed migrations once users depend on the data.</li></ul>",
+            "html": "<ul><li>Keep database credentials and privileged queries server-side.</li><li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li><li>Add indexes from measured query patterns, not guesses.</li></ul>",
             "target": [
               "section:nth-child(9) > ul"
             ]
@@ -16238,7 +16889,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>You need related records and transactions.</li>",
+            "html": "<li>You need related records such as users, teams, projects, and invoices.</li>",
             "target": [
               "section:nth-child(6) > ul > li:nth-child(1)"
             ]
@@ -16256,7 +16907,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>You need predictable querying and migrations.</li>",
+            "html": "<li>Several writes must succeed or fail together.</li>",
             "target": [
               "section:nth-child(6) > ul > li:nth-child(2)"
             ]
@@ -16274,7 +16925,43 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Mature relational model</li>",
+            "html": "<li>You need reporting or filters that cross multiple kinds of records.</li>",
+            "target": [
+              "section:nth-child(6) > ul > li:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>Your data rules matter more than accepting any document shape.</li>",
+            "target": [
+              "li:nth-child(4)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>Transactions protect multi-step changes.</li>",
             "target": [
               "div:nth-child(1) > ul > li:nth-child(1)"
             ]
@@ -16292,7 +16979,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Strong transactional guarantees</li>",
+            "html": "<li>Constraints catch invalid data at the database boundary.</li>",
             "target": [
               "div:nth-child(1) > ul > li:nth-child(2)"
             ]
@@ -16310,7 +16997,25 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Schema changes require migrations</li>",
+            "html": "<li>Joins support questions you did not predict when designing the schema.</li>",
+            "target": [
+              "div:nth-child(1) > ul > li:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>Schema changes require reviewed migrations.</li>",
             "target": [
               "div:nth-child(2) > ul > li:nth-child(1)"
             ]
@@ -16328,7 +17033,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Operations still need care</li>",
+            "html": "<li>Indexes and slow queries still need deliberate maintenance.</li>",
             "target": [
               "div:nth-child(2) > ul > li:nth-child(2)"
             ]
@@ -16346,7 +17051,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Keep database credentials server-side.</li>",
+            "html": "<li>Keep database credentials and privileged queries server-side.</li>",
             "target": [
               "section:nth-child(9) > ul > li:nth-child(1)"
             ]
@@ -16364,9 +17069,27 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Apply reviewed migrations once users depend on the data.</li>",
+            "html": "<li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li>",
             "target": [
               "section:nth-child(9) > ul > li:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>Add indexes from measured query patterns, not guesses.</li>",
+            "target": [
+              "section:nth-child(9) > ul > li:nth-child(3)"
             ]
           }
         ]
@@ -16779,7 +17502,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -16839,27 +17562,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              ".is-selected > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>A short starting point for understanding NoSQL document.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
             "target": [
               "a[href$=\"nosql-document\"]"
             ]
@@ -16899,7 +17602,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding NoSQL document.</span>",
+            "html": "<span>Keep one thing together when rows would pull it apart.</span>",
             "target": [
               "a[href$=\"nosql-document\"] > span:nth-child(3)"
             ]
@@ -16919,27 +17622,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"nosql-document\"] > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>The retrieval shape for semantic search.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
               "a[href$=\"vector\"]"
             ]
@@ -16979,7 +17662,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>The retrieval shape for semantic search.</span>",
+            "html": "<span>Find what means the same thing, not only what uses the same words.</span>",
             "target": [
               "a[href$=\"vector\"] > span:nth-child(3)"
             ]
@@ -16999,27 +17682,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"vector\"] > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>A short starting point for understanding Graph.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
               "a[href$=\"graph\"]"
             ]
@@ -17059,7 +17722,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding Graph.</span>",
+            "html": "<span>Use a graph when the connections are the product.</span>",
             "target": [
               "a[href$=\"graph\"] > span:nth-child(3)"
             ]
@@ -17079,27 +17742,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"graph\"] > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>A short starting point for understanding ORM vs raw SQL.</span><span class=\"draft-chip\">draft</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"]"
             ]
@@ -17139,7 +17782,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding ORM vs raw SQL.</span>",
+            "html": "<span>Use the abstraction until the query needs to speak for itself.</span>",
             "target": [
               "a[href$=\"orm-vs-raw-sql\"] > span:nth-child(3)"
             ]
@@ -17159,27 +17802,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > .draft-chip"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
             ]
@@ -17219,29 +17842,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>A short starting point for understanding Hosted vs self-hosted.</span>",
+            "html": "<span>Pay with money or pay with operational attention.</span>",
             "target": [
               ".landmark-card:nth-child(6) > span:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              ".landmark-card:nth-child(6) > .draft-chip"
             ]
           },
           {
@@ -17279,7 +17882,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"landmark-detail-header\"><div><p class=\"region-kicker\">Landmark detail</p><h2 id=\"landmark-title\">SQL</h2></div><span class=\"draft-chip\">draft</span></header>",
+            "html": "<header class=\"landmark-detail-header\"><div><p class=\"region-kicker\">Landmark detail</p><h2 id=\"landmark-title\">SQL</h2></div></header>",
             "target": [
               ".landmark-detail-header"
             ]
@@ -17342,26 +17945,6 @@
             "html": "<h2 id=\"landmark-title\">SQL</h2>",
             "target": [
               "#landmark-title"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<span class=\"draft-chip\">draft</span>",
-            "target": [
-              ".landmark-detail-header > .draft-chip"
             ]
           },
           {
@@ -17519,7 +18102,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section><h3>Definition</h3><p>SQL stores durable records in related tables and is a strong default for transactional applications.</p></section>",
+            "html": "<section><h3>Definition</h3><p>SQL databases store durable records in tables with explicit relationships. They are a strong default when your app needs transactions, constraints, and flexible queries across connected data.</p></section>",
             "target": [
               "section:nth-child(5)"
             ]
@@ -17559,7 +18142,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>SQL stores durable records in related tables and is a strong default for transactional applications.</p>",
+            "html": "<p>SQL databases store durable records in tables with explicit relationships. They are a strong default when your app needs transactions, constraints, and flexible queries across connected data.</p>",
             "target": [
               "section:nth-child(5) > p"
             ]
@@ -17579,7 +18162,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section><h3>When to use it</h3><ul><li>You need related records and transactions.</li><li>You need predictable querying and migrations.</li></ul></section>",
+            "html": "<section>",
             "target": [
               "section:nth-child(6)"
             ]
@@ -17619,7 +18202,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul><li>You need related records and transactions.</li><li>You need predictable querying and migrations.</li></ul>",
+            "html": "<ul><li>You need related records such as users, teams, projects, and invoices.</li><li>Several writes must succeed or fail together.</li><li>You need reporting or filters that cross multiple kinds of records.</li><li>Your data rules matter more than accepting any document shape.</li></ul>",
             "target": [
               "section:nth-child(6) > ul"
             ]
@@ -17639,7 +18222,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>You need related records and transactions.</li>",
+            "html": "<li>You need related records such as users, teams, projects, and invoices.</li>",
             "target": [
               "section:nth-child(6) > ul > li:nth-child(1)"
             ]
@@ -17659,7 +18242,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>You need predictable querying and migrations.</li>",
+            "html": "<li>Several writes must succeed or fail together.</li>",
             "target": [
               "section:nth-child(6) > ul > li:nth-child(2)"
             ]
@@ -17679,7 +18262,47 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"tradeoff-grid\"><div><h3>Pros</h3><ul><li>Mature relational model</li><li>Strong transactional guarantees</li></ul></div><div><h3>Cons</h3><ul><li>Schema changes require migrations</li><li>Operations still need care</li></ul></div></section>",
+            "html": "<li>You need reporting or filters that cross multiple kinds of records.</li>",
+            "target": [
+              "section:nth-child(6) > ul > li:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li>Your data rules matter more than accepting any document shape.</li>",
+            "target": [
+              "li:nth-child(4)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section class=\"tradeoff-grid\">",
             "target": [
               ".tradeoff-grid"
             ]
@@ -17699,7 +18322,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div><h3>Pros</h3><ul><li>Mature relational model</li><li>Strong transactional guarantees</li></ul></div>",
+            "html": "<div><h3>Pros</h3><ul><li>Transactions protect multi-step changes.</li><li>Constraints catch invalid data at the database boundary.</li><li>Joins support questions you did not predict when designing the schema.</li></ul></div>",
             "target": [
               ".tradeoff-grid > div:nth-child(1)"
             ]
@@ -17739,7 +18362,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul><li>Mature relational model</li><li>Strong transactional guarantees</li></ul>",
+            "html": "<ul><li>Transactions protect multi-step changes.</li><li>Constraints catch invalid data at the database boundary.</li><li>Joins support questions you did not predict when designing the schema.</li></ul>",
             "target": [
               "div:nth-child(1) > ul"
             ]
@@ -17759,7 +18382,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Mature relational model</li>",
+            "html": "<li>Transactions protect multi-step changes.</li>",
             "target": [
               "div:nth-child(1) > ul > li:nth-child(1)"
             ]
@@ -17779,7 +18402,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Strong transactional guarantees</li>",
+            "html": "<li>Constraints catch invalid data at the database boundary.</li>",
             "target": [
               "div:nth-child(1) > ul > li:nth-child(2)"
             ]
@@ -17799,7 +18422,27 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div><h3>Cons</h3><ul><li>Schema changes require migrations</li><li>Operations still need care</li></ul></div>",
+            "html": "<li>Joins support questions you did not predict when designing the schema.</li>",
+            "target": [
+              "div:nth-child(1) > ul > li:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div><h3>Cons</h3><ul><li>Schema changes require reviewed migrations.</li><li>Indexes and slow queries still need deliberate maintenance.</li></ul></div>",
             "target": [
               ".tradeoff-grid > div:nth-child(2)"
             ]
@@ -17839,7 +18482,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul><li>Schema changes require migrations</li><li>Operations still need care</li></ul>",
+            "html": "<ul><li>Schema changes require reviewed migrations.</li><li>Indexes and slow queries still need deliberate maintenance.</li></ul>",
             "target": [
               "div:nth-child(2) > ul"
             ]
@@ -17859,7 +18502,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Schema changes require migrations</li>",
+            "html": "<li>Schema changes require reviewed migrations.</li>",
             "target": [
               "div:nth-child(2) > ul > li:nth-child(1)"
             ]
@@ -17879,7 +18522,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Operations still need care</li>",
+            "html": "<li>Indexes and slow queries still need deliberate maintenance.</li>",
             "target": [
               "div:nth-child(2) > ul > li:nth-child(2)"
             ]
@@ -17899,7 +18542,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section><h3>Example</h3><p>A client portal relates users, companies, projects, invoices, and messages.</p></section>",
+            "html": "<section><h3>Example</h3><p>A client portal relates users, companies, projects, invoices, and messages. Tell your agent to model those relationships in PostgreSQL, enforce ownership with constraints, and wrap invoice creation in a transaction.</p></section>",
             "target": [
               "section:nth-child(8)"
             ]
@@ -17939,7 +18582,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>A client portal relates users, companies, projects, invoices, and messages.</p>",
+            "html": "<p>A client portal relates users, companies, projects, invoices, and messages. Tell your agent to model those relationships in PostgreSQL, enforce ownership with constraints, and wrap invoice creation in a transaction.</p>",
             "target": [
               "section:nth-child(8) > p"
             ]
@@ -17959,7 +18602,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section><h3>Gotchas</h3><ul><li>Keep database credentials server-side.</li><li>Apply reviewed migrations once users depend on the data.</li></ul></section>",
+            "html": "<section><h3>Gotchas</h3><ul><li>Keep database credentials and privileged queries server-side.</li><li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li><li>Add indexes from measured query patterns, not guesses.</li></ul></section>",
             "target": [
               "section:nth-child(9)"
             ]
@@ -17999,7 +18642,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul><li>Keep database credentials server-side.</li><li>Apply reviewed migrations once users depend on the data.</li></ul>",
+            "html": "<ul><li>Keep database credentials and privileged queries server-side.</li><li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li><li>Add indexes from measured query patterns, not guesses.</li></ul>",
             "target": [
               "section:nth-child(9) > ul"
             ]
@@ -18019,7 +18662,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Keep database credentials server-side.</li>",
+            "html": "<li>Keep database credentials and privileged queries server-side.</li>",
             "target": [
               "section:nth-child(9) > ul > li:nth-child(1)"
             ]
@@ -18039,7 +18682,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li>Apply reviewed migrations once users depend on the data.</li>",
+            "html": "<li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li>",
             "target": [
               "section:nth-child(9) > ul > li:nth-child(2)"
             ]
@@ -18059,7 +18702,27 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section><h3>Vibe coder default</h3><p>Start with PostgreSQL for relational application data, then add abstractions only when they help.</p></section>",
+            "html": "<li>Add indexes from measured query patterns, not guesses.</li>",
+            "target": [
+              "section:nth-child(9) > ul > li:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section><h3>Vibe coder default</h3><p>Start with PostgreSQL for application records, and keep it until a measured need proves another store fits better.</p></section>",
             "target": [
               "section:nth-child(10)"
             ]
@@ -18099,7 +18762,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>Start with PostgreSQL for relational application data, then add abstractions only when they help.</p>",
+            "html": "<p>Start with PostgreSQL for application records, and keep it until a measured need proves another store fits better.</p>",
             "target": [
               "section:nth-child(10) > p"
             ]

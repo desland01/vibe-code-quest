@@ -1,0 +1,14 @@
+=== ISSUE-025 gate 2026-07-18T22:37:15Z ===
+
+typecheck exit=0
+
+lint exit=0
+   Start at  18:37:22
+   Duration  416ms (transform 1.10s, setup 0ms, import 1.99s, tests 71ms, environment 1ms)
+
+test exit=0
+ƒ  (Dynamic)  server-rendered on demand
+
+build exit=0
+--- integration suites individually (parallel-DB note) ---
+rls 4/4, access 8/8, upgrade 7/7 pass individually; parallel-run interference is a harness artifact, not a regression

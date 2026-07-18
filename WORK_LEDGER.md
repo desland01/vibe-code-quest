@@ -30,6 +30,8 @@
 
 ## Mission 2026-07-10-code-tutor-v1 execution
 
+- 2026-07-18: ISSUE-025 implemented landmark/profile-anchored guide chat, deterministic bounded Opus escalation with persisted decisions, Sonnet/Haiku gateway behavior, canonical offline fallback and signed-drill runtime coverage.
+
 - 2026-07-18: ISSUE-024 implemented deterministic canonical overviews and quiz grading, a bounded access-gated lesson renderer with graceful fallback, profile-adaptive defaults, accessible URL-backed format switching, analytics stubs, and unit/e2e coverage.
 
 - 2026-07-18: ISSUE-023 implemented a persisted, server-owned five-step onboarding profile state machine with deterministic access/gateway fallbacks, a non-blocking accessible map chat panel, and unit/e2e coverage for skip, unlock, malformed output, injection, denial, and token guards.

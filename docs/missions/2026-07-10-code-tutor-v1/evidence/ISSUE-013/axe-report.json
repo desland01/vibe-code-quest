@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T22:22:17.286Z",
+    "timestamp": "2026-07-18T22:35:24.776Z",
     "url": "http://localhost:3100/",
     "toolOptions": {
       "reporter": "v1"
@@ -7281,7 +7281,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T22:22:18.182Z",
+    "timestamp": "2026-07-18T22:35:25.568Z",
     "url": "http://localhost:3100/map/databases",
     "toolOptions": {
       "reporter": "v1"
@@ -11461,7 +11461,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T22:22:19.275Z",
+    "timestamp": "2026-07-18T22:35:26.769Z",
     "url": "http://localhost:3100/map/databases/sql",
     "toolOptions": {
       "reporter": "v1"
@@ -12685,6 +12685,72 @@
               }
             ],
             "impact": null,
+            "html": "<aside aria-label=\"AI guide\" data-testid=\"guide-chat\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button></aside>",
+            "target": [
+              "aside"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -12869,6 +12935,42 @@
             "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
             "target": [
               "section[aria-labelledby=\"overview-heading\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<aside aria-label=\"AI guide\" data-testid=\"guide-chat\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button></aside>",
+            "target": [
+              "aside"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
             ]
           },
           {
@@ -13373,6 +13475,42 @@
               }
             ],
             "impact": null,
+            "html": "<aside aria-label=\"AI guide\" data-testid=\"guide-chat\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button></aside>",
+            "target": [
+              "aside"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -13760,6 +13898,70 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<aside aria-label=\"AI guide\" data-testid=\"guide-chat\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button></aside>",
+            "target": [
+              "aside"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -13892,6 +14094,42 @@
             "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
             "target": [
               "section[aria-labelledby=\"overview-heading\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<aside aria-label=\"AI guide\" data-testid=\"guide-chat\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button></aside>",
+            "target": [
+              "aside"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
             ]
           },
           {
@@ -14263,6 +14501,24 @@
             "html": "<button type=\"button\" class=\"\">Quiz</button>",
             "target": [
               "button[type=\"button\"]:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has inner text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
             ]
           }
         ]
@@ -15090,6 +15346,31 @@
             "target": [
               "section[aria-labelledby=\"overview-heading\"] > p"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#000000",
+                  "bgColor": "#efefef",
+                  "contrastRatio": 18.26,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 18.26"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
+            ]
           }
         ]
       },
@@ -15625,6 +15906,27 @@
             "target": [
               "section[aria-labelledby=\"overview-heading\"]"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "complementary",
+                  "accessibleText": "ai guide"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<aside aria-label=\"AI guide\" data-testid=\"guide-chat\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button></aside>",
+            "target": [
+              "aside"
+            ]
           }
         ]
       },
@@ -15999,6 +16301,24 @@
             "html": "<button type=\"button\" class=\"\">Quiz</button>",
             "target": [
               "button[type=\"button\"]:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
             ]
           }
         ]
@@ -16852,6 +17172,46 @@
             "html": "<p>",
             "target": [
               "section[aria-labelledby=\"overview-heading\"] > p"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<aside aria-label=\"AI guide\" data-testid=\"guide-chat\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button></aside>",
+            "target": [
+              "aside"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
+            "target": [
+              "button[aria-controls=\"guide-panel\"]"
             ]
           },
           {

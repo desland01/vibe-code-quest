@@ -78,6 +78,17 @@ describe('AI Gateway transport', () => {
     ]);
   });
 
+  it('uses Opus for advisor tier and still falls back to Haiku on 429', async () => {
+    const transport = vi.fn<GatewayTransport>()
+      .mockRejectedValueOnce(httpError(429))
+      .mockResolvedValueOnce({ text: 'Advisor fallback' });
+    await generateWithGateway({ surface: 'guide', tier: 'advisor', prompt: 'Review', maxOutputTokens: 200, transport });
+    expect(transport.mock.calls.map(([call]) => call.model)).toEqual([
+      AI_MODELS.advisor,
+      AI_MODELS.fallback,
+    ]);
+  });
+
   it('stops after the fallback is also rate limited', async () => {
     const transport = vi.fn<GatewayTransport>().mockRejectedValue(httpError(429));
     await expect(request(transport)).resolves.toEqual({ kind: 'gateway_down' });

@@ -31,6 +31,7 @@ export type GatewayTransport = (params: {
 
 export type GenerateWithGatewayParams = {
   surface: AiSurface;
+  tier?: 'executor' | 'advisor';
   prompt: string;
   system?: string;
   maxOutputTokens: number;
@@ -122,7 +123,9 @@ export async function generateWithGateway(
 
   try {
     if (drill === 'force_429') throw Object.assign(new Error('drill rate limit'), { statusCode: 429 });
-    const result = await callTransport(AI_MODELS.executor);
+    const result = await callTransport(
+      params.tier === 'advisor' ? AI_MODELS.advisor : AI_MODELS.executor
+    );
     return { kind: 'ok', text: result.text, usage: usageOf(result) };
   } catch (error) {
     if (!isRateLimited(error)) return { kind: 'gateway_down' };

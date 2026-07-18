@@ -7,6 +7,7 @@ import { LessonFormat } from './LessonFormat';
 import { OverviewFormat } from './OverviewFormat';
 import { QuizFormat } from './QuizFormat';
 import { recordClientEvent } from './clientEvents';
+import { GuideChat } from './GuideChat';
 
 export function LandmarkView({ landmark, regionId, format }: { landmark: Landmark; regionId: string; format: LandmarkFormat }) {
   useEffect(() => { recordClientEvent('landmark_open', { regionId, landmarkId: landmark.id, format }); }, [regionId, landmark.id, format]);
@@ -16,5 +17,6 @@ export function LandmarkView({ landmark, regionId, format }: { landmark: Landmar
     {format === 'overview' && <OverviewFormat landmark={landmark} />}
     {format === 'lesson' && <><OverviewFormat landmark={landmark} /><LessonFormat landmark={landmark} regionId={regionId} /></>}
     {format === 'quiz' && <QuizFormat landmark={landmark} regionId={regionId} />}
+    <GuideChat landmark={landmark} regionId={regionId} />
   </article>;
 }

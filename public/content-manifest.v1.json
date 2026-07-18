@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T20:54:36.572Z",
+  "generatedAt": "2026-07-18T21:01:21.741Z",
   "regions": [
     {
       "id": "languages",
@@ -2338,200 +2338,332 @@
         {
           "id": "design-tokens",
           "title": "Design tokens",
-          "draft": true,
-          "hook": "A short starting point for understanding Design tokens.",
-          "definition": "Tokens name recurring visual decisions such as color roles, spacing steps, and radii.",
+          "draft": false,
+          "hook": "Name visual decisions before screens multiply.",
+          "definition": "Design tokens give reusable names to choices such as color roles, spacing steps, type sizes, and radii. They turn scattered values into a small system your team and agent can apply consistently.",
           "when_to_use": [
-            "Use this lesson when Design tokens affects a product or implementation decision."
+            "You need several screens to share the same visual language.",
+            "Your agent keeps inventing slightly different colors, gaps, or corner radii.",
+            "You need light and dark themes without rewriting every component.",
+            "You expect a brand change to affect many interface surfaces."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Named roles make design decisions explicit and reusable.",
+              "Central values keep generated screens visually coherent.",
+              "Theme and brand changes can update many components together."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "A token set needs naming rules and ongoing ownership.",
+              "Too many near-duplicate tokens recreate the inconsistency they should remove."
             ]
           },
-          "example": "A builder asks an agent to explain how Design tokens changes the proposed implementation.",
+          "example": "A scheduling app uses surface, text, accent, danger, spacing, and radius tokens across its calendar and booking flow. Tell your agent to use existing semantic tokens and propose any missing role before adding a raw value.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Name tokens by purpose, not by a value such as blue-500 that may later change.",
+            "Restrict your agent from adding one-off colors or spacing values without review.",
+            "Verify every theme keeps readable contrast and clear interactive states."
           ],
-          "vibe_coder_default": "Ask the agent to state its Design tokens assumptions and verify them before shipping.",
+          "vibe_coder_default": "Define a small semantic token layer with CSS variables, map it into Tailwind CSS, and add a token only when a repeated role is clear.",
           "quiz": {
-            "question": "What is the safest current use of this Design tokens draft?",
+            "question": "Your agent needs a new card border color. What should it do first?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Use or propose a semantic border token",
+              "Add the closest hex value inside the card",
+              "Copy a color from an unrelated chart"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Use or propose a semantic border token",
+            "explanation": "A semantic token records the border role and keeps that decision consistent across components and themes."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://m3.material.io/foundations/design-tokens/overview",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://tailwindcss.com/docs/theme",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://spectrum.adobe.com/page/design-tokens/",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "component-libraries",
           "title": "Component libraries",
-          "draft": true,
-          "hook": "A short starting point for understanding Component libraries.",
-          "definition": "A component library packages repeated interface behavior and appearance into maintained building blocks.",
+          "draft": false,
+          "hook": "Reuse behavior, not only matching pixels.",
+          "definition": "A component library packages repeated interface appearance and behavior into maintained building blocks. It gives your agent a constrained vocabulary for creating coherent, accessible screens.",
           "when_to_use": [
-            "Use this lesson when Component libraries affects a product or implementation decision."
+            "You are building forms, dialogs, menus, and other patterns across several screens.",
+            "Your agent repeatedly rebuilds the same controls with different behavior.",
+            "You need accessible interaction details your team cannot maintain from scratch.",
+            "You want product-specific styling without inventing every primitive."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Shared components reduce visual and behavioral drift.",
+              "Maintained primitives cover difficult keyboard and focus interactions.",
+              "A known component vocabulary makes agent instructions more precise."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Upgrades and local customizations require deliberate maintenance.",
+              "A library can constrain unusual interactions or add code you do not need."
             ]
           },
-          "example": "A builder asks an agent to explain how Component libraries changes the proposed implementation.",
+          "example": "A team dashboard repeats buttons, forms, tables, dialogs, and menus across account and billing screens. Tell your agent to compose those screens from the project library and extend a primitive only after checking its existing variants.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Review generated wrappers so they preserve keyboard behavior, focus management, and ARIA attributes.",
+            "Avoid copying a component into several local variants that will drift apart.",
+            "Test the library in your supported browsers and assistive technology paths."
           ],
-          "vibe_coder_default": "Ask the agent to state its Component libraries assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with shadcn/ui components backed by Radix primitives and Tailwind CSS when you want owned source and flexible styling; leave that default when another maintained library already fits your stack.",
           "quiz": {
-            "question": "What is the safest current use of this Component libraries draft?",
+            "question": "An agent needs a confirmation dialog already covered by your library. What is the strongest direction?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Compose the maintained dialog primitive and its approved variants",
+              "Build a new div-based modal inside the page",
+              "Copy the markup from a different application"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Compose the maintained dialog primitive and its approved variants",
+            "explanation": "The maintained primitive preserves shared behavior and gives the team one place to improve the pattern."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://ui.shadcn.com/docs",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.radix-ui.com/primitives/docs/overview/introduction",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://tailwindcss.com/docs/styling-with-utility-classes",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "layout-and-spacing-rhythm",
           "title": "Layout and spacing rhythm",
-          "draft": true,
-          "hook": "A short starting point for understanding Layout and spacing rhythm.",
-          "definition": "Layout rules create consistent alignment, density, and responsive structure across screens.",
+          "draft": false,
+          "hook": "Good spacing is a system, not a hunch.",
+          "definition": "Layout sets alignment, width, flow, and responsive structure. A spacing rhythm uses a limited scale so related elements feel grouped and screens feel intentionally composed.",
           "when_to_use": [
-            "Use this lesson when Layout and spacing rhythm affects a product or implementation decision."
+            "Your screens look locally plausible but inconsistent when viewed together.",
+            "You need content to adapt across phone, tablet, and desktop widths.",
+            "Dense workflows need clear grouping without excessive borders.",
+            "Your agent chooses a new margin for every element."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "A spacing scale creates repeatable visual relationships.",
+              "Shared containers and grids align unrelated screens.",
+              "Responsive rules prevent layout choices from depending on one screenshot."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Rigid grids can waste space in dense or unusual workflows.",
+              "Responsive behavior needs testing at content extremes, not only standard breakpoints."
             ]
           },
-          "example": "A builder asks an agent to explain how Layout and spacing rhythm changes the proposed implementation.",
+          "example": "An operations dashboard has a page header, filters, summary cards, and a results table. Tell your agent to use the shared container, a defined spacing scale, and content-driven responsive changes instead of inventing margins for each block.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Test long labels, empty states, validation messages, and zoom before accepting a layout.",
+            "Require your agent to reuse spacing tokens and explain any exception.",
+            "Check narrow widths between named breakpoints where wrapping often exposes failures."
           ],
-          "vibe_coder_default": "Ask the agent to state its Layout and spacing rhythm assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use a small Tailwind CSS spacing scale, shared page containers, and mobile-first layout rules; add exceptions only for a demonstrated content need.",
           "quiz": {
-            "question": "What is the safest current use of this Layout and spacing rhythm draft?",
+            "question": "Generated screens use many close but different gaps. What should you change?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Map relationships to a shared spacing scale",
+              "Round every gap to the nearest even pixel",
+              "Keep each gap because its screen looks acceptable"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Map relationships to a shared spacing scale",
+            "explanation": "A shared scale turns spacing into consistent relationships instead of isolated visual guesses."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://tailwindcss.com/docs/padding",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://tailwindcss.com/docs/responsive-design",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://m3.material.io/foundations/adaptive-design/overview",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "typography-and-hierarchy",
           "title": "Typography and hierarchy",
-          "draft": true,
-          "hook": "A short starting point for understanding Typography and hierarchy.",
-          "definition": "Type scale, weight, line length, and contrast communicate importance and grouping.",
+          "draft": false,
+          "hook": "Type tells the eye where to begin.",
+          "definition": "Typography controls size, weight, line height, measure, and contrast. A clear hierarchy helps people scan importance and relationships before they read every word.",
           "when_to_use": [
-            "Use this lesson when Typography and hierarchy affects a product or implementation decision."
+            "Users must scan dashboards, settings, or long-form content quickly.",
+            "Your agent uses bold text and large sizes without a repeatable hierarchy.",
+            "Different screens assign different styles to the same content role.",
+            "You need readable text across viewport sizes and zoom levels."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "A type scale makes content roles recognizable across screens.",
+              "Consistent line height and measure improve reading comfort.",
+              "Defined roles reduce arbitrary styling in generated interfaces."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Too many type roles weaken hierarchy and increase maintenance.",
+              "Brand fonts can add loading cost and may render poorly at interface sizes."
             ]
           },
-          "example": "A builder asks an agent to explain how Typography and hierarchy changes the proposed implementation.",
+          "example": "A knowledge base needs article titles, section headings, body copy, metadata, and code notes. Tell your agent to assign each role from the system type scale, limit body measure, and preserve semantic heading order.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Keep semantic heading levels in document order instead of choosing them for appearance.",
+            "Verify text contrast, zoom behavior, and fallback fonts before shipping.",
+            "Stop your agent from creating a new text style for one isolated label."
           ],
-          "vibe_coder_default": "Ask the agent to state its Typography and hierarchy assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use a restrained system-font type scale with named roles, readable line heights, and semantic HTML; introduce a brand font only when its value offsets loading and rendering costs.",
           "quiz": {
-            "question": "What is the safest current use of this Typography and hierarchy draft?",
+            "question": "A visually small section title follows an h2. Which markup should it use?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "An h3 styled with the appropriate type role",
+              "A paragraph made bold",
+              "An h5 because its browser default is smaller"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "An h3 styled with the appropriate type role",
+            "explanation": "Heading markup expresses document structure, while the type role controls its visual size."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://www.w3.org/WAI/tutorials/page-structure/headings/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://m3.material.io/styles/typography/overview",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "accessibility-floor",
           "title": "Accessibility floor",
-          "draft": true,
-          "hook": "A short starting point for understanding Accessibility floor.",
-          "definition": "Semantic controls, keyboard access, focus, contrast, and reduced motion form a minimum interaction contract.",
+          "draft": false,
+          "hook": "Access is part of done.",
+          "definition": "An accessibility floor is the minimum interaction contract every screen must meet. It covers semantic controls, keyboard access, visible focus, readable contrast, useful names, and motion preferences.",
           "when_to_use": [
-            "Use this lesson when Accessibility floor affects a product or implementation decision."
+            "You are defining acceptance criteria for generated interface work.",
+            "A workflow includes forms, dialogs, menus, drag actions, or status updates.",
+            "Your product serves people using keyboards, screen readers, zoom, or reduced motion.",
+            "You need a repeatable review bar across contributors and agents."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "A shared floor catches barriers before they spread across the product.",
+              "Semantic controls work with more input and assistive technologies.",
+              "Explicit acceptance criteria make agent output easier to review."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Automated checks cannot prove a workflow is understandable or usable.",
+              "Keyboard and screen-reader testing adds time and needs practiced reviewers."
             ]
           },
-          "example": "A builder asks an agent to explain how Accessibility floor changes the proposed implementation.",
+          "example": "A booking flow uses date selection, validation, a confirmation dialog, and a live success message. Tell your agent that done means semantic controls, full keyboard completion, managed focus, named errors, and WCAG AA contrast, then verify the flow manually.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Prefer native HTML before adding ARIA roles and behavior yourself.",
+            "Test keyboard order, focus visibility, zoom, reduced motion, and screen-reader announcements.",
+            "Reject generated controls that look correct but cannot be named or operated without a pointer."
           ],
-          "vibe_coder_default": "Ask the agent to state its Accessibility floor assumptions and verify them before shipping.",
+          "vibe_coder_default": "Set WCAG 2.2 Level AA as the floor, use native HTML and maintained accessible primitives, and require automated plus manual checks in every interface definition of done.",
           "quiz": {
-            "question": "What is the safest current use of this Accessibility floor draft?",
+            "question": "An automated accessibility scan passes a new checkout flow. What remains?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Manually test the complete keyboard and assistive-technology workflow",
+              "Ship because the scan proves conformance",
+              "Remove semantic labels to reduce visual clutter"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Manually test the complete keyboard and assistive-technology workflow",
+            "explanation": "Automation catches specific rules, but it cannot establish that the complete workflow is understandable and operable."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://www.w3.org/WAI/standards-guidelines/wcag/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.w3.org/WAI/ARIA/apg/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "consistency-vs-novelty",
           "title": "Consistency vs novelty",
-          "draft": true,
-          "hook": "A short starting point for understanding Consistency vs novelty.",
-          "definition": "Routine interactions should remain predictable while a few meaningful moments can express product character.",
+          "draft": false,
+          "hook": "Spend surprise where it earns attention.",
+          "definition": "Consistency makes familiar actions predictable across your product and the wider platform. Novelty adds character, but it should serve a meaningful moment instead of making routine work harder to recognize.",
           "when_to_use": [
-            "Use this lesson when Consistency vs novelty affects a product or implementation decision."
+            "Your agent proposes custom controls for familiar actions.",
+            "You need to decide where brand expression belongs in a workflow.",
+            "Several generated screens work alone but feel like different products.",
+            "A signature moment could benefit from focused visual distinction."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Conventional controls reduce learning and recognition costs.",
+              "Consistent patterns make new screens easier to predict and review.",
+              "Selective novelty gives important moments stronger emphasis."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Too much consistency can make a product feel generic or hide key moments.",
+              "Novel interactions require more explanation, accessibility work, and testing."
             ]
           },
-          "example": "A builder asks an agent to explain how Consistency vs novelty changes the proposed implementation.",
+          "example": "A budgeting app keeps navigation, forms, and destructive confirmations conventional, then gives the monthly progress story a distinctive visual treatment. Tell your agent to reuse product patterns everywhere else and explain the user value of each proposed exception.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Keep navigation, form controls, and destructive actions recognizable before adding brand expression.",
+            "Require your agent to state what a novel pattern improves and how users recover from mistakes.",
+            "Test distinctive interactions for keyboard access, reduced motion, and comprehension."
           ],
-          "vibe_coder_default": "Ask the agent to state its Consistency vs novelty assumptions and verify them before shipping.",
+          "vibe_coder_default": "Keep routine interactions conventional and consistent with your component library; spend novelty on one or two product-defining moments that survive accessibility and usability review.",
           "quiz": {
-            "question": "What is the safest current use of this Consistency vs novelty draft?",
+            "question": "Where is a novel interaction most defensible?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "A product-defining insight with a tested conventional fallback",
+              "The primary navigation on every screen",
+              "A destructive confirmation users must decode quickly"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "A product-defining insight with a tested conventional fallback",
+            "explanation": "Novelty earns its cost when it strengthens a meaningful moment without blocking a familiar, accessible path."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://www.w3.org/WAI/WCAG22/Understanding/consistent-navigation.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.w3.org/WAI/WCAG22/Understanding/consistent-identification.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://m3.material.io/foundations/interaction/states/overview",
+              "checked": "2026-07-17"
+            }
+          ]
         }
       ]
     }

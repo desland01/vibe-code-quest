@@ -1,0 +1,14 @@
+=== ISSUE-021 gate 2026-07-18T21:01:16Z ===
+
+typecheck exit=0
+
+lint exit=0
+      Tests  34 passed | 19 skipped (53)
+   Start at  17:01:20
+   Duration  379ms (transform 632ms, setup 0ms, import 936ms, tests 44ms, environment 0ms)
+
+test exit=0
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+build exit=0

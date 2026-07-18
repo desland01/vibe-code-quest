@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T21:01:21.741Z",
+  "generatedAt": "2026-07-18T21:09:09.554Z",
   "regions": [
     {
       "id": "languages",
@@ -1430,200 +1430,332 @@
         {
           "id": "issues-as-specs",
           "title": "Issues as executable specs",
-          "draft": true,
-          "hook": "A short starting point for understanding Issues as executable specs.",
-          "definition": "A strong issue states an outcome, boundaries, acceptance checks, and the context needed to verify completion.",
+          "draft": false,
+          "hook": "An issue is your agent’s work order.",
+          "definition": "An executable issue defines one outcome, its boundaries, and observable proof of completion. It gives your agent enough context to act while keeping you responsible for review.",
           "when_to_use": [
-            "Use this lesson when Issues as executable specs affects a product or implementation decision."
+            "You want an agent to implement a change without guessing the product goal.",
+            "Several contributors need the same definition of done.",
+            "A bug needs reproduction steps and a verifiable expected result.",
+            "You need to hand work across sessions without losing constraints."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Acceptance checks make completion observable.",
+              "Explicit boundaries reduce accidental scope growth.",
+              "Linked context survives handoffs between people and agents."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Writing useful acceptance checks takes product judgment.",
+              "Stale issues can direct an agent toward requirements that have changed."
             ]
           },
-          "example": "A builder asks an agent to explain how Issues as executable specs changes the proposed implementation.",
+          "example": "A billing issue requires a customer to download one invoice PDF from the account page. Tell your agent which route may change, which payment paths are out of scope, and which tests prove authorization and download behavior.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "State the user-visible outcome before listing implementation tasks.",
+            "Separate required acceptance checks from optional ideas.",
+            "Verify your agent’s evidence; a checked box is not proof that behavior works."
           ],
-          "vibe_coder_default": "Ask the agent to state its Issues as executable specs assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use a GitHub Issue or Linear issue with context, scope, acceptance checks, and explicit exclusions before assigning work to an agent.",
           "quiz": {
-            "question": "What is the safest current use of this Issues as executable specs draft?",
+            "question": "Which issue gives an agent the safest work order?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Add invoice downloads",
+              "Let customers download only their own invoice PDF, with authorization and route tests",
+              "Improve billing when convenient"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Let customers download only their own invoice PDF, with authorization and route tests",
+            "explanation": "A useful work order names the outcome, critical boundary, and evidence needed to verify completion."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://linear.app/docs/creating-issues",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "prd-lite",
           "title": "PRD-lite",
-          "draft": true,
-          "hook": "A short starting point for understanding PRD-lite.",
-          "definition": "A lightweight product brief aligns the user, problem, promise, constraints, and success signal.",
+          "draft": false,
+          "hook": "Shared context keeps separate issues building one product.",
+          "definition": "A PRD-lite is a short product brief covering the user, problem, promise, constraints, and success signal. It holds shared context that would become inconsistent if copied into every issue.",
           "when_to_use": [
-            "Use this lesson when PRD-lite affects a product or implementation decision."
+            "Several issues contribute to one user outcome.",
+            "Agents need stable product constraints across separate work sessions.",
+            "You need to record what success means before choosing implementation details.",
+            "Stakeholders agree on the problem but need a compact scope boundary."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "One brief keeps shared product context consistent.",
+              "A success signal exposes disagreements before implementation.",
+              "Linked issues can stay focused on their own deliverables."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "The brief becomes misleading when decisions change without an update.",
+              "Too much detail turns a lightweight anchor into a maintenance burden."
             ]
           },
-          "example": "A builder asks an agent to explain how PRD-lite changes the proposed implementation.",
+          "example": "A team is adding saved searches through separate database, API, and interface issues. Write a one-page brief naming the target user, retention goal, privacy boundary, and non-goals, then tell each agent to link its issue back to that brief.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Keep solution details out unless they are genuine constraints.",
+            "Name an owner who updates the brief when a decision changes.",
+            "Require your agent to flag conflicts between an issue and the shared brief."
           ],
-          "vibe_coder_default": "Ask the agent to state its PRD-lite assumptions and verify them before shipping.",
+          "vibe_coder_default": "Keep a one-page PRD-lite beside the work in GitHub or Linear, and link every related issue to it; expand it only when repeated ambiguity appears.",
           "quiz": {
-            "question": "What is the safest current use of this PRD-lite draft?",
+            "question": "What belongs in a PRD-lite shared across several issues?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "The user problem, constraints, non-goals, and success signal",
+              "A transcript of every planning conversation",
+              "A fixed implementation plan for every file"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "The user problem, constraints, non-goals, and success signal",
+            "explanation": "The brief preserves stable product context while each issue owns its specific implementation and evidence."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://linear.app/docs/project-overview",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://linear.app/docs/project-documents",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "vertical-slices",
           "title": "Scope as vertical slices",
-          "draft": true,
-          "hook": "A short starting point for understanding Scope as vertical slices.",
-          "definition": "A vertical slice delivers the smallest testable user outcome across every necessary layer.",
+          "draft": false,
+          "hook": "Slice by testable outcomes, not technical layers.",
+          "definition": "A vertical slice delivers a small user outcome through every layer it needs. It lets you test real behavior before agents build a collection of disconnected parts.",
           "when_to_use": [
-            "Use this lesson when Scope as vertical slices affects a product or implementation decision."
+            "You need early evidence that a feature works end to end.",
+            "Separate frontend and backend tasks could drift apart.",
+            "An uncertain workflow needs feedback before broader investment.",
+            "You want each agent assignment to end in demonstrable behavior."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Each slice produces behavior you can test and review.",
+              "Integration risks appear earlier.",
+              "User feedback can change later slices before they are built."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Thin end-to-end changes may touch several parts of the system.",
+              "Poor slicing can duplicate setup or hide necessary foundation work."
             ]
           },
-          "example": "A builder asks an agent to explain how Scope as vertical slices changes the proposed implementation.",
+          "example": "Instead of assigning database, API, and UI phases for notifications, ship one slice for an overdue-invoice email. Tell your agent to add the preference, trigger, delivery seam, and end-to-end test for that single outcome.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Define the observable user outcome before naming layers.",
+            "Keep infrastructure work tied to the first slice that needs it.",
+            "Reject agent plans that finish components without proving an integrated path."
           ],
-          "vibe_coder_default": "Ask the agent to state its Scope as vertical slices assumptions and verify them before shipping.",
+          "vibe_coder_default": "Create the smallest end-to-end slice that one user can exercise, and split it again when its acceptance proof still contains multiple outcomes.",
           "quiz": {
-            "question": "What is the safest current use of this Scope as vertical slices draft?",
+            "question": "Which plan is a vertical slice for notifications?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Build every notification database table",
+              "Build all notification screens",
+              "Let one user receive and disable an overdue-invoice email"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Let one user receive and disable an overdue-invoice email",
+            "explanation": "The chosen slice crosses the necessary layers and ends in one testable user outcome."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://agilemanifesto.org/principles.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://scrumguides.org/scrum-guide.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "dependencies-and-work-graphs",
           "title": "Dependencies and work graphs",
-          "draft": true,
-          "hook": "A short starting point for understanding Dependencies and work graphs.",
-          "definition": "A work graph makes prerequisites, parallel-safe tasks, and blockers explicit.",
+          "draft": false,
+          "hook": "The work graph tells agents what must exist first.",
+          "definition": "A work graph connects tasks through prerequisite, blocked, and related relationships. It reveals the safe execution order and which work can proceed in parallel.",
           "when_to_use": [
-            "Use this lesson when Dependencies and work graphs affects a product or implementation decision."
+            "One issue depends on a schema, contract, or decision from another.",
+            "Several agents may work concurrently without sharing a session.",
+            "A milestone has enough tasks that sequence is hard to hold in memory.",
+            "Blocked work needs a visible cause and owner."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Prerequisites prevent agents from building against missing contracts.",
+              "Parallel-safe branches of work become visible.",
+              "Blockers carry context instead of becoming silent delays."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Incorrect dependency links can serialize work unnecessarily.",
+              "The graph needs maintenance when scope or architecture changes."
             ]
           },
-          "example": "A builder asks an agent to explain how Dependencies and work graphs changes the proposed implementation.",
+          "example": "A team plans account deletion across policy, database, API, and interface work. Link the policy decision and deletion contract as prerequisites, then tell agents to start only issues whose blockers are resolved.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Link true prerequisites, not every related conversation.",
+            "Assign one owner to each blocker and record the unblock condition.",
+            "Make your agent re-read dependency outputs instead of assuming their shape."
           ],
-          "vibe_coder_default": "Ask the agent to state its Dependencies and work graphs assumptions and verify them before shipping.",
+          "vibe_coder_default": "Model prerequisites with blocked-by links in Linear or GitHub Issues, then assign agents only from the unblocked edge of the graph.",
           "quiz": {
-            "question": "What is the safest current use of this Dependencies and work graphs draft?",
+            "question": "When should issue B be marked as blocked by issue A?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "When both issues mention the same feature",
+              "When B cannot be verified until A produces a required contract",
+              "When A was created first"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "When B cannot be verified until A produces a required contract",
+            "explanation": "A dependency represents a required input, not loose similarity or creation order."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://linear.app/docs/issue-relations",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "decision-logs",
           "title": "Decision logs",
-          "draft": true,
-          "hook": "A short starting point for understanding Decision logs.",
-          "definition": "A decision log preserves what was chosen, why, and what would trigger reconsideration.",
+          "draft": false,
+          "hook": "Record why, so future agents do not relitigate.",
+          "definition": "A decision log records a consequential choice, its context, status, and consequences. An architecture decision record, or ADR, gives future contributors a durable reason behind the current design.",
           "when_to_use": [
-            "Use this lesson when Decision logs affects a product or implementation decision."
+            "A technical choice affects several issues or future maintenance.",
+            "The team rejected plausible alternatives for reasons that may be forgotten.",
+            "An agent will encounter an unusual constraint and may try to remove it.",
+            "You need a clear trigger for reconsidering a settled choice."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Future agents can distinguish constraints from accidents.",
+              "Recorded consequences make tradeoffs reviewable.",
+              "A superseded status preserves history without pretending the choice is current."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Trivial decisions can create noisy documentation.",
+              "Unmaintained status leaves readers unsure which decision governs."
             ]
           },
-          "example": "A builder asks an agent to explain how Decision logs changes the proposed implementation.",
+          "example": "A team chooses PostgreSQL row-level security instead of application-only filters for tenant isolation. Record the threat boundary, alternatives, consequences, and replacement trigger, then link the ADR from every authorization issue.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Record the decision and rationale, not a meeting transcript.",
+            "Mark replaced decisions as superseded and link the new record.",
+            "Tell your agent to cite governing ADRs before proposing an architectural reversal."
           ],
-          "vibe_coder_default": "Ask the agent to state its Decision logs assumptions and verify them before shipping.",
+          "vibe_coder_default": "Keep short numbered ADRs in the repository for choices that constrain future work, and use a new ADR to supersede an old one.",
           "quiz": {
-            "question": "What is the safest current use of this Decision logs draft?",
+            "question": "Which change most deserves an ADR?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Renaming a local variable",
+              "Choosing the tenant-isolation boundary used across the product",
+              "Fixing a typo in a button"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Choosing the tenant-isolation boundary used across the product",
+            "explanation": "A durable, cross-cutting choice needs context and consequences that future contributors can recover."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://adr.github.io/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://github.com/joelparkerhenderson/architecture-decision-record",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/repositories/working-with-files/managing-files/creating-new-files",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "backlog-vs-now",
           "title": "Backlog vs now",
-          "draft": true,
-          "hook": "A short starting point for understanding Backlog vs now.",
-          "definition": "A backlog preserves possibilities while a small active queue keeps current execution focused.",
+          "draft": false,
+          "hook": "Generated ideas are not committed product scope.",
+          "definition": "A backlog preserves possible work, while a small active queue represents current commitment. Keeping them separate stops agent-generated suggestions from silently becoming the product plan.",
           "when_to_use": [
-            "Use this lesson when Backlog vs now affects a product or implementation decision."
+            "Agent reviews produce more ideas than the current milestone can absorb.",
+            "A team needs one visible answer to what should happen next.",
+            "Urgent fixes compete with planned product work.",
+            "Old backlog items need periodic validation or removal."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "A small active queue keeps attention on current outcomes.",
+              "The backlog preserves ideas without promising delivery.",
+              "Explicit promotion makes scope changes visible."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Backlog review requires recurring product judgment.",
+              "A strict queue can delay useful discoveries unless urgent work has a clear path."
             ]
           },
-          "example": "A builder asks an agent to explain how Backlog vs now changes the proposed implementation.",
+          "example": "An agent reviewing checkout proposes coupons, gift cards, and tax reports during a refund fix. Keep those ideas in the backlog, and tell the agent that only the verified refund path belongs in the active milestone.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Require an explicit owner decision before promoting generated ideas.",
+            "Limit active work and finish or remove blocked items before adding more.",
+            "Archive stale backlog entries instead of treating age as priority."
           ],
-          "vibe_coder_default": "Ask the agent to state its Backlog vs now assumptions and verify them before shipping.",
+          "vibe_coder_default": "Keep ideas in a Linear or GitHub backlog and maintain a deliberately small Now view; promote work only with an owner, outcome, and acceptance checks.",
           "quiz": {
-            "question": "What is the safest current use of this Backlog vs now draft?",
+            "question": "What should happen when an agent suggests three adjacent features during a focused fix?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Add all three to the active milestone",
+              "Discard every suggestion immediately",
+              "Capture them in the backlog and keep the current queue unchanged until review"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Capture them in the backlog and keep the current queue unchanged until review",
+            "explanation": "Capturing preserves useful ideas, while explicit review protects the current product commitment."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://linear.app/docs/triage",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://scrumguides.org/scrum-guide.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/issues/planning-and-tracking-with-projects/customizing-views-in-your-project",
+              "checked": "2026-07-17"
+            }
+          ]
         }
       ]
     },

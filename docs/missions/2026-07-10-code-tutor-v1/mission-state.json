@@ -414,7 +414,7 @@
       "status": "complete",
       "started_at": "2026-07-18T23:50:00Z",
       "worker": "codex gpt-5.6-sol authoring + orchestrator Pixi-crash fix; orchestrator (Opus 4.8): e2e debug, validation",
-      "commit": "pending",
+      "commit": "6f2928e",
       "evidence": [
         "evidence/ISSUE-026/VAL-043-e2e.txt",
         "evidence/ISSUE-026/VAL-001-gate.txt",

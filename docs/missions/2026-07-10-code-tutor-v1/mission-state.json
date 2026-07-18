@@ -318,7 +318,7 @@
       "status": "complete",
       "started_at": "2026-07-18T17:26:00Z",
       "worker": "codex gpt-5.6-sol authoring; orchestrator (Opus 4.8): URL verification (16, 1 dead link fixed), high-accuracy content review, deploy",
-      "commit": "pending",
+      "commit": "5d58221",
       "evidence": [
         "../../content/reviews/security.md",
         "evidence/ISSUE-020/VAL-001-gate.txt",

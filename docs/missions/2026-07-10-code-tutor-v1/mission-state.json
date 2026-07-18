@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-18T16:55:00Z",
+  "updated_at": "2026-07-18T17:10:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -280,6 +280,22 @@
       "completed_at": "2026-07-18T16:55:00Z",
       "validator": "orchestrator accuracy/voice review recorded; gate green; live on preview",
       "notes": "AI Types authored; concepts precise, agent/RAG framed honestly w/ security posture; 15/15 sources verified."
+    },
+    {
+      "issue": "ISSUE-018",
+      "status": "complete",
+      "started_at": "2026-07-18T16:56:00Z",
+      "worker": "codex gpt-5.6-sol authoring; orchestrator (Opus 4.8): URL verification (19/19), content review, deploy",
+      "commit": "pending",
+      "evidence": [
+        "../../content/reviews/git.md",
+        "evidence/ISSUE-018/VAL-001-gate.txt",
+        "evidence/ISSUE-018/preview-git.png",
+        "handoffs/ISSUE-018.md"
+      ],
+      "completed_at": "2026-07-18T17:10:00Z",
+      "validator": "orchestrator accuracy/voice review recorded; gate green; live on preview",
+      "notes": "Git authored for AI-assisted workflow; 19/19 sources verified; working-tree-hygiene encodes this mission's own lesson."
     }
   ],
   "artifact_paths": {

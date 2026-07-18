@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T20:36:06.075Z",
+  "generatedAt": "2026-07-18T20:42:31.165Z",
   "regions": [
     {
       "id": "languages",
@@ -1506,200 +1506,340 @@
         {
           "id": "commits-as-checkpoints",
           "title": "Commits as checkpoints",
-          "draft": true,
-          "hook": "A short starting point for understanding Commits as checkpoints.",
-          "definition": "A commit is a named, inspectable snapshot of one coherent change.",
+          "draft": false,
+          "hook": "A commit makes agent work inspectable and reversible.",
+          "definition": "A commit records a project snapshot with its parent history and a message. In an AI-assisted workflow, a focused commit gives you a boundary to inspect, test, compare, or undo.",
           "when_to_use": [
-            "Use this lesson when Commits as checkpoints affects a product or implementation decision."
+            "Your agent has completed one coherent change and its checks pass.",
+            "You want a stable point before asking an agent to attempt a risky edit.",
+            "You need to compare generated work with the last known-good state.",
+            "You want review history that explains why a change exists."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Focused snapshots make generated changes easier to review.",
+              "History provides known points for comparison and recovery.",
+              "Commit messages preserve intent beyond the current agent session."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Large mixed commits hide unrelated mistakes.",
+              "Frequent checkpoints still require tests and human review."
             ]
           },
-          "example": "A builder asks an agent to explain how Commits as checkpoints changes the proposed implementation.",
+          "example": "Your agent adds invoice reminders across a route, queue, and tests. Ask it to run the relevant checks, show the staged diff, and create one checkpoint only after you approve the scope.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Review the staged diff before committing; agents can include generated files or unrelated edits.",
+            "Keep secrets, local environment files, and credentials out of every snapshot.",
+            "Do not treat a clean commit as proof that the behavior is correct."
           ],
-          "vibe_coder_default": "Ask the agent to state its Commits as checkpoints assumptions and verify them before shipping.",
+          "vibe_coder_default": "Commit one reviewed, tested task at a time with a message that states the outcome; split unrelated agent changes first.",
           "quiz": {
-            "question": "What is the safest current use of this Commits as checkpoints draft?",
+            "question": "When should you create an agent-work checkpoint?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "After one coherent change passes review and checks",
+              "Whenever the agent pauses mid-edit",
+              "After combining several unrelated tasks"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "After one coherent change passes review and checks",
+            "explanation": "A useful checkpoint captures one understandable outcome that you can inspect and recover independently."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://git-scm.com/docs/git-commit",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "branches-as-isolation",
           "title": "Branches as isolation",
-          "draft": true,
-          "hook": "A short starting point for understanding Branches as isolation.",
-          "definition": "A branch isolates a line of work until it is ready to combine with other changes.",
+          "draft": false,
+          "hook": "Give each agent task its own line of work.",
+          "definition": "A Git branch is a movable name for one line of commit history. Separate branches isolate agent tasks so you can review, combine, or discard them without mixing unfinished work.",
           "when_to_use": [
-            "Use this lesson when Branches as isolation affects a product or implementation decision."
+            "You are starting an agent task that will change repository files.",
+            "Two tasks may proceed without depending on the same unfinished code.",
+            "You want to compare alternative implementations before choosing one.",
+            "A change needs review before it reaches the shared branch."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Tasks remain independently reviewable and discardable.",
+              "The shared branch stays stable while work is unfinished.",
+              "Alternative agent approaches can coexist for comparison."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Long-lived branches drift and become harder to combine.",
+              "Branches do not isolate uncommitted files in one working directory."
             ]
           },
-          "example": "A builder asks an agent to explain how Branches as isolation changes the proposed implementation.",
+          "example": "You need an export feature while another task repairs authentication. Create separate branches and working directories, then tell each agent its exact scope and verification command.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Start from the intended, current base branch before assigning work.",
+            "Use separate worktrees or clones for simultaneous agents; branch names alone do not separate files on disk.",
+            "Rebase or merge the current base before final review when the branch has drifted."
           ],
-          "vibe_coder_default": "Ask the agent to state its Branches as isolation assumptions and verify them before shipping.",
+          "vibe_coder_default": "Create a short-lived branch for every agent task, and pair concurrent branches with separate Git worktrees.",
           "quiz": {
-            "question": "What is the safest current use of this Branches as isolation draft?",
+            "question": "What safely isolates two agents working at the same time?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Separate branches in separate worktrees",
+              "Two branches in one shared working directory",
+              "One branch with different commit messages"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Separate branches in separate worktrees",
+            "explanation": "Branches separate histories, while worktrees also separate the files each agent edits."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://git-scm.com/docs/git-branch",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/docs/git-worktree",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "pull-requests-and-review",
           "title": "Pull requests and review",
-          "draft": true,
-          "hook": "A short starting point for understanding Pull requests and review.",
-          "definition": "A pull request presents a proposed change, its evidence, and the review conversation around it.",
+          "draft": false,
+          "hook": "Review the agent’s proposal before it becomes shared history.",
+          "definition": "A pull request proposes merging one branch into another and provides a place to review its changes. It is an evidence packet for agent work, not a guarantee that the work is safe.",
           "when_to_use": [
-            "Use this lesson when Pull requests and review affects a product or implementation decision."
+            "An agent change will affect a shared or protected branch.",
+            "You need another person to review behavior, security, or architecture.",
+            "Automated checks must run before a change can merge.",
+            "The decision needs a durable record of discussion and revisions."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Diffs and comments keep review tied to the proposed change.",
+              "Required checks can block known failures from merging.",
+              "The conversation records decisions and requested revisions."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Large pull requests overload reviewers and conceal risk.",
+              "Passing checks cannot detect every invented assumption or product mistake."
             ]
           },
-          "example": "A builder asks an agent to explain how Pull requests and review changes the proposed implementation.",
+          "example": "Your agent adds team invitations and updates authorization rules. Require a pull request that explains the threat boundary, links tests, and calls out migrations before you review the diff.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Read the changed code and test results; do not approve from the agent summary alone.",
+            "Require the author to disclose migrations, dependency changes, generated files, and unresolved risks.",
+            "Re-review changed lines after new commits arrive."
           ],
-          "vibe_coder_default": "Ask the agent to state its Pull requests and review assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use a small GitHub pull request with a clear outcome, test evidence, and required review before merging agent-produced code.",
           "quiz": {
-            "question": "What is the safest current use of this Pull requests and review draft?",
+            "question": "What is the strongest basis for approving an agent pull request?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "The reviewed diff, evidence, and passing required checks",
+              "A confident summary from the agent",
+              "A small number of changed files"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "The reviewed diff, evidence, and passing required checks",
+            "explanation": "Approval should rest on the actual change and its evidence, not the author’s confidence or diff size."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "merge-conflicts",
           "title": "Merge conflicts",
-          "draft": true,
-          "hook": "A short starting point for understanding Merge conflicts.",
-          "definition": "A merge conflict means two histories changed the same area and require an intentional combined result.",
+          "draft": false,
+          "hook": "A conflict is a design decision, not cleanup.",
+          "definition": "A merge conflict occurs when Git cannot combine competing changes automatically. You must choose a correct result, then test the combined behavior because either side may be incomplete alone.",
           "when_to_use": [
-            "Use this lesson when Merge conflicts affects a product or implementation decision."
+            "Git stops a merge or rebase and marks unmerged paths.",
+            "Two agent tasks changed the same function, schema, or configuration.",
+            "One branch renamed a file that another branch edited.",
+            "A clean automatic merge still combines related behavior from separate tasks."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Conflict markers expose changes Git cannot safely reconcile.",
+              "Resolution creates a deliberate combined result.",
+              "Frequent integration reveals incompatible assumptions early."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "A syntactically clean resolution can still break behavior.",
+              "Large or stale branches increase resolution effort and uncertainty."
             ]
           },
-          "example": "A builder asks an agent to explain how Merge conflicts changes the proposed implementation.",
+          "example": "One agent changes the account schema while another updates its API validation. Resolve the conflict from the shared contract, then rerun migration, API, and authorization tests.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Read both branches and the surrounding code before accepting either side.",
+            "Search for every conflict marker before completing the merge.",
+            "Run tests for both tasks after resolution; generated resolutions can compile while dropping behavior."
           ],
-          "vibe_coder_default": "Ask the agent to state its Merge conflicts assumptions and verify them before shipping.",
+          "vibe_coder_default": "Resolve conflicts yourself from the intended contract, ask an agent for analysis when useful, and verify the combined behavior before committing.",
           "quiz": {
-            "question": "What is the safest current use of this Merge conflicts draft?",
+            "question": "What should guide a merge-conflict resolution?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "The intended combined behavior and its tests",
+              "Whichever branch changed the file last",
+              "The version with fewer lines"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "The intended combined behavior and its tests",
+            "explanation": "Conflict resolution must preserve the product contract across both changes, not favor a mechanical side."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://git-scm.com/docs/git-merge",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/docs/git-rerere",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "working-tree-hygiene",
           "title": "Working-tree hygiene",
-          "draft": true,
-          "hook": "A short starting point for understanding Working-tree hygiene.",
-          "definition": "Working-tree state distinguishes tracked, untracked, generated, ignored, and modified project files.",
+          "draft": false,
+          "hook": "Know what is dirty before an agent touches it.",
+          "definition": "Your working tree contains checked-out files plus tracked, modified, staged, ignored, and untracked state. Inspecting that state protects existing work and keeps one agent task from absorbing another task’s changes.",
           "when_to_use": [
-            "Use this lesson when Working-tree hygiene affects a product or implementation decision."
+            "Before you give an agent permission to edit repository files.",
+            "Before switching branches, merging, rebasing, or generating a commit.",
+            "After a tool creates manifests, caches, migrations, or build output.",
+            "When several workers or sessions share a repository."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Preflight status checks reveal work that needs protection.",
+              "Explicit staging keeps commits aligned with task scope.",
+              "Ignore rules reduce noise from reproducible local artifacts."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Cleanliness checks add deliberate pauses to fast workflows.",
+              "Poor ignore rules can hide files that actually belong in history."
             ]
           },
-          "example": "A builder asks an agent to explain how Working-tree hygiene changes the proposed implementation.",
+          "example": "An agent starts a Git lesson while an untracked mission prompt already exists. Tell it to classify and preserve that file, edit only the assigned paths, and stage explicit files instead of the entire tree.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Run status before and after agent work, then explain every changed path.",
+            "Never discard, overwrite, or stash unknown changes without confirming their owner and purpose.",
+            "Review ignore rules so secrets stay untracked while required artifacts remain visible."
           ],
-          "vibe_coder_default": "Ask the agent to state its Working-tree hygiene assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start every agent task with a status check, preserve unrelated changes, use separate worktrees for concurrent tasks, and stage explicit paths.",
           "quiz": {
-            "question": "What is the safest current use of this Working-tree hygiene draft?",
+            "question": "What should an agent do after finding an unrelated untracked file?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Preserve and classify it before editing",
+              "Delete it to restore a clean tree",
+              "Include it in the next task commit"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Preserve and classify it before editing",
+            "explanation": "Unknown work may belong to another person or task, so ownership comes before cleanup or staging."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://git-scm.com/docs/git-status",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/docs/git-add",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/docs/gitignore",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/docs/git-worktree",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "revert-and-recovery",
           "title": "Revert and recovery",
-          "draft": true,
-          "hook": "A short starting point for understanding Revert and recovery.",
-          "definition": "Version-control recovery can back out bad changes or locate earlier working states without erasing history.",
+          "draft": false,
+          "hook": "Back out agent mistakes without erasing the trail.",
+          "definition": "Git offers different recovery tools for committed, staged, and working-tree changes. A revert records a new commit that reverses an earlier commit, making it the safer default for shared history.",
           "when_to_use": [
-            "Use this lesson when Revert and recovery affects a product or implementation decision."
+            "An agent commit reached a shared branch and caused a regression.",
+            "You need to restore one file from a known-good commit.",
+            "You staged the wrong changes but want to keep the files.",
+            "You need to locate the commit where working behavior changed."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Reverts preserve an auditable shared history.",
+              "Restore can target working-tree or staged file content.",
+              "Bisect narrows a regression using known good and bad commits."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Reverting dependent commits can create conflicts or partial behavior.",
+              "Restore, reset, and clean can destroy uncommitted work when misused."
             ]
           },
-          "example": "A builder asks an agent to explain how Revert and recovery changes the proposed implementation.",
+          "example": "An agent deployment changes checkout behavior and tests missed the regression. Revert the focused commit on the shared branch, verify checkout, then investigate the failure on a separate branch.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Inspect status and save valuable uncommitted work before any recovery command.",
+            "Prefer revert for published commits; avoid rewriting history others may use.",
+            "Require an exact path and source commit before letting an agent run restore or reset."
           ],
-          "vibe_coder_default": "Ask the agent to state its Revert and recovery assumptions and verify them before shipping.",
+          "vibe_coder_default": "Revert a bad shared commit, restore only named files when needed, and use destructive reset or clean commands only after explicit review.",
           "quiz": {
-            "question": "What is the safest current use of this Revert and recovery draft?",
+            "question": "How should you undo a bad commit already on a shared branch?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Create a revert commit",
+              "Hard-reset the shared branch",
+              "Delete the changed files manually"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Create a revert commit",
+            "explanation": "A revert preserves shared history while recording the inverse change for review and deployment."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://git-scm.com/docs/git-revert",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/docs/git-restore",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/docs/git-reset",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://git-scm.com/docs/git-bisect",
+              "checked": "2026-07-17"
+            }
+          ]
         }
       ]
     },

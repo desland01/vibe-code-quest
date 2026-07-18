@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T20:42:31.165Z",
+  "generatedAt": "2026-07-18T20:47:59.006Z",
   "regions": [
     {
       "id": "languages",
@@ -17,200 +17,336 @@
         {
           "id": "javascript-typescript",
           "title": "JavaScript and TypeScript",
-          "draft": true,
-          "hook": "A short starting point for understanding JavaScript and TypeScript.",
-          "definition": "JavaScript runs widely on the web, while TypeScript adds contracts that expose mismatches before runtime.",
+          "draft": false,
+          "hook": "One web runtime, with contracts when you need them.",
+          "definition": "JavaScript is the web's native programming language and also runs on servers. TypeScript adds static types, then compiles to JavaScript, helping you catch mismatched assumptions before execution.",
           "when_to_use": [
-            "Use this lesson when JavaScript and TypeScript affects a product or implementation decision."
+            "You are building an interactive web interface.",
+            "You want one language across a browser app and its server.",
+            "Your agent is changing a growing codebase with shared data shapes.",
+            "You need the broad JavaScript package ecosystem."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Runs directly in every modern browser.",
+              "TypeScript catches many interface mistakes before runtime.",
+              "One ecosystem can cover frontend, backend, and tooling."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Types do not validate untrusted runtime data.",
+              "Tooling and package choices can add substantial complexity."
             ]
           },
-          "example": "A builder asks an agent to explain how JavaScript and TypeScript changes the proposed implementation.",
+          "example": "A booking app shares appointment shapes between its React interface and API. Tell your agent to use strict TypeScript, validate incoming JSON at the API boundary, and keep browser-only code separate from server secrets.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Require runtime validation for forms, webhooks, and API responses.",
+            "Review generated asynchronous code for missing awaits and swallowed errors.",
+            "Keep secrets and privileged package calls out of browser bundles."
           ],
-          "vibe_coder_default": "Ask the agent to state its JavaScript and TypeScript assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use strict TypeScript for agent-written web apps; choose plain JavaScript only for a small script where type tooling adds more weight than safety.",
           "quiz": {
-            "question": "What is the safest current use of this JavaScript and TypeScript draft?",
+            "question": "What should protect a TypeScript API from malformed incoming JSON?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "A runtime schema at the boundary",
+              "A TypeScript interface alone",
+              "A browser console warning"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "A runtime schema at the boundary",
+            "explanation": "TypeScript checks code during development, but external data still needs validation while the app runs."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.typescriptlang.org/docs/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "python",
           "title": "Python",
-          "draft": true,
-          "hook": "A short starting point for understanding Python.",
-          "definition": "Python is a direct, library-rich language suited to scripts, data work, and many AI services.",
+          "draft": false,
+          "hook": "A practical language for data, AI, and automation.",
+          "definition": "Python is a general-purpose language designed around readable code and a large standard library. Its package ecosystem makes it a common fit for scripts, data work, AI services, and backend APIs.",
           "when_to_use": [
-            "Use this lesson when Python affects a product or implementation decision."
+            "You need a data-processing or machine-learning workflow.",
+            "You are automating files, reports, or operational tasks.",
+            "Your team already depends on Python libraries.",
+            "You need a small service around an AI or data model."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Readable syntax makes generated code easier to inspect.",
+              "A broad ecosystem supports data and AI workloads.",
+              "The standard library covers many scripting tasks."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Environment and dependency drift can break reproducibility.",
+              "Dynamic behavior can hide type errors until execution."
             ]
           },
-          "example": "A builder asks an agent to explain how Python changes the proposed implementation.",
+          "example": "A support team needs to classify exported tickets and produce a reviewed CSV. Tell your agent to use Python, pin dependencies, preserve the original rows, and add tests for missing or malformed fields.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Create an isolated environment and lock direct dependencies.",
+            "Review generated file operations before running them on valuable data.",
+            "Validate model outputs and external data instead of trusting expected shapes."
           ],
-          "vibe_coder_default": "Ask the agent to state its Python assumptions and verify them before shipping.",
+          "vibe_coder_default": "Choose Python for data, AI, and focused automation; choose TypeScript when the main product is an end-to-end web application.",
           "quiz": {
-            "question": "What is the safest current use of this Python draft?",
+            "question": "Which task most strongly favors Python as the default?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Cleaning a dataset before model evaluation",
+              "Styling a responsive landing page",
+              "Adding browser-native form behavior"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Cleaning a dataset before model evaluation",
+            "explanation": "Python has mature data tooling and keeps this kind of processing workflow direct and inspectable."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://docs.python.org/3/tutorial/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.python.org/3/library/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://packaging.python.org/en/latest/tutorials/installing-packages/",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "html-css",
           "title": "HTML and CSS",
-          "draft": true,
-          "hook": "A short starting point for understanding HTML and CSS.",
-          "definition": "HTML gives interfaces meaning and CSS controls their presentation, layout, and responsiveness.",
+          "draft": false,
+          "hook": "Structure carries meaning; styles should respect it.",
+          "definition": "HTML describes the meaning and structure of web content. CSS controls its presentation, layout, and adaptation across screens without replacing that semantic foundation.",
           "when_to_use": [
-            "Use this lesson when HTML and CSS affects a product or implementation decision."
+            "You are building any browser-based interface.",
+            "You need content that works with keyboards and assistive technology.",
+            "You need layouts that adapt across viewport sizes.",
+            "You want presentation separated from document meaning."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Semantic HTML gives browsers and assistive tools useful structure.",
+              "CSS adapts one document to many screen sizes.",
+              "Both are native web standards with no framework dependency."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "The cascade can create surprising interactions in large stylesheets.",
+              "Visual correctness requires testing across content, inputs, and viewports."
             ]
           },
-          "example": "A builder asks an agent to explain how HTML and CSS changes the proposed implementation.",
+          "example": "A service dashboard needs navigation, filters, a results table, and clear errors. Tell your agent to start with semantic landmarks and labeled controls, then add responsive CSS and test keyboard flow at narrow and wide widths.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Reject clickable divs when a button or link expresses the action.",
+            "Test focus, zoom, overflow, and reduced-motion behavior in the rendered page.",
+            "Inspect generated heading order and form labels, not only the screenshot."
           ],
-          "vibe_coder_default": "Ask the agent to state its HTML and CSS assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with semantic HTML and ordinary responsive CSS; add component abstractions only when repeated patterns justify them.",
           "quiz": {
-            "question": "What is the safest current use of this HTML and CSS draft?",
+            "question": "What should your agent establish before polishing a web page?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Semantic document structure",
+              "A large animation library",
+              "Pixel-perfect fixed widths"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Semantic document structure",
+            "explanation": "Meaningful HTML provides the durable base for accessibility, interaction, and styling."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "types-and-contracts",
           "title": "Types and contracts",
-          "draft": true,
-          "hook": "A short starting point for understanding Types and contracts.",
-          "definition": "Types describe the shapes that cross functions, components, APIs, and other important boundaries.",
+          "draft": false,
+          "hook": "Make important assumptions visible and enforceable.",
+          "definition": "Types describe the values code expects inside a program. Runtime contracts validate data where trust changes, such as forms, APIs, files, and model output.",
           "when_to_use": [
-            "Use this lesson when Types and contracts affects a product or implementation decision."
+            "Several components share the same records.",
+            "Untrusted data enters through an API or form.",
+            "Your agent changes code across module boundaries.",
+            "A failure would corrupt data or expose access."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Explicit shapes make generated changes easier to review.",
+              "Static checks catch many mismatches early.",
+              "Runtime validation stops invalid external data at boundaries."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Duplicate static and runtime definitions can drift.",
+              "Overly broad or forced types can create false confidence."
             ]
           },
-          "example": "A builder asks an agent to explain how Types and contracts changes the proposed implementation.",
+          "example": "A billing webhook updates subscriptions from an external payload. Tell your agent to define one shared contract, validate the payload before database writes, and test missing fields, unknown values, and repeated events.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Ban unchecked casts that silence errors without proving a value.",
+            "Validate every external boundary even when the client is typed.",
+            "Review optional and nullable fields against actual business rules."
           ],
-          "vibe_coder_default": "Ask the agent to state its Types and contracts assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use strict static types plus runtime schemas at trust boundaries; relax types only around a documented, tested integration constraint.",
           "quiz": {
-            "question": "What is the safest current use of this Types and contracts draft?",
+            "question": "Where is runtime validation most important?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Where external data enters your system",
+              "Inside a constant with a known value",
+              "Only in editor autocomplete"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Where external data enters your system",
+            "explanation": "Static types cannot prove that network, user, file, or model data matches your assumptions at runtime."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.python.org/3/library/typing.html",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "runtimes-and-packages",
           "title": "Runtimes and packages",
-          "draft": true,
-          "hook": "A short starting point for understanding Runtimes and packages.",
-          "definition": "Code depends on the environment that executes it and the package ecosystem it borrows from.",
+          "draft": false,
+          "hook": "Your code ships with an environment and a supply chain.",
+          "definition": "A runtime executes your code and defines available APIs. Packages add reusable code, but each dependency also brings versions, permissions, maintenance, and supply-chain risk.",
           "when_to_use": [
-            "Use this lesson when Runtimes and packages affects a product or implementation decision."
+            "Your app needs server APIs unavailable in the browser.",
+            "A maintained package solves a complex standard problem.",
+            "You must reproduce development behavior in deployment.",
+            "Your agent proposes adding or upgrading a dependency."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Runtimes provide stable execution APIs.",
+              "Packages can avoid rebuilding mature, tested capabilities.",
+              "Lockfiles make resolved dependency versions reproducible."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Runtime differences can cause deployment-only failures.",
+              "Dependencies add security, upgrade, and abandonment risk."
             ]
           },
-          "example": "A builder asks an agent to explain how Runtimes and packages changes the proposed implementation.",
+          "example": "A Node.js service generates invoices and sends them through a provider API. Tell your agent to target the deployed Node version, choose maintained packages sparingly, commit the lockfile, and keep credentials in server environment variables.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Confirm every generated API exists in the deployed runtime version.",
+            "Review package ownership, maintenance, permissions, and transitive dependencies before adding it.",
+            "Run security checks and tests before accepting an automated upgrade."
           ],
-          "vibe_coder_default": "Ask the agent to state its Runtimes and packages assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use the deployment platform's supported Node.js LTS line and npm lockfiles for web services; add a package only when its maintenance cost beats owning the code.",
           "quiz": {
-            "question": "What is the safest current use of this Runtimes and packages draft?",
+            "question": "What should you verify when an agent adds a package?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Its need, maintenance, permissions, and locked version",
+              "Only whether its name sounds familiar",
+              "Only whether installation succeeds"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Its need, maintenance, permissions, and locked version",
+            "explanation": "A dependency becomes part of your operational and security surface, not merely a convenient import."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://nodejs.org/en/learn/getting-started/introduction-to-nodejs",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.npmjs.com/about-packages-and-modules",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.npmjs.com/cli/commands/npm-ci",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.npmjs.com/auditing-package-dependencies-for-security-vulnerabilities",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "reading-generated-code",
           "title": "Reading code you did not write",
-          "draft": true,
-          "hook": "A short starting point for understanding Reading code you did not write.",
-          "definition": "Trace inputs, outputs, side effects, and failures so generated code can be verified before shipping.",
+          "draft": false,
+          "hook": "Syntax is the road sign, not the road.",
+          "definition": "Reading code means tracing what enters, what changes, what leaves, and how failure behaves. Agents reduce the need to memorize syntax, but they increase your need to verify generated behavior.",
           "when_to_use": [
-            "Use this lesson when Reading code you did not write affects a product or implementation decision."
+            "Your agent proposes code before you merge it.",
+            "A change touches authentication, money, or stored data.",
+            "Tests pass but the behavior still surprises you.",
+            "Generated code calls an unfamiliar API or package."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Behavior-first reading works across programming languages.",
+              "Focused tracing exposes hidden side effects and trust boundaries.",
+              "Verification lets you delegate implementation without delegating ownership."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Careful review takes time and domain context.",
+              "Plausible code can hide failures outside the tested path."
             ]
           },
-          "example": "A builder asks an agent to explain how Reading code you did not write changes the proposed implementation.",
+          "example": "An agent adds a route that deletes a project. Ask it to mark authentication, authorization, database writes, and error paths; then trace one allowed request and one forbidden request before running the tests.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Trace inputs through validation, authorization, side effects, and outputs.",
+            "Check unfamiliar APIs against official documentation; agents can invent plausible methods.",
+            "Read the tests for missing failure paths instead of treating green checks as complete proof."
           ],
-          "vibe_coder_default": "Ask the agent to state its Reading code you did not write assumptions and verify them before shipping.",
+          "vibe_coder_default": "Read generated code by behavior and risk: inspect every trust boundary and side effect, then use tests and official docs to verify your model.",
           "quiz": {
-            "question": "What is the safest current use of this Reading code you did not write draft?",
+            "question": "What is the strongest first pass over an unfamiliar generated function?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Trace inputs, side effects, outputs, and failures",
+              "Memorize every keyword it uses",
+              "Assume passing syntax means correct behavior"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Trace inputs, side effects, outputs, and failures",
+            "explanation": "This reveals the function's real contract and risks even when the language syntax is unfamiliar."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://www.typescriptlang.org/docs/handbook/2/functions.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.python.org/3/tutorial/errors.html",
+              "checked": "2026-07-17"
+            }
+          ]
         }
       ]
     },

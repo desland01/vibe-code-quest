@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-18T23:45:00Z",
+  "updated_at": "2026-07-19T00:15:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -408,6 +408,22 @@
       "completed_at": "2026-07-18T23:45:00Z",
       "validator": "fresh-context codex sol: 5/5 PASS",
       "notes": "Guide chat: executor/advisor tiers (added tier param to gateway seam), deterministic escalation cap<=3 persisted, offline manifest fallback + banner. Fixed 0007 invented RLS fns + alert-selector collision. 19/19 e2e. M5 COMPLETE. Integration suites must run serially (parallel-DB note)."
+    },
+    {
+      "issue": "ISSUE-026",
+      "status": "complete",
+      "started_at": "2026-07-18T23:50:00Z",
+      "worker": "codex gpt-5.6-sol authoring + orchestrator Pixi-crash fix; orchestrator (Opus 4.8): e2e debug, validation",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-026/VAL-043-e2e.txt",
+        "evidence/ISSUE-026/VAL-001-gate.txt",
+        "evidence/ISSUE-026/legal-terms.png",
+        "handoffs/ISSUE-026.md"
+      ],
+      "completed_at": "2026-07-19T00:15:00Z",
+      "validator": "e2e 23/23 (VAL-043 routes+footer+draft banner); gate green; content review = HITL-LEGAL (deferred to ISSUE-032)",
+      "notes": "3 agent-drafted legal pages w/ draft banners + bracketed placeholders, site-wide footer. Fixed real Pixi double-destroy client-nav crash (safeDestroy in MapCanvas). HITL-LEGAL stands."
     }
   ],
   "artifact_paths": {

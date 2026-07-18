@@ -30,6 +30,8 @@
 
 ## Mission 2026-07-10-code-tutor-v1 execution
 
+- 2026-07-18: ISSUE-026 drafted structured Terms, Privacy, and Cancellation & Refund policies with prominent legal-review warnings, shared readable rendering, a site-wide reusable legal footer, and VAL-043 Playwright coverage. HITL-LEGAL review remains required before launch.
+
 - 2026-07-18: ISSUE-025 implemented landmark/profile-anchored guide chat, deterministic bounded Opus escalation with persisted decisions, Sonnet/Haiku gateway behavior, canonical offline fallback and signed-drill runtime coverage.
 
 - 2026-07-18: ISSUE-024 implemented deterministic canonical overviews and quiz grading, a bounded access-gated lesson renderer with graceful fallback, profile-adaptive defaults, accessible URL-backed format switching, analytics stubs, and unit/e2e coverage.

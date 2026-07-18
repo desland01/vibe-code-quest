@@ -1,0 +1,31 @@
+
+Running 23 tests using 8 workers
+
+  ✓   5 e2e/legal.spec.ts:10:3 › Terms of Service renders with its draft warning and footer links (825ms)
+  ✓   2 e2e/map-top.spec.ts:3:1 › semantic regions open and close landmark details (863ms)
+  ✓   7 e2e/map-sub.spec.ts:5:1 › deep link and refresh preserve landmark quiz state (903ms)
+  ✓   8 e2e/a11y.spec.ts:9:1 › keyboard-only traversal activates all eight regions and restores focus (1.2s)
+  ✓   9 e2e/legal.spec.ts:10:3 › Privacy Policy renders with its draft warning and footer links (370ms)
+  ✓  10 e2e/map-top.spec.ts:16:1 › region map works with keyboard alone (371ms)
+  ✓  11 e2e/map-sub.spec.ts:15:1 › back and forward follow URL-backed map navigation (603ms)
+  ✓  13 e2e/legal.spec.ts:10:3 › Cancellation & Refund Policy renders with its draft warning and footer links (340ms)
+  ✓  12 e2e/a11y.spec.ts:28:1 › live region announces keyboard zoom and selection (386ms)
+  ✓  14 e2e/map-top.spec.ts:24:1 › DOM fallback preserves interactions (401ms)
+  ✓  18 e2e/map-top.spec.ts:31:1 › reduced motion exposes its deterministic hook (328ms)
+  ✓  15 e2e/map-sub.spec.ts:28:1 › invalid ids 404 and invalid format falls back to overview (622ms)
+  ✓  16 e2e/legal.spec.ts:28:1 › site-wide footer navigates among every legal page (743ms)
+  ✓  19 e2e/map-sub.spec.ts:37:1 › back link and browser back return to the eight-region map (616ms)
+[axe] / []
+  ✓   1 e2e/guide-chat.spec.ts:3:1 › guide falls back to canonical landmark text when the gateway is down (3.4s)
+  ✓   6 e2e/anon-session.spec.ts:3:1 › anonymous session and progress persist across reload (4.0s)
+[axe] /map/databases []
+[axe] /map/databases/sql []
+  ✓  17 e2e/a11y.spec.ts:39:1 › axe serious and critical report is clean on map routes (3.7s)
+  ✓   4 e2e/landmark-formats.spec.ts:3:1 › landmark formats are real, deterministic, and keyboard operable (5.4s)
+  ✓  20 e2e/a11y.spec.ts:54:1 › reduced motion disables ambient animation deterministically (262ms)
+  ✓  21 e2e/a11y.spec.ts:63:1 › DOM-only fallback retains map interactions (248ms)
+  ✓  22 e2e/a11y.spec.ts:72:3 › 200% zoom proxy remains scrollable without horizontal region-control clipping (347ms)
+  ✓  23 e2e/a11y.spec.ts:72:3 › 400% zoom proxy remains scrollable without horizontal region-control clipping (386ms)
+  ✓   3 e2e/onboarding.spec.ts:3:1 › onboarding unlocks after Q1, caps at five, and leaves the map browsable (15.5s)
+
+  23 passed (16.2s)

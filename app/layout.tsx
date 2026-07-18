@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Pixelify_Sans } from 'next/font/google';
 
 import { SessionProvider } from '@/lib/auth/SessionProvider';
+import { SiteFooter } from '@/components/SiteFooter';
 import './globals.css';
 
 const pixelify = Pixelify_Sans({ subsets: ['latin'], display: 'swap', variable: '--font-pixel' });
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={pixelify.variable}>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          {children}
+          <SiteFooter />
+        </SessionProvider>
       </body>
     </html>
   );

@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T22:35:24.776Z",
+    "timestamp": "2026-07-18T22:51:10.308Z",
     "url": "http://localhost:3100/",
     "toolOptions": {
       "reporter": "v1"
@@ -525,30 +525,6 @@
         "description": "Ensure the banner landmark is at top level",
         "help": "Banner landmark should not be contained in another landmark",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-banner-is-top-level?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "landmark-contentinfo-is-top-level",
-        "impact": null,
-        "tags": [
-          "cat.semantics",
-          "best-practice"
-        ],
-        "description": "Ensure the contentinfo landmark is at top level",
-        "help": "Contentinfo landmark should not be contained in another landmark",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-contentinfo-is-top-level?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "landmark-no-duplicate-contentinfo",
-        "impact": null,
-        "tags": [
-          "cat.semantics",
-          "best-practice"
-        ],
-        "description": "Ensure the document has at most one contentinfo landmark",
-        "help": "Document should not have more than one contentinfo landmark",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-no-duplicate-contentinfo?application=playwright",
         "nodes": []
       },
       {
@@ -1437,6 +1413,39 @@
               }
             ],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav[aria-label=\"Legal\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -1819,6 +1828,24 @@
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
               "p[role=\"status\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav[aria-label=\"Legal\"]"
             ]
           },
           {
@@ -2409,6 +2436,24 @@
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
               "p[role=\"status\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav[aria-label=\"Legal\"]"
             ]
           },
           {
@@ -3199,6 +3244,38 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav[aria-label=\"Legal\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -3508,6 +3585,24 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav[aria-label=\"Legal\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -3787,6 +3882,166 @@
             "html": "<button class=\"region-control\" style=\"left:53%;top:82%;width:28%;height:13%\" aria-label=\"Design Systems\" aria-pressed=\"false\" id=\"region-design\"><span class=\"sr-only\">Explore <!-- -->Design Systems</span></button>",
             "target": [
               "#region-design"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav[aria-label=\"Legal\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
             ]
           },
           {
@@ -4410,6 +4665,81 @@
             "target": [
               ".onboarding-chat > p"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
+            ]
           }
         ]
       },
@@ -4848,6 +5178,39 @@
         ]
       },
       {
+        "id": "landmark-contentinfo-is-top-level",
+        "impact": null,
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure the contentinfo landmark is at top level",
+        "help": "Contentinfo landmark should not be contained in another landmark",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-contentinfo-is-top-level?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "landmark-is-top-level",
+                "data": {
+                  "role": "contentinfo"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "The contentinfo landmark is at the top level."
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          }
+        ]
+      },
+      {
         "id": "landmark-main-is-top-level",
         "impact": null,
         "tags": [
@@ -4907,6 +5270,37 @@
             "html": "<header class=\"map-header\"><div><h1>code-tutor</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div><button type=\"button\">Save progress via email</button></header>",
             "target": [
               "header"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "landmark-no-duplicate-contentinfo",
+        "impact": null,
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure the document has at most one contentinfo landmark",
+        "help": "Document should not have more than one contentinfo landmark",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-no-duplicate-contentinfo?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "page-no-duplicate-contentinfo",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Document does not have more than one contentinfo landmark"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
             ]
           }
         ]
@@ -5087,6 +5481,48 @@
             "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
             "target": [
               ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "contentinfo",
+                  "accessibleText": null
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "navigation",
+                  "accessibleText": "legal"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav[aria-label=\"Legal\"]"
             ]
           }
         ]
@@ -5346,6 +5782,84 @@
             "html": "<a href=\"/map/design\">Design Systems<!-- -->, <!-- -->6<!-- --> landmarks</a>",
             "target": [
               "a[href$=\"design\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
             ]
           }
         ]
@@ -7149,6 +7663,106 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav[aria-label=\"Legal\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<next-route-announcer style=\"position: absolute;\"></next-route-announcer>",
             "target": [
               "next-route-announcer"
@@ -7281,7 +7895,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T22:35:25.568Z",
+    "timestamp": "2026-07-18T22:51:11.090Z",
     "url": "http://localhost:3100/map/databases",
     "toolOptions": {
       "reporter": "v1"
@@ -7898,30 +8512,6 @@
         "nodes": []
       },
       {
-        "id": "landmark-contentinfo-is-top-level",
-        "impact": null,
-        "tags": [
-          "cat.semantics",
-          "best-practice"
-        ],
-        "description": "Ensure the contentinfo landmark is at top level",
-        "help": "Contentinfo landmark should not be contained in another landmark",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-contentinfo-is-top-level?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "landmark-no-duplicate-contentinfo",
-        "impact": null,
-        "tags": [
-          "cat.semantics",
-          "best-practice"
-        ],
-        "description": "Ensure the document has at most one contentinfo landmark",
-        "help": "Document should not have more than one contentinfo landmark",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-no-duplicate-contentinfo?application=playwright",
-        "nodes": []
-      },
-      {
         "id": "link-in-text-block",
         "impact": null,
         "tags": [
@@ -8398,6 +8988,39 @@
               }
             ],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -8474,6 +9097,24 @@
             "html": "<section class=\"island-detail\" id=\"landmark-list\" tabindex=\"-1\" aria-label=\"Databases landmarks\">",
             "target": [
               "#landmark-list"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
             ]
           },
           {
@@ -8870,6 +9511,24 @@
               }
             ],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -9047,6 +9706,38 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -9089,6 +9780,24 @@
             "html": "<section class=\"island-detail\" id=\"landmark-list\" tabindex=\"-1\" aria-label=\"Databases landmarks\">",
             "target": [
               "#landmark-list"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
             ]
           },
           {
@@ -9351,6 +10060,166 @@
             "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
             ]
           },
           {
@@ -10023,6 +10892,81 @@
             "target": [
               ".landmark-card:nth-child(6) > span:nth-child(3)"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
+            ]
           }
         ]
       },
@@ -10215,6 +11159,39 @@
         ]
       },
       {
+        "id": "landmark-contentinfo-is-top-level",
+        "impact": null,
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure the contentinfo landmark is at top level",
+        "help": "Contentinfo landmark should not be contained in another landmark",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-contentinfo-is-top-level?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "landmark-is-top-level",
+                "data": {
+                  "role": "contentinfo"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "The contentinfo landmark is at the top level."
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          }
+        ]
+      },
+      {
         "id": "landmark-main-is-top-level",
         "impact": null,
         "tags": [
@@ -10274,6 +11251,37 @@
             "html": "<header class=\"sub-map-banner\"><p>Where app memory becomes product memory.</p><h1>Databases</h1><p>SQL, NoSQL, vector, graph, ORMs, and hosted-vs-self-hosted defaults.</p></header>",
             "target": [
               "header"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "landmark-no-duplicate-contentinfo",
+        "impact": null,
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure the document has at most one contentinfo landmark",
+        "help": "Document should not have more than one contentinfo landmark",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-no-duplicate-contentinfo?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "page-no-duplicate-contentinfo",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Document does not have more than one contentinfo landmark"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
             ]
           }
         ]
@@ -10398,6 +11406,48 @@
             "html": "<section class=\"island-detail\" id=\"landmark-list\" tabindex=\"-1\" aria-label=\"Databases landmarks\">",
             "target": [
               "#landmark-list"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "contentinfo",
+                  "accessibleText": null
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "navigation",
+                  "accessibleText": "legal"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
             ]
           }
         ]
@@ -10631,6 +11681,84 @@
             "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
             ]
           }
         ]
@@ -11329,6 +12457,106 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<next-route-announcer style=\"position: absolute;\"></next-route-announcer>",
             "target": [
               "next-route-announcer"
@@ -11461,7 +12689,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T22:35:26.769Z",
+    "timestamp": "2026-07-18T22:51:12.345Z",
     "url": "http://localhost:3100/map/databases/sql",
     "toolOptions": {
       "reporter": "v1"
@@ -12036,30 +13264,6 @@
         "description": "Ensure the banner landmark is at top level",
         "help": "Banner landmark should not be contained in another landmark",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-banner-is-top-level?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "landmark-contentinfo-is-top-level",
-        "impact": null,
-        "tags": [
-          "cat.semantics",
-          "best-practice"
-        ],
-        "description": "Ensure the contentinfo landmark is at top level",
-        "help": "Contentinfo landmark should not be contained in another landmark",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-contentinfo-is-top-level?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "landmark-no-duplicate-contentinfo",
-        "impact": null,
-        "tags": [
-          "cat.semantics",
-          "best-practice"
-        ],
-        "description": "Ensure the document has at most one contentinfo landmark",
-        "help": "Document should not have more than one contentinfo landmark",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-no-duplicate-contentinfo?application=playwright",
         "nodes": []
       },
       {
@@ -12751,6 +13955,39 @@
               }
             ],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -12971,6 +14208,24 @@
             "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
             "target": [
               "button[aria-controls=\"guide-panel\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
             ]
           },
           {
@@ -13511,6 +14766,24 @@
               }
             ],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -13962,6 +15235,38 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<div aria-live=\"assertive\" id=\"__next-route-announcer__\" role=\"alert\" style=\"position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;\"></div>",
             "target": [
               [
@@ -14130,6 +15435,24 @@
             "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
             "target": [
               "button[aria-controls=\"guide-panel\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
             ]
           },
           {
@@ -14392,6 +15715,166 @@
             "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
             ]
           },
           {
@@ -15371,6 +16854,81 @@
             "target": [
               "button[aria-controls=\"guide-panel\"]"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
+            ]
           }
         ]
       },
@@ -15701,6 +17259,39 @@
         ]
       },
       {
+        "id": "landmark-contentinfo-is-top-level",
+        "impact": null,
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure the contentinfo landmark is at top level",
+        "help": "Contentinfo landmark should not be contained in another landmark",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-contentinfo-is-top-level?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "landmark-is-top-level",
+                "data": {
+                  "role": "contentinfo"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "The contentinfo landmark is at the top level."
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          }
+        ]
+      },
+      {
         "id": "landmark-main-is-top-level",
         "impact": null,
         "tags": [
@@ -15760,6 +17351,37 @@
             "html": "<header class=\"sub-map-banner\"><p>Where app memory becomes product memory.</p><h1>Databases</h1><p>SQL, NoSQL, vector, graph, ORMs, and hosted-vs-self-hosted defaults.</p></header>",
             "target": [
               ".sub-map-banner"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "landmark-no-duplicate-contentinfo",
+        "impact": null,
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure the document has at most one contentinfo landmark",
+        "help": "Document should not have more than one contentinfo landmark",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-no-duplicate-contentinfo?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "page-no-duplicate-contentinfo",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Document does not have more than one contentinfo landmark"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
             ]
           }
         ]
@@ -15926,6 +17548,48 @@
             "html": "<aside aria-label=\"AI guide\" data-testid=\"guide-chat\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button></aside>",
             "target": [
               "aside"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "contentinfo",
+                  "accessibleText": null
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "navigation",
+                  "accessibleText": "legal"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
             ]
           }
         ]
@@ -16159,6 +17823,84 @@
             "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
             "target": [
               ".landmark-card:nth-child(6)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
             ]
           }
         ]
@@ -17212,6 +18954,106 @@
             "html": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"guide-panel\">Ask the guide</button>",
             "target": [
               "button[aria-controls=\"guide-panel\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<footer style=\"border-top:2px solid var(--banner-border);background:var(--banner);padding:20px clamp(16px, 3vw, 40px);color:var(--ink)\">",
+            "target": [
+              "footer"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
+            "target": [
+              "nav"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
+            "target": [
+              "a[href$=\"terms\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/privacy\">Privacy Policy</a>",
+            "target": [
+              "a[href$=\"privacy\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
+            "target": [
+              "a[href$=\"refund\"]"
             ]
           },
           {

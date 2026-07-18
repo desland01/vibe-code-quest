@@ -82,6 +82,16 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
     let app: import('pixi.js').Application | undefined;
     let idleHandle: number | undefined;
     let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
+    let destroyed = false;
+    const safeDestroy = () => {
+      if (destroyed || !app) return;
+      destroyed = true;
+      try {
+        app.destroy(true, { children: true });
+      } catch {
+        // Pixi may be partially initialized or already destroyed during navigation.
+      }
+    };
     const islands = islandRefs.current;
     const mountCanvas = async () => {
       try {
@@ -100,7 +110,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
         }
         app = new PIXI.Application();
         await app.init({ width: MAP_WIDTH, height: MAP_HEIGHT, background: '#7ec8c9', antialias: false, preference: 'webgl', roundPixels: true });
-        if (disposed || !hostRef.current) { app.destroy(true); return; }
+        if (disposed || !hostRef.current) { safeDestroy(); return; }
         app.canvas.className = 'map-canvas';
         app.canvas.setAttribute('aria-hidden', 'true');
         hostRef.current.appendChild(app.canvas);
@@ -215,7 +225,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
       if (timeoutHandle !== undefined) clearTimeout(timeoutHandle);
       worldRef.current = null;
       islands.clear();
-      app?.destroy(true, { children: true });
+      safeDestroy();
     };
   }, [dispatch, onSelect, regions]);
 

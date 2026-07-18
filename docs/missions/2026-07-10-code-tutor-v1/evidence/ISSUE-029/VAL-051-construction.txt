@@ -1,0 +1,16 @@
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > contains exactly the reconciled 13 names 1ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs profile_built with its expected non-PII properties 1ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs profile_skipped with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs region_click with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs landmark_open with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs format_switched with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs quiz_completed with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs guide_chat_message with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs guide_unavailable_shown with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs account_upgraded with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs trial_started with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs subscribe_clicked with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs paywall_shown with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > constructs share_card_created with its expected non-PII properties 0ms
+ ✓ src/__tests__/analytics.test.ts > analytics event contract > rejects unknown event names at compile time and runtime 0ms
+      Tests  15 passed (15)

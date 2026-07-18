@@ -137,7 +137,7 @@ export async function applyUpgrade(database: Database, profileId: string, email:
     );
     return { kind: 'merged', userId: targetId } as const;
   });
-  recordEvent('account_upgraded', { sourceUserId: profileId, userId: result.userId, kind: result.kind });
+  recordEvent('account_upgraded', { kind: result.kind });
   return result;
 }
 

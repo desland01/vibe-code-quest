@@ -9,7 +9,7 @@ export function RegionControls({ regions, state, dispatch, lastTriggerRef, onSel
   state: MapState;
   dispatch: Dispatch<MapAction>;
   lastTriggerRef: RefObject<HTMLButtonElement | null>;
-  onSelect: (title: string) => void;
+  onSelect: (region: Pick<Region, 'id' | 'title'>) => void;
 }) {
   return (
     <nav className="region-controls" id="region-controls" aria-label="Learning regions">
@@ -30,7 +30,7 @@ export function RegionControls({ regions, state, dispatch, lastTriggerRef, onSel
             onClick={(event) => {
               lastTriggerRef.current = event.currentTarget;
               dispatch({ type: 'select', regionId: region.id });
-              onSelect(region.title);
+              onSelect(region);
             }}
           ><span className="sr-only">Explore {region.title}</span></button>
         );

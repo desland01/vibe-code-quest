@@ -66,7 +66,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
   dispatch: Dispatch<MapAction>;
   reducedMotion: boolean;
   onZoom: (scale: number) => void;
-  onSelect: (title: string) => void;
+  onSelect: (region: Pick<Region, 'id' | 'title'>) => void;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<import('pixi.js').Container | null>(null);
@@ -144,7 +144,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
           island.on('pointerout', () => dispatch({ type: 'unhover', regionId: region.id }));
           island.on('pointertap', () => {
             dispatch({ type: 'select', regionId: region.id });
-            onSelect(region.title);
+            onSelect(region);
           });
 
           const accent = accents[region.id] ?? Object.values(accents)[index];

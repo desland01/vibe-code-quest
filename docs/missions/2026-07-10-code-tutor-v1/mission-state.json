@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-19T01:35:00Z",
+  "updated_at": "2026-07-19T02:05:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -459,6 +459,22 @@
       "completed_at": "2026-07-19T01:35:00Z",
       "validator": "fresh-context codex sol: 5/5 PASS",
       "notes": "Immutable share snapshots (approved fields only, no PII), unguessable token, public /s/<token> + OG image (1200x630 server-safe), revoke->404. 25/25 e2e. share_card_created stub event added."
+    },
+    {
+      "issue": "ISSUE-029",
+      "status": "complete",
+      "started_at": "2026-07-19T01:40:00Z",
+      "worker": "codex gpt-5.6-sol authoring + orchestrator selector fix; orchestrator (Opus 4.8): PII/stray-event audit, validation + disposition",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-029/VAL-051-construction.txt",
+        "evidence/ISSUE-029/VAL-051-e2e.txt",
+        "evidence/ISSUE-029/VAL-001-gate.txt",
+        "handoffs/ISSUE-029.md"
+      ],
+      "completed_at": "2026-07-19T02:05:00Z",
+      "validator": "fresh-context codex sol: 5/5 substantive PASS; criterion-1 FAIL was a doc-only email_capture_submitted drop-note (orchestrator disposition: not a defect, runtime clean)",
+      "notes": "Unified typed analytics (13 events, single source of truth), PII stripped (6 UUID leaks fixed), duplicate emits deduped, region_click/landmark_open wired. 15 construction tests + 26/26 e2e. email_capture_submitted docs-only (drop note)."
     }
   ],
   "artifact_paths": {

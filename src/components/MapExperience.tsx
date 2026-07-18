@@ -10,6 +10,7 @@ import { RegionControls } from '@/components/map/RegionControls';
 import { RegionPanel } from '@/components/map/RegionPanel';
 import { initialMapState, mapReducer } from '@/lib/mapState';
 import '@/components/map/Accessibility.css';
+import { recordClientEvent } from '@/components/landmark/clientEvents';
 
 export function MapExperience() {
   const session = useSession();
@@ -23,7 +24,10 @@ export function MapExperience() {
     requestAnimationFrame(() => lastTriggerRef.current?.focus());
   }, []);
   const announceZoom = useCallback((scale: number) => setLiveMessage(`Zoom ${scale}x`), []);
-  const announceSelection = useCallback((title: string) => setLiveMessage(`${title} selected — panel open`), []);
+  const announceSelection = useCallback((region: { id: string; title: string }) => {
+    setLiveMessage(`${region.title} selected — panel open`);
+    recordClientEvent('region_click', { region: region.id });
+  }, []);
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');

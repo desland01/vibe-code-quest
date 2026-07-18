@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     state = advanceState(state, current.field, value);
   } else if (body.action === 'skip') {
     state = skip(state);
-    recordEvent('profile_skipped', { userId: id, field: current.done ? null : current.field });
+    recordEvent('profile_skipped', { field: current.done ? null : current.field });
   } else if (body.action === 'finish') {
     state = { ...state, finished: true };
   }
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   const next = getNextStep(state);
   const done = next.done;
   await saveState(id, state, done);
-  if (done && !wasDone) recordEvent('profile_built', { userId: id, count: state.count });
+  if (done && !wasDone) recordEvent('profile_built', { count: state.count });
   const questionText = done ? null : await generateQuestionText(id, next.field, state.profile);
   return NextResponse.json({ step: done ? null : next.field, questionText, count: state.count, mapUnlocked: state.mapUnlocked, done, profile: state.profile });
 }

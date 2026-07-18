@@ -4,6 +4,7 @@ import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { pool } from '@/lib/db';
 import { createCheckout, postgresBillingDb, reconcileAfterCheckout, startTrial } from '@/server/billing';
 import { getStripe } from '@/server/stripe';
+import { recordEvent } from '@/server/events';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
     const entitlement = (await db.query<{ stripe_customer_id: string | null }>('SELECT stripe_customer_id FROM entitlements WHERE profile_id=$1', [session.userId])).rows[0];
     if (!entitlement?.stripe_customer_id) await startTrial({ userId: session.userId, email: profile.email, deps: { stripe, db } });
     if (action === 'trial') return NextResponse.json({ status: 'trialing' });
-    console.debug('[event] subscribe_clicked', { userId: session.userId });
+    recordEvent('subscribe_clicked', { source: 'paywall' });
     return NextResponse.json({ url: await createCheckout({ userId: session.userId, deps: { stripe, db, origin: new URL(request.url).origin } }) });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Billing request failed';

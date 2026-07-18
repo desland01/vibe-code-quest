@@ -30,6 +30,8 @@
 
 ## Mission 2026-07-10-code-tutor-v1 execution
 
+- 2026-07-18: ISSUE-029 unified all 13 reconciled analytics events behind typed, runtime-allowlisted client/server sink seams; removed profile identifiers and duplicate emissions; wired region selection; and added construction plus browser-dispatch coverage.
+
 - 2026-07-18: ISSUE-028 implemented explicit immutable progress-share snapshots with payload-only privileged public reads, owner-scoped revocation, short-cache public summary and offline-safe OG image, accessible share/copy/revoke UI, stub analytics emission, and unit/e2e coverage. Completion is deterministic: only `state.completed === true` counts as completed; any recognized progress row starts its region.
 
 - 2026-07-18: ISSUE-027 implemented the Stripe test-mode no-card trial, Checkout/cancel/reconciliation routes, transactional ordered/idempotent webhook processing, guide-only paywall, fixture-replay tests, and graceful unconfigured-billing e2e coverage. VAL-041 live test-card flow remains HITL-STRIPE-KEY deferred.

@@ -8,6 +8,7 @@ import { queryAsUser } from '@/lib/db';
 import { DRILL_HEADER_NAME, drillForUser } from '@/server/aiDrill';
 import { runGuideTurn } from '@/server/guide';
 import { checkAccess } from '@/server/access';
+import { recordEvent } from '@/server/events';
 
 export const dynamic = 'force-dynamic';
 const schema = z.object({
@@ -73,7 +74,17 @@ export async function POST(request: Request) {
       RETURNING escalations`, [JSON.stringify(turn.decision), session.userId, body.regionId, body.landmarkId]);
     escalations = updated.rows[0]?.escalations ?? row.escalations;
   }
-  console.debug('[event] guide_chat_message', { userId: session.userId, regionId: body.regionId, landmarkId: body.landmarkId, escalated: turn.escalated });
-  if (turn.kind === 'offline') console.debug('[event] guide_unavailable_shown', { userId: session.userId, regionId: body.regionId, landmarkId: body.landmarkId });
+  recordEvent('guide_chat_message', {
+    region: body.regionId,
+    landmark: body.landmarkId,
+    role: 'assistant',
+    model: turn.kind === 'offline' ? 'offline' : turn.escalated ? 'advisor' : 'executor',
+    fallbackReason: turn.kind === 'offline' ? 'gateway_down' : null,
+  });
+  if (turn.kind === 'offline') recordEvent('guide_unavailable_shown', {
+    region: body.regionId,
+    landmark: body.landmarkId,
+    fallbackReason: 'gateway_down',
+  });
   return NextResponse.json({ ...turn, escalations });
 }

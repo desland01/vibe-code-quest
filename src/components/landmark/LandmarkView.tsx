@@ -10,7 +10,7 @@ import { recordClientEvent } from './clientEvents';
 import { GuideChat } from './GuideChat';
 
 export function LandmarkView({ landmark, regionId, format }: { landmark: Landmark; regionId: string; format: LandmarkFormat }) {
-  useEffect(() => { recordClientEvent('landmark_open', { regionId, landmarkId: landmark.id, format }); }, [regionId, landmark.id, format]);
+  useEffect(() => { recordClientEvent('landmark_open', { region: regionId, landmark: landmark.id }); }, [regionId, landmark.id]);
   return <article className="landmark-detail" aria-labelledby="landmark-title">
     <header className="landmark-detail-header"><div><p className="region-kicker">Landmark detail</p><h2 id="landmark-title">{landmark.title}</h2></div></header>
     <FormatSwitcher format={format} regionId={regionId} landmarkId={landmark.id} />

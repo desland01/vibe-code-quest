@@ -3,6 +3,7 @@ import 'server-only';
 import type Stripe from 'stripe';
 import type { Pool, PoolClient, QueryResult, QueryResultRow } from 'pg';
 import { pool } from '@/lib/db';
+import { recordEvent } from '@/server/events';
 
 export type BillingQueryable = {
   query<R extends QueryResultRow = QueryResultRow>(text: string, values?: readonly unknown[]): Promise<QueryResult<R>>;
@@ -83,7 +84,7 @@ export async function startTrial({ userId, email, deps }: { userId: string; emai
       ON CONFLICT (profile_id) DO UPDATE SET tier = 'trial', trial_starts_at = now(), trial_ends_at = EXCLUDED.trial_ends_at,
         status = 'trialing', stripe_customer_id = EXCLUDED.stripe_customer_id, stripe_subscription_id = EXCLUDED.stripe_subscription_id, updated_at = now()`,
     [userId, trialEnd, customer.id, subscription.id]);
-    console.debug('[event] trial_started', { userId });
+    recordEvent('trial_started', { trialDays: 14 });
     return { customerId: customer.id, subscriptionId: subscription.id, trialEnd };
   });
 }

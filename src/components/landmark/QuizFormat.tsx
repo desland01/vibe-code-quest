@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import type { Landmark } from '@/content/schema';
-import { recordClientEvent } from './clientEvents';
 
 type Grade = { correct: boolean; answer: string; explanation: string };
 
@@ -20,7 +19,6 @@ export function QuizFormat({ landmark, regionId }: { landmark: Landmark; regionI
       if (!response.ok) throw new Error('Quiz grading failed');
       const result = await response.json() as Grade;
       setGrade(result);
-      recordClientEvent('quiz_completed', { regionId, landmarkId: landmark.id, correct: result.correct });
     } catch {
       setError('We could not grade that answer. Please try again.');
     } finally { setPending(false); }

@@ -19,6 +19,6 @@ export async function POST(request: Request) {
   try { body = schema.parse(await request.json()); } catch { return NextResponse.json({ error: 'Invalid request body' }, { status: 400 }); }
   const grade = gradeQuiz(body.regionId, body.landmarkId, body.choice);
   if (!grade) return NextResponse.json({ error: 'Landmark not found' }, { status: 404 });
-  recordEvent('quiz_completed', { userId: session.userId, regionId: body.regionId, landmarkId: body.landmarkId, correct: grade.correct });
+  recordEvent('quiz_completed', { region: body.regionId, landmark: body.landmarkId, score: grade.correct ? 1 : 0, correct: grade.correct });
   return NextResponse.json(grade);
 }

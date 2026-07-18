@@ -13,7 +13,7 @@ export function FormatSwitcher({ format, regionId, landmarkId }: { format: Landm
   const pathname = usePathname();
   const choose = (next: LandmarkFormat) => {
     router.replace(`${pathname}?format=${next}`, { scroll: false });
-    recordClientEvent('format_switched', { regionId, landmarkId, format: next });
+    recordClientEvent('format_switched', { region: regionId, landmark: landmarkId, format: next });
   };
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;

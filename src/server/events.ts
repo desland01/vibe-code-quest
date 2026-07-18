@@ -1,7 +1,22 @@
 import 'server-only';
 
-export type EventName = 'account_upgraded' | 'profile_built' | 'profile_skipped' | 'landmark_open' | 'format_switched' | 'quiz_completed' | 'trial_started' | 'subscribe_clicked' | 'paywall_shown' | 'share_card_created';
+import { createAnalyticsEvent, type AnalyticsEvent, type AnalyticsProps, type AnalyticsSink } from '@/lib/analytics';
 
-export function recordEvent(name: EventName, properties: Record<string, unknown>): void {
-  console.debug(`[event] ${name}`, properties);
+export type { AnalyticsEvent, AnalyticsProps } from '@/lib/analytics';
+
+const consoleSink: AnalyticsSink = (name, properties) => {
+  console.debug(`[analytics] ${name} ${JSON.stringify(properties)}`);
+};
+
+let sink: AnalyticsSink = consoleSink;
+
+export function setServerAnalyticsSink(next: AnalyticsSink): () => void {
+  const previous = sink;
+  sink = next;
+  return () => { sink = previous; };
+}
+
+export function recordEvent<E extends AnalyticsEvent>(name: E, properties: AnalyticsProps[E]): void {
+  const event = createAnalyticsEvent(name, properties);
+  sink(event.name, event.properties);
 }

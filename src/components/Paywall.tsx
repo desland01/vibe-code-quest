@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { recordClientEvent } from '@/components/landmark/clientEvents';
 
 export function Paywall({ verifiedEmail }: { verifiedEmail: boolean }) {
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  useEffect(() => { console.debug('[event] paywall_shown'); }, []);
+  useEffect(() => { recordClientEvent('paywall_shown', { reason: 'subscription_required' }); }, []);
   async function billing(action: 'trial' | 'subscribe') {
     setBusy(true); setMessage(null);
     try {

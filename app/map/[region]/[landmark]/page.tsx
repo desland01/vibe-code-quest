@@ -4,7 +4,6 @@ import { getLandmark, getRegion, regions } from '@/lib/content';
 import { cookies } from 'next/headers';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { queryAsUser } from '@/lib/db';
-import { recordEvent } from '@/server/events';
 
 const formats: readonly LandmarkFormat[] = ['overview', 'lesson', 'quiz'];
 
@@ -35,7 +34,5 @@ export default async function LandmarkMapPage({
     }
   }
   const format = formats.includes(requestedFormat as LandmarkFormat) ? requestedFormat as LandmarkFormat : defaultFormat;
-  recordEvent('landmark_open', { regionId, landmarkId, format });
-  if (requestedFormat && formats.includes(requestedFormat as LandmarkFormat)) recordEvent('format_switched', { regionId, landmarkId, format });
   return <SubMapScene region={region} landmark={landmark} format={format} />;
 }

@@ -5,11 +5,11 @@ const regionButtons = (page: import('@playwright/test').Page) => page.getByRole(
 test('deep link and refresh preserve landmark quiz state', async ({ page }) => {
   await page.goto('/map/databases/sql?format=quiz');
   await expect(page.getByRole('heading', { name: 'SQL', exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Quiz' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Quiz' })).toHaveAttribute('aria-current', 'true');
   await expect(page.getByRole('heading', { name: 'Quiz' })).toBeVisible();
   await page.reload();
   await expect(page).toHaveURL(/\/map\/databases\/sql\?format=quiz$/);
-  await expect(page.getByRole('button', { name: 'Quiz' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Quiz' })).toHaveAttribute('aria-current', 'true');
 });
 
 test('back and forward follow URL-backed map navigation', async ({ page }) => {
@@ -31,7 +31,7 @@ test('invalid ids 404 and invalid format falls back to overview', async ({ page 
   await page.goto('/map/databases/nope');
   await expect(page.getByText(/404|not found/i).first()).toBeVisible();
   await page.goto('/map/databases/sql?format=bogus');
-  await expect(page.getByRole('button', { name: 'Overview' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Overview' })).toHaveAttribute('aria-current', 'true');
 });
 
 test('back link and browser back return to the eight-region map', async ({ page }) => {

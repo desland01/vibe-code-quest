@@ -35,5 +35,9 @@
 .scene :global(.format-note) { background: color-mix(in srgb, var(--region-accent) 15%, white); padding: 12px; }
 .scene :global(.tradeoff-grid) { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .scene :global(.landmark-quiz) { border: 3px dashed var(--banner-border); padding: 18px; background: #fff8e9; }
+.scene :global(.landmark-quiz fieldset) { display: grid; gap: 10px; border: 0; padding: 0; margin: 16px 0; }
+.scene :global(.landmark-quiz label) { display: block; padding: 10px; border: 2px solid var(--banner-border); cursor: pointer; }
+.scene :global(.landmark-quiz button), .scene :global(.landmark-detail textarea + button) { min-height: 44px; border: 3px solid var(--ink); background: var(--region-accent); padding: 8px 14px; font-family: var(--font-pixel), monospace; cursor: pointer; }
+.scene :global(.landmark-detail textarea) { display: block; width: 100%; min-height: 88px; margin: 8px 0; border: 3px solid var(--ink); padding: 10px; font: inherit; }
 @media (prefers-reduced-motion: reduce) { .scene :global(.sub-map-zoom) { animation: none; } .scene :global(.landmark-card), .scene :global(.back-to-map) { transition: none; } .scene :global(.back-to-map:hover), .scene :global(.back-to-map:focus-visible), .scene :global(.landmark-card:hover), .scene :global(.landmark-card:focus-visible) { transform: none; } }
 @media (max-width: 760px) { .scene :global(.landmark-grid) { grid-template-columns: 1fr; } .scene :global(.landmark-card:nth-child(even)) { margin-top: 0; } .scene :global(.tradeoff-grid) { grid-template-columns: 1fr; gap: 0; } }

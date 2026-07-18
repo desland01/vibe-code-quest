@@ -1,0 +1,26 @@
+
+Running 18 tests using 6 workers
+
+  ✓   3 e2e/map-top.spec.ts:3:1 › semantic regions open and close landmark details (806ms)
+  ✓   6 e2e/a11y.spec.ts:9:1 › keyboard-only traversal activates all eight regions and restores focus (1.1s)
+  ✓   7 e2e/map-top.spec.ts:16:1 › region map works with keyboard alone (395ms)
+  ✓   4 e2e/map-sub.spec.ts:5:1 › deep link and refresh preserve landmark quiz state (1.3s)
+  ✓   8 e2e/a11y.spec.ts:28:1 › live region announces keyboard zoom and selection (371ms)
+  ✓   9 e2e/map-top.spec.ts:24:1 › DOM fallback preserves interactions (355ms)
+  ✓  12 e2e/map-top.spec.ts:31:1 › reduced motion exposes its deterministic hook (401ms)
+  ✓  10 e2e/map-sub.spec.ts:15:1 › back and forward follow URL-backed map navigation (1.7s)
+[axe] / []
+  ✓  13 e2e/map-sub.spec.ts:28:1 › invalid ids 404 and invalid format falls back to overview (598ms)
+  ✓   1 e2e/anon-session.spec.ts:3:1 › anonymous session and progress persist across reload (3.9s)
+[axe] /map/databases []
+  ✓  14 e2e/map-sub.spec.ts:37:1 › back link and browser back return to the eight-region map (809ms)
+[axe] /map/databases/sql []
+  ✓  11 e2e/a11y.spec.ts:39:1 › axe serious and critical report is clean on map routes (3.5s)
+  ✓  15 e2e/a11y.spec.ts:54:1 › reduced motion disables ambient animation deterministically (257ms)
+  ✓  16 e2e/a11y.spec.ts:63:1 › DOM-only fallback retains map interactions (301ms)
+  ✓   5 e2e/landmark-formats.spec.ts:3:1 › landmark formats are real, deterministic, and keyboard operable (5.7s)
+  ✓  17 e2e/a11y.spec.ts:72:3 › 200% zoom proxy remains scrollable without horizontal region-control clipping (462ms)
+  ✓  18 e2e/a11y.spec.ts:72:3 › 400% zoom proxy remains scrollable without horizontal region-control clipping (408ms)
+  ✓   2 e2e/onboarding.spec.ts:3:1 › onboarding unlocks after Q1, caps at five, and leaves the map browsable (14.6s)
+
+  18 passed (15.3s)

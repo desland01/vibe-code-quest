@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T21:57:06.026Z",
+    "timestamp": "2026-07-18T22:22:17.286Z",
     "url": "http://localhost:3100/",
     "toolOptions": {
       "reporter": "v1"
@@ -7281,7 +7281,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T21:57:06.862Z",
+    "timestamp": "2026-07-18T22:22:18.182Z",
     "url": "http://localhost:3100/map/databases",
     "toolOptions": {
       "reporter": "v1"
@@ -11461,7 +11461,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T21:57:07.583Z",
+    "timestamp": "2026-07-18T22:22:19.275Z",
     "url": "http://localhost:3100/map/databases/sql",
     "toolOptions": {
       "reporter": "v1"
@@ -12082,6 +12082,40 @@
         "nodes": []
       },
       {
+        "id": "list",
+        "impact": null,
+        "tags": [
+          "cat.structure",
+          "wcag2a",
+          "wcag131",
+          "EN-301-549",
+          "EN-9.1.3.1",
+          "RGAAv4",
+          "RGAA-9.3.1"
+        ],
+        "description": "Ensure that lists are structured correctly",
+        "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/list?application=playwright",
+        "nodes": []
+      },
+      {
+        "id": "listitem",
+        "impact": null,
+        "tags": [
+          "cat.structure",
+          "wcag2a",
+          "wcag131",
+          "EN-301-549",
+          "EN-9.1.3.1",
+          "RGAAv4",
+          "RGAA-9.3.1"
+        ],
+        "description": "Ensure <li> elements are used semantically",
+        "help": "<li> elements must be contained in a <ul> or <ol>",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/listitem?application=playwright",
+        "nodes": []
+      },
+      {
         "id": "marquee",
         "impact": null,
         "tags": [
@@ -12552,7 +12586,7 @@
               }
             ],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -12585,7 +12619,7 @@
               }
             ],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -12618,42 +12652,9 @@
               }
             ],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "aria-allowed-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA attributes are used correctly for the defined role"
-              },
-              {
-                "id": "aria-allowed-attr-elm",
-                "data": null,
-                "relatedNodes": [],
-                "message": "ARIA attributes are allowed for this element",
-                "impact": "critical"
-              }
-            ],
-            "none": [
-              {
-                "id": "aria-unsupported-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA attribute is supported"
-              }
-            ],
-            "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
-            "target": [
-              "button[type=\"button\"]:nth-child(3)"
+              "section[aria-labelledby=\"overview-heading\"]"
             ]
           },
           {
@@ -12718,7 +12719,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -12829,7 +12830,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -12847,7 +12848,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -12865,27 +12866,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "aria-conditional-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "ARIA attribute is allowed"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
-            "target": [
-              "button[type=\"button\"]:nth-child(3)"
+              "section[aria-labelledby=\"overview-heading\"]"
             ]
           },
           {
@@ -12940,7 +12923,7 @@
               }
             ],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -13336,7 +13319,7 @@
               }
             ],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -13354,7 +13337,7 @@
               }
             ],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -13372,27 +13355,9 @@
               }
             ],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "aria-prohibited-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "ARIA attribute is allowed"
-              }
-            ],
-            "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
-            "target": [
-              "button[type=\"button\"]:nth-child(3)"
+              "section[aria-labelledby=\"overview-heading\"]"
             ]
           },
           {
@@ -13447,7 +13412,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -13518,7 +13483,7 @@
               }
             ],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -13699,7 +13664,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -13731,7 +13696,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -13763,41 +13728,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "aria-valid-attr-value",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA attribute values are valid"
-              },
-              {
-                "id": "aria-errormessage",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
-              },
-              {
-                "id": "aria-level",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "aria-level values are valid"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
-            "target": [
-              "button[type=\"button\"]:nth-child(3)"
+              "section[aria-labelledby=\"overview-heading\"]"
             ]
           },
           {
@@ -13920,7 +13853,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -13938,7 +13871,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -13956,27 +13889,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-valid-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA attribute name is valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
-            "target": [
-              "button[type=\"button\"]:nth-child(3)"
+              "section[aria-labelledby=\"overview-heading\"]"
             ]
           },
           {
@@ -14309,7 +14224,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -14327,7 +14242,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<button type=\"button\" class=\"\">Lesson</button>",
             "target": [
               "button[type=\"button\"]:nth-child(2)"
             ]
@@ -14345,7 +14260,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
+            "html": "<button type=\"button\" class=\"\">Quiz</button>",
             "target": [
               "button[type=\"button\"]:nth-child(3)"
             ]
@@ -14398,45 +14313,9 @@
                     ]
                   },
                   {
-                    "html": "<h3>Definition</h3>",
+                    "html": "<h3 id=\"overview-heading\">Overview</h3>",
                     "target": [
-                      "section:nth-child(5) > h3"
-                    ]
-                  },
-                  {
-                    "html": "<h3>When to use it</h3>",
-                    "target": [
-                      "section:nth-child(6) > h3"
-                    ]
-                  },
-                  {
-                    "html": "<h3>Pros</h3>",
-                    "target": [
-                      "div:nth-child(1) > h3"
-                    ]
-                  },
-                  {
-                    "html": "<h3>Cons</h3>",
-                    "target": [
-                      "div:nth-child(2) > h3"
-                    ]
-                  },
-                  {
-                    "html": "<h3>Example</h3>",
-                    "target": [
-                      "section:nth-child(8) > h3"
-                    ]
-                  },
-                  {
-                    "html": "<h3>Gotchas</h3>",
-                    "target": [
-                      "section:nth-child(9) > h3"
-                    ]
-                  },
-                  {
-                    "html": "<h3>Vibe coder default</h3>",
-                    "target": [
-                      "section:nth-child(10) > h3"
+                      "#overview-heading"
                     ]
                   }
                 ],
@@ -14584,7 +14463,7 @@
             "impact": null,
             "html": "<p>SQL, NoSQL, vector, graph, ORMs, and hosted-vs-self-hosted defaults.</p>",
             "target": [
-              ".sub-map-banner > p:nth-child(3)"
+              "p:nth-child(3)"
             ]
           },
           {
@@ -15107,7 +14986,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -15132,7 +15011,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<button type=\"button\" class=\"\">Lesson</button>",
             "target": [
               "button[type=\"button\"]:nth-child(2)"
             ]
@@ -15157,7 +15036,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
+            "html": "<button type=\"button\" class=\"\">Quiz</button>",
             "target": [
               "button[type=\"button\"]:nth-child(3)"
             ]
@@ -15168,81 +15047,6 @@
                 "id": "color-contrast",
                 "data": {
                   "fgColor": "#3b3245",
-                  "bgColor": "#f9eee9",
-                  "contrastRatio": 10.66,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.66"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"format-note\" data-testid=\"format-note\"><strong>Overview<!-- --> format:</strong> adaptive <!-- -->overview<!-- --> presentation arrives in a later lesson update.</p>",
-            "target": [
-              ".format-note"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f9eee9",
-                  "contrastRatio": 10.66,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.66"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<strong>Overview<!-- --> format:</strong>",
-            "target": [
-              ".format-note > strong"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "13.8pt (18.4px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"landmark-hook\">The durable database choice that is often right.</p>",
-            "target": [
-              ".landmark-hook"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
                   "bgColor": "#f4e9d0",
                   "contrastRatio": 10.07,
                   "fontSize": "14.0pt (18.72px)",
@@ -15257,9 +15061,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Definition</h3>",
+            "html": "<h3 id=\"overview-heading\">Overview</h3>",
             "target": [
-              "section:nth-child(5) > h3"
+              "#overview-heading"
             ]
           },
           {
@@ -15282,509 +15086,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>SQL databases store durable records in tables with explicit relationships. They are a strong default when your app needs transactions, constraints, and flexible queries across connected data.</p>",
+            "html": "<p>",
             "target": [
-              "section:nth-child(5) > p"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "14.0pt (18.72px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>When to use it</h3>",
-            "target": [
-              "section:nth-child(6) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>You need related records such as users, teams, projects, and invoices.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Several writes must succeed or fail together.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>You need reporting or filters that cross multiple kinds of records.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Your data rules matter more than accepting any document shape.</li>",
-            "target": [
-              "li:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "14.0pt (18.72px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Pros</h3>",
-            "target": [
-              "div:nth-child(1) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Transactions protect multi-step changes.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Constraints catch invalid data at the database boundary.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Joins support questions you did not predict when designing the schema.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "14.0pt (18.72px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Cons</h3>",
-            "target": [
-              "div:nth-child(2) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Schema changes require reviewed migrations.</li>",
-            "target": [
-              "div:nth-child(2) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Indexes and slow queries still need deliberate maintenance.</li>",
-            "target": [
-              "div:nth-child(2) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "14.0pt (18.72px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Example</h3>",
-            "target": [
-              "section:nth-child(8) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p>A client portal relates users, companies, projects, invoices, and messages. Tell your agent to model those relationships in PostgreSQL, enforce ownership with constraints, and wrap invoice creation in a transaction.</p>",
-            "target": [
-              "section:nth-child(8) > p"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "14.0pt (18.72px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Gotchas</h3>",
-            "target": [
-              "section:nth-child(9) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Keep database credentials and privileged queries server-side.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Add indexes from measured query patterns, not guesses.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "14.0pt (18.72px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Vibe coder default</h3>",
-            "target": [
-              "section:nth-child(10) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p>Start with PostgreSQL for application records, and keep it until a measured need proves another store fits better.</p>",
-            "target": [
-              "section:nth-child(10) > p"
+              "section[aria-labelledby=\"overview-heading\"] > p"
             ]
           }
         ]
@@ -15861,6 +15165,24 @@
             "target": [
               "#landmark-title"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "duplicate-id-aria",
+                "data": "overview-heading",
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h3 id=\"overview-heading\">Overview</h3>",
+            "target": [
+              "#overview-heading"
+            ]
           }
         ]
       },
@@ -15924,117 +15246,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Definition</h3>",
+            "html": "<h3 id=\"overview-heading\">Overview</h3>",
             "target": [
-              "section:nth-child(5) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>When to use it</h3>",
-            "target": [
-              "section:nth-child(6) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Pros</h3>",
-            "target": [
-              "div:nth-child(1) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Cons</h3>",
-            "target": [
-              "div:nth-child(2) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Example</h3>",
-            "target": [
-              "section:nth-child(8) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Gotchas</h3>",
-            "target": [
-              "section:nth-child(9) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Vibe coder default</h3>",
-            "target": [
-              "section:nth-child(10) > h3"
+              "#overview-heading"
             ]
           }
         ]
@@ -16070,43 +15284,7 @@
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(5) > h3:nth-child(1)"
-                      ],
-                      "level": 3
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(6) > h3:nth-child(1)"
-                      ],
-                      "level": 3
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(7) > div:nth-child(1) > h3:nth-child(1)"
-                      ],
-                      "level": 3
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(7) > div:nth-child(2) > h3:nth-child(1)"
-                      ],
-                      "level": 3
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(8) > h3:nth-child(1)"
-                      ],
-                      "level": 3
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(9) > h3:nth-child(1)"
-                      ],
-                      "level": 3
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(10) > h3:nth-child(1)"
+                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(3) > h3:nth-child(1)"
                       ],
                       "level": 3
                     }
@@ -16156,117 +15334,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Definition</h3>",
+            "html": "<h3 id=\"overview-heading\">Overview</h3>",
             "target": [
-              "section:nth-child(5) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>When to use it</h3>",
-            "target": [
-              "section:nth-child(6) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Pros</h3>",
-            "target": [
-              "div:nth-child(1) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Cons</h3>",
-            "target": [
-              "div:nth-child(2) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Example</h3>",
-            "target": [
-              "section:nth-child(8) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Gotchas</h3>",
-            "target": [
-              "section:nth-child(9) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Vibe coder default</h3>",
-            "target": [
-              "section:nth-child(10) > h3"
+              "#overview-heading"
             ]
           }
         ]
@@ -16534,6 +15604,27 @@
             "target": [
               "#landmark-list"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "region",
+                  "accessibleText": "overview"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
+            "target": [
+              "section[aria-labelledby=\"overview-heading\"]"
+            ]
           }
         ]
       },
@@ -16771,330 +15862,6 @@
         ]
       },
       {
-        "id": "list",
-        "impact": null,
-        "tags": [
-          "cat.structure",
-          "wcag2a",
-          "wcag131",
-          "EN-301-549",
-          "EN-9.1.3.1",
-          "RGAAv4",
-          "RGAA-9.3.1"
-        ],
-        "description": "Ensure that lists are structured correctly",
-        "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/list?application=playwright",
-        "nodes": [
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "only-listitems",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List element only has direct children that are allowed inside <li> elements"
-              }
-            ],
-            "impact": null,
-            "html": "<ul><li>You need related records such as users, teams, projects, and invoices.</li><li>Several writes must succeed or fail together.</li><li>You need reporting or filters that cross multiple kinds of records.</li><li>Your data rules matter more than accepting any document shape.</li></ul>",
-            "target": [
-              "section:nth-child(6) > ul"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "only-listitems",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List element only has direct children that are allowed inside <li> elements"
-              }
-            ],
-            "impact": null,
-            "html": "<ul><li>Transactions protect multi-step changes.</li><li>Constraints catch invalid data at the database boundary.</li><li>Joins support questions you did not predict when designing the schema.</li></ul>",
-            "target": [
-              "div:nth-child(1) > ul"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "only-listitems",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List element only has direct children that are allowed inside <li> elements"
-              }
-            ],
-            "impact": null,
-            "html": "<ul><li>Schema changes require reviewed migrations.</li><li>Indexes and slow queries still need deliberate maintenance.</li></ul>",
-            "target": [
-              "div:nth-child(2) > ul"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "only-listitems",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List element only has direct children that are allowed inside <li> elements"
-              }
-            ],
-            "impact": null,
-            "html": "<ul><li>Keep database credentials and privileged queries server-side.</li><li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li><li>Add indexes from measured query patterns, not guesses.</li></ul>",
-            "target": [
-              "section:nth-child(9) > ul"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "listitem",
-        "impact": null,
-        "tags": [
-          "cat.structure",
-          "wcag2a",
-          "wcag131",
-          "EN-301-549",
-          "EN-9.1.3.1",
-          "RGAAv4",
-          "RGAA-9.3.1"
-        ],
-        "description": "Ensure <li> elements are used semantically",
-        "help": "<li> elements must be contained in a <ul> or <ol>",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/listitem?application=playwright",
-        "nodes": [
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>You need related records such as users, teams, projects, and invoices.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Several writes must succeed or fail together.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>You need reporting or filters that cross multiple kinds of records.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Your data rules matter more than accepting any document shape.</li>",
-            "target": [
-              "li:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Transactions protect multi-step changes.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Constraints catch invalid data at the database boundary.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Joins support questions you did not predict when designing the schema.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Schema changes require reviewed migrations.</li>",
-            "target": [
-              "div:nth-child(2) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Indexes and slow queries still need deliberate maintenance.</li>",
-            "target": [
-              "div:nth-child(2) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Keep database credentials and privileged queries server-side.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Add indexes from measured query patterns, not guesses.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(3)"
-            ]
-          }
-        ]
-      },
-      {
         "id": "meta-viewport-large",
         "impact": null,
         "tags": [
@@ -17193,7 +15960,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -17211,7 +15978,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<button type=\"button\" class=\"\">Lesson</button>",
             "target": [
               "button[type=\"button\"]:nth-child(2)"
             ]
@@ -17229,7 +15996,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
+            "html": "<button type=\"button\" class=\"\">Quiz</button>",
             "target": [
               "button[type=\"button\"]:nth-child(3)"
             ]
@@ -17444,7 +16211,7 @@
             "impact": null,
             "html": "<p>SQL, NoSQL, vector, graph, ORMs, and hosted-vs-self-hosted defaults.</p>",
             "target": [
-              ".sub-map-banner > p:nth-child(3)"
+              "p:nth-child(3)"
             ]
           },
           {
@@ -17962,7 +16729,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Lesson format\"><button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button><button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -17982,7 +16749,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-pressed=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
             "target": [
               ".is-active"
             ]
@@ -18002,7 +16769,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Lesson</button>",
+            "html": "<button type=\"button\" class=\"\">Lesson</button>",
             "target": [
               "button[type=\"button\"]:nth-child(2)"
             ]
@@ -18022,7 +16789,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\" aria-pressed=\"false\">Quiz</button>",
+            "html": "<button type=\"button\" class=\"\">Quiz</button>",
             "target": [
               "button[type=\"button\"]:nth-child(3)"
             ]
@@ -18042,9 +16809,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"format-note\" data-testid=\"format-note\"><strong>Overview<!-- --> format:</strong> adaptive <!-- -->overview<!-- --> presentation arrives in a later lesson update.</p>",
+            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
             "target": [
-              ".format-note"
+              "section[aria-labelledby=\"overview-heading\"]"
             ]
           },
           {
@@ -18062,9 +16829,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<strong>Overview<!-- --> format:</strong>",
+            "html": "<h3 id=\"overview-heading\">Overview</h3>",
             "target": [
-              ".format-note > strong"
+              "#overview-heading"
             ]
           },
           {
@@ -18082,689 +16849,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"landmark-hook\">The durable database choice that is often right.</p>",
+            "html": "<p>",
             "target": [
-              ".landmark-hook"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<section><h3>Definition</h3><p>SQL databases store durable records in tables with explicit relationships. They are a strong default when your app needs transactions, constraints, and flexible queries across connected data.</p></section>",
-            "target": [
-              "section:nth-child(5)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Definition</h3>",
-            "target": [
-              "section:nth-child(5) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p>SQL databases store durable records in tables with explicit relationships. They are a strong default when your app needs transactions, constraints, and flexible queries across connected data.</p>",
-            "target": [
-              "section:nth-child(5) > p"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<section>",
-            "target": [
-              "section:nth-child(6)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>When to use it</h3>",
-            "target": [
-              "section:nth-child(6) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<ul><li>You need related records such as users, teams, projects, and invoices.</li><li>Several writes must succeed or fail together.</li><li>You need reporting or filters that cross multiple kinds of records.</li><li>Your data rules matter more than accepting any document shape.</li></ul>",
-            "target": [
-              "section:nth-child(6) > ul"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>You need related records such as users, teams, projects, and invoices.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Several writes must succeed or fail together.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>You need reporting or filters that cross multiple kinds of records.</li>",
-            "target": [
-              "section:nth-child(6) > ul > li:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Your data rules matter more than accepting any document shape.</li>",
-            "target": [
-              "li:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<section class=\"tradeoff-grid\">",
-            "target": [
-              ".tradeoff-grid"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<div><h3>Pros</h3><ul><li>Transactions protect multi-step changes.</li><li>Constraints catch invalid data at the database boundary.</li><li>Joins support questions you did not predict when designing the schema.</li></ul></div>",
-            "target": [
-              ".tradeoff-grid > div:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Pros</h3>",
-            "target": [
-              "div:nth-child(1) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<ul><li>Transactions protect multi-step changes.</li><li>Constraints catch invalid data at the database boundary.</li><li>Joins support questions you did not predict when designing the schema.</li></ul>",
-            "target": [
-              "div:nth-child(1) > ul"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Transactions protect multi-step changes.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Constraints catch invalid data at the database boundary.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Joins support questions you did not predict when designing the schema.</li>",
-            "target": [
-              "div:nth-child(1) > ul > li:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<div><h3>Cons</h3><ul><li>Schema changes require reviewed migrations.</li><li>Indexes and slow queries still need deliberate maintenance.</li></ul></div>",
-            "target": [
-              ".tradeoff-grid > div:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Cons</h3>",
-            "target": [
-              "div:nth-child(2) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<ul><li>Schema changes require reviewed migrations.</li><li>Indexes and slow queries still need deliberate maintenance.</li></ul>",
-            "target": [
-              "div:nth-child(2) > ul"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Schema changes require reviewed migrations.</li>",
-            "target": [
-              "div:nth-child(2) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Indexes and slow queries still need deliberate maintenance.</li>",
-            "target": [
-              "div:nth-child(2) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<section><h3>Example</h3><p>A client portal relates users, companies, projects, invoices, and messages. Tell your agent to model those relationships in PostgreSQL, enforce ownership with constraints, and wrap invoice creation in a transaction.</p></section>",
-            "target": [
-              "section:nth-child(8)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Example</h3>",
-            "target": [
-              "section:nth-child(8) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p>A client portal relates users, companies, projects, invoices, and messages. Tell your agent to model those relationships in PostgreSQL, enforce ownership with constraints, and wrap invoice creation in a transaction.</p>",
-            "target": [
-              "section:nth-child(8) > p"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<section><h3>Gotchas</h3><ul><li>Keep database credentials and privileged queries server-side.</li><li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li><li>Add indexes from measured query patterns, not guesses.</li></ul></section>",
-            "target": [
-              "section:nth-child(9)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Gotchas</h3>",
-            "target": [
-              "section:nth-child(9) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<ul><li>Keep database credentials and privileged queries server-side.</li><li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li><li>Add indexes from measured query patterns, not guesses.</li></ul>",
-            "target": [
-              "section:nth-child(9) > ul"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Keep database credentials and privileged queries server-side.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(1)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Require your agent to generate and review migrations; never let it edit production tables ad hoc.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li>Add indexes from measured query patterns, not guesses.</li>",
-            "target": [
-              "section:nth-child(9) > ul > li:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<section><h3>Vibe coder default</h3><p>Start with PostgreSQL for application records, and keep it until a measured need proves another store fits better.</p></section>",
-            "target": [
-              "section:nth-child(10)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3>Vibe coder default</h3>",
-            "target": [
-              "section:nth-child(10) > h3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p>Start with PostgreSQL for application records, and keep it until a measured need proves another store fits better.</p>",
-            "target": [
-              "section:nth-child(10) > p"
+              "section[aria-labelledby=\"overview-heading\"] > p"
             ]
           },
           {

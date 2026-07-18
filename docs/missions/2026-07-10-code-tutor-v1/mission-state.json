@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-19T02:20:00Z",
+  "updated_at": "2026-07-19T02:40:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -488,6 +488,22 @@
       ],
       "blocked_reason": "Production deploy denied by permission classifier (needs user approval); VAL-061 runtime drill needs AI_DRILL_SECRET (absent). Autonomous parts done: VAL-042 env audit clean (no live keys), deploy pipeline proven on preview, drill harness unit-tested. Convergent HITL gate.",
       "notes": "VAL-060/061 require production-deploy approval + AI_DRILL_SECRET. Proceeding to ISSUE-031 (autonomous) then surfacing the ISSUE-032 closeout gate."
+    },
+    {
+      "issue": "ISSUE-031",
+      "status": "complete",
+      "started_at": "2026-07-19T02:25:00Z",
+      "worker": "orchestrator (screenshots/gif) + codex gpt-5.6-sol (copy, per R013)",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-031/VAL-052-launch-assets.md",
+        "evidence/ISSUE-031/VAL-001-gate.txt",
+        "handoffs/ISSUE-031.md",
+        "../../launch/"
+      ],
+      "completed_at": "2026-07-19T02:40:00Z",
+      "validator": "VAL-052: assets present in docs/launch/, absence-of-posting asserted (0 integrations), gate green",
+      "notes": "Demo gif + 3 screenshots + Show HN + tweet thread + README + POST-CHECKLIST. HELD \u2014 nothing posted; final post is user action after ISSUE-032."
     }
   ],
   "artifact_paths": {

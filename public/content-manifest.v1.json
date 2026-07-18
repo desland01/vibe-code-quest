@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-17T18:16:18.252Z",
+  "generatedAt": "2026-07-18T20:36:06.075Z",
   "regions": [
     {
       "id": "languages",
@@ -944,200 +944,338 @@
         {
           "id": "model-call-vs-agent",
           "title": "Model call vs agent",
-          "draft": true,
-          "hook": "A short starting point for understanding Model call vs agent.",
-          "definition": "A model call produces one bounded response, while an agent can choose and execute multiple steps toward a goal.",
+          "draft": false,
+          "hook": "Use the smallest loop that can finish the job.",
+          "definition": "A model call maps one bounded input to one response. An agent adds a loop that can choose tools and next steps, which increases reach and failure modes.",
           "when_to_use": [
-            "Use this lesson when Model call vs agent affects a product or implementation decision."
+            "You need one classification, extraction, rewrite, or generated object.",
+            "You can express the output as a schema and validate it immediately.",
+            "The task may require choosing among tools based on intermediate results.",
+            "The number of steps cannot be known safely in advance."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "A single call is easier to test, price, and debug.",
+              "Structured outputs can enforce the response shape.",
+              "An agent can adapt when a task needs different tools or follow-up steps."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "A single call cannot inspect new evidence unless you provide it.",
+              "Agent loops add latency, cost, and more paths to unsafe actions.",
+              "An agent can stop early, repeat work, or pursue the wrong goal."
             ]
           },
-          "example": "A builder asks an agent to explain how Model call vs agent changes the proposed implementation.",
+          "example": "A receipt importer needs merchant, date, currency, and line items. Tell your agent to start with one model call using a strict output schema, then add a bounded tool loop only if it must fetch missing records.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Cap agent steps, time, and spend before the loop starts.",
+            "Require confirmation before irreversible or externally visible tool calls.",
+            "Make your agent validate structured output and handle refusals or missing fields."
           ],
-          "vibe_coder_default": "Ask the agent to state its Model call vs agent assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with one model call and structured outputs; add an agent only when the task truly needs dynamic tool or step selection.",
           "quiz": {
-            "question": "What is the safest current use of this Model call vs agent draft?",
+            "question": "What should power a receipt importer with a fixed output shape?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "One model call with a validated schema",
+              "An unbounded agent with every app tool",
+              "A multi-agent planning team"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "One model call with a validated schema",
+            "explanation": "A fixed transformation does not need a planning loop, so one validated call is easier to control."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://platform.openai.com/docs/guides/structured-outputs",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://platform.openai.com/docs/guides/agents",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "retrieval-augmented-generation",
           "title": "Retrieval-augmented generation",
-          "draft": true,
-          "hook": "A short starting point for understanding Retrieval-augmented generation.",
-          "definition": "Retrieval supplies relevant private or current context before a model produces an answer.",
+          "draft": false,
+          "hook": "Retrieve evidence before asking the model to answer.",
+          "definition": "Retrieval-augmented generation, or RAG, finds relevant source material and includes it in a model request. It can ground answers in your data, but retrieval does not guarantee correctness.",
           "when_to_use": [
-            "Use this lesson when Retrieval-augmented generation affects a product or implementation decision."
+            "Answers must use private documents that were not in model training.",
+            "Your source material changes more often than a model release.",
+            "Users need citations back to manuals, policies, or records.",
+            "A measured search test shows semantic retrieval beats keyword search."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "You can update source content without training a model.",
+              "Returned source IDs can make answers reviewable.",
+              "Metadata filters can restrict retrieval by tenant, version, or permission."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Bad chunking or ranking can hide the needed evidence.",
+              "Retrieved text can contain hostile instructions or stale content.",
+              "Embedding, indexing, and evaluation add operating cost."
             ]
           },
-          "example": "A builder asks an agent to explain how Retrieval-augmented generation changes the proposed implementation.",
+          "example": "A benefits assistant answers from plan documents that change each year. Tell your agent to retrieve passages filtered by employer and plan year, cite source IDs, and say when the evidence is insufficient.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Apply authorization filters before retrieval, not after generation.",
+            "Treat retrieved text as untrusted data and keep it separate from system instructions.",
+            "Test retrieval and final answers separately with labeled questions."
           ],
-          "vibe_coder_default": "Ask the agent to state its Retrieval-augmented generation assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with a small indexed corpus, metadata filters, citations, and a labeled retrieval test; add RAG only when supplied context no longer fits the need.",
           "quiz": {
-            "question": "What is the safest current use of this Retrieval-augmented generation draft?",
+            "question": "What is the safest retrieval rule for a multi-tenant policy assistant?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Filter authorized documents before similarity search",
+              "Retrieve every tenant and hide citations later",
+              "Let the model decide which tenant owns a passage"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Filter authorized documents before similarity search",
+            "explanation": "Retrieval is a data-access boundary, so unauthorized passages must never enter the model context."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://platform.openai.com/docs/guides/retrieval",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.pinecone.io/guides/search/filter-by-metadata",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/long-context-tips",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "tool-use",
           "title": "Tool use",
-          "draft": true,
-          "hook": "A short starting point for understanding Tool use.",
-          "definition": "Tool use lets a model request narrowly defined actions through validated schemas.",
+          "draft": false,
+          "hook": "Give models narrow handles, not broad authority.",
+          "definition": "Tool use lets a model request a function through a defined input schema. Your application still validates the request, runs the code, and decides what result returns to the model.",
           "when_to_use": [
-            "Use this lesson when Tool use affects a product or implementation decision."
+            "The model needs current data from an approved API or database query.",
+            "A user request should create a draft in another system.",
+            "A calculation needs deterministic application code.",
+            "One assistant must choose among a small set of bounded capabilities."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Schemas make available actions and arguments explicit.",
+              "Application code can enforce authorization and validation.",
+              "Deterministic tools can handle work models should not improvise."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "The model can select the wrong tool or supply bad arguments.",
+              "Every tool expands the security and testing surface.",
+              "External APIs introduce latency, failures, and side effects."
             ]
           },
-          "example": "A builder asks an agent to explain how Tool use changes the proposed implementation.",
+          "example": "A project assistant can search tasks and draft a status update. Tell your agent to expose separate read and draft tools with strict schemas, while requiring user confirmation before sending any message.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Authorize every tool call against the current user and resource.",
+            "Validate arguments server-side even when the provider enforces a schema.",
+            "Keep secrets out of tool descriptions, results, and model-visible errors."
           ],
-          "vibe_coder_default": "Ask the agent to state its Tool use assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with two or three read-only tools using strict schemas; add write tools only with idempotency and confirmation for material side effects.",
           "quiz": {
-            "question": "What is the safest current use of this Tool use draft?",
+            "question": "Who should enforce access before a model-requested task lookup runs?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Your server-side tool handler",
+              "The model prompt alone",
+              "The tool result after it reaches the model"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Your server-side tool handler",
+            "explanation": "A tool request is untrusted input, so the application must enforce authorization before accessing data."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://platform.openai.com/docs/guides/function-calling",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://modelcontextprotocol.io/docs/getting-started/intro",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "workflows-vs-agents",
           "title": "Workflows vs agents",
-          "draft": true,
-          "hook": "A short starting point for understanding Workflows vs agents.",
-          "definition": "Workflows follow code-defined steps, while agents dynamically choose what to do next.",
+          "draft": false,
+          "hook": "Code the path when you already know it.",
+          "definition": "A workflow follows steps and branches defined by your code. An agent chooses its next step from context, which helps with open-ended work but reduces predictability.",
           "when_to_use": [
-            "Use this lesson when Workflows vs agents affects a product or implementation decision."
+            "A business process has known stages, approvals, and retry rules.",
+            "Each step needs clear logs and deterministic recovery.",
+            "Open-ended research may require different searches and follow-up questions.",
+            "The task can tolerate bounded exploration before a human review."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Workflows are easier to observe, retry, and audit.",
+              "Code-defined branches keep policy outside model judgment.",
+              "Agents can adapt when the useful path depends on intermediate evidence."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Workflows become cumbersome when valid paths vary widely.",
+              "Agents make timing, cost, and outcomes less predictable.",
+              "Both designs need explicit failure and cancellation handling."
             ]
           },
-          "example": "A builder asks an agent to explain how Workflows vs agents changes the proposed implementation.",
+          "example": "A refund request needs eligibility checks, manager approval, payment processing, and a receipt. Tell your agent to build that as a durable workflow, using a model only to summarize evidence for the reviewer.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Keep approvals, money movement, and policy checks in deterministic code.",
+            "Persist step state so retries do not repeat side effects.",
+            "Bound any agent inside the workflow by tools, steps, time, and review gates."
           ],
-          "vibe_coder_default": "Ask the agent to state its Workflows vs agents assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with a code-defined workflow and insert bounded model calls; use an agent only inside steps where the path cannot be specified reliably.",
           "quiz": {
-            "question": "What is the safest current use of this Workflows vs agents draft?",
+            "question": "How should an app handle a refund with fixed approval rules?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "A durable code-defined workflow",
+              "An autonomous agent with payment credentials",
+              "One prompt that performs every side effect"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "A durable code-defined workflow",
+            "explanation": "Known policy, approval, and payment stages need explicit state, retries, and human control."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://platform.openai.com/docs/guides/agents",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://ai-sdk.dev/docs/agents/workflows",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "ai-evals",
-          "title": "Evals",
-          "draft": true,
-          "hook": "A short starting point for understanding Evals.",
-          "definition": "Evals are repeatable checks for whether AI behavior remains useful, correct, and safe enough.",
+          "title": "AI evals",
+          "draft": false,
+          "hook": "Turn “looks good” into repeatable evidence.",
+          "definition": "AI evals are repeatable tests that measure model behavior on representative cases. They help you compare prompts, models, and system changes, but their results are only as useful as the test set and graders.",
           "when_to_use": [
-            "Use this lesson when Evals affects a product or implementation decision."
+            "You are choosing between prompts or models for one product task.",
+            "A change could regress correctness, safety, tone, or tool selection.",
+            "Production failures need to become reproducible test cases.",
+            "You need a release threshold for an AI feature."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "A fixed dataset makes changes comparable over time.",
+              "Task-specific criteria reveal failures broad benchmarks miss.",
+              "Production examples can improve coverage after review and redaction."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Test sets become stale as users and data change.",
+              "Model-based graders can be biased or inconsistent.",
+              "Passing offline tests does not replace production monitoring."
             ]
           },
-          "example": "A builder asks an agent to explain how Evals changes the proposed implementation.",
+          "example": "A support drafter must cite the correct policy and avoid promised refunds. Tell your agent to build a versioned set of real, redacted tickets with citation, policy, and refusal criteria, then run it before each prompt change.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Keep a human-reviewed holdout set outside prompt-tuning work.",
+            "Inspect failures by category instead of trusting one aggregate score.",
+            "Require your agent to version prompts, datasets, graders, and model settings together."
           ],
-          "vibe_coder_default": "Ask the agent to state its Evals assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with 20 to 50 representative cases, deterministic checks where possible, and human review of model-graded failures before expanding the suite.",
           "quiz": {
-            "question": "What is the safest current use of this Evals draft?",
+            "question": "What should you do after a production answer cites the wrong policy?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Add a redacted case to the eval set",
+              "Tune the prompt and rely on memory",
+              "Replace all human review with one model grader"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Add a redacted case to the eval set",
+            "explanation": "A reviewed production failure should become a repeatable regression case for future changes."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://platform.openai.com/docs/guides/evals",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.anthropic.com/en/docs/test-and-evaluate/define-success",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.anthropic.com/en/docs/test-and-evaluate/develop-tests",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "model-selection-routing",
           "title": "Model selection and routing",
-          "draft": true,
-          "hook": "A short starting point for understanding Model selection and routing.",
-          "definition": "Model routing chooses among capability, speed, cost, and modality for each request.",
+          "draft": false,
+          "hook": "Route by measured need, not model prestige.",
+          "definition": "Model selection matches a product task to needed quality, speed, cost, context, and modality. Routing applies that choice per request using explicit rules or a tested classifier.",
           "when_to_use": [
-            "Use this lesson when Model selection and routing affects a product or implementation decision."
+            "A cheap model meets quality targets for common requests.",
+            "Some inputs need vision, long context, or stronger reasoning.",
+            "Latency targets differ between interactive and background work.",
+            "A fallback must preserve service during a provider or model failure."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Task-specific routing can reduce cost and latency.",
+              "Fallbacks can improve availability during bounded failures.",
+              "Evals can tie model choices to product quality targets."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "More models multiply prompts, tests, and operational paths.",
+              "A bad router can send difficult work to an inadequate model.",
+              "Fallbacks can change behavior, output shape, or safety characteristics."
             ]
           },
-          "example": "A builder asks an agent to explain how Model selection and routing changes the proposed implementation.",
+          "example": "A document app extracts fields from routine forms and reviews ambiguous scans. Tell your agent to use one default model, escalate only low-confidence cases to a vision-capable model, and record route, latency, cost, and eval outcome.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Verify every routed model against the same output contract and safety checks.",
+            "Set finite retry and fallback rules to prevent loops and surprise spend.",
+            "Do not let your agent invent capability, price, or model identifiers; verify provider documentation."
           ],
-          "vibe_coder_default": "Ask the agent to state its Model selection and routing assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with one model that passes your evals; add an explicit second route only when measured quality, latency, modality, or cost data supports it.",
           "quiz": {
-            "question": "What is the safest current use of this Model selection and routing draft?",
+            "question": "When should you add a second model route?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "When measured task data shows a useful tradeoff",
+              "When a new model gets attention online",
+              "Before you have a baseline eval set"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "When measured task data shows a useful tradeoff",
+            "explanation": "Routing earns its complexity when task-level evidence shows a meaningful quality, latency, modality, or cost benefit."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://platform.openai.com/docs/models",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://ai-sdk.dev/docs/ai-sdk-core/provider-management",
+              "checked": "2026-07-17"
+            }
+          ]
         }
       ]
     },

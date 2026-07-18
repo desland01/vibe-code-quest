@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-17T23:40:00Z",
+  "updated_at": "2026-07-18T16:35:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -248,6 +248,22 @@
       "completed_at": "2026-07-17T23:40:00Z",
       "validator": "orchestrator accuracy/voice review recorded in review artifact; gate green; region live on preview",
       "notes": "Gold standard set. VOICE.md FROZEN. Repeatable template for 016..022 recorded in handoff."
+    },
+    {
+      "issue": "ISSUE-016",
+      "status": "complete",
+      "started_at": "2026-07-17T23:45:00Z",
+      "worker": "codex gpt-5.6-sol authoring; orchestrator: URL verification (19/19), accuracy+voice review, deploy",
+      "commit": "pending",
+      "evidence": [
+        "../../content/reviews/infra.md",
+        "evidence/ISSUE-016/VAL-001-gate.txt",
+        "evidence/ISSUE-016/preview-infra.png",
+        "handoffs/ISSUE-016.md"
+      ],
+      "completed_at": "2026-07-18T16:35:00Z",
+      "validator": "orchestrator accuracy/voice review recorded; gate green; region live on preview",
+      "notes": "Infra/Hosting authored, 19/19 sources verified, VOICE-conformant, live."
     }
   ],
   "artifact_paths": {

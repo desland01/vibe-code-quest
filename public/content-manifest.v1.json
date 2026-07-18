@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-17T18:06:13.855Z",
+  "generatedAt": "2026-07-17T18:16:18.252Z",
   "regions": [
     {
       "id": "languages",
@@ -590,42 +590,55 @@
         {
           "id": "serverless-functions",
           "title": "Serverless functions",
-          "draft": true,
-          "hook": "A low-operations shape for bounded request work.",
-          "definition": "Serverless functions run bounded backend work on demand without requiring the team to manage servers directly.",
+          "draft": false,
+          "hook": "Bounded backend work without an always-on server.",
+          "definition": "Serverless functions run backend code when a request or event arrives. The provider manages the servers, but your code still owns timeouts, retries, data access, and cost.",
           "when_to_use": [
-            "Backend work is request-response shaped.",
-            "You do not need an always-on worker."
+            "You need short API handlers for forms, webhooks, or authenticated reads.",
+            "Traffic is uneven and an idle server would add needless operating work.",
+            "A scheduled task finishes within the provider's runtime limits.",
+            "Your framework already maps backend routes to managed functions."
           ],
           "tradeoffs": {
             "pros": [
-              "Low server-management burden",
-              "Scales per request"
+              "You deploy handlers without patching an operating system.",
+              "Capacity can follow request volume without a server-sizing step.",
+              "Each function gives you a narrow deployment and permission boundary."
             ],
             "cons": [
-              "Runtime and duration limits apply",
-              "Long-running work needs another shape"
+              "Duration, memory, payload, and concurrency limits shape the design.",
+              "Cold starts and remote database connections can add latency.",
+              "Provider runtimes and event contracts create migration work."
             ]
           },
-          "example": "A route validates a form submission, writes a record, and returns a status.",
+          "example": "A booking app receives a payment webhook, verifies its signature, and records the event idempotently. Tell your agent to return quickly, reject unsigned requests, and move slow follow-up work to a durable queue.",
           "gotchas": [
-            "Check platform limits.",
-            "Move long-running jobs outside the request path."
+            "Check current runtime, duration, payload, and concurrency limits before choosing the request path.",
+            "Require your agent to make retries idempotent and cap every outbound call.",
+            "Keep functions near their database, and measure connection pressure under bursts."
           ],
-          "vibe_coder_default": "Use bounded functions for ordinary request handlers and introduce workers only when requirements demand them.",
+          "vibe_coder_default": "Start with Vercel Functions for bounded handlers in a Vercel web app; choose another runtime when limits or long-lived work conflict with the workload.",
           "quiz": {
-            "question": "What fits a serverless function?",
+            "question": "Which workload is the cleanest fit for a serverless function?",
             "options": [
-              "A short form handler",
-              "A permanent process",
-              "A long media render"
+              "A short signed webhook handler",
+              "A permanent queue consumer",
+              "A four-hour video encoder"
             ],
-            "answer": "A short form handler",
-            "explanation": "Functions fit bounded request-response work."
+            "answer": "A short signed webhook handler",
+            "explanation": "Functions fit bounded event work; permanent or long-running processes need a different runtime shape."
           },
           "sources": [
             {
-              "url": "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-concepts.html",
+              "url": "https://vercel.com/docs/functions",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://vercel.com/docs/functions/limitations",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
               "checked": "2026-07-17"
             }
           ]
@@ -633,75 +646,111 @@
         {
           "id": "vps-single-server",
           "title": "VPS / single server",
-          "draft": true,
-          "hook": "A short starting point for understanding VPS / single server.",
-          "definition": "A single virtual server offers a straightforward always-on runtime with explicit operational responsibility.",
+          "draft": false,
+          "hook": "One understandable machine, with all the chores included.",
+          "definition": "A virtual private server gives you an always-on machine with its own operating system and resources. It offers direct control, while making you responsible for security updates, backups, monitoring, and recovery.",
           "when_to_use": [
-            "Use this lesson when VPS / single server affects a product or implementation decision."
+            "You need an always-on process with predictable, modest traffic.",
+            "Your application requires system packages or network controls a managed runtime lacks.",
+            "You can own patching, backups, monitoring, and incident response.",
+            "A single failure domain is acceptable or you have planned failover."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "You control the operating system, runtime, ports, and background processes.",
+              "One machine keeps the initial architecture easy to inspect.",
+              "Fixed resources can make steady workloads easier to budget."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "You own security patches, firewall rules, backups, and restore drills.",
+              "The server is a failure domain unless you add redundancy.",
+              "Scaling and zero-downtime deploys require additional design."
             ]
           },
-          "example": "A builder asks an agent to explain how VPS / single server changes the proposed implementation.",
+          "example": "An internal inventory service runs an API, a scheduled importer, and a small PostgreSQL instance for twelve staff members. Tell your agent to create repeatable deploys, restrict inbound ports, back up off-server, and document a tested restore path.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Disable password-based administrative access and restrict exposed ports before launch.",
+            "Require your agent to preserve persistent data across deploys and prove backups restore elsewhere.",
+            "Monitor disk, memory, certificates, and failed services before users become the alert system."
           ],
-          "vibe_coder_default": "Ask the agent to state its VPS / single server assumptions and verify them before shipping.",
+          "vibe_coder_default": "Choose a DigitalOcean Droplet for a modest always-on service only when you accept server operations; use a managed platform when you do not.",
           "quiz": {
-            "question": "What is the safest current use of this VPS / single server draft?",
+            "question": "What must you accept before choosing one VPS?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Ownership of patching, backups, and recovery",
+              "Automatic multi-region failover",
+              "No need for monitoring"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Ownership of patching, backups, and recovery",
+            "explanation": "A VPS gives you machine control by transferring core operating responsibilities to you."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://docs.digitalocean.com/products/droplets/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.hetzner.com/cloud/servers/overview/",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "containers",
           "title": "Containers",
-          "draft": true,
-          "hook": "A repeatable runtime unit for work that needs more control.",
-          "definition": "Containers package an application and its runtime into a repeatable unit for workers and long-running services.",
+          "draft": false,
+          "hook": "Package the runtime; keep operations explicit.",
+          "definition": "Containers package an application and its runtime files into a repeatable image. They give workers and services a consistent environment, but orchestration, storage, networking, and updates remain separate concerns.",
           "when_to_use": [
-            "You need a long-running service or worker.",
-            "Runtime binaries and dependencies must be explicit."
+            "You need a long-running service or queue worker.",
+            "Runtime binaries and system dependencies must be explicit.",
+            "Local, test, and production environments need the same packaged process.",
+            "A managed host accepts container images but not your native runtime."
           ],
           "tradeoffs": {
             "pros": [
-              "Repeatable runtime",
-              "Suitable for workers and services"
+              "Images make runtime dependencies explicit and reviewable.",
+              "The same image can move through testing and deployment.",
+              "Processes receive useful filesystem and dependency isolation."
             ],
             "cons": [
-              "Adds operational surface",
-              "Scaling remains a separate concern"
+              "Image building, scanning, storage, and rollout add delivery work.",
+              "Persistent data and secrets need external lifecycle rules.",
+              "Scheduling, scaling, networking, and recovery still need an owner."
             ]
           },
-          "example": "A media worker processes uploads outside the web request path.",
+          "example": "A media service pulls uploads from a queue and runs FFmpeg for several minutes. Tell your agent to build a minimal Docker image, run as a non-root user, store outputs outside the container, and handle job retries idempotently.",
           "gotchas": [
-            "Keep secrets outside images.",
-            "Define persistence and networking explicitly."
+            "Keep credentials out of image layers and inject them at runtime.",
+            "Require your agent to pin base images, scan dependencies, and define a rebuild cadence.",
+            "Persist state outside the container and test termination during active work."
           ],
-          "vibe_coder_default": "Reach for containers when runtime or execution requirements no longer fit bounded functions.",
+          "vibe_coder_default": "Package long-running workers with Docker and deploy them on Fly.io when you need managed container hosting; stay with functions for bounded request work.",
           "quiz": {
-            "question": "What suggests a container may be useful?",
+            "question": "Which workload most clearly benefits from a container?",
             "options": [
-              "Long-running background processing",
-              "A static heading",
-              "A button hover"
+              "A long-running FFmpeg queue worker",
+              "A static pricing page",
+              "A CSS hover effect"
             ],
-            "answer": "Long-running background processing",
-            "explanation": "Containers suit controlled, long-lived runtime processes."
+            "answer": "A long-running FFmpeg queue worker",
+            "explanation": "A container makes the worker's binaries and long-lived runtime explicit and repeatable."
           },
           "sources": [
             {
               "url": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.docker.com/engine/storage/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://fly.io/docs/launch/deploy/",
               "checked": "2026-07-17"
             }
           ]
@@ -709,101 +758,174 @@
         {
           "id": "edge-compute",
           "title": "Edge compute",
-          "draft": true,
-          "hook": "A short starting point for understanding Edge compute.",
-          "definition": "Edge compute runs bounded logic near users when latency and geographic distribution matter.",
+          "draft": false,
+          "hook": "Move small decisions closer to the request.",
+          "definition": "Edge compute runs bounded logic across geographically distributed locations near users. It can reduce network delay, but remote data and limited runtimes can erase that benefit.",
           "when_to_use": [
-            "Use this lesson when Edge compute affects a product or implementation decision."
+            "You need request routing or personalization before traffic reaches an origin.",
+            "Users are globally distributed and the required data is also nearby.",
+            "You need lightweight authentication or feature decisions on cached content.",
+            "Measurements show network distance dominates response time."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Nearby execution can reduce request travel time.",
+              "Distributed capacity can absorb globally scattered traffic.",
+              "Logic can run before a cached response or origin request."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Remote database calls can cancel the latency gain.",
+              "Runtime APIs, CPU time, and package support may be constrained.",
+              "Distributed logs and region-specific failures complicate debugging."
             ]
           },
-          "example": "A builder asks an agent to explain how Edge compute changes the proposed implementation.",
+          "example": "A documentation site chooses locale and access rules before serving cached pages worldwide. Tell your agent to keep the decision small, avoid a cross-ocean database call, and record the chosen region in traces.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Measure end-to-end latency with real data placement before adopting edge execution.",
+            "Require your agent to verify every runtime API and package against provider documentation.",
+            "Keep authorization fail-closed when configuration or regional data is unavailable."
           ],
-          "vibe_coder_default": "Ask the agent to state its Edge compute assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use Cloudflare Workers for small globally distributed request logic; keep database-heavy application code near its primary data.",
           "quiz": {
-            "question": "What is the safest current use of this Edge compute draft?",
+            "question": "When is edge compute most likely to help?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Small request logic with nearby data",
+              "A transaction against one distant database",
+              "A long CPU-heavy video render"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Small request logic with nearby data",
+            "explanation": "Edge placement helps when both the computation and its required data avoid long network trips."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://developers.cloudflare.com/workers/reference/how-workers-works/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://developers.cloudflare.com/workers/platform/limits/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://developers.cloudflare.com/workers/observability/",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "static-cdn",
           "title": "Static + CDN",
-          "draft": true,
-          "hook": "A short starting point for understanding Static + CDN.",
-          "definition": "Static hosting and a content delivery network suit sites that do not need a request-time backend.",
+          "draft": false,
+          "hook": "Prebuilt files make the safest backend unnecessary.",
+          "definition": "Static hosting serves files built before a visitor requests them. A content delivery network caches those files near users, which suits public pages without request-time application logic.",
           "when_to_use": [
-            "Use this lesson when Static + CDN affects a product or implementation decision."
+            "You are publishing documentation, a portfolio, or a marketing site.",
+            "Content changes during a deploy instead of per visitor.",
+            "Pages can call separate APIs for the few dynamic actions they need.",
+            "You want a small attack surface and globally cached assets."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Prebuilt files need little request-time infrastructure.",
+              "CDN caching can serve assets close to users.",
+              "Versioned deploys make rollback straightforward."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Personalized or private pages need another execution path.",
+              "Large content sets can make builds slow or invalidation complex.",
+              "Stale caches can hide updates without clear cache rules."
             ]
           },
-          "example": "A builder asks an agent to explain how Static + CDN changes the proposed implementation.",
+          "example": "A product handbook publishes versioned guides and release notes from a repository. Tell your agent to prebuild every public route, fingerprint assets, define cache headers, and send feedback forms to a separate authenticated endpoint.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Exclude secrets and private records from build output and source maps.",
+            "Require your agent to define cache invalidation and verify headers after deployment.",
+            "Test direct navigation, missing pages, and old asset URLs after each release."
           ],
-          "vibe_coder_default": "Ask the agent to state its Static + CDN assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use Cloudflare Pages for public sites that build to static files; add server code only for a specific request-time need.",
           "quiz": {
-            "question": "What is the safest current use of this Static + CDN draft?",
+            "question": "Which project best fits static hosting with a CDN?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "A public versioned product handbook",
+              "A private live trading dashboard",
+              "A stateful multiplayer game server"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "A public versioned product handbook",
+            "explanation": "Public content that changes at build time can be prebuilt and cached without a request-time backend."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://developers.cloudflare.com/pages/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://developers.cloudflare.com/cache/concepts/default-cache-behavior/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://vercel.com/docs/cdn-cache",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "managed-platforms",
           "title": "Managed platforms",
-          "draft": true,
-          "hook": "A short starting point for understanding Managed platforms.",
-          "definition": "Managed application platforms run services while taking on much of the infrastructure operations burden.",
+          "draft": false,
+          "hook": "Deploy the service without becoming its infrastructure team.",
+          "definition": "A managed application platform builds and runs your service from source code or a container. It handles much of deployment and host operation, while you still own application security, data, scaling choices, and provider limits.",
           "when_to_use": [
-            "Use this lesson when Managed platforms affects a product or implementation decision."
+            "You need an API or worker that does not fit a function runtime.",
+            "Your team wants managed deploys, logs, restarts, and service networking.",
+            "You need attached databases or background services without operating hosts.",
+            "Shipping product work matters more than tuning infrastructure."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Source-based deploys reduce host setup and release scripting.",
+              "Managed logs, health checks, and restarts cover common operating needs.",
+              "Services and managed data products can share one platform workflow."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Platform build rules, networking, and service contracts create lock-in.",
+              "Costs can rise as always-on services and databases multiply.",
+              "Deep operating-system or network control may be unavailable."
             ]
           },
-          "example": "A builder asks an agent to explain how Managed platforms changes the proposed implementation.",
+          "example": "A small team runs a web API, a queue worker, PostgreSQL, and a scheduled cleanup job. Tell your agent to declare each process separately, add health checks, keep secrets in platform settings, and prove database backups restore.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Review sleep, restart, storage, region, and scaling behavior before launch.",
+            "Require your agent to use documented platform configuration instead of invented deployment fields.",
+            "Keep data exports and a provider-exit runbook even when deploys are managed."
           ],
-          "vibe_coder_default": "Ask the agent to state its Managed platforms assumptions and verify them before shipping.",
+          "vibe_coder_default": "Start with Railway for a small API and worker stack; choose Render when its documented service model better matches your runtime or team workflow.",
           "quiz": {
-            "question": "What is the safest current use of this Managed platforms draft?",
+            "question": "Why choose a managed platform over one VPS?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "You want managed deploy and service operations",
+              "You need unrestricted host control",
+              "You want to patch the operating system yourself"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "You want managed deploy and service operations",
+            "explanation": "Managed platforms trade some infrastructure control for a smaller deployment and host-operations burden."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://docs.railway.com/guides/services",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.railway.com/guides/deployments",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://render.com/docs/web-services",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://render.com/docs/background-workers",
+              "checked": "2026-07-17"
+            }
+          ]
         }
       ]
     },

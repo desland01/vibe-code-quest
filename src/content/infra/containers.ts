@@ -1,41 +1,45 @@
-import { createDraftLandmark } from '../draft.ts';
+import type { Landmark } from '../schema.ts';
 
-export const landmark = createDraftLandmark("containers", "Containers", "Containers package an application and its runtime into a repeatable unit for workers and long-running services.", {
-  "hook": "A repeatable runtime unit for work that needs more control.",
-  "when_to_use": [
-    "You need a long-running service or worker.",
-    "Runtime binaries and dependencies must be explicit."
+export const landmark = {
+  id: 'containers',
+  title: 'Containers',
+  draft: false,
+  hook: 'Package the runtime; keep operations explicit.',
+  definition: 'Containers package an application and its runtime files into a repeatable image. They give workers and services a consistent environment, but orchestration, storage, networking, and updates remain separate concerns.',
+  when_to_use: [
+    'You need a long-running service or queue worker.',
+    'Runtime binaries and system dependencies must be explicit.',
+    'Local, test, and production environments need the same packaged process.',
+    'A managed host accepts container images but not your native runtime.'
   ],
-  "tradeoffs": {
-    "pros": [
-      "Repeatable runtime",
-      "Suitable for workers and services"
+  tradeoffs: {
+    pros: [
+      'Images make runtime dependencies explicit and reviewable.',
+      'The same image can move through testing and deployment.',
+      'Processes receive useful filesystem and dependency isolation.'
     ],
-    "cons": [
-      "Adds operational surface",
-      "Scaling remains a separate concern"
+    cons: [
+      'Image building, scanning, storage, and rollout add delivery work.',
+      'Persistent data and secrets need external lifecycle rules.',
+      'Scheduling, scaling, networking, and recovery still need an owner.'
     ]
   },
-  "example": "A media worker processes uploads outside the web request path.",
-  "gotchas": [
-    "Keep secrets outside images.",
-    "Define persistence and networking explicitly."
+  example: 'A media service pulls uploads from a queue and runs FFmpeg for several minutes. Tell your agent to build a minimal Docker image, run as a non-root user, store outputs outside the container, and handle job retries idempotently.',
+  gotchas: [
+    'Keep credentials out of image layers and inject them at runtime.',
+    'Require your agent to pin base images, scan dependencies, and define a rebuild cadence.',
+    'Persist state outside the container and test termination during active work.'
   ],
-  "vibe_coder_default": "Reach for containers when runtime or execution requirements no longer fit bounded functions.",
-  "quiz": {
-    "question": "What suggests a container may be useful?",
-    "options": [
-      "Long-running background processing",
-      "A static heading",
-      "A button hover"
-    ],
-    "answer": "Long-running background processing",
-    "explanation": "Containers suit controlled, long-lived runtime processes."
+  vibe_coder_default: 'Package long-running workers with Docker and deploy them on Fly.io when you need managed container hosting; stay with functions for bounded request work.',
+  quiz: {
+    question: 'Which workload most clearly benefits from a container?',
+    options: ['A long-running FFmpeg queue worker', 'A static pricing page', 'A CSS hover effect'],
+    answer: 'A long-running FFmpeg queue worker',
+    explanation: 'A container makes the worker\'s binaries and long-lived runtime explicit and repeatable.'
   },
-  "sources": [
-    {
-      "url": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/",
-      "checked": "2026-07-17"
-    }
+  sources: [
+    { url: 'https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/', checked: '2026-07-17' },
+    { url: 'https://docs.docker.com/engine/storage/', checked: '2026-07-17' },
+    { url: 'https://fly.io/docs/launch/deploy/', checked: '2026-07-17' }
   ]
-});
+} satisfies Landmark;

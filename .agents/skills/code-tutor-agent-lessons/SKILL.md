@@ -82,6 +82,36 @@ ISSUE-007 added access/budget controls around LLM tutor usage. The reusable patt
 - Route gateway/model invocations only through the access seam. Tests should prove direct bypasses are impossible or at least lint-detected, and should cover concurrent reservations, exhausted caps, expired windows, and failure refunds.
 - Do not wire real paid-provider calls from a learning/review run. Prove the budget contract with mocks or configured non-metered fixtures unless the user explicitly approves spend.
 
+### 8. AI gateway fallback and drill paths must be typed, bounded, and canary-scoped
+
+ISSUE-008 added the AI SDK v6 Gateway transport seam before any live tutor surface consumed it. The durable lesson is to keep provider calls behind one typed server seam and make failure drills impossible to abuse in production.
+
+- Verify the current SDK/provider shape before locking implementation details. In this mission `ai@^6` was pinned after a GA check; a later major version bump is a separate mechanical follow-up, not an in-slice improvisation.
+- Keep model/provider strings configurable but routed through one server module. Consumers should not import provider SDKs directly or bypass the access/budget seam.
+- Fallbacks must be explicit and finite: one 429 fallback attempt to the cheaper model, no retry storm on 5xx/network outage, and typed `gateway_down` style results for UI handling.
+- Drill hooks need signed, expiring, canary-scoped headers and production forced-config rejection. Malformed drill input should be ignored or fail closed without exposing internals.
+- Tests for the gateway seam should use injected transports and mocks. Do not require live credentials, network, or paid provider calls for normal slice verification.
+
+### 9. Content maps are manifest-backed products, not loose data files
+
+ISSUE-010 through ISSUE-015 converted the map into a taxonomy-locked manifest and proved the Databases region as the gold standard. Future content workers should preserve the contract instead of hand-editing runtime JSON.
+
+- Generate content through the schema-to-manifest pipeline. Keep IDs locked to `TAXONOMY.md`, assert exactly eight regions and six landmarks per region, and commit the deterministic `public/content-manifest.v1.json` read by runtime loaders.
+- Draft gates are phase-aware. Before M4 exit, `--forbid-drafts` should fail loudly with the remaining draft list; after all regions are authored, wire the forbid-drafts gate into the normal build.
+- Split client and server concerns. The browser can read committed JSON plus TypeScript types; Zod validation belongs in build/server paths so client bundles do not pay for validator code.
+- Each authored region needs primary-source URL verification, a per-claim/source review artifact, voice review against frozen `docs/content/VOICE.md`, and a preview screenshot. A manifest build alone is not content accuracy proof.
+- Serial region execution matters. Use the Databases region as the exemplar, then close one region with review, gate, preview, screenshot, and commit before dispatching the next.
+
+### 10. Map UX proof is DOM-canonical, accessible, lazy-enhanced, and measured after deploy
+
+ISSUE-011 through ISSUE-014 built the top map, sub-map routes, accessibility pass, and performance budget without making Pixi the source of truth.
+
+- The semantic DOM layer is canonical. Canvas/Pixi is presentation-only and must dispatch the same reducer actions, stay `aria-hidden`, and preserve keyboard, pointer, reduced-motion, and `?nocanvas=1` fallback behavior.
+- URL state is source truth for deep links. Generate static params from the manifest, `notFound()` invalid region/landmark ids, validate optional formats, and prove cold-load plus refresh/back-forward behavior in e2e tests.
+- Accessibility fixes need machine and manual evidence: skip link, focus trap/restoration, live-region announcements, 44px targets, 200/400% zoom proxies, reduced-motion scans, axe on representative routes, and a screen-reader walkthrough script.
+- Performance budgets should measure initial route JS separately from lazy enhancements. Defer Pixi/canvas until window load plus idle time, keep the DOM map interactive immediately, and record deployed vitals/screenshots at desktop and phone viewports.
+- Vision/style judges are advisory when they conflict with locked style tokens. Record the disposition and defer subjective token amendments to an explicit style gate rather than letting a judge rewrite the product language mid-slice.
+
 ## Verification menu
 
 - Docs/skills only: read back changed files and run `git diff --check`.

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { useSession } from '@/lib/auth/SessionProvider';
 import { regions } from '@/lib/content-client';
 import { UpgradeAccountModal } from '@/components/UpgradeAccountModal';
 import { OnboardingChat } from '@/components/OnboardingChat';
@@ -11,6 +12,7 @@ import { initialMapState, mapReducer } from '@/lib/mapState';
 import '@/components/map/Accessibility.css';
 
 export function MapExperience() {
+  const session = useSession();
   const [state, dispatch] = useReducer(mapReducer, initialMapState);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [liveMessage, setLiveMessage] = useState('');
@@ -57,9 +59,75 @@ export function MapExperience() {
         {selectedRegion && <RegionPanel region={selectedRegion} onClose={closePanel} restoreFocus={() => lastTriggerRef.current?.focus()} />}
       </section>
       <OnboardingChat />
+      {session.status === 'authenticated' && <ShareProgress />}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true" data-testid="map-live-region">
         {liveMessage}
       </p>
     </main>
   );
+}
+
+function ShareProgress() {
+  const [share, setShare] = useState<{ token: string; url: string } | null>(null);
+  const [status, setStatus] = useState('');
+  const [busy, setBusy] = useState(false);
+
+  async function createShare() {
+    setBusy(true);
+    setStatus('Creating share link…');
+    try {
+      const response = await fetch('/api/share', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ action: 'create' })
+      });
+      if (!response.ok) throw new Error('Could not create share link');
+      const result = await response.json() as { token: string; url: string };
+      setShare(result);
+      setStatus('Share link ready.');
+    } catch {
+      setStatus('Could not create a share link. Please try again.');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function copyShare() {
+    if (!share) return;
+    try {
+      await navigator.clipboard.writeText(share.url);
+      setStatus('Share link copied.');
+    } catch {
+      setStatus('Copy failed. Select and copy the link manually.');
+    }
+  }
+
+  async function revokeShare() {
+    if (!share) return;
+    setBusy(true);
+    const response = await fetch('/api/share', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ action: 'revoke', token: share.token })
+    });
+    if (response.ok) {
+      setShare(null);
+      setStatus('Share link revoked.');
+    } else {
+      setStatus('Could not revoke the share link.');
+    }
+    setBusy(false);
+  }
+
+  return <section className="share-control" aria-labelledby="share-progress-title">
+    <h2 id="share-progress-title">Share your progress</h2>
+    <p>Create a public snapshot with completion counts only. It contains no email or account details.</p>
+    {!share ? <button type="button" onClick={createShare} disabled={busy}>Share my progress</button> : <div className="share-link-actions">
+      <label htmlFor="share-progress-url">Public link</label>
+      <input id="share-progress-url" value={share.url} readOnly onFocus={(event) => event.currentTarget.select()} />
+      <button type="button" onClick={copyShare}>Copy link</button>
+      <button type="button" onClick={revokeShare} disabled={busy}>Revoke link</button>
+    </div>}
+    <p role="status" aria-live="polite" data-testid="share-status">{status}</p>
+  </section>;
 }

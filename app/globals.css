@@ -10,6 +10,16 @@
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
+.share-control, .share-page { max-width: 760px; margin: 2rem auto; padding: 1.5rem; border: 3px solid var(--ink, #173f35); background: var(--paper, #fff8df); color: var(--ink, #173f35); }
+.share-control button { min-height: 44px; padding: .65rem 1rem; }
+.share-link-actions { display: grid; gap: .75rem; }
+.share-link-actions input { min-height: 44px; padding: .5rem; font: inherit; }
+.share-page { min-height: 70vh; }
+.share-hero { margin-bottom: 2rem; }
+.share-region-list { display: grid; gap: .75rem; padding: 0; list-style: none; }
+.share-region-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; border: 2px solid currentColor; }
+.share-date { margin-top: 2rem; }
+
 * { box-sizing: border-box; }
 body { margin: 0; background: #fff8e9; }
 button { font: inherit; }

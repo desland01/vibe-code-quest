@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T23:05:21.131Z",
+    "timestamp": "2026-07-18T23:18:31.953Z",
     "url": "http://localhost:3100/",
     "toolOptions": {
       "reporter": "v1"
@@ -1380,9 +1380,75 @@
               }
             ],
             "impact": null,
+            "html": "<section class=\"share-control\" aria-labelledby=\"share-progress-title\">",
+            "target": [
+              ".share-control"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -1516,9 +1582,27 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-allowed-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "ARIA role is allowed for given element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -1825,9 +1909,45 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<section class=\"share-control\" aria-labelledby=\"share-progress-title\">",
+            "target": [
+              ".share-control"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -1936,9 +2056,27 @@
               }
             ],
             "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "deprecatedrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "ARIA role is not deprecated"
+              }
+            ],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -2433,9 +2571,45 @@
               }
             ],
             "impact": null,
+            "html": "<section class=\"share-control\" aria-labelledby=\"share-progress-title\">",
+            "target": [
+              ".share-control"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -2544,9 +2718,27 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-required-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "All required ARIA attributes are present"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -2679,9 +2871,41 @@
               }
             ],
             "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "invalidrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA role is valid"
+              },
+              {
+                "id": "abstractrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Abstract roles are not used"
+              },
+              {
+                "id": "unsupportedrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA role is supported"
+              }
+            ],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -3212,9 +3436,73 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<section class=\"share-control\" aria-labelledby=\"share-progress-title\">",
+            "target": [
+              ".share-control"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -3567,9 +3855,45 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<section class=\"share-control\" aria-labelledby=\"share-progress-title\">",
+            "target": [
+              ".share-control"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -4395,6 +4719,24 @@
             "target": [
               ".onboarding-chat__actions > button[type=\"button\"]:nth-child(2)"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has inner text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\">Share my progress</button>",
+            "target": [
+              ".share-control > button[type=\"button\"]"
+            ]
           }
         ]
       },
@@ -4441,6 +4783,12 @@
                     "html": "<h1>code-tutor</h1>",
                     "target": [
                       "h1"
+                    ]
+                  },
+                  {
+                    "html": "<h2 id=\"share-progress-title\">Share your progress</h2>",
+                    "target": [
+                      "#share-progress-title"
                     ]
                   }
                 ],
@@ -4672,6 +5020,81 @@
                 "id": "color-contrast",
                 "data": {
                   "fgColor": "#3b3245",
+                  "bgColor": "#fff8df",
+                  "contrastRatio": 11.42,
+                  "fontSize": "18.0pt (24px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 11.42"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2 id=\"share-progress-title\">Share your progress</h2>",
+            "target": [
+              "#share-progress-title"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#fff8df",
+                  "contrastRatio": 11.42,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 11.42"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>Create a public snapshot with completion counts only. It contains no email or account details.</p>",
+            "target": [
+              ".share-control > p:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#000000",
+                  "bgColor": "#efefef",
+                  "contrastRatio": 18.26,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 18.26"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\">Share my progress</button>",
+            "target": [
+              ".share-control > button[type=\"button\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
                   "bgColor": "#f4e9d0",
                   "contrastRatio": 10.07,
                   "fontSize": "12.0pt (16px)",
@@ -4851,6 +5274,24 @@
             "target": [
               "#onboarding-answer"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "duplicate-id-aria",
+                "data": "share-progress-title",
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2 id=\"share-progress-title\">Share your progress</h2>",
+            "target": [
+              "#share-progress-title"
+            ]
           }
         ]
       },
@@ -4899,6 +5340,24 @@
             "html": "<h1>code-tutor</h1>",
             "target": [
               "h1"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2 id=\"share-progress-title\">Share your progress</h2>",
+            "target": [
+              "#share-progress-title"
             ]
           }
         ]
@@ -4976,6 +5435,12 @@
                         "html > body > main:nth-child(2) > header:nth-child(3) > div:nth-child(1) > h1:nth-child(1)"
                       ],
                       "level": 1
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > main:nth-child(2) > section:nth-child(6) > h2:nth-child(1)"
+                      ],
+                      "level": 2
                     }
                   ]
                 },
@@ -5008,6 +5473,24 @@
             "html": "<h1>code-tutor</h1>",
             "target": [
               "h1"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "heading-order",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Heading order valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2 id=\"share-progress-title\">Share your progress</h2>",
+            "target": [
+              "#share-progress-title"
             ]
           }
         ]
@@ -5481,6 +5964,27 @@
             "html": "<section class=\"onboarding-chat\" role=\"dialog\" aria-modal=\"false\" aria-labelledby=\"onboarding-title\" data-testid=\"onboarding-panel\">",
             "target": [
               ".onboarding-chat"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "landmark-is-unique",
+                "data": {
+                  "role": "region",
+                  "accessibleText": "share your progress"
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<section class=\"share-control\" aria-labelledby=\"share-progress-title\">",
+            "target": [
+              ".share-control"
             ]
           },
           {
@@ -6380,6 +6884,24 @@
             "html": "<button type=\"button\" disabled=\"\">Finish</button>",
             "target": [
               ".onboarding-chat__actions > button[type=\"button\"]:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\">Share my progress</button>",
+            "target": [
+              ".share-control > button[type=\"button\"]"
             ]
           }
         ]
@@ -7643,9 +8165,109 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<section class=\"share-control\" aria-labelledby=\"share-progress-title\">",
+            "target": [
+              ".share-control"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2 id=\"share-progress-title\">Share your progress</h2>",
+            "target": [
+              "#share-progress-title"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>Create a public snapshot with completion counts only. It contains no email or account details.</p>",
+            "target": [
+              ".share-control > p:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\">Share my progress</button>",
+            "target": [
+              ".share-control > button[type=\"button\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p role=\"status\" aria-live=\"polite\" data-testid=\"share-status\"></p>",
+            "target": [
+              "p[data-testid=\"share-status\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-testid=\"map-live-region\"></p>",
             "target": [
-              "p[role=\"status\"]"
+              "p[aria-atomic=\"true\"]"
             ]
           },
           {
@@ -7895,7 +8517,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T23:05:21.907Z",
+    "timestamp": "2026-07-18T23:18:32.822Z",
     "url": "http://localhost:3100/map/databases",
     "toolOptions": {
       "reporter": "v1"
@@ -12689,7 +13311,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T23:05:23.319Z",
+    "timestamp": "2026-07-18T23:18:33.780Z",
     "url": "http://localhost:3100/map/databases/sql",
     "toolOptions": {
       "reporter": "v1"

@@ -3,7 +3,7 @@
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
   "updated_at": "2026-07-19T02:50:00Z",
-  "phase": "closeout",
+  "phase": "execution",
   "status": "active",
   "mission_volume": {
     "duration_estimate": "27 issues / 7 milestones; M4 content is the long pole; design-doc human equivalent ~20+ weeks, agent-executed serially",

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-18T20:47:59.006Z",
+  "generatedAt": "2026-07-18T20:54:36.572Z",
   "regions": [
     {
       "id": "languages",
@@ -1994,200 +1994,332 @@
         {
           "id": "secrets-and-environment",
           "title": "Secrets and environment",
-          "draft": true,
-          "hook": "A short starting point for understanding Secrets and environment.",
-          "definition": "Secrets are credentials that belong in protected server-side stores, never source, browsers, prompts, or logs.",
+          "draft": false,
+          "hook": "A secret copied into code is already exposed.",
+          "definition": "Secrets are credentials that grant access to systems or data. Keep them out of source, browsers, prompts, and logs, then load them server-side from protected environment or secret stores.",
           "when_to_use": [
-            "Use this lesson when Secrets and environment affects a product or implementation decision."
+            "You connect a server to a database or paid API.",
+            "You sign sessions, webhooks, or encrypted data.",
+            "Your build or deployment needs provider credentials.",
+            "You give an agent access to test or production services."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Secret stores separate credentials from code.",
+              "Rotation can limit damage after exposure.",
+              "Environment-specific credentials keep development away from production."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Rotation and access policies require operating discipline.",
+              "Missing or mis-scoped secrets can break builds and deployments."
             ]
           },
-          "example": "A builder asks an agent to explain how Secrets and environment changes the proposed implementation.",
+          "example": "A booking app needs database and email credentials. Tell your agent to read named environment variables only in server code, fail closed when they are absent, and document rotation without printing values.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Reject agent-generated examples that hardcode real credentials or expose server secrets through public environment prefixes.",
+            "Review logs, error payloads, prompts, and build output because agents often add debugging that leaks values.",
+            "Rotate an exposed credential and inspect its use; deleting it from the latest commit does not erase history."
           ],
-          "vibe_coder_default": "Ask the agent to state its Secrets and environment assumptions and verify them before shipping.",
+          "vibe_coder_default": "Use environment variables backed by your deployment platform secret manager, with separate scoped credentials for development, preview, and production.",
           "quiz": {
-            "question": "What is the safest current use of this Secrets and environment draft?",
+            "question": "Where should a production database credential be available?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Only in server-side runtime configuration",
+              "In a public browser environment variable",
+              "Inside the repository README"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Only in server-side runtime configuration",
+            "explanation": "The server needs the credential, while browsers, source history, and documentation are disclosure paths."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://vercel.com/docs/environment-variables",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "authentication-vs-authorization",
           "title": "Authentication vs authorization",
-          "draft": true,
-          "hook": "A short starting point for understanding Authentication vs authorization.",
-          "definition": "Authentication identifies an actor; authorization determines which actions and records that identity may access.",
+          "draft": false,
+          "hook": "Knowing who is there does not grant access.",
+          "definition": "Authentication establishes an actor’s identity. Authorization decides whether that actor may perform this action on this specific resource, and must be enforced server-side.",
           "when_to_use": [
-            "Use this lesson when Authentication vs authorization affects a product or implementation decision."
+            "You add sign-in or session handling.",
+            "Users own private records or belong to teams.",
+            "Staff and customers have different capabilities.",
+            "An API accepts identifiers supplied by a browser or agent."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Separate checks make access rules explicit.",
+              "Server enforcement protects every client path.",
+              "Resource-level rules prevent users from crossing ownership boundaries."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Every route and background job needs policy coverage.",
+              "Roles alone may not express ownership or tenant boundaries."
             ]
           },
-          "example": "A builder asks an agent to explain how Authentication vs authorization changes the proposed implementation.",
+          "example": "A project dashboard lets members view only their company’s projects. Tell your agent to authenticate the session, then authorize company membership and project access on every server route.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Reject agent-generated code that hides a button but leaves its server action callable.",
+            "Test another user’s valid record ID because agents often check login without checking ownership.",
+            "Deny by default when identity, policy, or resource context is missing."
           ],
-          "vibe_coder_default": "Ask the agent to state its Authentication vs authorization assumptions and verify them before shipping.",
+          "vibe_coder_default": "Authenticate with a maintained server-side session system, then enforce authorization on every route and resource access with deny-by-default policies.",
           "quiz": {
-            "question": "What is the safest current use of this Authentication vs authorization draft?",
+            "question": "A signed-in user requests another company’s invoice. What must the server do?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Check the user may access that invoice",
+              "Trust the hidden invoice link",
+              "Allow access because the user is authenticated"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Check the user may access that invoice",
+            "explanation": "Authentication identifies the user; resource-level authorization decides whether this invoice is permitted."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://owasp.org/Top10/A01_2021-Broken_Access_Control/",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "trust-boundaries",
           "title": "Trust boundaries",
-          "draft": true,
-          "hook": "A short starting point for understanding Trust boundaries.",
-          "definition": "A trust boundary marks where data or control crosses between differently trusted systems.",
+          "draft": false,
+          "hook": "Every boundary turns assumptions into checks.",
+          "definition": "A trust boundary is where data or control crosses between differently trusted actors or systems. Browsers, webhooks, uploaded files, retrieved documents, and model output stay untrusted until the receiving boundary verifies them.",
           "when_to_use": [
-            "Use this lesson when Trust boundaries affects a product or implementation decision."
+            "You accept browser or mobile requests.",
+            "A webhook or partner service triggers work.",
+            "Your agent retrieves documents or calls tools.",
+            "Uploaded content reaches parsers, storage, or models."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Explicit boundaries reveal missing checks.",
+              "Layered verification limits one compromised component.",
+              "Typed contracts make failures easier to test."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Boundary checks add code and failure handling.",
+              "Distributed workflows require careful identity and freshness checks."
             ]
           },
-          "example": "A builder asks an agent to explain how Trust boundaries changes the proposed implementation.",
+          "example": "A support agent reads customer documents and can issue refunds through a tool. Tell your agent to treat document instructions as data, validate tool arguments, authorize the customer and amount, and require confirmation for the refund.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Do not let agent-generated model output select privileged tools or arguments without validation and authorization.",
+            "Verify webhook signatures and replay protections before changing state; agents often trust a familiar JSON shape.",
+            "Keep retrieved text untrusted because prompt injection can arrive through documents, pages, or messages."
           ],
-          "vibe_coder_default": "Ask the agent to state its Trust boundaries assumptions and verify them before shipping.",
+          "vibe_coder_default": "Draw browser, server, database, third-party, and model/tool boundaries, then authenticate, authorize, and validate every crossing.",
           "quiz": {
-            "question": "What is the safest current use of this Trust boundaries draft?",
+            "question": "How should a model tool handler treat arguments produced by the model?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "As untrusted input requiring validation and authorization",
+              "As trusted because the model chose them",
+              "As safe after prompt instructions"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "As untrusted input requiring validation and authorization",
+            "explanation": "Model output crosses a trust boundary and cannot replace application checks."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://owasp.org/www-project-threat-modeling/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "input-validation-and-injection",
           "title": "Input validation and injection",
-          "draft": true,
-          "hook": "A short starting point for understanding Input validation and injection.",
-          "definition": "Untrusted input must be validated and passed through safe APIs at every boundary.",
+          "draft": false,
+          "hook": "Validate meaning, then use APIs that preserve it.",
+          "definition": "Input validation checks untrusted data against an expected type, shape, length, and range. Injection happens when data is interpreted as commands, so safe APIs must keep values separate from SQL, HTML, shell, and other executable syntax.",
           "when_to_use": [
-            "Use this lesson when Input validation and injection affects a product or implementation decision."
+            "A route accepts forms, JSON, query strings, or headers.",
+            "User values reach database queries or rendered HTML.",
+            "Uploads or URLs trigger parsers and network requests.",
+            "Model output becomes a query, command, or tool call."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Schema validation rejects malformed data early.",
+              "Parameterized queries separate SQL values from syntax.",
+              "Allowlisted formats make boundary behavior testable."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Schemas must evolve with legitimate inputs.",
+              "Validation alone cannot make dangerous interpreters safe."
             ]
           },
-          "example": "A builder asks an agent to explain how Input validation and injection changes the proposed implementation.",
+          "example": "A reporting endpoint filters invoices by customer and date. Tell your agent to parse the request with a server schema, enforce allowed ranges, and bind values through parameterized queries.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Reject agent-generated string concatenation for SQL or shell commands, even when earlier validation looks strict.",
+            "Validate again at the server boundary because client schemas and hidden fields are not security controls.",
+            "Constrain model-generated tool arguments with schemas and allowlists; prompt instructions do not prevent injection."
           ],
-          "vibe_coder_default": "Ask the agent to state its Input validation and injection assumptions and verify them before shipping.",
+          "vibe_coder_default": "Validate every server boundary with a shared schema, use parameterized queries, and avoid invoking shells or interpreters with untrusted values.",
           "quiz": {
-            "question": "What is the safest current use of this Input validation and injection draft?",
+            "question": "What is the safe default for a user value in a SQL query?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Bind it as a query parameter",
+              "Concatenate it after escaping quotes",
+              "Ask the model whether it looks safe"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Bind it as a query parameter",
+            "explanation": "Parameters preserve the boundary between SQL syntax and untrusted values."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XSS",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "dependency-supply-chain",
           "title": "Dependency and supply-chain risk",
-          "draft": true,
-          "hook": "A short starting point for understanding Dependency and supply-chain risk.",
-          "definition": "Every dependency and external build step adds code, provenance, and maintenance risk.",
+          "draft": false,
+          "hook": "Every install extends who can ship your code.",
+          "definition": "Your software supply chain includes dependencies, registries, build actions, and update tooling. Each addition brings code and maintainers into your build, so provenance, pinning, review, and timely patching matter.",
           "when_to_use": [
-            "Use this lesson when Dependency and supply-chain risk affects a product or implementation decision."
+            "Your agent proposes a new package.",
+            "A workflow runs third-party build actions.",
+            "Automated updates change lockfiles.",
+            "A security advisory affects a direct or transitive dependency."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Maintained dependencies avoid rebuilding mature capabilities.",
+              "Lockfiles make resolved versions reviewable and reproducible.",
+              "Automated alerts expose known vulnerable versions."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Updates can introduce regressions or compromised code.",
+              "Audits report known issues, not proof that a package is safe."
             ]
           },
-          "example": "A builder asks an agent to explain how Dependency and supply-chain risk changes the proposed implementation.",
+          "example": "An agent proposes a small package to parse one configuration value. Ask it to justify the dependency, inspect maintenance and permissions, preserve the lockfile, and prefer existing platform code when the package adds little value.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Do not approve agent-generated install commands until you verify the exact package name, source, version, and need.",
+            "Review lockfile and workflow changes because agents often add transitive code or broad third-party action permissions.",
+            "Run audits and patch deliberately, but investigate impact instead of applying breaking upgrades blindly."
           ],
-          "vibe_coder_default": "Ask the agent to state its Dependency and supply-chain risk assumptions and verify them before shipping.",
+          "vibe_coder_default": "Keep dependencies minimal, commit the lockfile, review additions and update diffs, enable vulnerability alerts, and pin third-party automation to reviewed revisions.",
           "quiz": {
-            "question": "What is the safest current use of this Dependency and supply-chain risk draft?",
+            "question": "What should happen before accepting an agent-proposed package?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "Verify its identity, need, provenance, and maintenance",
+              "Install it because the name matches the task",
+              "Delete the lockfile to get newer transitive versions"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "Verify its identity, need, provenance, and maintenance",
+            "explanation": "A dependency executes within your supply chain, so convenience does not replace provenance review."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://owasp.org/www-project-software-component-verification-standard/",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions",
+              "checked": "2026-07-17"
+            }
+          ]
         },
         {
           "id": "least-privilege-blast-radius",
           "title": "Least privilege and blast radius",
-          "draft": true,
-          "hook": "A short starting point for understanding Least privilege and blast radius.",
-          "definition": "Limit every user, service, and agent to only the authority and resources its job requires.",
+          "draft": false,
+          "hook": "Limit what one mistake can reach.",
+          "definition": "Least privilege gives each user, service, token, and agent only the authority its current job needs. Smaller scopes, separate environments, and short-lived credentials reduce the blast radius of mistakes or compromise.",
           "when_to_use": [
-            "Use this lesson when Least privilege and blast radius affects a product or implementation decision."
+            "You issue API tokens or cloud roles.",
+            "An agent can call tools or change external systems.",
+            "A background worker accesses customer data.",
+            "Development, preview, and production share infrastructure."
           ],
           "tradeoffs": {
             "pros": [
-              "Makes the relevant decision explicit."
+              "Scoped credentials reduce reachable data and actions.",
+              "Separate roles make access easier to audit.",
+              "Short lifetimes limit exposure after theft."
             ],
             "cons": [
-              "This draft needs deeper examples and accuracy review before publication."
+              "Fine-grained policies require maintenance and testing.",
+              "Overly narrow permissions can interrupt legitimate work."
             ]
           },
-          "example": "A builder asks an agent to explain how Least privilege and blast radius changes the proposed implementation.",
+          "example": "A media worker needs to read one upload bucket and write thumbnails. Tell your agent to create a worker-specific role for those paths, without database administration or access to unrelated buckets.",
           "gotchas": [
-            "Treat this draft as a map marker, not complete guidance."
+            "Reject agent-generated use of owner, admin, wildcard, or production tokens when a narrower role can do the task.",
+            "Separate preview and production credentials because agents often reuse the first working token everywhere.",
+            "Require confirmation and audit logs for destructive tool actions; model intent is not an authorization policy."
           ],
-          "vibe_coder_default": "Ask the agent to state its Least privilege and blast radius assumptions and verify them before shipping.",
+          "vibe_coder_default": "Issue separate, short-lived, narrowly scoped tokens per service and environment, with explicit approval for destructive or production actions.",
           "quiz": {
-            "question": "What is the safest current use of this Least privilege and blast radius draft?",
+            "question": "Which credential should a thumbnail worker receive?",
             "options": [
-              "Use it as an orientation stub",
-              "Treat it as final expert guidance"
+              "A role limited to required upload and thumbnail paths",
+              "The cloud account owner token",
+              "The production database administrator password"
             ],
-            "answer": "Use it as an orientation stub",
-            "explanation": "Every landmark remains draft content until the later authoring and review milestone."
+            "answer": "A role limited to required upload and thumbnail paths",
+            "explanation": "The narrow role completes the job while limiting damage from bugs or compromise."
           },
-          "sources": []
+          "sources": [
+            {
+              "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication",
+              "checked": "2026-07-17"
+            },
+            {
+              "url": "https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions",
+              "checked": "2026-07-17"
+            }
+          ]
         }
       ]
     },

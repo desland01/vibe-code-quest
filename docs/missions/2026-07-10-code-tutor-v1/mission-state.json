@@ -430,7 +430,7 @@
       "status": "complete",
       "started_at": "2026-07-19T00:20:00Z",
       "worker": "codex gpt-5.6-sol authoring + orchestrator paywall-spec fix; orchestrator (Opus 4.8): migration, e2e, VAL-042 audit, validation",
-      "commit": "pending",
+      "commit": "1233a04",
       "evidence": [
         "evidence/ISSUE-027/VAL-040-billing-fixtures.txt",
         "evidence/ISSUE-027/VAL-041-paywall-e2e.txt",

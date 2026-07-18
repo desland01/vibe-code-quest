@@ -448,7 +448,7 @@
       "status": "complete",
       "started_at": "2026-07-19T01:05:00Z",
       "worker": "codex gpt-5.6-sol authoring (correct stop-and-report on event-constraint) + orchestrator spec fix; orchestrator (Opus 4.8): e2e debug, OG capture, validation",
-      "commit": "pending",
+      "commit": "96489ea",
       "evidence": [
         "evidence/ISSUE-028/VAL-050-e2e.txt",
         "evidence/ISSUE-028/share-public-page.png",

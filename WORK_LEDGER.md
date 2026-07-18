@@ -30,6 +30,8 @@
 
 ## Mission 2026-07-10-code-tutor-v1 execution
 
+- 2026-07-18: ISSUE-027 implemented the Stripe test-mode no-card trial, Checkout/cancel/reconciliation routes, transactional ordered/idempotent webhook processing, guide-only paywall, fixture-replay tests, and graceful unconfigured-billing e2e coverage. VAL-041 live test-card flow remains HITL-STRIPE-KEY deferred.
+
 - 2026-07-18: ISSUE-026 drafted structured Terms, Privacy, and Cancellation & Refund policies with prominent legal-review warnings, shared readable rendering, a site-wide reusable legal footer, and VAL-043 Playwright coverage. HITL-LEGAL review remains required before launch.
 
 - 2026-07-18: ISSUE-025 implemented landmark/profile-anchored guide chat, deterministic bounded Opus escalation with persisted decisions, Sonnet/Haiku gateway behavior, canonical offline fallback and signed-drill runtime coverage.

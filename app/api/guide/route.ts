@@ -7,6 +7,7 @@ import { getLandmark } from '@/lib/content';
 import { queryAsUser } from '@/lib/db';
 import { DRILL_HEADER_NAME, drillForUser } from '@/server/aiDrill';
 import { runGuideTurn } from '@/server/guide';
+import { checkAccess } from '@/server/access';
 
 export const dynamic = 'force-dynamic';
 const schema = z.object({
@@ -15,6 +16,17 @@ const schema = z.object({
   message: z.string().trim().min(1).max(1_000),
 });
 
+export async function GET() {
+  const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
+  const session = token ? await verifySessionToken(token) : null;
+  if (!session) return NextResponse.json({ allowed: true, verifiedEmail: false });
+  const [access, profile] = await Promise.all([
+    checkAccess({ userId: session.userId }, 'guide'),
+    queryAsUser<{ email: string | null }>(session.userId, 'SELECT email FROM profiles WHERE id=$1', [session.userId]),
+  ]);
+  return NextResponse.json({ allowed: access.allowed, verifiedEmail: Boolean(profile.rows[0]?.email), reason: access.reason });
+}
+
 export async function POST(request: Request) {
   const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   const session = token ? await verifySessionToken(token) : null;
@@ -22,6 +34,8 @@ export async function POST(request: Request) {
   let body: z.infer<typeof schema>;
   try { body = schema.parse(await request.json()); } catch { return NextResponse.json({ error: 'Invalid request body' }, { status: 400 }); }
   if (!getLandmark(body.regionId, body.landmarkId)) return NextResponse.json({ error: 'Landmark not found' }, { status: 404 });
+  const access = await checkAccess({ userId: session.userId }, 'guide');
+  if (!access.allowed && access.reason === 'subscription required') return NextResponse.json({ error: 'Subscription required' }, { status: 402 });
 
   const result = await queryAsUser<{
     escalations: number;

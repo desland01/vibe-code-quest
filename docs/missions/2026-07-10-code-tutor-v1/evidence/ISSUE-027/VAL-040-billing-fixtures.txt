@@ -1,0 +1,8 @@
+ ✓ src/__tests__/billing.test.ts > billing fixture replay > starts one no-card trial per email and rejects a second profile 4ms
+ ✓ src/__tests__/billing.test.ts > billing fixture replay > rejects a customer that already has a subscription mapping 0ms
+ ✓ src/__tests__/billing.test.ts > billing fixture replay > verifies signatures before touching the database 0ms
+ ✓ src/__tests__/billing.test.ts > billing fixture replay > deduplicates retries and preserves the same entitlement 1ms
+ ✓ src/__tests__/billing.test.ts > billing fixture replay > ignores an older subscription event after a newer event 0ms
+ ✓ src/__tests__/billing.test.ts > billing fixture replay > safely ignores unknown customers and cancels known deleted subscriptions 0ms
+ ✓ src/__tests__/billing.test.ts > billing fixture replay > activates checkout completion and reconciles before a webhook arrives 1ms
+ ✓ src/__tests__/billing.test.ts > billing fixture replay > reads the configured price for checkout 0ms

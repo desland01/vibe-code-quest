@@ -1,0 +1,7 @@
+# VAL-042 no-live-charges audit — ISSUE-027 (2026-07-19)
+- Live-key patterns (sk_live/pk_live/rk_live/live_) in source tree (src/ app/ db/): 0 matches (0 = clean).
+- Local env: STRIPE_SECRET_KEY / STRIPE_WEBHOOK_SECRET / STRIPE_PUBLISHABLE_KEY all ABSENT (no keys of any mode present; billing routes return graceful 503 'billing not configured').
+- Vercel project STRIPE env keys: [] (none set).
+- .env.example lists Stripe variable NAMES only (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PUBLISHABLE_KEY, STRIPE_PRICE_ID), no values.
+- getStripe() throws 'Stripe not configured' when unset; ALL billing functions accept injected clients — fixture tests need no key.
+- Live mode is HITL-LIVE only (ISSUE-032); TEST-mode key needed for the deferred VAL-041 subscribe-with-test-card flow (HITL-STRIPE-KEY).

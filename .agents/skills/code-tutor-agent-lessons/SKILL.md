@@ -112,6 +112,78 @@ ISSUE-011 through ISSUE-014 built the top map, sub-map routes, accessibility pas
 - Performance budgets should measure initial route JS separately from lazy enhancements. Defer Pixi/canvas until window load plus idle time, keep the DOM map interactive immediately, and record deployed vitals/screenshots at desktop and phone viewports.
 - Vision/style judges are advisory when they conflict with locked style tokens. Record the disposition and defer subjective token amendments to an explicit style gate rather than letting a judge rewrite the product language mid-slice.
 
+### 11. Server-owned multi-turn counts beat client-supplied histories
+
+ISSUE-023/024 online onboarding and adaptive lesson chat proved that client message arrays are untrusted model context, not progress authority.
+
+- Persist step/turn counts on the server (profile jsonb or equivalent) and derive caps, calibration completion, and unlocks from that record.
+- Treat client-supplied histories as prompts only. Add a forged-history test that proves calibration and turn caps cannot be skipped by replaying or elongating the client array.
+- Prefer deterministic cores for skip/unlock/parse fallbacks, with LLM phrasing/parse behind the shared AI and access seams.
+
+### 12. Gateway calls fail fast without keys and stay time-bounded
+
+M5 slices hung ~30s when no `AI_GATEWAY_API_KEY` or transport was present until `generateWithGateway` returned `gateway_down` immediately and real calls gained an explicit timeout.
+
+- Missing transport + missing key must return a typed outage immediately so UX can show fixed questions or offline manifesto without waiting on network stacks.
+- Bound live calls with a short hard timeout; on timeout or 5xx, fall through the approved offline/fallback path.
+- Live executor/advisor answers stay HITL-key gated; offline fallback + banner is the proof target when keys are absent.
+
+### 13. Secondary product panels cannot steal ARIA landmarks
+
+ISSUE-023's onboarding panel as a second `complementary` landmark broke map a11y strict-mode tests. Switching to `role="dialog" aria-modal="false"` restored green map/a11y coverage while keeping the panel non-blocking.
+
+- Map chrome owns the main complementary surface. Overlays and coaching panels should use dialog/region roles that do not collide with upper-page landmarks.
+- When e2e queries `getByRole('alert')` or similar shared roles, scope to the component `testid` so Next.js route announcers do not steal matches.
+
+### 14. Session-cookie bootstrap races need authenticated gates
+
+Onboarding/quiz/lesson POSTs 401 when the anonymous session cookie is still bootstrapping. Gate start actions on `useSession().status === 'authenticated'` (or equivalent ready signal) rather than firing on first paint.
+
+- Quiz/lesson interactions that post under the cookie must wait for the session bootstrap the same way onboarding does.
+- Unit and e2e coverage should include cold/bootstrap ordering, not only steady-state happy paths.
+
+### 15. Content regions close only after live source rewrite and forbid-drafts build wiring
+
+ISSUE-016–022 authored all 48 landmarks. Authoring is not done when the manifest builds.
+
+- HTTP-verify every primary source URL after authoring; replace dead links with live replacements and re-scan to zero non-200 before the region is marked complete.
+- Keep per-region review artifacts (sources, voice, accuracy). Preview screenshot proof is required alongside the gate.
+- At M4 exit, wire `build:manifest -- --forbid-drafts` into the default `build` script so no future draft can ship by accident.
+
+### 16. Advisor/executor AI tiers share one gateway seam with stop-on-gap
+
+ISSUE-025 needed an Opus advisor path the gateway client originally could not express. The correct worker behavior was stop-and-report; the authorized seam change added `tier: 'executor'|'advisor'` defaults while preserving 429→Haiku and drill/production guards.
+
+- Extend the existing typed gateway seam rather than forking a second provider client for special modes.
+- Cap escalations per session, persist each decision, and keep offline manifesto fallback when the gateway is down.
+- Workers that discover a seam capacity gap should stop and report instead of inventing a parallel transport.
+
+### 17. Shared Neon integration suites must run serially
+
+Running rls + access + upgrade + guide integration suites in one Vitest process against a shared Neon branch produced TRUNCATE cross-talk and spurious failures even though each suite passed alone.
+
+- Default `npm run test` keeps integration suites `TEST_DATABASE_URL`-guarded/offline.
+- When intentionally running DB suites, use `--no-file-parallelism` or one suite at a time against the branch.
+- Do not treat parallel-suite flakes as product defects until serial re-run fails.
+
+### 18. Canvas teardown must be single-shot and partial-init safe
+
+ISSUE-026 e2e exposed a real Pixi v8 crash: navigating away before idle-deferred canvas mount finished threw `this._cancelResize is not a function` and hit the Next error boundary.
+
+- Own teardown through one guarded `safeDestroy()` that destroys at most once and swallows partial-init errors.
+- Prove footer/site navigation during deferred mount shows the destination without client errors.
+- Keep DOM map interactive immediately; canvas remains presentation-only.
+
+### 19. Legal and billing artifacts stay draft-honest and HITL-gated
+
+ISSUE-026 legal pages and the Stripe trial path established the launch-adjacent pattern for reputation-sensitive copy and payments.
+
+- Legal drafts render with prominent legal-review banners and clearly bracketed placeholders for entity/jurisdiction/contact/date. Do not remove banners or fill invented legal facts.
+- Site-wide legal footer links ship with the drafts; HITL-LEGAL remains a launch blocker even after pages exist and e2e is green.
+- Billing/webhooks prefer fixture-replay and unconfigured graceful paths. Live test-card flows stay behind HITL Stripe test keys; never invent live charges from learning review.
+- Mission prompts and evidence must not embed placeholder personal emails or raw validator transcripts. Keep verdicts in handoffs; redact PII from slice prompts before commit.
+- Migrations that invent helpers must match established app RLS helpers (`current_setting('app.user_id', true)::uuid`, existing owner guards), not parallel invented function names.
+
 ## Verification menu
 
 - Docs/skills only: read back changed files and run `git diff --check`.

@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import type { Landmark } from '@/content/schema';
+import { Paywall } from '@/components/Paywall';
 
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
@@ -11,6 +12,17 @@ export function GuideChat({ landmark, regionId }: { landmark: Landmark; regionId
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [offline, setOffline] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [access, setAccess] = useState<{ allowed: boolean; verifiedEmail: boolean } | null>(null);
+  async function toggle() {
+    const next = !open;
+    setOpen(next);
+    if (next && !access) {
+      try {
+        const response = await fetch('/api/guide');
+        setAccess(await response.json() as { allowed: boolean; verifiedEmail: boolean });
+      } catch { setAccess({ allowed: true, verifiedEmail: false }); }
+    }
+  }
   async function submit(event: FormEvent) {
     event.preventDefault();
     const message = text.trim();
@@ -30,11 +42,13 @@ export function GuideChat({ landmark, regionId }: { landmark: Landmark; regionId
     } finally { setBusy(false); }
   }
   return <aside aria-label="AI guide" data-testid="guide-chat">
-    <button type="button" aria-expanded={open} aria-controls="guide-panel" onClick={() => setOpen((value) => !value)}>Ask the guide</button>
+    <button type="button" aria-expanded={open} aria-controls="guide-panel" onClick={toggle}>Ask the guide</button>
     {open && <div id="guide-panel"><h3>Landmark guide</h3>
+      {!access ? <p role="status">Checking guide access…</p> : !access.allowed ? <Paywall verifiedEmail={access.verifiedEmail} /> : <>
       {offline && <p role="alert">{offline}</p>}
       <div role="log" aria-live="polite" aria-label="Guide conversation">{messages.map((item, index) => <p key={index}><strong>{item.role === 'user' ? 'You' : 'Guide'}:</strong> {item.content}</p>)}</div>
       <form onSubmit={submit}><label htmlFor="guide-message">Ask about {landmark.title}</label><textarea id="guide-message" value={text} maxLength={1000} disabled={busy} onChange={(event) => setText(event.target.value)} /><button type="submit" disabled={busy || !text.trim()}>{busy ? 'Asking…' : 'Send'}</button></form>
+      </>}
     </div>}
   </aside>;
 }

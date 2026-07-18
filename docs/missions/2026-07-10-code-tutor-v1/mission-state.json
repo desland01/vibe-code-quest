@@ -2,7 +2,7 @@
   "schema": "mission-state-v1",
   "mission_id": "2026-07-10-code-tutor-v1",
   "created_at": "2026-07-10T16:20:00Z",
-  "updated_at": "2026-07-19T00:15:00Z",
+  "updated_at": "2026-07-19T01:00:00Z",
   "phase": "execution",
   "status": "active",
   "mission_volume": {
@@ -424,6 +424,24 @@
       "completed_at": "2026-07-19T00:15:00Z",
       "validator": "e2e 23/23 (VAL-043 routes+footer+draft banner); gate green; content review = HITL-LEGAL (deferred to ISSUE-032)",
       "notes": "3 agent-drafted legal pages w/ draft banners + bracketed placeholders, site-wide footer. Fixed real Pixi double-destroy client-nav crash (safeDestroy in MapCanvas). HITL-LEGAL stands."
+    },
+    {
+      "issue": "ISSUE-027",
+      "status": "complete",
+      "started_at": "2026-07-19T00:20:00Z",
+      "worker": "codex gpt-5.6-sol authoring + orchestrator paywall-spec fix; orchestrator (Opus 4.8): migration, e2e, VAL-042 audit, validation",
+      "commit": "pending",
+      "evidence": [
+        "evidence/ISSUE-027/VAL-040-billing-fixtures.txt",
+        "evidence/ISSUE-027/VAL-041-paywall-e2e.txt",
+        "evidence/ISSUE-027/VAL-042-no-live-keys.txt",
+        "evidence/ISSUE-027/VAL-001-gate.txt",
+        "evidence/ISSUE-027/paywall.png",
+        "handoffs/ISSUE-027.md"
+      ],
+      "completed_at": "2026-07-19T01:00:00Z",
+      "validator": "fresh-context codex sol: 6/6 PASS",
+      "notes": "Stripe billing fixture-validated (8 cases: trial one-per-email/customer, sig verify, dedup, ordering, idempotency, unknown/deleted, checkout+reconcile, config price). Paywall gates guide only; canonical always readable. VAL-042 no live keys. Live subscribe flow deferred (HITL-STRIPE-KEY). TEST MODE only."
     }
   ],
   "artifact_paths": {

@@ -1,0 +1,44 @@
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
+import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
+import { pool } from '@/lib/db';
+import { createCheckout, postgresBillingDb, reconcileAfterCheckout, startTrial } from '@/server/billing';
+import { getStripe } from '@/server/stripe';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: Request) {
+  const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
+  const session = token ? await verifySessionToken(token) : null;
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  try {
+    await reconcileAfterCheckout({ userId: session.userId, deps: { stripe: getStripe(), db: postgresBillingDb() } });
+    return NextResponse.redirect(new URL('/map?checkout=success', request.url));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Billing request failed';
+    return NextResponse.json({ error: message === 'Stripe not configured' ? 'billing not configured' : message }, { status: message === 'Stripe not configured' ? 503 : 409 });
+  }
+}
+
+export async function POST(request: Request) {
+  const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
+  const session = token ? await verifySessionToken(token) : null;
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  const profile = (await pool.query<{ email: string | null }>('SELECT email FROM profiles WHERE id=$1', [session.userId])).rows[0];
+  if (!profile?.email) return NextResponse.json({ error: 'Verify your email before starting billing' }, { status: 403 });
+  let stripe;
+  try { stripe = getStripe(); } catch { return NextResponse.json({ error: 'billing not configured' }, { status: 503 }); }
+  const db = postgresBillingDb();
+  let action = 'subscribe';
+  try { action = (await request.json() as { action?: string }).action ?? action; } catch { /* default subscribe */ }
+  try {
+    const entitlement = (await db.query<{ stripe_customer_id: string | null }>('SELECT stripe_customer_id FROM entitlements WHERE profile_id=$1', [session.userId])).rows[0];
+    if (!entitlement?.stripe_customer_id) await startTrial({ userId: session.userId, email: profile.email, deps: { stripe, db } });
+    if (action === 'trial') return NextResponse.json({ status: 'trialing' });
+    console.debug('[event] subscribe_clicked', { userId: session.userId });
+    return NextResponse.json({ url: await createCheckout({ userId: session.userId, deps: { stripe, db, origin: new URL(request.url).origin } }) });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Billing request failed';
+    return NextResponse.json({ error: message }, { status: message.includes('configured') ? 503 : 409 });
+  }
+}

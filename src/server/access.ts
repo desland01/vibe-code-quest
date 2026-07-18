@@ -142,6 +142,15 @@ async function decide(
   config: AccessConfig,
   now: Date
 ): Promise<Decision> {
+  if (surface === 'guide' && !identity.tier) {
+    const billing = await database.query<{ status: string; trial_ends_at: Date | null }>(
+      'SELECT status, trial_ends_at FROM entitlements WHERE profile_id = $1', [identity.userId]
+    );
+    const row = billing.rows[0];
+    if (row?.trial_ends_at && row.trial_ends_at <= now && row.status !== 'active') {
+      return { allowed: false, banner: 'guide_disabled', reason: 'subscription required', tier: 'free' };
+    }
+  }
   const tier = await resolveTier(identity, database, now);
   const zeroReason = capZero(config, tier, surface);
   if (zeroReason) return { allowed: false, banner: bannerFor(surface, tier, false), reason: zeroReason, tier };

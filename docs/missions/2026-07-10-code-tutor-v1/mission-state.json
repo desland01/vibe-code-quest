@@ -447,7 +447,8 @@
     "D7 deploy grant: RE-CONFIRMED with legal-page gate (VAL-043) \u2014 2026-07-10",
     "HITL-LEGAL: user reviews drafted ToS/privacy/refund pages before launch",
     "HITL-LIVE: stripe live mode + launch posts \u2014 held for user",
-    "HITL-AI-KEY: AI_GATEWAY_API_KEY absent (local + Vercel). M5 (ISSUE-023/024/025) is built + validated against its MOCK-based contract (VAL-032/033/034 are unit/transport/deterministic tests) without it. A live key (or confirmed Vercel AI Gateway OIDC) is REQUIRED before the ISSUE-030 live drill and ISSUE-032 closeout / real usage. Also AI_DRILL_SECRET needed for the signed-header drill at ISSUE-030. Flagged 2026-07-18."
+    "HITL-AI-KEY: AI_GATEWAY_API_KEY absent (local + Vercel). M5 (ISSUE-023/024/025) is built + validated against its MOCK-based contract (VAL-032/033/034 are unit/transport/deterministic tests) without it. A live key (or confirmed Vercel AI Gateway OIDC) is REQUIRED before the ISSUE-030 live drill and ISSUE-032 closeout / real usage. Also AI_DRILL_SECRET needed for the signed-header drill at ISSUE-030. Flagged 2026-07-18.",
+    "HITL-STRIPE-KEY: Stripe TEST-mode keys absent (STRIPE_SECRET_KEY / STRIPE_WEBHOOK_SECRET / publishable). ISSUE-027 builds + validates the webhook lifecycle/idempotency/ordering/reconciliation/paywall via FIXTURE REPLAY (VAL-040) and the no-live-keys audit (VAL-042) without them. A Stripe TEST key is REQUIRED for live Checkout session creation + the VAL-041 subscribe-with-test-card Playwright flow, and before ISSUE-030 production billing deploy. TEST MODE ONLY; live keys are HITL-LIVE (ISSUE-032). Flagged 2026-07-19."
   ],
   "blocked_reason": null,
   "approval": {

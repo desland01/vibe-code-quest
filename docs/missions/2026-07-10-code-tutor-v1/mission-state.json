@@ -270,7 +270,7 @@
       "status": "complete",
       "started_at": "2026-07-18T16:36:00Z",
       "worker": "codex gpt-5.6-sol authoring; orchestrator (Opus 4.8): URL verification (15/15), high-accuracy content review, deploy",
-      "commit": "pending",
+      "commit": "0d2397e",
       "evidence": [
         "../../content/reviews/ai-types.md",
         "evidence/ISSUE-017/VAL-001-gate.txt",

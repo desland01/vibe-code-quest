@@ -7,7 +7,7 @@ Bound: app/legal/terms/page.tsx, app/legal/privacy/page.tsx, app/legal/refund/pa
 Context (zero chat context assumed):
 - Product: code-tutor, "A Map for Post-AI Builders" — an interactive learning map for people building apps by directing AI agents. Business model: 14-day no-card free trial, then a $-priced monthly subscription (placeholder $9/mo, Stripe TEST mode). Stores: an optional email (for account upgrade via OTP), learning progress, usage/cost telemetry. Content includes AI-generated explanations.
 - These pages are AGENT-DRAFTED and MUST carry a visible "Draft — pending legal review" notice at the top of each page AND every page must be marked so the user knows a lawyer has not reviewed them. The actual legal sufficiency review is HITL (user, at closeout) — you are producing a solid, honest starting draft, not final legal advice.
-- Placeholder brand name: use "code-tutor" and a placeholder company/contact ("code-tutor" / "support@code-tutor.example") — do NOT invent a real legal entity, address, or jurisdiction; use clearly-marked placeholders like "[COMPANY LEGAL NAME]", "[JURISDICTION]", "[CONTACT EMAIL]" so the user fills them at review.
+- Placeholder brand name: use "code-tutor" and a placeholder company/contact (brand "code-tutor" and a bracketed [CONTACT EMAIL] token) — do NOT invent a real legal entity, address, or jurisdiction; use clearly-marked placeholders like "[COMPANY LEGAL NAME]", "[JURISDICTION]", "[CONTACT EMAIL]" so the user fills them at review.
 
 Tasks:
 1. Three legal pages (server components) rendered via a shared LegalPage layout: readable prose, headings, last-updated placeholder, and a prominent "⚠ Draft — pending legal review; placeholders in [BRACKETS] must be completed before launch" banner at the top of each.

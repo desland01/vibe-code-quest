@@ -3,9 +3,10 @@
 import { usePathname, useRouter } from 'next/navigation';
 import type { KeyboardEvent } from 'react';
 import { recordClientEvent } from './clientEvents';
+import { LANDMARK_FORMATS, type LandmarkFormat } from './formats';
 
-export type LandmarkFormat = 'overview' | 'lesson' | 'quiz';
-export const landmarkFormats: readonly LandmarkFormat[] = ['overview', 'lesson', 'quiz'];
+export type { LandmarkFormat } from './formats';
+export const landmarkFormats = LANDMARK_FORMATS;
 const labels: Record<LandmarkFormat, string> = { overview: 'Overview', lesson: 'Lesson', quiz: 'Quiz' };
 
 export function FormatSwitcher({ format, regionId, landmarkId }: { format: LandmarkFormat; regionId: string; landmarkId: string }) {

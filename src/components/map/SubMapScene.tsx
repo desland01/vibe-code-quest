@@ -5,16 +5,13 @@ import type { CSSProperties } from 'react';
 import type { Landmark, Region } from '@/content/schema';
 import { LandmarkView } from '@/components/landmark/LandmarkView';
 import type { LandmarkFormat } from '@/components/landmark/FormatSwitcher';
+import { getRegionAccent } from './regionAccents';
 import styles from './SubMapScene.module.css';
 
 export type { LandmarkFormat } from '@/components/landmark/FormatSwitcher';
-const accents: Record<string, string> = {
-  databases: '#d98f6c', infra: '#8f9fd9', 'ai-types': '#c98fd9', git: '#d96c6c',
-  languages: '#6cd9a8', security: '#d9c96c', design: '#ed9ec4', 'pm-tools': '#9ad0ed'
-};
 
 export function SubMapScene({ region, landmark, format = 'overview' }: { region: Region; landmark?: Landmark; format?: LandmarkFormat }) {
-  const style = { '--region-accent': accents[region.id] ?? '#d98f6c' } as CSSProperties;
+  const style = { '--region-accent': getRegionAccent(region.id) } as CSSProperties;
   return (
     <main className={`sub-map-scene ${styles.scene}`} id="main-content" tabIndex={-1} style={style}>
       <a className="sub-map-skip-link" href="#landmark-list">Skip to landmarks</a>

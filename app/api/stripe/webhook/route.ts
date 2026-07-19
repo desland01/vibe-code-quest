@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { postgresBillingDb, processWebhookEvent } from '@/server/billing';
+import { postgresBillingDb, processWebhookEvent, WebhookSignatureError } from '@/server/billing';
 import { getStripe } from '@/server/stripe';
 
 export const dynamic = 'force-dynamic';
@@ -10,7 +10,8 @@ export async function POST(request: Request) {
   try {
     await processWebhookEvent(await request.text(), signature, { stripe: getStripe(), db: postgresBillingDb() });
     return NextResponse.json({ received: true });
-  } catch {
-    return NextResponse.json({ error: 'Invalid webhook' }, { status: 400 });
+  } catch (error) {
+    if (error instanceof WebhookSignatureError) return NextResponse.json({ error: 'Invalid webhook signature' }, { status: 400 });
+    return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 });
   }
 }

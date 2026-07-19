@@ -286,7 +286,7 @@ async function bumpAnon(database: Queryable, key: string, kind: 'ip' | 'device',
 
 async function adjustReservationCounters(database: Queryable, row: ReservationRow, delta: number) {
   const day = typeof row.day === 'string' ? row.day : dayUtc(row.day);
-  await database.query('UPDATE global_usage SET tokens = GREATEST(0, tokens + $2) WHERE day = $1', [row.day, delta]);
+  await database.query('UPDATE global_usage SET tokens = GREATEST(0, tokens + $2) WHERE day = $1', [day, delta]);
   if (row.anonymous_ip_key) await bumpAnon(database, row.anonymous_ip_key, 'ip', day, delta);
   if (row.anonymous_device_key) await bumpAnon(database, row.anonymous_device_key, 'device', day, delta);
 }

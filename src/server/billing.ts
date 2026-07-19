@@ -13,6 +13,7 @@ export type BillingDb = BillingQueryable & {
 };
 export type BillingStripe = Pick<Stripe, 'customers' | 'subscriptions' | 'checkout' | 'webhooks'>;
 export type BillingDeps = { stripe: BillingStripe; db: BillingDb; priceId?: string; webhookSecret?: string; origin?: string };
+export class WebhookSignatureError extends Error {}
 
 type EntitlementRow = {
   profile_id: string; stripe_customer_id: string | null; stripe_subscription_id: string | null;
@@ -116,7 +117,12 @@ async function subscriptionUpdate(db: BillingQueryable, subscription: Stripe.Sub
 export async function processWebhookEvent(rawBody: string | Buffer, signature: string, deps: BillingDeps): Promise<{ processed: boolean }> {
   const secret = deps.webhookSecret ?? process.env.STRIPE_WEBHOOK_SECRET;
   if (!secret) throw new Error('Stripe webhook not configured');
-  const event = deps.stripe.webhooks.constructEvent(rawBody, signature, secret);
+  let event: Stripe.Event;
+  try {
+    event = deps.stripe.webhooks.constructEvent(rawBody, signature, secret);
+  } catch (error) {
+    throw new WebhookSignatureError(error instanceof Error ? error.message : String(error));
+  }
   return deps.db.transaction(async (db) => {
     const claimed = await db.query(`INSERT INTO processed_webhook_events (event_id) VALUES ($1) ON CONFLICT DO NOTHING RETURNING event_id`, [event.id]);
     if (claimed.rowCount === 0) return { processed: false };

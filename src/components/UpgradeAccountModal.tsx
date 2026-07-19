@@ -16,24 +16,38 @@ export function UpgradeAccountModal() {
     event.preventDefault();
     setBusy(true);
     setMessage('');
-    const response = await fetch(`/api/auth/otp/${step === 'email' ? 'request' : 'verify'}`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(step === 'email' ? { email } : { code })
-    });
-    const result = (await response.json()) as { error?: string };
+    try {
+      const response = await fetch(`/api/auth/otp/${step === 'email' ? 'request' : 'verify'}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(step === 'email' ? { email } : { code })
+      });
+      const result = (await response.json()) as { error?: string };
+      if (!response.ok) {
+        setMessage(result.error ?? 'Something went wrong');
+        return;
+      }
+      if (step === 'email') {
+        setStep('code');
+        setMessage('Check your email for the 6-digit code.');
+      } else {
+        setStep('success');
+        setMessage('Your progress is now saved to your email.');
+      }
+    } catch {
+      setMessage('Something went wrong. Try again.');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function close() {
+    setOpen(false);
+    setStep('email');
+    setEmail('');
+    setCode('');
+    setMessage('');
     setBusy(false);
-    if (!response.ok) {
-      setMessage(result.error ?? 'Something went wrong');
-      return;
-    }
-    if (step === 'email') {
-      setStep('code');
-      setMessage('Check your email for the 6-digit code.');
-    } else {
-      setStep('success');
-      setMessage('Your progress is now saved to your email.');
-    }
   }
 
   return (
@@ -53,7 +67,7 @@ export function UpgradeAccountModal() {
             </form>
           )}
           {message && <p role="status">{message}</p>}
-          <button type="button" onClick={() => setOpen(false)}>Close</button>
+          <button type="button" onClick={close}>Close</button>
         </div>
       )}
     </>

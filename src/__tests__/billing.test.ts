@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type Stripe from 'stripe';
 import type { QueryResult, QueryResultRow } from 'pg';
-import { createCheckout, processWebhookEvent, reconcileAfterCheckout, startTrial, type BillingDb, type BillingStripe } from '@/server/billing';
+import { createCheckout, processWebhookEvent, reconcileAfterCheckout, startTrial, WebhookSignatureError, type BillingDb, type BillingStripe } from '@/server/billing';
 
 type Ent = { profile_id: string; stripe_customer_id: string | null; stripe_subscription_id: string | null; status: string; tier?: string;
   trial_starts_at?: Date | null; trial_ends_at?: Date | null; current_period_end?: Date | null; cancel_at_period_end?: boolean;
@@ -91,8 +91,14 @@ describe('billing fixture replay', () => {
 
   it('verifies signatures before touching the database', async () => {
     fakeStripe.webhooks.constructEvent = vi.fn(() => { throw new Error('bad signature'); });
+    await expect(processWebhookEvent('{}', 'bad', { stripe: fakeStripe, db, webhookSecret: 'whsec_fixture' })).rejects.toBeInstanceOf(WebhookSignatureError);
     await expect(processWebhookEvent('{}', 'bad', { stripe: fakeStripe, db, webhookSecret: 'whsec_fixture' })).rejects.toThrow('bad signature');
     expect(db.processed.size).toBe(0);
+  });
+
+  it('does not classify database failures as signature errors', async () => {
+    const failingDb = { query: vi.fn(), transaction: vi.fn(async () => { throw new Error('db down'); }) } as unknown as BillingDb;
+    await expect(processWebhookEvent('{}', 'sig', { stripe: fakeStripe, db: failingDb, webhookSecret: 'fixture' })).rejects.not.toBeInstanceOf(WebhookSignatureError);
   });
 
   it('deduplicates retries and preserves the same entitlement', async () => {

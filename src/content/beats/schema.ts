@@ -69,8 +69,14 @@ export const beatSequenceSchema = z
       ctx.addIssue({ code: 'custom', message: 'beat ids must be unique within the sequence' });
     }
     for (const beat of sequence.beats) {
-      if ('options' in beat && !beat.options.some((option) => option.id === beat.correctOptionId)) {
-        ctx.addIssue({ code: 'custom', message: `beat ${beat.id}: correctOptionId must match an option id` });
+      if ('options' in beat) {
+        const optionIds = beat.options.map((option) => option.id);
+        if (new Set(optionIds).size !== optionIds.length) {
+          ctx.addIssue({ code: 'custom', message: `beat ${beat.id}: option ids must be unique` });
+        }
+        if (!beat.options.some((option) => option.id === beat.correctOptionId)) {
+          ctx.addIssue({ code: 'custom', message: `beat ${beat.id}: correctOptionId must match an option id` });
+        }
       }
     }
     if (sequence.beats.at(-1)?.type !== 'recap') {

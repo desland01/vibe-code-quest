@@ -1,4 +1,4 @@
-import type { Beat, BeatSequence } from '@/content/beats/schema';
+import type { Beat, BeatSequence, ChoiceBeat } from '@/content/beats/schema';
 
 // Pure BeatPlayer state machine (frozen DESIGN_CONTRACT §4/§8).
 // displayIndex = local navigation (back-review writes NOTHING).
@@ -29,15 +29,21 @@ export type PlayerAction =
   | { type: 'stamp'; stampedAt: string }                  // recap stamp pressed (only completion path)
   | { type: 'resume'; furthestBeatIndex: number; checked: boolean; completed: boolean; stampedAt: string | null };
 
-export function isChoiceBeat(beat: Beat): beat is Extract<Beat, { options: unknown }> {
+export function isChoiceBeat(beat: Beat): beat is ChoiceBeat {
   return 'options' in beat;
 }
 
-export function initialPlayerState(): PlayerState {
+// Entry rule for any beat: a reveal beat shows its first card immediately.
+// Applied everywhere displayIndex lands on a beat (init, advance, back, resume).
+function revealCountOnEntry(beat: Beat | undefined): number {
+  return beat?.type === 'reveal' ? 1 : 0;
+}
+
+export function initialPlayerState(sequence: BeatSequence): PlayerState {
   return {
     displayIndex: 0,
     furthestBeatIndex: 0,
-    revealCount: 0,
+    revealCount: revealCountOnEntry(sequence.beats[0]),
     classifications: {},
     feedback: null,
     checked: false,
@@ -62,10 +68,8 @@ export function canAdvance(beat: Beat, state: PlayerState): boolean {
       return state.feedback?.kind === 'correct';
     case 'reveal':
       return state.revealCount >= beat.cards.length;
-    case 'tradeoff': {
-      const allClassified = beat.items.every((item) => state.classifications[item.id]);
-      return allClassified && beat.items.every((item) => state.classifications[item.id] === item.side);
-    }
+    case 'tradeoff':
+      return beat.items.every((item) => state.classifications[item.id] === item.side);
     case 'check':
       return state.feedback?.kind === 'correct';
     default:
@@ -79,7 +83,10 @@ export function playerReducer(sequence: BeatSequence, state: PlayerState, action
 
   switch (action.type) {
     case 'advance': {
-      if (!canAdvance(beat, state)) return state;
+      // Review-mode forward is unconditional below the frontier; back-review writes nothing,
+      // and shouldPersist stays false because furthest does not grow.
+      const belowFrontier = state.displayIndex < state.furthestBeatIndex;
+      if (!belowFrontier && !canAdvance(beat, state)) return state;
       const nextIndex = Math.min(state.displayIndex + 1, sequence.beats.length - 1);
       if (nextIndex === state.displayIndex) return state; // already terminal; stamp-only from here
       // NEVER sets completed — only stamp does.
@@ -87,7 +94,7 @@ export function playerReducer(sequence: BeatSequence, state: PlayerState, action
         ...state,
         displayIndex: nextIndex,
         furthestBeatIndex: Math.max(state.furthestBeatIndex, nextIndex),
-        revealCount: sequence.beats[nextIndex].type === 'reveal' ? 1 : 0, // first card visible on entry
+        revealCount: revealCountOnEntry(sequence.beats[nextIndex]),
         classifications: {},
         feedback: null,
       };
@@ -145,7 +152,7 @@ export function playerReducer(sequence: BeatSequence, state: PlayerState, action
       return {
         ...state,
         displayIndex: state.displayIndex - 1,
-        revealCount: 0,
+        revealCount: revealCountOnEntry(sequence.beats[state.displayIndex - 1]),
         classifications: {},
         feedback: null,
       };
@@ -155,12 +162,8 @@ export function playerReducer(sequence: BeatSequence, state: PlayerState, action
       // The ONLY completion path. Requires terminal + checked; idempotent.
       if (!state.checked) return state;
       if (state.displayIndex !== sequence.beats.length - 1) return state;
-      if (state.completed && state.stampedAt) return state;
-      return {
-        ...state,
-        completed: true,
-        stampedAt: state.stampedAt ?? action.stampedAt,
-      };
+      if (state.completed) return state; // idempotent: completed always carries stampedAt
+      return { ...state, completed: true, stampedAt: action.stampedAt };
     }
 
     case 'resume': {
@@ -170,7 +173,7 @@ export function playerReducer(sequence: BeatSequence, state: PlayerState, action
         ...state,
         displayIndex: furthest,
         furthestBeatIndex: furthest,
-        revealCount: sequence.beats[furthest].type === 'reveal' ? 1 : 0,
+        revealCount: revealCountOnEntry(sequence.beats[furthest]),
         checked: state.checked || action.checked,
         completed: state.completed || action.completed,
         stampedAt: state.stampedAt ?? action.stampedAt,

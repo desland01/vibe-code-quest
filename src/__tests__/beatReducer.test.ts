@@ -14,7 +14,7 @@ import { sequence as pilot } from '@/content/git/beats/commits-as-checkpoints';
 const seq: BeatSequence = pilot;
 
 function play(actions: Parameters<typeof playerReducer>[2][], from?: PlayerState): PlayerState {
-  return actions.reduce((state, action) => playerReducer(seq, state, action), from ?? initialPlayerState());
+  return actions.reduce((state, action) => playerReducer(seq, state, action), from ?? initialPlayerState(seq));
 }
 
 // indexes: 0 hook · 1 predict · 2 reveal · 3 scenario · 4 gotcha · 5 default · 6 check · 7 recap
@@ -120,12 +120,40 @@ describe('beat reducer — frozen contract rules', () => {
   });
 
   it('back at beat 0 is a no-op', () => {
-    const initial = initialPlayerState();
+    const initial = initialPlayerState(seq);
     expect(playerReducer(seq, initial, { type: 'back' })).toBe(initial);
   });
 
+  it('back into a reveal beat re-applies the entry rule (first card visible)', () => {
+    const atScenario = play(toScenario);
+    const back = playerReducer(seq, atScenario, { type: 'back' });
+    expect(back.displayIndex).toBe(2); // reveal beat
+    expect(back.revealCount).toBe(1);
+  });
+
+  it('review-mode advance skips transient re-gating below the frontier', () => {
+    const progressed = play([
+      ...toScenario,
+      { type: 'choose', optionId: 'review-split' }, { type: 'advance' }, // -> gotcha
+    ]);
+    const reviewed = play([{ type: 'back' }, { type: 'back' }], progressed);
+    expect(reviewed.displayIndex).toBe(2); // reveal beat
+    expect(reviewed.revealCount).toBe(1); // entry state; no cards re-revealed
+
+    const next = playerReducer(seq, reviewed, { type: 'advance' });
+    expect(next.displayIndex).toBe(3);
+    expect(next.furthestBeatIndex).toBe(progressed.furthestBeatIndex);
+    expect(shouldPersist(reviewed, next)).toBe(false);
+  });
+
+  it('frontier advance still requires the current beat gate', () => {
+    const atScenario = play(toScenario);
+    const next = playerReducer(seq, atScenario, { type: 'advance' });
+    expect(next).toBe(atScenario);
+  });
+
   it('resume: monotonic raise only; clamps to sequence; flags OR only', () => {
-    const initial = initialPlayerState();
+    const initial = initialPlayerState(seq);
     const resumed = playerReducer(seq, initial, {
       type: 'resume', furthestBeatIndex: 99, checked: true, completed: true, stampedAt: '2026-07-18T00:00:00Z',
     });
@@ -161,7 +189,7 @@ describe('beat reducer — frozen contract rules', () => {
   });
 
   it('shouldPersist: only furthest advance, checked flip, completion, first stamp', () => {
-    const a = initialPlayerState();
+    const a = initialPlayerState(seq);
     const b = { ...a, furthestBeatIndex: 3 };
     expect(shouldPersist(a, b)).toBe(true);
     const c = { ...b, checked: true };
@@ -174,12 +202,12 @@ describe('beat reducer — frozen contract rules', () => {
   });
 
   it('persistentFacts is exactly the server state shape (minus v/kind)', () => {
-    const facts = persistentFacts({ ...initialPlayerState(), furthestBeatIndex: 4, checked: true });
+    const facts = persistentFacts({ ...initialPlayerState(seq), furthestBeatIndex: 4, checked: true });
     expect(Object.keys(facts).sort()).toEqual(['checked', 'completed', 'furthestBeatIndex', 'stampedAt']);
   });
 
   it('canAdvance: hook and default always; tradeoff requires all-correct classification', () => {
-    expect(canAdvance(seq.beats[0], initialPlayerState())).toBe(true);  // hook
+    expect(canAdvance(seq.beats[0], initialPlayerState(seq))).toBe(true);  // hook
     const atDefault = play([
       ...toScenario,
       { type: 'choose', optionId: 'review-split' }, { type: 'advance' },

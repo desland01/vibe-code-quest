@@ -38,6 +38,18 @@ describe('beat sequence schema', () => {
     expect(() => beatSequenceSchema.parse(bad)).toThrow(/correctOptionId/);
   });
 
+  it('rejects duplicate choice option ids', () => {
+    const bad = {
+      ...pilot,
+      beats: pilot.beats.map((beat) =>
+        beat.type === 'predict'
+          ? { ...beat, options: [beat.options[0], { ...beat.options[1], id: beat.options[0].id }] }
+          : beat
+      ),
+    };
+    expect(() => beatSequenceSchema.parse(bad)).toThrow(/option ids must be unique/);
+  });
+
   it('rejects a sequence without a check beat or with a non-recap terminal beat', () => {
     const noCheck = { ...pilot, beats: pilot.beats.filter((beat) => beat.type !== 'check') };
     expect(() => beatSequenceSchema.parse(noCheck)).toThrow(/check/);
@@ -74,6 +86,11 @@ describe('beat registry', () => {
     expect(hasBeatSequence('git', 'commits-as-checkpoints')).toBe(true);
     expect(hasBeatSequence('git', 'branches-as-isolation')).toBe(false);
     expect(getBeatSequence('git', 'commits-as-checkpoints')?.beats).toHaveLength(8);
+  });
+
+  it('rejects a registered sequence that references a missing canonical landmark', () => {
+    const invalid = { ...pilot, regionId: 'missing-region' };
+    expect(() => validateBeatSequences([invalid])).toThrow(/missing-region\/commits-as-checkpoints/);
   });
 });
 

@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   if (!result.fallback && result.turn === priorAssistantTurns + 1) {
     await queryAsUser(session.userId, `UPDATE profiles
       SET lesson_progress = COALESCE(lesson_progress, '{}'::jsonb) || jsonb_build_object($1::text, $2::int)
-      WHERE id = $3`, [lessonKey, result.turn, session.userId]);
+      WHERE id = $3 AND COALESCE((lesson_progress->>$1)::int, 0) = $4`, [lessonKey, result.turn, session.userId, priorAssistantTurns]);
   }
   return NextResponse.json(result);
 }

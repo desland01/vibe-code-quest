@@ -37,8 +37,9 @@ export function issueSessionToken(userId: string): Promise<string> {
 }
 
 export async function verifySessionToken(token: string): Promise<{ userId: string } | null> {
+  const secret = getSecret();
   try {
-    const { payload } = await jwtVerify(token, getSecret(), {
+    const { payload } = await jwtVerify(token, secret, {
       algorithms: ['HS256'],
       audience: TOKEN_AUDIENCE,
       issuer: TOKEN_ISSUER

@@ -59,5 +59,3 @@ export const landmarkRegistry: Record<string, readonly Landmark[]> = {
   "security": [security_secrets_and_environment, security_authentication_vs_authorization, security_trust_boundaries, security_input_validation_and_injection, security_dependency_supply_chain, security_least_privilege_blast_radius],
   "design": [design_design_tokens, design_component_libraries, design_layout_and_spacing_rhythm, design_typography_and_hierarchy, design_accessibility_floor, design_consistency_vs_novelty],
 };
-
-export const allLandmarks = Object.values(landmarkRegistry).flat();

@@ -4,8 +4,7 @@ import { getLandmark, getRegion, regions } from '@/lib/content';
 import { cookies } from 'next/headers';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { queryAsUser } from '@/lib/db';
-
-const formats: readonly LandmarkFormat[] = ['overview', 'lesson', 'quiz'];
+import { isLandmarkFormat } from '@/components/landmark/formats';
 
 export function generateStaticParams() {
   return regions.flatMap((region) => region.landmarks.map((landmark) => ({ region: region.id, landmark: landmark.id })));
@@ -33,6 +32,6 @@ export default async function LandmarkMapPage({
       defaultFormat = depth === 'thorough' ? 'lesson' : depth === 'expert_refresh' ? 'quiz' : 'overview';
     }
   }
-  const format = formats.includes(requestedFormat as LandmarkFormat) ? requestedFormat as LandmarkFormat : defaultFormat;
+  const format = requestedFormat !== undefined && isLandmarkFormat(requestedFormat) ? requestedFormat : defaultFormat;
   return <SubMapScene region={region} landmark={landmark} format={format} />;
 }

@@ -3,14 +3,11 @@
 import { useEffect, useRef, useState, type Dispatch, type PointerEvent as ReactPointerEvent, type WheelEvent } from 'react';
 import type { Region } from '@/content/schema';
 import { MAP_HEIGHT, MAP_WIDTH, type MapAction, type MapState } from '@/lib/mapState';
+import { getRegionAccent, getRegionAccentPixi } from './regionAccents';
 
 const GRID = 16;
 const INK = 0x3b3245;
 const OUTLINE = 4;
-const accents: Record<string, number> = {
-  databases: 0xd98f6c, infra: 0x8f9fd9, 'ai-types': 0xc98fd9, git: 0xd96c6c,
-  languages: 0x6cd9a8, security: 0xd9c96c, design: 0xed9ec4, 'pm-tools': 0x9ad0ed
-};
 const snap = (value: number) => Math.round(value / GRID) * GRID;
 const seedFrom = (value: string) => [...value].reduce((seed, character) => Math.imul(seed ^ character.charCodeAt(0), 16777619) >>> 0, 2166136261);
 const hashCell = (seed: number, x: number, y: number) => {
@@ -129,7 +126,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
         }
         world.addChild(seaDither);
 
-        regions.forEach((region, index) => {
+        regions.forEach((region) => {
           const x = snap(region.mapArea.x / 100 * MAP_WIDTH);
           const sourceY = snap(region.mapArea.y / 100 * MAP_HEIGHT);
           const width = Math.max(GRID * 5, snap(region.mapArea.width / 100 * MAP_WIDTH));
@@ -147,7 +144,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
             onSelect(region);
           });
 
-          const accent = accents[region.id] ?? Object.values(accents)[index];
+          const accent = getRegionAccentPixi(region.id);
           const columns = Math.max(5, Math.floor(width / GRID));
           const rows = Math.max(6, Math.floor(height / GRID));
           const mask = islandMask(columns, rows, region.id);
@@ -285,7 +282,7 @@ export function MapCanvas({ regions, state, dispatch, reducedMotion, onZoom, onS
         }
       }}
     >
-      <div className={`map-fallback${canvasReady ? ' is-canvas-ready' : ''}`} data-testid="map-fallback" aria-hidden="true">{regions.map((region) => <div key={region.id} className="fallback-island" style={{ left: `${region.mapArea.x}%`, top: `${region.mapArea.y}%`, width: `${region.mapArea.width}%`, height: `${region.mapArea.height}%`, '--region-accent': `#${(accents[region.id] ?? 0xd98f6c).toString(16)}` } as React.CSSProperties}><span>{region.title}</span></div>)}</div>
+      <div className={`map-fallback${canvasReady ? ' is-canvas-ready' : ''}`} data-testid="map-fallback" aria-hidden="true">{regions.map((region) => <div key={region.id} className="fallback-island" style={{ left: `${region.mapArea.x}%`, top: `${region.mapArea.y}%`, width: `${region.mapArea.width}%`, height: `${region.mapArea.height}%`, '--region-accent': getRegionAccent(region.id) } as React.CSSProperties}><span>{region.title}</span></div>)}</div>
     </div>
   );
 }

@@ -6,6 +6,11 @@ const eslintConfig = [
   ...typescript,
   {
     ignores: ['.next/**', 'node_modules/**', 'coverage/**', 'playwright-report/**', 'test-results/**', '.frugal-fable/**', '.remember/**']
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true, argsIgnorePattern: '^_', varsIgnorePattern: '^_' }]
+    }
   }
 ];
 

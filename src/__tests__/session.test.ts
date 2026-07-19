@@ -16,4 +16,26 @@ describe('anonymous session tokens', () => {
     const tamperedToken = `${token.slice(0, -1)}${finalCharacter === 'a' ? 'b' : 'a'}`;
     await expect(verifySessionToken(tamperedToken)).resolves.toBeNull();
   });
+
+  it('rejects when AUTH_SECRET is not configured', async () => {
+    const originalSecret = process.env.AUTH_SECRET;
+    try {
+      delete process.env.AUTH_SECRET;
+      await expect(verifySessionToken('garbage')).rejects.toThrow('AUTH_SECRET is required');
+    } finally {
+      if (originalSecret === undefined) delete process.env.AUTH_SECRET;
+      else process.env.AUTH_SECRET = originalSecret;
+    }
+  });
+
+  it('returns null for a garbage token with AUTH_SECRET configured', async () => {
+    const originalSecret = process.env.AUTH_SECRET;
+    try {
+      process.env.AUTH_SECRET = 'unit-test-secret-with-enough-entropy';
+      await expect(verifySessionToken('garbage')).resolves.toBeNull();
+    } finally {
+      if (originalSecret === undefined) delete process.env.AUTH_SECRET;
+      else process.env.AUTH_SECRET = originalSecret;
+    }
+  });
 });

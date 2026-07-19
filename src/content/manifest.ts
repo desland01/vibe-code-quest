@@ -16,7 +16,7 @@ export function buildContentManifest(generatedAt: string, version = 1): ContentM
       if (seen.has(id)) throw new Error(`Duplicate landmark id: ${id}`);
       seen.add(id);
     }
-    const { landmarkIds: _landmarkIds, ...region } = meta;
+    const { landmarkIds, ...region } = meta;
     return { ...region, landmarks };
   });
 

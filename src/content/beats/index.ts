@@ -1,5 +1,6 @@
 import { beatSequenceSchema, type BeatSequence } from './schema.ts';
 import { sequence as commitsAsCheckpoints } from '../git/beats/commits-as-checkpoints.ts';
+import { landmarkRegistry } from '../index.ts';
 
 // Static beat-sequence registry (frozen DESIGN_CONTRACT §4/§8). Server-side only.
 // Explicit imports only — no dynamic loading, no full-registry client exposure.
@@ -24,8 +25,16 @@ export function hasBeatSequence(regionId: string, landmarkId: string): boolean {
   return registry.has(`${regionId}/${landmarkId}`);
 }
 
-// Build-time validation hook: parses every registered sequence. Called by build-manifest.
-export function validateBeatSequences(): { count: number; keys: string[] } {
-  for (const entry of registryEntries) beatSequenceSchema.parse(entry);
+// Build-time validation hook: parses every registered sequence and checks canonical references.
+// Called by build-manifest.
+export function validateBeatSequences(entries: readonly BeatSequence[] = registryEntries): { count: number; keys: string[] } {
+  for (const entry of entries) {
+    const parsedEntry = beatSequenceSchema.parse(entry);
+    const key = `${parsedEntry.regionId}/${parsedEntry.landmarkId}`;
+    const region = landmarkRegistry[parsedEntry.regionId];
+    if (!region?.some((landmark) => landmark.id === parsedEntry.landmarkId)) {
+      throw new Error(`Beat sequence references missing canonical landmark: ${key}`);
+    }
+  }
   return { count: registry.size, keys: [...registry.keys()] };
 }

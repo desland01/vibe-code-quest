@@ -1,7 +1,7 @@
-import manifestV1Json from '../../public/content-manifest.v1.json';
+import { loadManifest } from './content';
 import type { ContentManifest, Region } from '@/content/schema';
 
-const manifest = manifestV1Json as ContentManifest;
+const manifest: ContentManifest = loadManifest();
 
 export const regions: readonly Region[] = manifest.regions;
 export const defaultRegion = regions.find((region) => region.id === 'databases') ?? regions[0];

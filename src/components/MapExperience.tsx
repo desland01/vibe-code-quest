@@ -109,18 +109,23 @@ function ShareProgress() {
   async function revokeShare() {
     if (!share) return;
     setBusy(true);
-    const response = await fetch('/api/share', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ action: 'revoke', token: share.token })
-    });
-    if (response.ok) {
-      setShare(null);
-      setStatus('Share link revoked.');
-    } else {
+    try {
+      const response = await fetch('/api/share', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ action: 'revoke', token: share.token })
+      });
+      if (response.ok) {
+        setShare(null);
+        setStatus('Share link revoked.');
+      } else {
+        setStatus('Could not revoke the share link.');
+      }
+    } catch {
       setStatus('Could not revoke the share link.');
+    } finally {
+      setBusy(false);
     }
-    setBusy(false);
   }
 
   return <section className="share-control" aria-labelledby="share-progress-title">

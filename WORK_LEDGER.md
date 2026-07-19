@@ -2,6 +2,8 @@
 
 ## Completed Work
 
+- 2026-07-19: Adversarially reviewed the standard SuperGrok/OAuth claim. Wrote `.frugal-fable/grok-sub-adversarial/findings.md` with first-party xAI documentation, GitHub issue review, July community reports, quota/economics analysis, and explicit retrieval limitations. Finding: PARTIALLY REFUTED. Standard-tier agent/OAuth access and X Premium+ eligibility are documented and have July working reports, but quota opacity and intermittent failures still justify an API key for predictable production/MoA capacity. `gh` API/comments retrieval was blocked by invalid local credentials and unavailable GitHub DNS; this is recorded in the evidence log.
+
 - 2026-05-18: Created project-level `CLAUDE.md` and `AGENTS.md` with synchronized agent instructions for `/Users/thebeast/vibe-tutor`.
 - 2026-05-18: Added this closeout ledger because the project directory does not yet have a git root or existing status/changelog file.
 - 2026-05-18: Promoted the AIS-OS `/committee` skill to global Claude, Agents, and Codex skill homes.

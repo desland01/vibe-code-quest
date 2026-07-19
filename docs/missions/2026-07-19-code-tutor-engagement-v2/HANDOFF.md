@@ -1,4 +1,4 @@
-# HANDOFF — code-tutor engagement-v2 (FROZEN; E-001 backend complete)
+# HANDOFF — code-tutor engagement-v2 (FROZEN; E-001 backend + E-002 comps gate PASS)
 
 **Date:** 2026-07-19 · **Author:** Greg (orchestrator, in-session)
 

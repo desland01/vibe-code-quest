@@ -1,0 +1,234 @@
+{"id":"M-001","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The code-tutor engagement-v2 mission is in a FROZEN state.","class":"A"}
+{"id":"M-002","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Commit 12fe978 is the E-000 freeze commit.","class":"A"}
+{"id":"M-003","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Commit b8d0213 implements the E-001 backend.","class":"A"}
+{"id":"M-004","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Commit 035b22f is the E-002 comps gate PASS commit.","class":"A"}
+{"id":"M-005","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The E-002 comps gate has PASSED (the BeatPlayer build is unblocked).","class":"A"}
+{"id":"M-006","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"At the HANDOFF mid-flight state the working tree passes typecheck (typecheck clean).","class":"A"}
+{"id":"M-007","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"At the HANDOFF mid-flight state the test suite reports 135 passed / 21 skipped.","class":"A"}
+{"id":"M-008","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"src/components/landmark/Beats/beatReducer.ts implements the BeatPlayer state machine.","class":"A"}
+{"id":"M-009","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"src/components/landmark/Beats/beatReducer.ts is a pure state machine (no side effects).","class":"A"}
+{"id":"M-010","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"src/components/landmark/Beats/beatReducer.ts conforms to DESIGN_CONTRACT section 4 and section 8.","class":"B"}
+{"id":"M-011","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"src/components/landmark/Beats/beats.module.css exists and holds styles ported from the judged comps.","class":"A"}
+{"id":"M-012","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"src/__tests__/beatReducer.test.ts contains 13 tests, all passing (13/13 green).","class":"A"}
+{"id":"M-013","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The previously contradictory canAdvance assertion pair (old lines 66-67) has been fixed.","class":"A"}
+{"id":"M-014","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The React BeatPlayer component is not yet built.","class":"A"}
+{"id":"M-015","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Lesson-page wiring is not yet done.","class":"A"}
+{"id":"M-016","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The 'Play' tab label is not yet applied to the lesson URL.","class":"A"}
+{"id":"M-017","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Client progress writes (shouldPersist -> localStorage + PUT /api/progress) are not yet implemented.","class":"A"}
+{"id":"M-018","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Network-blocked Playwright coverage is not yet done.","class":"A"}
+{"id":"M-019","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"At the HANDOFF mid-flight state the full gate has not yet been run to green.","class":"A"}
+{"id":"M-020","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"At the HANDOFF mid-flight state beatReducer.ts, beats.module.css, and beatReducer.test.ts were uncommitted.","class":"A"}
+{"id":"M-021","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The back action resets revealCount, classifications, and feedback.","class":"A"}
+{"id":"M-022","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"A reveal beat re-entered via back shows 0 cards while every other entry path shows 1 (bug to fix).","class":"A"}
+{"id":"M-023","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Required reducer fix: when displayIndex < furthestBeatIndex, forward navigation is unconditional.","class":"A"}
+{"id":"M-024","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Required reducer fix: back onto a reveal beat sets revealCount to 1.","class":"A"}
+{"id":"M-025","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Back-review writes nothing (contract rule).","class":"A"}
+{"id":"M-026","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"DESIGN_CONTRACT.md is FROZEN at v1.3.","class":"A"}
+{"id":"M-027","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The original 2026-07-19 user directive is treated as standing build authorization (Lane B).","class":"C"}
+{"id":"M-028","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The v1.3 freeze was authorized under Lane B (user directive = authorization).","class":"C"}
+{"id":"M-029","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"VALIDATION_CONTRACT.md is aligned to DESIGN_CONTRACT v1.3.","class":"B"}
+{"id":"M-030","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"docs/research/adhd-engagement-synthesis.md exists and contains orchestrator-verified primary sources.","class":"B"}
+{"id":"M-031","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The synthesis headline is that adult-ADHD-specific product evidence is thin.","class":"B"}
+{"id":"M-032","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Fleet deleg_4b102524 returned 2026-07-19 with 5/5 leaves dead on OpenRouter HTTP 429.","class":"B"}
+{"id":"M-033","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Fleet deleg_f8bfe6ac returned 2026-07-19 with 5/5 leaves dead on OpenRouter HTTP 429.","class":"B"}
+{"id":"M-034","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The free model used by the fleets caps at 8 requests per minute.","class":"B"}
+{"id":"M-035","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"docs/research/adhd-engagement/raw/ has zero bytes from either fleet.","class":"A"}
+{"id":"M-036","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"AGENTS.md and CLAUDE.md source-of-truth pointer switches to v2 for engagement work.","class":"A"}
+{"id":"M-037","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"v1 production/HITL gates are preserved separately.","class":"A"}
+{"id":"M-038","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Comps are E-002's first work item.","class":"A"}
+{"id":"M-039","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Comps hard-gate the BeatPlayer build (no BeatPlayer build before comps pass).","class":"A"}
+{"id":"M-040","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-001 implements a beat zod schema.","class":"A"}
+{"id":"M-041","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-001 implements a static beat registry.","class":"A"}
+{"id":"M-042","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-001 implements PUT /api/progress atomic monotonic merge.","class":"A"}
+{"id":"M-043","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Monotonic merge rule: furthestBeatIndex = GREATEST(old, incoming).","class":"A"}
+{"id":"M-044","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Monotonic merge rule: checked = old OR incoming.","class":"A"}
+{"id":"M-045","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Monotonic merge rule: completed = old OR incoming.","class":"A"}
+{"id":"M-046","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Monotonic merge rule: first non-null stampedAt wins.","class":"A"}
+{"id":"M-047","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"stampedAt merge uses NULLIF(..., 'null'::jsonb) on both sides.","class":"A"}
+{"id":"M-048","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Terminal state never regresses.","class":"A"}
+{"id":"M-049","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The total merge always returns HTTP 200.","class":"A"}
+{"id":"M-050","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Strictly stale writes are absorbed (there is no 409 path).","class":"A"}
+{"id":"M-051","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Quiz analytics emit exactly one quiz_completed event per explicit graded attempt (Amendment A3).","class":"A"}
+{"id":"M-052","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Amendment A3 promises no durable dedup store.","class":"A"}
+{"id":"M-053","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The beat registry is server-side.","class":"A"}
+{"id":"M-054","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The client receives only the selected landmark's beats.","class":"A"}
+{"id":"M-055","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The analytics seam is 4 files.","class":"A"}
+{"id":"M-056","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"src/server/events.ts is generic pass-through and needs no edit.","class":"A"}
+{"id":"M-057","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-002 requires 3 comps: predict / scenario-diff / stamp+next.","class":"A"}
+{"id":"M-058","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-002 comps are produced for desktop and mobile.","class":"A"}
+{"id":"M-059","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-002 requires a judge record committed.","class":"A"}
+{"id":"M-060","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"BeatPlayer motion is CSS-only (CSS steps()).","class":"A"}
+{"id":"M-061","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-003 pilot landmark is git/commits-as-checkpoints.","class":"A"}
+{"id":"M-062","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-003 pilot has 8 beats.","class":"A"}
+{"id":"M-063","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-003 grading is fully local.","class":"A"}
+{"id":"M-064","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-003 uses network-blocked Playwright.","class":"A"}
+{"id":"M-065","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-004 reward wiring is stamp + 6-pip region progress + next-landmark offer.","class":"A"}
+{"id":"M-066","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-004 region progress has 6 pips.","class":"A"}
+{"id":"M-067","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-005 transfer landmark is security/trust-boundaries.","class":"A"}
+{"id":"M-068","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-005 includes a full QA matrix.","class":"A"}
+{"id":"M-069","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"E-005 includes a usability protocol draft.","class":"A"}
+{"id":"M-070","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"No E-002 UI before comps pass.","class":"A"}
+{"id":"M-071","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"No 48-landmark factory before transfer + usability study.","class":"C"}
+{"id":"M-072","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"v1 mission stays active source of truth until the freeze commit.","class":"A"}
+{"id":"M-073","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"ISSUE-030 (prod deploy + AI_DRILL_SECRET) remains blocked and untouched.","class":"B"}
+{"id":"M-074","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"ISSUE-032 (price/name/legal/live-mode) remains blocked and untouched.","class":"B"}
+{"id":"M-075","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"No spend.","class":"C"}
+{"id":"M-076","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"No posting.","class":"C"}
+{"id":"M-077","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"No deploy.","class":"C"}
+{"id":"M-078","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"No canonical content or VOICE.md changes.","class":"A"}
+{"id":"M-079","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"No new dependencies.","class":"A"}
+{"id":"M-080","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"No new API routes.","class":"A"}
+{"id":"M-081","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":".agents/skills/code-tutor-agent-lessons/SKILL.md is a foreign dirty file (a 54-line lessons addition).","class":"A"}
+{"id":"M-082","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Provenance of .agents/skills/code-tutor-agent-lessons/SKILL.md is a parallel ISSUE-02x session.","class":"B"}
+{"id":"M-083","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The foreign file must be left alone and never bagged into engagement commits.","class":"A"}
+{"id":"M-084","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Persistence uses the progress table only.","class":"A"}
+{"id":"M-085","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Persistence never writes profiles.lesson_progress.","class":"A"}
+{"id":"M-086","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The monotonic field is furthestBeatIndex.","class":"A"}
+{"id":"M-087","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"The UI index is local (not the persisted monotonic field).","class":"A"}
+{"id":"M-088","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Back-review writes nothing.","class":"A"}
+{"id":"M-089","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Share contract: state.completed === true only at stamp.","class":"A"}
+{"id":"M-090","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Format IA: the lesson URL maps to label 'Play'.","class":"A"}
+{"id":"M-091","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Format IA: the overview is the trust surface.","class":"A"}
+{"id":"M-092","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Format IA: the quiz is direct assess.","class":"A"}
+{"id":"M-093","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Quiz dedup: quiz_completed fires once.","class":"A"}
+{"id":"M-094","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Direct quiz never stamps.","class":"A"}
+{"id":"M-095","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Reward pilot is stamp + pips + next-offer only.","class":"A"}
+{"id":"M-096","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Reward pilot has no XP/streaks/glow.","class":"A"}
+{"id":"M-097","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Motion uses CSS steps() only.","class":"A"}
+{"id":"M-098","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Motion has no shake/red-flash.","class":"A"}
+{"id":"M-099","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Motion has reduced-motion fallbacks.","class":"A"}
+{"id":"M-100","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"AI uses GuideChat only.","class":"A"}
+{"id":"M-101","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Completion works with guide/lesson APIs blocked.","class":"A"}
+{"id":"M-102","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/HANDOFF.md","text":"Onboarding is unchanged: OnboardingChat mounts in MapExperience only.","class":"A"}
+{"id":"M-103","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Baseline gate for any src/ change: npm run typecheck && npm run lint && npm run test && npm run build.","class":"A"}
+{"id":"M-104","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Evidence must be command output + Playwright spec names + screenshots; a passing build is not visual proof.","class":"C"}
+{"id":"M-105","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"docs/research/adhd-engagement-synthesis.md exists with a graded claims table of 5 tiers (strong peer-reviewed / moderate-emerging / product-reported / industry hypothesis / product hypothesis).","class":"A"}
+{"id":"M-106","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"The synthesis flags ADHD-specific claims separately.","class":"A"}
+{"id":"M-107","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"The synthesis states a thin-evidence gap.","class":"A"}
+{"id":"M-108","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"DESIGN_CONTRACT.md v1.3 is internally coherent (freeze = rules; comps = E-002 first work).","class":"B"}
+{"id":"M-109","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"AGENTS.md and CLAUDE.md name v1 as source of truth and are synchronized.","class":"A"}
+{"id":"M-110","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"The freeze commit touches docs/ledger/instruction files only (zero src/ diff).","class":"A"}
+{"id":"M-111","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"User approval for the freeze is recorded.","class":"C"}
+{"id":"M-112","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"The beat zod schema + static registry compile.","class":"A"}
+{"id":"M-113","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"The manifest build validates beat files.","class":"A"}
+{"id":"M-114","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Invalid beat IDs/indexes are rejected by unit tests.","class":"A"}
+{"id":"M-115","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"PUT /api/progress atomic monotonic merge is unit-proven (concurrent writes, stale absorbed, forged/completed bypasses rejected, non-beat legacy untouched).","class":"A"}
+{"id":"M-116","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"A Neon-guarded integration test is committed.","class":"A"}
+{"id":"M-117","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"The integration test runs only when a disposable TEST_DATABASE_URL is provisioned.","class":"A"}
+{"id":"M-118","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"The live SQL proof was pending as of the E-001 commit.","class":"A"}
+{"id":"M-119","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"There are zero writes to profiles.lesson_progress (grep + test).","class":"A"}
+{"id":"M-120","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Analytics changes touch 4 files together.","class":"A"}
+{"id":"M-121","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"events.ts is generic pass-through (no edit).","class":"A"}
+{"id":"M-122","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"New analytics events are in the ClientAnalyticsEvent extract.","class":"A"}
+{"id":"M-123","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Construction/no-PII unit tests for analytics are green.","class":"A"}
+{"id":"M-124","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Beat-dispatch e2e is E-003 scope (no beat UI exists in E-001).","class":"A"}
+{"id":"M-125","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Three comps exist (prediction card, scenario/mock-diff, stamp+next).","class":"A"}
+{"id":"M-126","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Comps are judged desktop + mobile against DESIGN_CONTRACT section 7 criteria.","class":"B"}
+{"id":"M-127","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"A judge record is committed.","class":"A"}
+{"id":"M-128","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"BeatPlayer uses CSS-only motion.","class":"A"}
+{"id":"M-129","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Every motion verb has a reduced-motion fallback proven in browser.","class":"A"}
+{"id":"M-130","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"No new dependencies are added in package.json for E-002.","class":"A"}
+{"id":"M-131","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Map onboarding e2e is green.","class":"A"}
+{"id":"M-132","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Landmark routes do not mount OnboardingChat (no change).","class":"A"}
+{"id":"M-133","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"8 beats render from data in E-003.","class":"A"}
+{"id":"M-134","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"E-003 grading is fully local.","class":"A"}
+{"id":"M-135","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Playwright with /api/guide + /api/lesson network-blocked still reaches stamp.","class":"A"}
+{"id":"M-136","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"A keyboard-only path to stamp exists.","class":"A"}
+{"id":"M-137","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Screen-reader announcements fire once per transition.","class":"A"}
+{"id":"M-138","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Refresh at beat k resumes at beat k.","class":"A"}
+{"id":"M-139","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Stamp fires exactly once (retry storm test).","class":"A"}
+{"id":"M-140","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Region pips update on stamp.","class":"A"}
+{"id":"M-141","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Next-landmark offer and clean stop are present and functional.","class":"A"}
+{"id":"M-142","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Share card landmarksCompleted increments on stamp.","class":"A"}
+{"id":"M-143","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"The security/trust-boundaries beat file renders through the same grammar with zero landmark-specific component branches.","class":"A"}
+{"id":"M-144","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"QA matrix evidence covers keyboard, resume, reduced-motion, mobile width, concurrent-write, share-snapshot, and analytics e2e.","class":"A"}
+{"id":"M-145","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"A usability protocol for 5-8 founders is drafted.","class":"A"}
+{"id":"M-146","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/VALIDATION_CONTRACT.md","text":"Rollout decision is gated on the usability protocol.","class":"C"}
+{"id":"M-147","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Repo path is /Users/thebeast/code-tutor.","class":"A"}
+{"id":"M-148","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The active branch is main.","class":"A"}
+{"id":"M-149","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The repo is local-only (no remote configured).","class":"A"}
+{"id":"M-150","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Do not run git push (no remote).","class":"C"}
+{"id":"M-151","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit 12fe978 is the E-000 freeze (DESIGN_CONTRACT v1.3 + research synthesis + validation contract).","class":"A"}
+{"id":"M-152","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit b8d0213 is E-001 backend (beat schema, registry, atomic monotonic PUT /api/progress merge, analytics seam).","class":"A"}
+{"id":"M-153","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit 035b22f is the E-002 comps gate PASS.","class":"A"}
+{"id":"M-154","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit b75f85d is the beatReducer state machine + comps CSS + reducer tests.","class":"A"}
+{"id":"M-155","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit b47d69a makes the comps a working interactive prototype.","class":"B"}
+{"id":"M-156","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"designs/comps/engagement-v2/beat-comps.html exists.","class":"A"}
+{"id":"M-157","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"designs/comps/engagement-v2/beat-comps.html runs predict/scenario-retry/stamp/next-landmark interactively.","class":"B"}
+{"id":"M-158","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"scripts/test-beat-comps.mjs exists.","class":"A"}
+{"id":"M-159","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"node scripts/test-beat-comps.mjs proves the comps headlessly.","class":"A"}
+{"id":"M-160","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit 5f4d786 implements the review-navigation spec in the reducer.","class":"A"}
+{"id":"M-161","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit 5f4d786 adds schema duplicate-option rejection.","class":"A"}
+{"id":"M-162","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit 5f4d786 adds registry unknown-landmark rejection.","class":"A"}
+{"id":"M-163","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit 5f4d786 adds a compare-and-swap (CAS) lesson progress write.","class":"A"}
+{"id":"M-164","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commit 5f4d786 adds session/webhook/checkout hardening.","class":"A"}
+{"id":"M-165","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The review-navigation spec is implemented in the reducer (below-frontier forward never re-gates; shared reveal entry rule).","class":"A"}
+{"id":"M-166","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"At baseline, typecheck is clean.","class":"A"}
+{"id":"M-167","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"At baseline, lint reports 0 problems.","class":"A"}
+{"id":"M-168","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"At baseline, 146 tests passed / 21 skipped across 17 files.","class":"A"}
+{"id":"M-169","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"At baseline, the production build is green.","class":"A"}
+{"id":"M-170","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"At baseline, the comps interaction smoke is green.","class":"A"}
+{"id":"M-171","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"vitest.config.ts excludes .claude/**.","class":"A"}
+{"id":"M-172","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"DESIGN_CONTRACT.md is FROZEN v1.3 and must not be re-argued.","class":"C"}
+{"id":"M-173","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"A separate session is fixing a read/modify/write race in app/api/onboarding/route.ts.","class":"B"}
+{"id":"M-174","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The onboarding fix uses an atomic transaction or CAS, plus possible client handling in src/components/OnboardingChat.tsx, plus a route regression test.","class":"B"}
+{"id":"M-175","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"main must be fast-forwarded before the first edit and the gate re-run if new commits land.","class":"A"}
+{"id":"M-176","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Never touch app/api/onboarding/route.ts.","class":"A"}
+{"id":"M-177","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Never touch src/components/OnboardingChat.tsx.","class":"A"}
+{"id":"M-178","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Never touch onboarding tests.","class":"A"}
+{"id":"M-179","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Never modify .claude/worktrees/.","class":"A"}
+{"id":"M-180","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"OnboardingChat mounts in MapExperience only (no change).","class":"A"}
+{"id":"M-181","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The BeatPlayer component is built at src/components/landmark/Beats/.","class":"A"}
+{"id":"M-182","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The BeatPlayer is built over the existing reducer (review-navigation already implemented).","class":"A"}
+{"id":"M-183","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"BeatPlayer behavior must match designs/comps/engagement-v2/beat-comps.html and its headless smoke.","class":"B"}
+{"id":"M-184","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The BeatPlayer renders all beat types from the registry-served sequence.","class":"A"}
+{"id":"M-185","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The BeatPlayer uses the existing beats.module.css.","class":"A"}
+{"id":"M-186","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The BeatPlayer uses CSS steps() motion only.","class":"A"}
+{"id":"M-187","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The BeatPlayer has reduced-motion fallbacks.","class":"A"}
+{"id":"M-188","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The BeatPlayer has zero typing (instant feedback).","class":"A"}
+{"id":"M-189","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The BeatPlayer has no shake/red-flash.","class":"A"}
+{"id":"M-190","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"A predict beat is never marked wrong.","class":"A"}
+{"id":"M-191","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"A scenario/gotcha beat uses fail-soft retry.","class":"A"}
+{"id":"M-192","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The recap beat is stamp-only.","class":"A"}
+{"id":"M-193","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The lesson URL maps to tab label 'Play'.","class":"A"}
+{"id":"M-194","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Resume uses server state via the monotonic merge (resume action).","class":"A"}
+{"id":"M-195","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Client progress writes fire only when shouldPersist says so.","class":"A"}
+{"id":"M-196","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Client progress writes go to localStorage + PUT /api/progress.","class":"A"}
+{"id":"M-197","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"app/api/lesson/route.ts progress writes are compare-and-swap (CAS).","class":"A"}
+{"id":"M-198","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Exactly one quiz_completed event fires per explicit graded attempt.","class":"A"}
+{"id":"M-199","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Stamp sets completed (share contract: state.completed === true only at stamp).","class":"A"}
+{"id":"M-200","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Overview and direct quiz surfaces are unchanged.","class":"A"}
+{"id":"M-201","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"GuideChat stays an optional side rail; completion must work with guide/lesson APIs blocked.","class":"A"}
+{"id":"M-202","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"E-003 verification runs a network-blocked Playwright of the full pilot loop (predict -> reveal -> decide -> stamp) on git/commits-as-checkpoints.","class":"A"}
+{"id":"M-203","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"E-003 verification covers a resume-mid-lesson case.","class":"A"}
+{"id":"M-204","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"E-003 verification covers a reduced-motion case.","class":"A"}
+{"id":"M-205","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"E-004 rewards = stamp moment + 6-pip region progress + next-landmark offer.","class":"A"}
+{"id":"M-206","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"E-004 rewards have no XP/streaks/glow.","class":"A"}
+{"id":"M-207","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"E-005 = security/trust-boundaries transfer landmark + full QA matrix + usability protocol draft.","class":"A"}
+{"id":"M-208","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Stop after E-005.","class":"C"}
+{"id":"M-209","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No 48-landmark factory before the founder usability test (user gate).","class":"C"}
+{"id":"M-210","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No Stripe.","class":"A"}
+{"id":"M-211","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No deploy.","class":"C"}
+{"id":"M-212","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No launch posts.","class":"C"}
+{"id":"M-213","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No ISSUE-030/032 movement.","class":"B"}
+{"id":"M-214","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No spend.","class":"C"}
+{"id":"M-215","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No new dependencies.","class":"A"}
+{"id":"M-216","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No new API routes.","class":"A"}
+{"id":"M-217","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"No canonical content or VOICE.md changes.","class":"A"}
+{"id":"M-218","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Persistence uses the progress table only, never profiles.lesson_progress.","class":"A"}
+{"id":"M-219","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The registry stays server-side; the client gets only the selected landmark's beats.","class":"A"}
+{"id":"M-220","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Foreign dirty file .agents/skills/code-tutor-agent-lessons/SKILL.md must be left alone and never committed.","class":"A"}
+{"id":"M-221","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Full gate before every commit: npm run typecheck && npm run lint && npm run test && npm run build.","class":"A"}
+{"id":"M-222","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"A real browser render of the player at desktop + mobile viewports is required before commit.","class":"A"}
+{"id":"M-223","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"WORK_LEDGER.md must be updated per session.","class":"A"}
+{"id":"M-224","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Do not dispatch research/worker fan-outs to OpenRouter.","class":"C"}
+{"id":"M-225","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The OpenRouter key is at its monthly 402 cap.","class":"B"}
+{"id":"M-226","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The free qwen slugs on OpenRouter are dead (404).","class":"B"}
+{"id":"M-227","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Use only kimi-coding, zai (GLM), or openai-codex paths.","class":"C"}
+{"id":"M-228","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"K3 (advisor) runs direct via kimi-coding and is healthy.","class":"B"}
+{"id":"M-229","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Delegation's openrouter:x-ai/grok-4.5 leaf is dead until credits.","class":"B"}
+{"id":"M-230","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The session must be on main at or past commit 5f4d786.","class":"A"}
+{"id":"M-231","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"Commits go to main directly.","class":"A"}
+{"id":"M-232","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"This KICKOFF supersedes the in-chat plan from session 20260719_005103_f0b670 (which died on an OpenRouter 402).","class":"B"}
+{"id":"M-233","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"The MoA stack is 'Kimi Crew' (K3 strategy advisor -> gpt-5.6-sol acting aggregator).","class":"C"}
+{"id":"M-234","source_file":"docs/missions/2026-07-19-code-tutor-engagement-v2/KICKOFF-2026-07-19-beatplayer.md","text":"src/content/git/beats/commits-as-checkpoints.ts exists (pilot beat content).","class":"A"}

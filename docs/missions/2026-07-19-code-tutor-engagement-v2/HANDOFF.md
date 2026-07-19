@@ -1,6 +1,20 @@
 # HANDOFF — code-tutor engagement-v2 (FROZEN; E-001 backend + E-002 comps gate PASS)
 
-**Date:** 2026-07-19 · **Author:** Greg (orchestrator, in-session)
+**Date:** 2026-07-19 · **Author:** Greg (orchestrator, in-session) · **PM review pass:** 2026-07-19 ~12:20 (Claude, post-session — corrected stale status, verified claims against repo)
+
+## Mid-flight state (verified 2026-07-19 12:19 — start here next session)
+
+Committed: `12fe978` (E-000 freeze), `b8d0213` (E-001 backend), `035b22f` (E-002 comps gate PASS). The comps gate has PASSED — the BeatPlayer build is unblocked.
+
+Uncommitted but verified green (typecheck clean; **135 passed / 21 skipped**):
+
+- `src/components/landmark/Beats/beatReducer.ts` — pure BeatPlayer state machine per contract §4/§8.
+- `src/components/landmark/Beats/beats.module.css` — styles ported from the judged comps.
+- `src/__tests__/beatReducer.test.ts` — 13/13 green. The contradictory `canAdvance` assertion pair (old lines 66–67) is FIXED: the reveal beat has 2 cards and `revealCount` is 2 at that point, so `toBe(true)` was kept and the `toBe(false)` line deleted.
+
+Not yet built (E-002 remainder → E-004): the React `BeatPlayer` component itself, lesson-page wiring, "Play" tab label, client progress writes (`shouldPersist` → localStorage + `PUT /api/progress`), network-blocked Playwright coverage, full gate, commit.
+
+**Review-navigation spec (was missing from this plan — required):** `back` resets `revealCount`/`classifications`/`feedback`, so a learner reviewing an earlier beat would be forced to re-answer already-solved beats to get forward (`canAdvance` gates on transient state), and a reveal beat re-entered via `back` shows 0 cards (every other entry path shows 1). Fix in the reducer before building the player: when `displayIndex < furthestBeatIndex`, forward navigation is unconditional (already-resolved beats never re-gate) — e.g. a `forward`/`return_to_furthest` action that ignores `canAdvance` below the frontier — and `back` onto a reveal beat sets `revealCount: 1` to match `advance`/`resume`. Back-review still writes nothing (contract rule unchanged).
 
 ## Status
 

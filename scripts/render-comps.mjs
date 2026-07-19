@@ -21,11 +21,10 @@ for (const vp of viewports) {
   const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } });
   for (const comp of comps) {
     await page.goto(htmlPath);
-    await page.evaluate((target) => {
-      for (const section of document.querySelectorAll('[data-comp]')) {
-        section.style.display = section.getAttribute('data-comp') === target ? '' : 'none';
-      }
-    }, comp);
+    await page.evaluate((target) => window.__beatPrototype.showComp(target, { focus: false }), comp);
+    if (comp === '02-scenario-diff') {
+      await page.getByRole('button', { name: /Commit everything right now/ }).click();
+    }
     await page.evaluate(() => document.fonts.ready);
     const pixelFontLoaded = await page.evaluate(() => document.fonts.check('12px "Press Start 2P"'));
     if (!pixelFontLoaded) {
@@ -51,6 +50,7 @@ for (const vp of viewports) {
       }
       const short = [];
       for (const el of section.querySelectorAll('.choice, .btn')) {
+        if (el.hidden || getComputedStyle(el).display === 'none') continue;
         const h = el.getBoundingClientRect().height;
         if (h < 44) short.push(`${el.className}:${Math.round(h)}px`);
       }

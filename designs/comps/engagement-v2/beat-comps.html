@@ -20,6 +20,7 @@
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--sea); color: var(--ink); font-family: var(--body); }
+  [data-comp][hidden], [hidden] { display: none !important; }
 
   .stage { min-height: 100vh; padding: clamp(16px, 3vw, 40px); padding-inline: max(clamp(16px, 3vw, 40px), 24px); display: grid; place-items: start center; }
   .panel {
@@ -54,10 +55,14 @@
   .choice .key { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border: 3px solid var(--ink); background: var(--accent); color: var(--ink); font: 700 0.9rem/1 var(--pixel); }
   .choice.is-correct { border-color: #2f7d4f; background: color-mix(in srgb, #2f7d4f 14%, var(--banner)); }
   .choice.is-wrong { border-color: #b0432f; background: color-mix(in srgb, #b0432f 10%, var(--banner)); }
+  .choice.is-selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--banner)); }
   .feedback { margin: 16px 0 0; padding: 12px 14px; border: 2px solid var(--banner-border); background: var(--paper); font-size: 1rem; }
   .feedback strong { font-family: var(--pixel); font-size: 0.85rem; }
   .feedback.ok strong { color: #2f7d4f; }
   .feedback.no strong { color: #b0432f; }
+  .feedback.info strong { color: var(--ink); }
+  .prototype-action { width: 100%; margin-top: 16px; }
+  .prototype-status { width: 100%; margin: 0; text-align: left; }
 
   .diff { margin: 0 0 18px; border: 3px solid var(--ink); background: var(--paper); font: 500 0.95rem/1.7 ui-monospace, "SF Mono", Menlo, monospace; }
   .diff .file { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; padding: 10px 14px; border-bottom: 3px solid var(--banner-border); }
@@ -119,12 +124,14 @@
     </ol>
     <div class="beat-card">
       <p class="prompt">Your agent just changed invoice reminders across a route, a queue, and tests. What belongs in the checkpoint?</p>
-      <ul class="choices">
-        <li><button class="choice" type="button"><span class="key">A</span>One reviewed change that passes its checks</button></li>
-        <li><button class="choice" type="button"><span class="key">B</span>Everything it touched so far</button></li>
-        <li><button class="choice" type="button"><span class="key">C</span>Wait and batch more changes first</button></li>
+      <ul class="choices" aria-label="Prediction choices">
+        <li><button class="choice" type="button" data-predict="reviewed" aria-pressed="false"><span class="key">A</span>One reviewed change that passes its checks</button></li>
+        <li><button class="choice" type="button" data-predict="everything" aria-pressed="false"><span class="key">B</span>Everything it touched so far</button></li>
+        <li><button class="choice" type="button" data-predict="batch" aria-pressed="false"><span class="key">C</span>Wait and batch more changes first</button></li>
       </ul>
       <p class="hint">Take your best guess. You won't lose anything.</p>
+      <p class="feedback info" id="fb1" role="status" aria-live="polite" hidden></p>
+      <button class="btn primary prototype-action" id="to-scenario" type="button" hidden>See the worked example →</button>
     </div>
   </article>
 </section>
@@ -147,12 +154,13 @@
         <div class="file"><span title="jobs/reminders.ts">jobs/reminders.ts</span><span class="delta"><span class="add">+18</span> <span class="del">−0</span></span></div>
         <div class="file"><span title="tests/reminders.test.ts">tests/reminders.test.ts</span><span class="delta"><span class="add">+31</span> <span class="del">−0</span></span></div>
       </div>
-      <ul class="choices">
-        <li><button class="choice is-wrong" type="button" aria-describedby="fb2"><span class="key">✗</span>Commit everything right now</button></li>
-        <li><button class="choice" type="button"><span class="key">B</span>Stage, review the diff, split unrelated edits, commit one outcome</button></li>
-        <li><button class="choice" type="button"><span class="key">C</span>Let the agent keep working uncommitted</button></li>
+      <ul class="choices" aria-label="Scenario choices">
+        <li><button class="choice" type="button" data-scenario="commit-now" data-key="A" aria-pressed="false" aria-describedby="fb2"><span class="key">A</span>Commit everything right now</button></li>
+        <li><button class="choice" type="button" data-scenario="review-split" data-key="B" aria-pressed="false" aria-describedby="fb2"><span class="key">B</span>Stage, review the diff, split unrelated edits, commit one outcome</button></li>
+        <li><button class="choice" type="button" data-scenario="keep-working" data-key="C" aria-pressed="false" aria-describedby="fb2"><span class="key">C</span>Let the agent keep working uncommitted</button></li>
       </ul>
-      <p class="feedback no" id="fb2"><strong>Not quite.</strong> Agents can sweep generated files or unrelated edits into a snapshot. Review the staged diff first — then pick again.</p>
+      <p class="feedback" id="fb2" role="status" aria-live="polite" hidden></p>
+      <button class="btn primary prototype-action" id="to-stamp" type="button" hidden>Stamp this lesson →</button>
     </div>
   </article>
 </section>
@@ -173,11 +181,99 @@
       </div>
       <p class="region-line">Git River — <b>1 of 6</b> stamped</p>
       <div class="next-actions">
-        <a class="btn primary" href="#">Next: Branches as isolation →</a>
-        <a class="btn secondary" href="#">Back to map</a>
+        <a class="btn primary" id="prototype-next" href="#next">Next: Branches as isolation →</a>
+        <a class="btn secondary" id="prototype-back" href="#map">Back to map</a>
       </div>
+      <p class="feedback info prototype-status" id="prototype-status" role="status" aria-live="polite" hidden></p>
     </div>
   </article>
 </section>
+<script>
+  (() => {
+    const compNames = ['01-predict-card', '02-scenario-diff', '03-stamp-next'];
+
+    function showComp(name, { focus = true } = {}) {
+      if (!compNames.includes(name)) return;
+      for (const section of document.querySelectorAll('[data-comp]')) {
+        section.hidden = section.dataset.comp !== name;
+      }
+      const active = document.querySelector(`[data-comp="${name}"]`);
+      if (focus && active) {
+        const heading = active.querySelector('h1');
+        heading?.setAttribute('tabindex', '-1');
+        heading?.focus({ preventScroll: true });
+      }
+      active?.scrollIntoView({ block: 'start', behavior: 'auto' });
+    }
+
+    function clearChoices(buttons) {
+      for (const button of buttons) {
+        button.classList.remove('is-selected', 'is-correct', 'is-wrong');
+        button.setAttribute('aria-pressed', 'false');
+        const key = button.querySelector('.key');
+        if (key && button.dataset.key) key.textContent = button.dataset.key;
+      }
+    }
+
+    const predictionCopy = {
+      reviewed: '<strong>Strong prediction.</strong> A checkpoint should hold one reviewed change that passes its checks, so it is safe to inspect or undo.',
+      everything: '<strong>Useful prediction.</strong> “Everything so far” can hide unrelated edits. A stronger checkpoint contains one reviewed change that passes its checks.',
+      batch: '<strong>Useful prediction.</strong> Waiting makes the checkpoint harder to inspect. Smaller reviewed outcomes are easier to understand and recover.'
+    };
+
+    const predictButtons = [...document.querySelectorAll('[data-predict]')];
+    const predictFeedback = document.querySelector('#fb1');
+    const toScenario = document.querySelector('#to-scenario');
+    for (const button of predictButtons) {
+      button.addEventListener('click', () => {
+        clearChoices(predictButtons);
+        button.classList.add('is-selected');
+        button.setAttribute('aria-pressed', 'true');
+        predictFeedback.innerHTML = predictionCopy[button.dataset.predict];
+        predictFeedback.hidden = false;
+        toScenario.hidden = false;
+      });
+    }
+    toScenario.addEventListener('click', () => showComp('02-scenario-diff'));
+
+    const scenarioButtons = [...document.querySelectorAll('[data-scenario]')];
+    const scenarioFeedback = document.querySelector('#fb2');
+    const toStamp = document.querySelector('#to-stamp');
+    for (const button of scenarioButtons) {
+      button.addEventListener('click', () => {
+        clearChoices(scenarioButtons);
+        button.setAttribute('aria-pressed', 'true');
+        const key = button.querySelector('.key');
+        const correct = button.dataset.scenario === 'review-split';
+        button.classList.add(correct ? 'is-correct' : 'is-wrong');
+        if (key) key.textContent = correct ? '✓' : '✗';
+        scenarioFeedback.className = `feedback ${correct ? 'ok' : 'no'}`;
+        scenarioFeedback.innerHTML = correct
+          ? '<strong>Good call.</strong> Review first, separate unrelated edits, and commit one inspectable outcome.'
+          : button.dataset.scenario === 'commit-now'
+            ? '<strong>Not quite.</strong> Agents can sweep generated or unrelated files into a snapshot. Review the staged diff first, then pick again.'
+            : '<strong>Not quite.</strong> More uncommitted work makes recovery harder. Review what is ready and checkpoint one outcome now.';
+        scenarioFeedback.hidden = false;
+        toStamp.hidden = !correct;
+      });
+    }
+    toStamp.addEventListener('click', () => showComp('03-stamp-next'));
+
+    const status = document.querySelector('#prototype-status');
+    document.querySelector('#prototype-next').addEventListener('click', (event) => {
+      event.preventDefault();
+      status.innerHTML = '<strong>Prototype complete.</strong> The production player opens “Branches as isolation” here.';
+      status.hidden = false;
+    });
+    document.querySelector('#prototype-back').addEventListener('click', (event) => {
+      event.preventDefault();
+      status.innerHTML = '<strong>Prototype complete.</strong> The production player returns to the Git River map here.';
+      status.hidden = false;
+    });
+
+    window.__beatPrototype = { showComp };
+    showComp('01-predict-card', { focus: false });
+  })();
+</script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 import 'server-only';
 
+import type { PoolClient } from 'pg';
 import { z } from 'zod';
 
 import { queryAsUser } from '@/lib/db';
@@ -141,8 +142,10 @@ export async function parseAnswer(userId: string, field: OnboardingField, rawUse
   return localParse(field, raw);
 }
 
-export async function applyAnswer(userId: string, field: OnboardingField, value: unknown): Promise<void> {
-  await queryAsUser(userId, `UPDATE profiles SET ${field} = $1 WHERE id = $2`, [value, userId]);
+export async function applyAnswer(userId: string, field: OnboardingField, value: unknown, client?: Pick<PoolClient, 'query'>): Promise<void> {
+  const sql = `UPDATE profiles SET ${field} = $1 WHERE id = $2`;
+  if (client) await client.query(sql, [value, userId]);
+  else await queryAsUser(userId, sql, [value, userId]);
 }
 
 export function skip(state: OnboardingState): OnboardingState {

@@ -20,6 +20,7 @@ export function OnboardingChat() {
     setError('');
     try {
       const response = await fetch('/api/onboarding', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action, ...(answer ? { text: answer } : {}) }) });
+      if (response.status === 409 && action !== 'start') { await act('start'); return; }
       if (!response.ok) throw new Error('Could not continue onboarding');
       const next = await response.json() as Reply;
       setReply(next);

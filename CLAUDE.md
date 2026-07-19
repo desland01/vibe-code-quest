@@ -4,7 +4,8 @@ Applies to `/Users/thebeast/code-tutor`.
 
 ## Source Of Truth
 
-- The active mission source of truth is `docs/missions/2026-07-10-code-tutor-v1/HANDOFF.md` and the artifacts it indexes.
+- The active mission source of truth for engagement/UI work is `docs/missions/2026-07-19-code-tutor-engagement-v2/DESIGN_CONTRACT.md` (FROZEN 2026-07-19; authorization = original user directive, Lane B logged in its HANDOFF/WORK_LEDGER).
+- The v1 production/launch mission remains in `docs/missions/2026-07-10-code-tutor-v1/HANDOFF.md` with its HITL gates intact (ISSUE-030/032 blocked pending user decisions). Nothing v2 does reopens it.
 - Keep `CLAUDE.md` and `AGENTS.md` synchronized when either file changes.
 - Use project-level files before global defaults when instructions overlap.
 - Do not edit global rules, skills, or home-directory agent files unless the user explicitly asks.

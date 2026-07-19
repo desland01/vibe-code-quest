@@ -15,3 +15,4 @@ coverage/
 .frugal-fable/
 test-results/
 playwright-report/
+.constance/

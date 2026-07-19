@@ -2,6 +2,8 @@
 
 **Date:** 2026-07-19 · **Author:** Greg (orchestrator, in-session) · **PM review pass:** 2026-07-19 ~12:20 (Claude, post-session — corrected stale status, verified claims against repo)
 
+> **Next session starts from [KICKOFF-2026-07-19-beatplayer.md](KICKOFF-2026-07-19-beatplayer.md)** — rewritten execution plan (BeatPlayer → rewards → transfer) with the paste-ready Kimi Crew kickoff prompt. The section below is the verified state that plan builds on.
+
 ## Mid-flight state (verified 2026-07-19 12:19 — start here next session)
 
 Committed: `12fe978` (E-000 freeze), `b8d0213` (E-001 backend), `035b22f` (E-002 comps gate PASS). The comps gate has PASSED — the BeatPlayer build is unblocked.

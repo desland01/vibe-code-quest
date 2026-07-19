@@ -1,6 +1,6 @@
 # DESIGN CONTRACT — code-tutor engagement v2
 
-**Status:** FROZEN v1.3 — authorization: the original 2026-07-19 user directive ("way better visual design, all modules interactive, animated sequential steps, gamification to keep ADHD founders engaged — research and build") taken as standing build authorization (Lane B, logged in HANDOFF/WORK_LEDGER). Rules locked; changes only via amendment. Evidence base: `docs/research/adhd-engagement-synthesis.md` (orchestrator-verified primary sources, 2026-07-19). E-001 plumbing may touch src/ now. Visual comps are the first work item of E-002 and hard-gate the BeatPlayer build.
+**Status:** FROZEN v1.3 — authorization: the user's 2026-07-19 directive (verbatim: "I want way better visual design and I want all modules to be interactive, with animated sequences and engaging sequencial steps to walk you through the learning process… gamification and dopamine hits to keep the user wanting to stay involved") interpreted as standing implementation authorization (Lane B, logged in HANDOFF/WORK_LEDGER). Rules locked; changes only via amendment. Evidence base: `docs/research/adhd-engagement-synthesis.md` (orchestrator-verified primary sources, 2026-07-19). E-001 plumbing may touch src/ now. Visual comps are the first work item of E-002 and hard-gate the BeatPlayer build.
 **Scope:** engagement layer only. For engagement/UI work THIS contract is the active mission source of truth (per AGENTS.md/CLAUDE.md pointer). The v1 mission (`docs/missions/2026-07-10-code-tutor-v1/`) remains the source of truth for production/launch work; its ISSUE-030/032 stay HITL-blocked, untouched. This work never touches Stripe, deploy, launch assets, canonical landmark content, or VOICE.md.
 **North star:** every landmark becomes a ~3 minute local beat sequence (predict → reveal → decide → stamp) with instant feedback, AI demoted to the help rail, and a shame-free progress economy. Measured by stamp completion, resume success, next-landmark acceptance, and voluntary return — never raw clicks.
 **Claims discipline:** no clinical, diagnostic, or neurochemical claims in UI copy or artifacts as fact. Adult-ADHD-specific product evidence is thin (synthesis headline finding); ADHD-labeled rules below are explicit hypotheses; time targets are performance budgets to measure. The 5-8 founder usability study post-pilot is the decisive evidence layer.
@@ -74,7 +74,7 @@ Beats are a typed projection of existing canonical landmark fields — not new f
 - Beat-enabled landmarks: `format=lesson` renders `BeatPlayer`; tab label changes from "Lesson" to **"Play"** (display-only; URL value and analytics union stay `lesson`). Default format for beat-enabled landmarks = Play, with explicit `?format=` always winning and `expert_refresh` profile default still preferring `quiz`.
 - `format=overview` remains the calm canonical reference/trust surface.
 - `format=quiz` remains the direct assessment route.
-- **Quiz/check dedup:** completing the `check` beat emits `quiz_completed` exactly once (same semantics as direct quiz). Direct quiz completion never stamps the sequence and never writes beat progress.
+- **Quiz/check dedup:** one `quiz_completed` event per explicit graded attempt, for both the direct quiz and the check beat (same semantics). Durable cross-session exactly-once is NOT claimed — analytics uses a sink without a dedup store, so no such promise exists (Amendment A3). Direct quiz completion never stamps the sequence and never writes beat progress.
 - Browser back/forward and existing `?format=` deep links keep working.
 
 ## 5. Reward economy
@@ -127,7 +127,7 @@ Cozy-pixel direction (`designs/map-style.md`) stands; engagement v2 extends it i
 - **Write semantics (server is authority):**
   1. Immediate local transition (React state); localStorage write-through for same-device resume.
   2. Writes fire only when `furthestBeatIndex` advances, on `checked`, and at stamp — not on back-navigation.
-  3. Server enforces monotonicity **atomically in SQL** (one `INSERT ... ON CONFLICT ... DO UPDATE ... WHERE`, never JS read-then-write): validate against the content registry (region exists; landmark ∈ region; registered beat sequence; index in bounds; `completed` only at terminal index), then upsert only when the incoming `furthestBeatIndex` ≥ stored value and never unset `completed`. Losing writes → 409 + current row. Cross-tab/cross-device races resolve in the database.
+  3. Server enforces monotonicity **atomically in SQL** (one `INSERT ... ON CONFLICT ... DO UPDATE` with a merge expression, never JS read-then-write): validate against the content registry (region exists; landmark ∈ region; registered beat sequence; index in bounds; `completed` only at terminal index), then upsert with a **total monotonic merge** — `furthestBeatIndex = GREATEST(old, incoming)`, `checked = old OR incoming`, `completed = old OR incoming`, first non-null `stampedAt` wins. Accepted writes always return 200 with the merged row; strictly stale writes are absorbed harmlessly (Amendment A1 — no 409 path). Cross-tab/cross-device races resolve in the database.
   4. Load: server state wins by recency (`updated_at`); localStorage is a cache.
 - **Connectivity (precise):** after initial page load, sequence + grading + stamp work without network. Server persistence and cross-device resume require connectivity; offline writes sync on next successful request.
 - **Mastery:** per-landmark states only — `seen → in-progress → checked → stamped`. No BKT/DKT/FSRS in pilot (synthesis claim 9).
@@ -149,7 +149,7 @@ Cozy-pixel direction (`designs/map-style.md`) stands; engagement v2 extends it i
 
 ## 11. Analytics
 
-Extend the existing typed seam — no parallel sink. All five touch points change together: `src/lib/analytics.ts` (union + props) · `src/components/landmark/clientEvents.ts` (`ClientAnalyticsEvent` is an `Extract<>` allowlist — new events MUST be added there or they silently cannot fire) · `src/server/events.ts` · `src/__tests__/analytics.test.ts` · `e2e/analytics.spec.ts`. The typed `format_switched` union stays `'overview' | 'lesson' | 'quiz'` ("Play" is display-only).
+Extend the existing typed seam — no parallel sink. Analytics = 4 files (Amendment A3): `src/lib/analytics.ts` (union + props) · `src/components/landmark/clientEvents.ts` (`ClientAnalyticsEvent` is an `Extract<>` allowlist — new events MUST be added there or they silently cannot fire) · `src/__tests__/analytics.test.ts` (construction/no-PII) · `e2e/analytics.spec.ts` (dispatch, E-003). `src/server/events.ts` is a generic pass-through and needs no edit. The typed `format_switched` union stays `'overview' | 'lesson' | 'quiz'` ("Play" is display-only).
 
 Pilot events only: `beat_started {landmark, beat_id, type}` · `beat_completed {landmark, beat_id, type, ms}` · `landmark_stamped {landmark, region, ms_total}` · `next_landmark_accepted {from, to}` · `resume_succeeded {landmark, furthest_beat_index}`. No answer content (PII rule stands).
 
@@ -183,9 +183,9 @@ Total ≈ 3:00. Zero typing. All grading local.
 **Acceptance:**
 - Cold anonymous visitor finishes in ≈ 3 minutes, zero typing, stamp moment visible.
 - Refresh resumes at the furthest reached beat; cross-device resume works via server state.
-- Reviewing earlier beats writes nothing; progress cannot regress under delayed/out-of-order writes (server 409 proven).
+- Reviewing earlier beats writes nothing; progress cannot regress under delayed/out-of-order writes (stale writes absorbed by the total merge; terminal state never regresses).
 - Share card `landmarksCompleted` increments on stamp (`state.completed === true` predicate intact).
-- `quiz_completed` fires exactly once whether graded via check beat or direct quiz.
+- `quiz_completed` fires once per explicit graded attempt whether graded via check beat or direct quiz (Amendment A3).
 - Full sequence + stamp works with `/api/guide` and `/api/lesson` network-blocked.
 - Reduced-motion: no animated verbs; all state changes legible. Keyboard-only path to stamp; SR announcements once per transition.
 - Existing overview, quiz, onboarding, paywall, and non-beat landmarks remain functional; `?format=` deep links and back/forward work.
@@ -201,14 +201,20 @@ Total ≈ 3:00. Zero typing. All grading local.
 ## 13. Issue spine
 
 - **E-000** — freeze (this contract + synthesis + user approval). No UI before this closes.
-- **E-001** — Beat schema + static registry + progress route atomic upsert + analytics seams (5 files) — includes concrete upsert SQL/pseudocode in the issue text (max furthestBeatIndex wins; never unset completed).
+- **E-001** — Beat schema + static registry + progress route atomic upsert + analytics seams (4 files; events.ts is generic pass-through) — includes concrete upsert SQL/pseudocode in the issue text (max furthestBeatIndex wins; never unset completed).
 - **E-002** — comps (3 states, desktop+mobile, judged) → then BeatPlayer + motion CSS.
 - **E-003** — pilot beat content + acceptance tests.
 - **E-004** — reward wiring (stamp, pips, next-offer).
 - **E-005** — transfer landmark (`security/trust-boundaries`) + QA matrix + usability protocol prep.
 
-Governance: v2 is a draft folder until user approval; then `AGENTS.md`/`CLAUDE.md` pointer switches deliberately. v1 HITL items untouched. No further research waves; late fleet output becomes a corroboration appendix unless it contradicts a claim with equal-or-better grade.
+Governance: v2 is the active mission for engagement/UI work per the AGENTS.md/CLAUDE.md pointer (frozen 2026-07-19, Lane B authorization logged in HANDOFF/WORK_LEDGER). v1 HITL items untouched. No further research waves; late fleet output becomes a corroboration appendix unless it contradicts a claim with equal-or-better grade.
 
 ---
 
-*Contract v1.3 — freeze candidate. Author: Greg (orchestrator). Pilot landmark confirmed against `src/content/git/commits-as-checkpoints.ts`. Persistence model reviewed against `src/server/share.ts`, `app/api/progress/route.ts`, ISSUE-024 notes.*
+*Contract v1.3 FROZEN 2026-07-19. Author: Greg (orchestrator). Pilot landmark confirmed against `src/content/git/commits-as-checkpoints.ts`. Persistence model reviewed against `src/server/share.ts`, `app/api/progress/route.ts`, ISSUE-024 notes.*
+
+## Amendment log
+
+- **A1 (2026-07-19, E-001):** stale-write handling is a total monotonic merge with always-200 responses (GREATEST/OR/first-stamp), replacing the earlier 409-rejection wording. Rationale: the merge is total — any validated write either advances or is absorbed harmlessly; 409 added client complexity with no correctness gain.
+- **A2 (2026-07-19, E-001):** pilot beat content for `git/commits-as-checkpoints` shipped inside E-001 as the beat registry's validation fixture (originally listed under E-003). Content data only — no BeatPlayer UI; E-003 retains its full acceptance suite.
+- **A3 (2026-07-19, E-001):** quiz analytics semantics clarified — one `quiz_completed` per explicit graded attempt (direct quiz and check beat alike). No durable exactly-once/dedup store exists in the current sink; none is promised. Also corrected: the analytics seam is 4 files (lib, clientEvents, unit test, e2e spec); `src/server/events.ts` is a generic typed pass-through and needed no edit.

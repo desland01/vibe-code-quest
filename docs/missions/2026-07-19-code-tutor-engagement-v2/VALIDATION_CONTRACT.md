@@ -11,9 +11,9 @@ Evidence formats: command output + Playwright spec names + screenshots where vis
 
 ## E-001 — Schema + registry + persistence + analytics
 - Beat zod schema + static registry compile; manifest build validates beat files; invalid beat IDs/indexes rejected (unit tests).
-- `PUT /api/progress` atomic monotonicity proven: two concurrent writes (higher `furthestBeatIndex` wins), stale-index write → 409 + current row, stale `completed`/`checked`/`stampedAt` regression rejected, invalid region/landmark/beat references rejected, existing non-beat state upserts unchanged (route tests).
+- `PUT /api/progress` atomic monotonic merge: pure merge + registry-keyed routing unit-proven (concurrent writes, stale absorbed, forged/completed bypasses rejected, non-beat legacy untouched). Live SQL proof: Neon-guarded integration test committed; runs when a disposable `TEST_DATABASE_URL` is provisioned (pending as of E-001 commit).
 - Zero writes to `profiles.lesson_progress` (grep + test).
-- Analytics: 5 files changed together; new events in `ClientAnalyticsEvent` extract; construction/no-PII/duplicate-dispatch unit tests green; dispatch e2e green.
+- Analytics: 4 files changed together (events.ts is generic pass-through, no edit); new events in `ClientAnalyticsEvent` extract; construction/no-PII unit tests green. Beat-dispatch e2e is E-003 scope (no beat UI exists in E-001).
 
 ## E-002 — Comps → BeatPlayer
 - Three comps (prediction card · scenario/mock-diff · stamp+next) judged desktop + mobile against §7 criteria; judge record committed.

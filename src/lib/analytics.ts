@@ -1,3 +1,5 @@
+import type { BeatType } from '@/content/beats/schema';
+
 export const ANALYTICS_EVENTS = [
   'profile_built',
   'profile_skipped',
@@ -12,6 +14,11 @@ export const ANALYTICS_EVENTS = [
   'subscribe_clicked',
   'paywall_shown',
   'share_card_created',
+  'beat_started',
+  'beat_completed',
+  'landmark_stamped',
+  'next_landmark_accepted',
+  'resume_succeeded',
 ] as const;
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[number];
@@ -30,6 +37,11 @@ export type AnalyticsProps = {
   subscribe_clicked: { source: 'paywall' };
   paywall_shown: { reason: 'subscription_required' };
   share_card_created: { regionsStarted: number; landmarksCompleted: number };
+  beat_started: { region: string; landmark: string; beat_id: string; type: BeatType };
+  beat_completed: { region: string; landmark: string; beat_id: string; type: BeatType; ms: number };
+  landmark_stamped: { region: string; landmark: string; ms_total: number };
+  next_landmark_accepted: { region: string; from: string; to: string };
+  resume_succeeded: { region: string; landmark: string; furthest_beat_index: number };
 };
 
 const eventNames: ReadonlySet<string> = new Set(ANALYTICS_EVENTS);

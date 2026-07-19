@@ -1,6 +1,7 @@
 import { mkdir, readdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateBeatSequences } from '../src/content/beats/index.ts';
 import { buildContentManifest } from '../src/content/manifest.ts';
 import { regionMetas } from '../src/content/regions.ts';
 
@@ -8,9 +9,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 async function verifyRegistryFiles() {
   for (const region of regionMetas) {
-    const entries = (await readdir(resolve(root, 'src/content', region.id)))
-      .filter((name) => name.endsWith('.ts'))
-      .map((name) => name.slice(0, -3))
+    const entries = (await readdir(resolve(root, 'src/content', region.id), { withFileTypes: true }))
+      .filter((entry) => entry.isFile() && entry.name.endsWith('.ts'))
+      .map((entry) => entry.name.slice(0, -3))
       .sort();
     const expected = [...region.landmarkIds].sort();
     if (JSON.stringify(entries) !== JSON.stringify(expected)) {
@@ -30,6 +31,8 @@ function generatedAt() {
 }
 
 await verifyRegistryFiles();
+const beatReport = validateBeatSequences();
+console.log(`Validated ${beatReport.count} beat sequences: ${beatReport.keys.join(', ') || '(none)'}`);
 const manifest = buildContentManifest(generatedAt());
 if (process.argv.includes('--forbid-drafts')) {
   const drafts = manifest.regions.flatMap((region) =>

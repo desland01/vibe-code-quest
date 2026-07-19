@@ -1,7 +1,8 @@
 import { createAnalyticsEvent, type AnalyticsEvent, type AnalyticsProps, type AnalyticsSink } from '@/lib/analytics';
 
 export type ClientAnalyticsEvent = Extract<AnalyticsEvent,
-  'region_click' | 'landmark_open' | 'format_switched' | 'quiz_completed' | 'paywall_shown'>;
+  'region_click' | 'landmark_open' | 'format_switched' | 'quiz_completed' | 'paywall_shown'
+  | 'beat_started' | 'beat_completed' | 'landmark_stamped' | 'next_landmark_accepted' | 'resume_succeeded'>;
 
 const consoleSink: AnalyticsSink = (name, properties) => {
   console.debug(`[analytics] ${name} ${JSON.stringify(properties)}`);

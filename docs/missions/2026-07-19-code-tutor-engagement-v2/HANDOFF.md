@@ -1,4 +1,4 @@
-# HANDOFF — code-tutor engagement-v2 (freeze candidate, awaiting user approval)
+# HANDOFF — code-tutor engagement-v2 (FROZEN; E-001 backend complete)
 
 **Date:** 2026-07-19 · **Author:** Greg (orchestrator, in-session)
 
@@ -15,7 +15,7 @@
 
 ## Issue spine (do not reorder)
 
-- **E-001** — Beat zod schema + static registry + `PUT /api/progress` atomic monotonic merge (NOT a plain `incoming >= stored` guard — equal-index writes can clobber flags): `furthestBeatIndex = GREATEST(old, incoming)`; `checked = old OR incoming`; `completed = old OR incoming`; `stampedAt = COALESCE(old, incoming)`; terminal state never regresses; 409 + current row on strictly-stale writes. Also defined in E-001 issue text: durable quiz-assessment dedup identity (landmark-scoped, server-side — "emit once" cannot rely on client state across refreshes/tabs); beat analytics event boundaries (no emit on mere render/resume); registry stays server-side, client receives only the selected landmark's beats (no full-registry browser bundle); offline queue + reconciliation semantics. + analytics 5-file seam incl. `ClientAnalyticsEvent` Extract allowlist + unit tests
+1. **E-001** — Beat zod schema + static registry + `PUT /api/progress` atomic monotonic merge (implemented): `furthestBeatIndex = GREATEST(old, incoming)`; `checked = old OR incoming`; `completed = old OR incoming`; first non-null `stampedAt` wins (`NULLIF(..., 'null'::jsonb)` both sides — bare COALESCE locks JSON null forever); terminal state never regresses; always-200 total merge, strictly stale writes absorbed (no 409 path). Quiz analytics: one `quiz_completed` per explicit graded attempt (Amendment A3 — no durable dedup store, none promised). Registry server-side; client receives only the selected landmark's beats. Analytics seam = 4 files (`src/server/events.ts` is generic pass-through, no edit needed) + `ClientAnalyticsEvent` Extract.
 2. **E-002** — 3 comps (predict / scenario-diff / stamp+next, desktop+mobile, judge record committed) → then BeatPlayer CSS-only motion
 3. **E-003** — pilot beats (`git/commits-as-checkpoints`, 8 beats) + local grading + network-blocked Playwright
 4. **E-004** — reward wiring: stamp, 6-pip region progress, next-landmark offer

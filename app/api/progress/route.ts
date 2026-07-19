@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { queryAsUser } from '@/lib/db';
+import { BEAT_PROGRESS_UPSERT_SQL, resolveProgressWrite } from '@/server/beatProgress';
 
 export const dynamic = 'force-dynamic';
 
@@ -75,6 +76,22 @@ export async function PUT(request: Request) {
 
   if (!isValidBody(body)) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  }
+
+  // Engagement-v2: the server registry decides the write path — never client state.kind.
+  // Beat-enabled landmarks are validated + atomically merged; everything else keeps the
+  // legacy whole-object upsert. A forged/omitted kind cannot bypass beat validation.
+  const plan = resolveProgressWrite(body.region, body.landmark, body.state);
+  if (plan.path === 'reject') {
+    return NextResponse.json({ error: plan.error }, { status: plan.status });
+  }
+  if (plan.path === 'beat') {
+    const result = await queryAsUser<ProgressRow>(
+      userId,
+      BEAT_PROGRESS_UPSERT_SQL,
+      [userId, body.region, body.landmark, JSON.stringify(plan.state)]
+    );
+    return NextResponse.json(result.rows[0]);
   }
 
   const result = await queryAsUser<ProgressRow>(

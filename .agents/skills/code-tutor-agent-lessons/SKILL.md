@@ -183,6 +183,60 @@ ISSUE-026 legal pages and the Stripe trial path established the launch-adjacent 
 - Billing/webhooks prefer fixture-replay and unconfigured graceful paths. Live test-card flows stay behind HITL Stripe test keys; never invent live charges from learning review.
 - Mission prompts and evidence must not embed placeholder personal emails or raw validator transcripts. Keep verdicts in handoffs; redact PII from slice prompts before commit.
 - Migrations that invent helpers must match established app RLS helpers (`current_setting('app.user_id', true)::uuid`, existing owner guards), not parallel invented function names.
+### 20. Billing ships fixture-first; live Stripe stays HITL even when the machine is ready
+
+ISSUE-027 built the full Stripe trial/webhook/paywall stack and green-gated it with zero Stripe keys in repo or Vercel env.
+
+- Prefer injectable client factories that throw a typed "not configured" path when secrets are absent. Fixture-replay validates one-trial-per-email/customer, signature verify, idempotent dedup, out-of-order event precedence, unknown/deleted no-ops, and checkout reconciliation without live network.
+- Gate paid surfaces only (here: live guide). Overview/quiz/lesson and legal links stay readable so unpaid users are not hard-locked out of the product map.
+- Ordered webhook processing and unique customer/subscription mapping indexes are part of the entitlement contract, not polish.
+- VAL-041 subscribe-with-test-card and any Checkout session that needs `STRIPE_*` remain HITL-STRIPE-KEY. Do not invent live charges from a learning or AFK lane.
+- Paywall e2e that uses `getByRole('alert')` must scope to the feature `testid`; Next.js route announcers collide with bare alert roles (same class as guide-chat/onboarding).
+
+### 21. Share snapshots are immutable approved-field cards, not progress dumps
+
+ISSUE-028 shipped public share cards and OG images under VAL-050.
+
+- Snapshot payloads include only approved aggregate fields (region/landmark completion counts). Never embed email, profile_id, or raw progress rows.
+- Tokens are unguessable (`crypto.randomBytes` base64url or equivalent), immutable after create, and owner-scoped for revoke. Public reads return null/404 on unknown or revoked without leaking owner identity.
+- Public pages stay session-free, `notFound()` on bad tokens, short-cache, and canvas-free so crawlers get a deterministic card.
+- OG image generation is a server `ImageResponse` (or equivalent) with offline-safe fonts and a fallback image; prove 1200×630 and zero PII in the rendered pixels.
+- If a worker confuses a stub analytics event with a CHECK-constrained DB writer, stop and clarify. Stub events are console/typed sinks until an explicit writer exists — inventing a DB row to "emit" is wrong.
+
+### 22. Product analytics are one typed allowlist with a hard PII denylist
+
+ISSUE-029 collapsed 13 reconciled events into a single `ANALYTICS_EVENTS` source of truth with construction tests and browser dispatch proof.
+
+- One module owns event names, per-event prop types, runtime allowlist rejection, and a swappable sink. Client and server emitters both route through it; no ad-hoc `console.log` analytics forks for product events.
+- Strip profile UUIDs and other PII keys at the emission boundary. Construction tests must denylist common PII keys and reject unknown event names.
+- Deduplicate client+server double-emits at the call site. A second identical emit is a defect, not "extra coverage".
+- Fresh-context validators may flag documentation that still names a dropped event. If repo-wide runtime/test grep is clean and the docs are the deliberate drop record, disposition as docs-only — do not delete the drop note or invent a runtime event to silence the validator.
+
+### 23. Preview-green is not production-live; missing deploy/drill credentials are designed stops
+
+ISSUE-030 reached a planned gate-block after the autonomous half:
+
+- Audit remote env read-back before claiming production-ready. Absence of Stripe/AI/live keys can be a passing VAL-042 result, not a bug, when the product is designed to soft-fail unconfigured.
+- Preview deploy pipeline proof ≠ permission to `target:production`. Session classifiers that deny production deploys are the gate working; surface approval rather than bypassing.
+- Signed failure drills need their secret (`AI_DRILL_SECRET`) plus a live/canary deploy. Missing credential → blocked handoff, not a fabricated drill green.
+- Split autonomy: content-only preview work may continue; billing/email production surfaces wait on D3 re-confirm + HITL-LEGAL + owner-supplied keys.
+
+### 24. Launch assets are drafted, HELD, and publish-path absent
+
+ISSUE-031 produced screenshots, a deterministic demo GIF, Show HN/tweet drafts, and a POST-CHECKLIST without posting anything.
+
+- Capture demos against the DOM fallback when Pixi determinism is weak; note a canvas reshoot only as a post-HITL polish item.
+- All public URLs in held copy stay bracketed placeholders until the final production URL and post checklist pass.
+- Assert zero posting integrations/schedulers/webhooks in the launch evidence. HELD is a mechanical absence, not a label on a live publisher.
+- Final posting remains a human action after ticket only price/name/legal/live-mode/URL gates clear.
+
+### 25. Harness phases stay in vocabulary; HITL closeout lives in blocked_reason
+
+ISSUE-032 and the follow-up mission-state fix proved the closeout packaging rule:
+
+- Do not invent harness phases such as `closeout`. When AFK work is done and only humans remain, keep a valid phase (usually `execution`) and put the gate text in `blocked_reason` / handoff.
+- The final HITL packet lists decisions (price, name, legal, live-mode, D3) and credentials separately from actions (production deploy, drill, posting). Nothing in that packet is agent-executable.
+- Fresh sessions must STOP at the gate rather than "complete" the mission by toggling status fields. Completion happens only after owner decisions land in the closeout record.
 
 ## Verification menu
 

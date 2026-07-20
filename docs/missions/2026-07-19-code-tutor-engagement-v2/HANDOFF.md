@@ -1,22 +1,26 @@
-# HANDOFF — code-tutor engagement-v2 (FROZEN; E-001 backend + E-002 comps gate PASS)
+# HANDOFF — code-tutor engagement-v2
 
-**Date:** 2026-07-19 · **Author:** Greg (orchestrator, in-session) · **PM review pass:** 2026-07-19 ~12:20 (Claude, post-session — corrected stale status, verified claims against repo)
+**Status:** E-002 → E-005 COMPLETE (2026-07-20) · **Stopped after E-005 per kickoff**
 
-> **Next session starts from [KICKOFF-2026-07-19-beatplayer.md](KICKOFF-2026-07-19-beatplayer.md)** — rewritten execution plan (BeatPlayer → rewards → transfer) with the paste-ready Kimi Crew kickoff prompt. The section below is the verified state that plan builds on.
+| Slice | Commit | What landed |
+|---|---|---|
+| E-002 + E-003 + E-004 | `32ce7b9` | BeatPlayer React player, Play tab, progress write-through, pilot Playwright loop, stamp + 6 pips + next-offer |
+| E-005 | `135d377` | `security/trust-boundaries` transfer (same grammar), QA matrix, usability protocol draft |
 
-## Mid-flight state (verified 2026-07-19 12:19 — start here next session)
+**Gate evidence at close:** typecheck clean · lint 0 errors / 1 pre-existing OnboardingChat warning · 146 unit / 21 skipped · build validates 2 beat sequences · full Playwright **35/35** on `:3100` (includes a11y/share/onboarding/map; beats suite 9/9). Forbidden surfaces clean: neither commit touches `app/api/onboarding/route.ts`, `OnboardingChat.tsx`, or `.claude/worktrees/`.
 
-Committed: `12fe978` (E-000 freeze), `b8d0213` (E-001 backend), `035b22f` (E-002 comps gate PASS). The comps gate has PASSED — the BeatPlayer build is unblocked.
+**Open (not in-mission blockers):**
+- Live SQL concurrent-write proof still unit-only — needs disposable `TEST_DATABASE_URL` (E-001 carryover). Marked honestly in [QA-MATRIX.md](QA-MATRIX.md).
+- Founder usability study ([USABILITY-PROTOCOL.md](USABILITY-PROTOCOL.md)) gates any 48-landmark factory. Do not open the factory before that study + founder sign-off.
+- Pre-existing `landmark-formats.spec.ts` parallel-load flake (Lesson tab waiting on `/api/lesson`) — passes solo; not introduced by engagement-v2; do not timeout-bump here.
 
-Uncommitted but verified green (typecheck clean; **135 passed / 21 skipped**):
+**Foreign dirt left untouched this session:** `.agents/skills/code-tutor-agent-lessons/SKILL.md`, Constance self-writes (`CLAUDE.md` rule 6, `constants.md`, `.claude/commands/*`, `.claude/settings.json`), untracked `.claude/commands/constance-report.md`. Owner session decides Constance/AGENTS.md R014 sync.
 
-- `src/components/landmark/Beats/beatReducer.ts` — pure BeatPlayer state machine per contract §4/§8.
-- `src/components/landmark/Beats/beats.module.css` — styles ported from the judged comps.
-- `src/__tests__/beatReducer.test.ts` — 13/13 green. The contradictory `canAdvance` assertion pair (old lines 66–67) is FIXED: the reveal beat has 2 cards and `revealCount` is 2 at that point, so `toBe(true)` was kept and the `toBe(false)` line deleted.
+**Next session:** run the 5–8 founder usability study before any further landmark factory work. Kickoff packet below is historical.
 
-Not yet built (E-002 remainder → E-004): the React `BeatPlayer` component itself, lesson-page wiring, "Play" tab label, client progress writes (`shouldPersist` → localStorage + `PUT /api/progress`), network-blocked Playwright coverage, full gate, commit.
+---
 
-**Review-navigation spec (was missing from this plan — required):** `back` resets `revealCount`/`classifications`/`feedback`, so a learner reviewing an earlier beat would be forced to re-answer already-solved beats to get forward (`canAdvance` gates on transient state), and a reveal beat re-entered via `back` shows 0 cards (every other entry path shows 1). Fix in the reducer before building the player: when `displayIndex < furthestBeatIndex`, forward navigation is unconditional (already-resolved beats never re-gate) — e.g. a `forward`/`return_to_furthest` action that ignores `canAdvance` below the frontier — and `back` onto a reveal beat sets `revealCount: 1` to match `advance`/`resume`. Back-review still writes nothing (contract rule unchanged).
+## Historical archive (pre-completion state)
 
 ## Status
 

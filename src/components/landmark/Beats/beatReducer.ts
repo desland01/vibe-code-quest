@@ -186,7 +186,9 @@ export function playerReducer(sequence: BeatSequence, state: PlayerState, action
 }
 
 // Facts that persist. Only these ever reach localStorage / the server.
-export function persistentFacts(state: PlayerState) {
+export function persistentFacts(
+  state: Pick<PlayerState, 'furthestBeatIndex' | 'checked' | 'completed' | 'stampedAt'>,
+) {
   return {
     furthestBeatIndex: state.furthestBeatIndex,
     checked: state.checked,

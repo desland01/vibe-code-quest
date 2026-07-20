@@ -3,14 +3,24 @@
 import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import type { Landmark, Region } from '@/content/schema';
-import { LandmarkView } from '@/components/landmark/LandmarkView';
+import { LandmarkView, type LandmarkBeatProps } from '@/components/landmark/LandmarkView';
 import type { LandmarkFormat } from '@/components/landmark/FormatSwitcher';
 import { getRegionAccent } from './regionAccents';
 import styles from './SubMapScene.module.css';
 
 export type { LandmarkFormat } from '@/components/landmark/FormatSwitcher';
 
-export function SubMapScene({ region, landmark, format = 'overview' }: { region: Region; landmark?: Landmark; format?: LandmarkFormat }) {
+export function SubMapScene({
+  region,
+  landmark,
+  format = 'overview',
+  beats = null,
+}: {
+  region: Region;
+  landmark?: Landmark;
+  format?: LandmarkFormat;
+  beats?: LandmarkBeatProps | null;
+}) {
   const style = { '--region-accent': getRegionAccent(region.id) } as CSSProperties;
   return (
     <main className={`sub-map-scene ${styles.scene}`} id="main-content" tabIndex={-1} style={style}>
@@ -40,7 +50,14 @@ export function SubMapScene({ region, landmark, format = 'overview' }: { region:
             ))}
           </div>
         </section>
-        {landmark && <LandmarkView landmark={landmark} regionId={region.id} format={format} />}
+        {landmark && (
+          <LandmarkView
+            landmark={landmark}
+            regionId={region.id}
+            format={format}
+            beats={beats}
+          />
+        )}
       </div>
     </main>
   );

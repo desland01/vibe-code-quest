@@ -14,7 +14,8 @@
 .pips li { width: 16px; height: 16px; border: 3px solid var(--ink); background: var(--paper, #fff8e9); }
 .pips li.done { background: var(--region-accent, #d96c6c); }
 .pips li.current { background: var(--ink); outline: 3px solid var(--region-accent, #d96c6c); outline-offset: 2px; }
-.pips .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+/* Standalone .sr covers pips, check-beat legend, and any other screen-reader-only labels. */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
 .beatCard {
   border: 3px solid var(--ink);
@@ -31,6 +32,7 @@
 }
 
 .choices { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+fieldset.choices { border: 0; min-inline-size: 0; }
 .choice {
   display: flex; align-items: center; gap: 14px; width: 100%;
   min-height: 52px; padding: 12px 16px;

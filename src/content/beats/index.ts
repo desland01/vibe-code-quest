@@ -1,5 +1,6 @@
 import { beatSequenceSchema, type BeatSequence } from './schema.ts';
 import { sequence as commitsAsCheckpoints } from '../git/beats/commits-as-checkpoints.ts';
+import { sequence as trustBoundaries } from '../security/beats/trust-boundaries.ts';
 import { landmarkRegistry } from '../index.ts';
 
 // Static beat-sequence registry (frozen DESIGN_CONTRACT §4/§8). Server-side only.
@@ -7,6 +8,7 @@ import { landmarkRegistry } from '../index.ts';
 
 const registryEntries: readonly BeatSequence[] = [
   commitsAsCheckpoints,
+  trustBoundaries,
 ];
 
 const parsed = registryEntries.map((entry) => beatSequenceSchema.parse(entry));

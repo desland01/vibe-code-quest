@@ -79,13 +79,29 @@ describe('beat sequence schema', () => {
 });
 
 describe('beat registry', () => {
-  it('validates all registered sequences and resolves the pilot', () => {
+  it('validates all registered sequences and resolves the pilot + transfer landmark', () => {
     const report = validateBeatSequences();
-    expect(report.count).toBeGreaterThanOrEqual(1);
-    expect(report.keys).toContain('git/commits-as-checkpoints');
+    // E-005: pilot + security/trust-boundaries transfer through the same grammar.
+    expect(report.count).toBe(2);
+    expect(report.keys).toEqual(expect.arrayContaining([
+      'git/commits-as-checkpoints',
+      'security/trust-boundaries',
+    ]));
     expect(hasBeatSequence('git', 'commits-as-checkpoints')).toBe(true);
+    expect(hasBeatSequence('security', 'trust-boundaries')).toBe(true);
     expect(hasBeatSequence('git', 'branches-as-isolation')).toBe(false);
-    expect(getBeatSequence('git', 'commits-as-checkpoints')?.beats).toHaveLength(8);
+
+    const pilotSeq = getBeatSequence('git', 'commits-as-checkpoints');
+    expect(pilotSeq?.beats).toHaveLength(8);
+    expect(pilotSeq?.beats.at(-1)?.type).toBe('recap');
+    expect(pilotSeq?.beats.some((beat) => beat.type === 'check')).toBe(true);
+
+    const transfer = getBeatSequence('security', 'trust-boundaries');
+    expect(transfer?.beats).toHaveLength(8);
+    expect(transfer?.beats.at(-1)?.type).toBe('recap');
+    expect(transfer?.beats.some((beat) => beat.type === 'check')).toBe(true);
+    // Same schema path — no landmark-specific branches required to parse.
+    expect(() => beatSequenceSchema.parse(transfer)).not.toThrow();
   });
 
   it('rejects a registered sequence that references a missing canonical landmark', () => {

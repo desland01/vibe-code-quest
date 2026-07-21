@@ -12,7 +12,7 @@ const expected = [
   'guide_unavailable_shown', 'account_upgraded', 'trial_started',
   'subscribe_clicked', 'paywall_shown', 'share_card_created',
   'beat_started', 'beat_completed', 'landmark_stamped',
-  'next_landmark_accepted', 'resume_succeeded',
+  'next_landmark_accepted', 'resume_succeeded', 'xp_awarded',
 ] as const;
 
 const fixtures = {
@@ -34,6 +34,7 @@ const fixtures = {
   landmark_stamped: { region: 'git', landmark: 'commits-as-checkpoints', ms_total: 175000 },
   next_landmark_accepted: { region: 'git', from: 'commits-as-checkpoints', to: 'branches-as-isolation' },
   resume_succeeded: { region: 'git', landmark: 'commits-as-checkpoints', furthest_beat_index: 3 },
+  xp_awarded: { region: 'git', landmark: 'commits-as-checkpoints', points: 50, total: 100, award_count: 1 },
 } satisfies { [E in AnalyticsEvent]: AnalyticsProps[E] };
 
 const expectedKeys: { [E in AnalyticsEvent]: readonly (keyof AnalyticsProps[E])[] } = {
@@ -49,6 +50,7 @@ const expectedKeys: { [E in AnalyticsEvent]: readonly (keyof AnalyticsProps[E])[
   landmark_stamped: ['region', 'landmark', 'ms_total'],
   next_landmark_accepted: ['region', 'from', 'to'],
   resume_succeeded: ['region', 'landmark', 'furthest_beat_index'],
+  xp_awarded: ['region', 'landmark', 'points', 'total', 'award_count'],
 };
 
 const piiKeys = new Set(['email', 'text', 'message', 'token', 'profileid', 'userid', 'sourceuserid']);
@@ -58,9 +60,9 @@ function keysDeep(value: unknown): string[] {
 }
 
 describe('analytics event contract', () => {
-  it('contains exactly the reconciled 18 names', () => {
+  it('contains exactly the reconciled 19 names', () => {
     expect(ANALYTICS_EVENTS).toEqual(expected);
-    expect(new Set(ANALYTICS_EVENTS).size).toBe(18);
+    expect(new Set(ANALYTICS_EVENTS).size).toBe(19);
   });
 
   for (const name of expected) {

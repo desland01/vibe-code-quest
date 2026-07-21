@@ -195,9 +195,31 @@ export function BeatPlayer({
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ region: regionId, landmark: landmark.id, state: payload }),
-      }).catch(() => {
-        // Offline / 401 — localStorage is the floor; play never blocks.
-      });
+      })
+        .then(async (response) => {
+          if (!response.ok) return;
+          const body = (await response.json()) as {
+            xp?: {
+              total?: number;
+              newPoints?: number;
+              awarded?: Array<{ awardKey: string; points: number }>;
+            };
+          };
+          const xp = body.xp;
+          // Emit only when the server confirms newly inserted awards (idempotent replay = 0).
+          if (!xp || typeof xp.newPoints !== 'number' || xp.newPoints <= 0) return;
+          if (typeof xp.total !== 'number') return;
+          recordClientEvent('xp_awarded', {
+            region: regionId,
+            landmark: landmark.id,
+            points: xp.newPoints,
+            total: xp.total,
+            award_count: Array.isArray(xp.awarded) ? xp.awarded.length : 0,
+          });
+        })
+        .catch(() => {
+          // Offline / 401 — localStorage is the floor; play never blocks.
+        });
     }
   }, [state, regionId, landmark.id]);
 

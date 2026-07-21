@@ -27,7 +27,26 @@ button { font: inherit; }
 .map-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; max-width: 1280px; margin: 0 auto 20px; }
 .map-header h1 { margin: 0; font: 700 clamp(2rem, 5vw, 4rem)/1 var(--font-pixel), monospace; }
 .map-header p { margin: 8px 0 0; font-size: 1.05rem; }
+.map-header-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; min-width: 0; }
 .map-header button, .panel-close { border: 2px solid var(--ink); background: var(--banner); color: var(--ink); padding: 10px 14px; cursor: pointer; box-shadow: 3px 3px 0 var(--banner-border); }
+/* L-003 cozy-pixel XP counter — server total only; hide when unavailable */
+.xp-hud {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 44px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 8px 12px;
+  border: 2px solid var(--ink);
+  background: var(--banner);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--banner-border);
+  font-family: var(--font-pixel), monospace;
+  white-space: nowrap;
+}
+.xp-hud__value { font-weight: 700; font-size: 1.1rem; line-height: 1; }
+.xp-hud__unit { font-size: 0.75rem; letter-spacing: 0.04em; opacity: 0.85; }
 .map-shell { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; max-width: 1280px; margin: auto; align-items: start; }
 .map-viewport { position: relative; aspect-ratio: 8 / 5; overflow: hidden; border: 4px solid var(--ink); background: var(--sea); image-rendering: pixelated; }
 .map-renderer { position: absolute; inset: 0; overflow: hidden; outline: none; touch-action: none; }

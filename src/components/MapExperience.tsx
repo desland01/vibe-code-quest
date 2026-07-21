@@ -5,6 +5,7 @@ import { useSession } from '@/lib/auth/SessionProvider';
 import { regions } from '@/lib/content-client';
 import { UpgradeAccountModal } from '@/components/UpgradeAccountModal';
 import { OnboardingChat } from '@/components/OnboardingChat';
+import { XpHud } from '@/components/XpHud';
 import { MapCanvas } from '@/components/map/MapCanvas';
 import { RegionControls } from '@/components/map/RegionControls';
 import { RegionPanel } from '@/components/map/RegionPanel';
@@ -53,7 +54,10 @@ export function MapExperience() {
       </section>
       <header className="map-header">
         <div><h1>code-tutor</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div>
-        <UpgradeAccountModal />
+        <div className="map-header-actions">
+          <XpHud />
+          <UpgradeAccountModal />
+        </div>
       </header>
       <section className="map-shell" aria-label="Learning map">
         <div className="map-viewport">

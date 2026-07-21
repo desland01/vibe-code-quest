@@ -2,8 +2,9 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
-import { queryAsUser } from '@/lib/db';
+import { withUserTransaction } from '@/lib/db';
 import { BEAT_PROGRESS_UPSERT_SQL, resolveProgressWrite } from '@/server/beatProgress';
+import { applyXpAwards, getXpTotal } from '@/server/xp';
 
 export const dynamic = 'force-dynamic';
 
@@ -52,15 +53,19 @@ export async function GET() {
   const userId = await authenticatedUserId();
   if (!userId) return unauthorized();
 
-  const result = await queryAsUser<ProgressRow>(
-    userId,
-    `SELECT region, landmark, state, updated_at
-     FROM progress
-     WHERE profile_id = $1
-     ORDER BY updated_at DESC`,
-    [userId]
-  );
-  return NextResponse.json({ items: result.rows });
+  const payload = await withUserTransaction(userId, async (client) => {
+    const result = await client.query<ProgressRow>(
+      `SELECT region, landmark, state, updated_at
+       FROM progress
+       WHERE profile_id = $1
+       ORDER BY updated_at DESC`,
+      [userId],
+    );
+    const total = await getXpTotal(client, userId);
+    return { items: result.rows, xp: { total } };
+  });
+
+  return NextResponse.json(payload);
 }
 
 export async function PUT(request: Request) {
@@ -85,23 +90,38 @@ export async function PUT(request: Request) {
   if (plan.path === 'reject') {
     return NextResponse.json({ error: plan.error }, { status: plan.status });
   }
-  if (plan.path === 'beat') {
-    const result = await queryAsUser<ProgressRow>(
-      userId,
-      BEAT_PROGRESS_UPSERT_SQL,
-      [userId, body.region, body.landmark, JSON.stringify(plan.state)]
-    );
-    return NextResponse.json(result.rows[0]);
-  }
 
-  const result = await queryAsUser<ProgressRow>(
-    userId,
-    `INSERT INTO progress (profile_id, region, landmark, state)
-     VALUES ($1, $2, $3, $4::jsonb)
-     ON CONFLICT (profile_id, region, landmark)
-     DO UPDATE SET state = EXCLUDED.state, updated_at = now()
-     RETURNING region, landmark, state, updated_at`,
-    [userId, body.region, body.landmark, JSON.stringify(body.state)]
-  );
-  return NextResponse.json(result.rows[0]);
+  // One transaction: progress upsert + XP awards from the *merged* returned state.
+  const payload = await withUserTransaction(userId, async (client) => {
+    if (plan.path === 'beat') {
+      const result = await client.query<ProgressRow>(BEAT_PROGRESS_UPSERT_SQL, [
+        userId,
+        body.region,
+        body.landmark,
+        JSON.stringify(plan.state),
+      ]);
+      const row = result.rows[0]!;
+      // Awards from server-merged RETURNING state, never the incoming client payload.
+      const xp = await applyXpAwards(client, userId, body.region, body.landmark, row.state);
+      return { ...row, xp };
+    }
+
+    const result = await client.query<ProgressRow>(
+      `INSERT INTO progress (profile_id, region, landmark, state)
+       VALUES ($1, $2, $3, $4::jsonb)
+       ON CONFLICT (profile_id, region, landmark)
+       DO UPDATE SET state = EXCLUDED.state, updated_at = now()
+       RETURNING region, landmark, state, updated_at`,
+      [userId, body.region, body.landmark, JSON.stringify(body.state)],
+    );
+    const row = result.rows[0]!;
+    // Legacy/non-beat path: no awards, still return current total for HUD.
+    const total = await getXpTotal(client, userId);
+    return {
+      ...row,
+      xp: { total, awarded: [] as Array<{ awardKey: string; points: number }>, newPoints: 0 },
+    };
+  });
+
+  return NextResponse.json(payload);
 }

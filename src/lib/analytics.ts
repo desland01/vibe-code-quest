@@ -19,6 +19,7 @@ export const ANALYTICS_EVENTS = [
   'landmark_stamped',
   'next_landmark_accepted',
   'resume_succeeded',
+  'xp_awarded',
 ] as const;
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[number];
@@ -42,6 +43,14 @@ export type AnalyticsProps = {
   landmark_stamped: { region: string; landmark: string; ms_total: number };
   next_landmark_accepted: { region: string; from: string; to: string };
   resume_succeeded: { region: string; landmark: string; furthest_beat_index: number };
+  // L-003: only emitted after server confirms newly inserted awards (newPoints > 0).
+  xp_awarded: {
+    region: string;
+    landmark: string;
+    points: number;
+    total: number;
+    award_count: number;
+  };
 };
 
 const eventNames: ReadonlySet<string> = new Set(ANALYTICS_EVENTS);

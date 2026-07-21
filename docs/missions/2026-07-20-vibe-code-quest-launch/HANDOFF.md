@@ -26,7 +26,7 @@ Spelling: **Truline**, never Trueline.
 |---|---|---|
 | **L-001** Live SQL concurrency proof | `3ab22f5` | Disposable Neon branch proof PASS (3/3 incl. 8-way race). Branch deleted + verified absent. QA-MATRIX concurrent-write → LIVE SQL PASS. A4.3 Truline spelling locked. Constance R039–R041 declared. |
 | **L-002** Beat factory (48 landmarks) | `4f1616f` | 2 hand-authored overrides + 46 provenance-locked derives. Source-aware feedback. Anti-spoiler quiz isolation. Invalid `?format=` → overview. Full Playwright **44/44** on `http://localhost:3100`. Gates green. |
-| **L-003** Competence XP | *(this commit)* | Additive `0009_xp.sql` on main Neon. Server-derived XP (15+15+20+50=100). Disposable branch proof PASS + verified delete. Map HUD + `xp_awarded`. Full Playwright **46/46** workers=1 on `:3100`. R042–R047 declared. |
+| **L-003** Competence XP | `b8663cc` | Additive `0009_xp.sql` on main Neon. Server-derived XP (15+15+20+50=100). Disposable branch proof PASS + verified delete. Map HUD + `xp_awarded`. Full Playwright **46/46** workers=1 on `:3100`. R042–R047 declared. |
 
 Evidence:
 

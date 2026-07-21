@@ -1,8 +1,8 @@
 # HANDOFF — Vibe Code Quest launch mission
 
-**Date:** 2026-07-21  
-**Repo:** `/Users/thebeast/code-tutor`  
-**Branch:** `main`  
+**Date:** 2026-07-21
+**Repo:** `/Users/thebeast/code-tutor`
+**Branch:** `main`
 **Status:** L-001 + L-002 committed. L-003 mid-slice on disk, uncommitted. L-004→L-011 not started.
 
 ---
@@ -14,8 +14,8 @@
 3. [`WORK_LEDGER.md`](../../../WORK_LEDGER.md) — dated session history.
 4. This file — resume state for the next session.
 
-Product name (A4.3 amended 2026-07-21): **Vibe Code Quest by Truline**  
-Byline: [https://truline.io](https://truline.io)  
+Product name (A4.3 amended 2026-07-21): **Vibe Code Quest by Truline**
+Byline: [https://truline.io](https://truline.io)
 Spelling: **Truline**, never Trueline.
 
 ---
@@ -75,6 +75,12 @@ Evidence:
 - Unique key `(profile_id, region, landmark, award_key)` → idempotent
 - Backfill: all-time XP yes; `awarded_at` clamped before current UTC week so weekly board stays clean
 
+### Uncommitted WIP backup
+
+Local dangling ref (not pushed): `refs/backup/l003-wip`.
+Recover if working tree is wiped: `git checkout refs/backup/l003-wip -- <paths>` or `git show refs/backup/l003-wip`.
+Delete after L-003 commits: `git update-ref -d refs/backup/l003-wip`.
+
 ### Critical blocker
 
 Main Neon currently has:
@@ -96,20 +102,20 @@ Do **not** start browser progress e2e against main until migration is applied.
 
 ## 4. Exact resume order
 
-1. Constance session-start (real CLI):  
+1. Constance session-start (real CLI):
    `node /Users/thebeast/Constance/dist/constance.mjs session-start`
 2. Dirty-work audit. Preserve foreign/self-written files listed above.
 3. Re-read KICKOFF + this HANDOFF + frozen DESIGN_CONTRACT.
-4. Inspect + execute disposable proof:  
-   `node --check /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l003-branch-proof.mjs && node /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l003-branch-proof.mjs`  
-   Require PASS + verified branch deletion. Evidence path expected:  
+4. Inspect + execute disposable proof:
+   `node --check /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l003-branch-proof.mjs && node /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l003-branch-proof.mjs`
+   Require PASS + verified branch deletion. Evidence path expected:
    `docs/missions/2026-07-20-vibe-code-quest-launch/evidence/L-003-branch-proof.md`
-5. Apply migration to **main** Neon via existing `.env.local` (never print secrets):  
+5. Apply migration to **main** Neon via existing `.env.local` (never print secrets):
    `npm run db:migrate`
 6. Verify: `xp_awards` exists + `schema_migrations` has `0009_xp.sql`.
 7. Targeted XP tests + `e2e/xp.spec.ts`.
-8. Fresh dev server on port 3100:  
-   `npm run dev -- -p 3100`  
+8. Fresh dev server on port 3100:
+   `npm run dev -- -p 3100`
    Playwright **only** against `http://localhost:3100` (never `127.0.0.1` — hydration/HMR blocked).
 9. Four gates: `typecheck`, `lint`, `test`, `build`.
 10. Render/inspect desktop + mobile XP HUD. Vision API was previously OpenRouter 402 credit-blocked — if still blocked, record that honestly; geometry checks ≠ subjective visual PASS.
@@ -137,7 +143,7 @@ Treat owner GO from original mission as still in force for all remaining slices 
 
 ## 6. Guardrails (turn-one)
 
-- Constance fallback CLI: `node /Users/thebeast/Constance/dist/constance.mjs …`  
+- Constance fallback CLI: `node /Users/thebeast/Constance/dist/constance.mjs …`
   Bare `constance` may be missing; do not invent `cli/constance.ts` under code-tutor.
 - Use `bunx` (PATH includes `~/.bun/bin`), not `npx` (global R010).
 - No heredoc multi-line scripts in terminal if the harness approval path wedges — write a file, run the file bare.
@@ -162,5 +168,8 @@ Treat owner GO from original mission as still in force for all remaining slices 
 ## Kickoff (paste into fresh session)
 
 ```text
-Resume the Vibe Code Quest launch mission AFK in /Users/thebeast/code-tutor (git repo, branch main). FIRST run: node /Users/thebeast/Constance/dist/constance.mjs session-start and operate inside the printed constants. Then read, in order: (1) /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/KICKOFF.md — mission packet, Amendment A4, L-001→L-011 spine, §6 stop conditions only; (2) /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/HANDOFF.md — current resume state; (3) /Users/thebeast/code-tutor/docs/missions/2026-07-19-code-tutor-engagement-v2/DESIGN_CONTRACT.md — frozen, never edit. Landed: L-001 3ab22f5, L-002 4f1616f. L-003 is mid-slice on disk and uncommitted; progress route already queries xp_awards but main Neon does not have the table yet (progress APIs will 500 until migrate). First concrete work: dirty-work audit without touching Constance self-writes; node --check /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l003-branch-proof.mjs then node /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l003-branch-proof.mjs for disposable Neon XP/RLS proof; require PASS + verified branch deletion; apply npm run db:migrate to main Neon without printing secrets; verify xp_awards + schema_migrations 0009; run targeted XP tests and e2e/xp.spec.ts; start fresh npm run dev -- -p 3100; Playwright only against http://localhost:3100 (never 127.0.0.1); four gates typecheck/lint/test/build; render/inspect desktop+mobile XP HUD (vision may be credit-blocked — be honest); update WORK_LEDGER + L-003 evidence; commit only L-003 paths on main. Then continue L-004 through L-011 in packet order. Guardrails: bunx not npx (~/.bun/bin on PATH); Truline spelling only; leave CLAUDE.md/constants.md/.claude/*/.agents/* and content-manifest churn uncommitted; no heredoc terminal scripts if they wedge approvals; treat this message as GO for remaining slices including public GitHub + Vercel deploy; STOP only for KICKOFF §6.
+Resume the Vibe Code Quest launch mission AFK in /Users/thebeast/code-tutor on branch main. FIRST run `node /Users/thebeast/Constance/dist/constance.mjs session-start`, then read in order: /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/KICKOFF.md, /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/HANDOFF.md, and the frozen /Users/thebeast/code-tutor/docs/missions/2026-07-19-code-tutor-engagement-v2/DESIGN_CONTRACT.md.
+First perform a dirty-work audit without touching Constance self-writes, then run `node --check /Users/thebeast/code-tutor/docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l003-branch-proof.mjs` followed by the runner itself; require PASS and verified disposable-branch deletion before applying `npm run db:migrate` to main Neon.
+Finish L-003 with XP tests, a fresh server on port 3100, Playwright only against http://localhost:3100, desktop/mobile rendered inspection, all four gates, dated evidence/ledger, and a scoped main commit; then execute L-004 through L-011 in order. Treat this message as GO.
+Guardrails: Truline spelling only; use bunx, never npx; never expose secrets; leave CLAUDE.md/constants.md/.claude/*/.agents/* and manifest timestamp churn uncommitted; STOP only for KICKOFF §6.
 ```

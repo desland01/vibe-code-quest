@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
 
+// L-002: every landmark is beat-enabled, so the lesson tab label is "Play" and
+// BeatPlayer mounts instead of LessonFormat/lesson-chat. This is intentional IA,
+// not a timeout-bump of the pre-existing parallel-load flake on this file.
 test('landmark formats are real, deterministic, and keyboard operable', async ({ page }) => {
   await page.goto('/map/databases/sql?format=overview');
   await page.waitForResponse((r) => r.url().includes('/api/session'), { timeout: 15000 }).catch(() => {});
@@ -21,6 +24,8 @@ test('landmark formats are real, deterministic, and keyboard operable', async ({
   await quiz.getByRole('button', { name: 'Check answer' }).click();
   await expect(quiz.getByRole('status')).toContainText(/Correct/);
 
-  await switcher.getByRole('button', { name: 'Lesson' }).click();
-  await expect(page.getByTestId('lesson-chat')).toContainText(/\?|overview/i);
+  await switcher.getByRole('button', { name: 'Play' }).click();
+  await expect(page).toHaveURL(/format=lesson/);
+  await expect(page.getByTestId('beat-player')).toBeVisible({ timeout: 15000 });
+  await expect(page.getByRole('button', { name: 'Play' })).toHaveAttribute('aria-current', 'true');
 });

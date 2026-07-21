@@ -11,7 +11,8 @@ test('map and renderer interactions dispatch allowlisted analytics without PII',
   await expect.poll(() => messages.some((message) => message.includes('[analytics] region_click'))).toBe(true);
 
   await page.getByRole('complementary').getByRole('link', { name: 'SQL', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'SQL' })).toBeVisible();
+  // L-002: BeatPlayer also renders an h3 with the landmark title — pin the page header h2.
+  await expect(page.locator('#landmark-title')).toHaveText('SQL');
   await expect.poll(() => messages.some((message) => message.includes('[analytics] landmark_open'))).toBe(true);
 
   await page.getByRole('group', { name: 'Landmark format' }).getByRole('button', { name: 'Quiz' }).click();

@@ -12,8 +12,13 @@ describe('anonymous session tokens', () => {
 
     await expect(verifySessionToken(token)).resolves.toEqual({ userId });
 
-    const finalCharacter = token.at(-1);
-    const tamperedToken = `${token.slice(0, -1)}${finalCharacter === 'a' ? 'b' : 'a'}`;
+    // Tamper the payload segment (not the last signature char). A 32-byte HMAC
+    // base64url-encodes to 43 chars; the final char can carry only padding bits,
+    // so a↔b on the last char is not a reliable invalidation.
+    const [header, payload, signature] = token.split('.');
+    expect(header && payload && signature).toBeTruthy();
+    const tamperedPayload = `${payload!.slice(0, -1)}${payload!.at(-1) === 'a' ? 'b' : 'a'}`;
+    const tamperedToken = `${header}.${tamperedPayload}.${signature}`;
     await expect(verifySessionToken(tamperedToken)).resolves.toBeNull();
   });
 

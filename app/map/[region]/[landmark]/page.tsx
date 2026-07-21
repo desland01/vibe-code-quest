@@ -49,8 +49,15 @@ export default async function LandmarkMapPage({
       else if (!sequence) defaultFormat = 'overview';
     }
   }
-  const format =
-    requestedFormat !== undefined && isLandmarkFormat(requestedFormat) ? requestedFormat : defaultFormat;
+  // Explicit valid ?format= always wins. Missing format uses beat-aware default (Play).
+  // Explicitly invalid format falls back to overview (trust surface), not Play —
+  // preserves deep-link safety and the pre-L-002 map-sub contract.
+  const format: LandmarkFormat =
+    requestedFormat === undefined
+      ? defaultFormat
+      : isLandmarkFormat(requestedFormat)
+        ? requestedFormat
+        : 'overview';
 
   let beats: LandmarkBeatProps | null = null;
   if (sequence) {

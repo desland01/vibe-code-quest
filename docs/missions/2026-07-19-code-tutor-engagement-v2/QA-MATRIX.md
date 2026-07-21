@@ -15,7 +15,7 @@
 | Stamp once | `landmark_stamped` fires on gesture only; resume does not re-fire | Full pilot + transfer specs: count stays 1 across reload | ✅ PASS |
 | Network-blocked completion | Full sequence + stamp with `/api/guide` + `/api/lesson` aborted | Full pilot loop + transfer loop both block those routes | ✅ PASS |
 | Transfer grammar | `security/trust-boundaries` renders 8 beat types in order via same player | `e2e/beats.spec.ts` → E-005 transfer gate (`assertTypes` locks type order) + `evidence/E-005/` | ✅ PASS |
-| Concurrent-write merge | Atomic monotonic merge under race | Pure merge + routing unit-proven (`beatProgress.server.test.ts`, `beats.test.ts`). **Live SQL integration still pending `TEST_DATABASE_URL` (E-001 carryover) — not marked proven here.** | ⚠️ UNIT ONLY |
+| Concurrent-write merge | Atomic monotonic merge under race | Pure merge + routing unit-proven (`beatProgress.server.test.ts`, `beats.test.ts`). **Live SQL PASS 2026-07-21** on disposable Neon branch `br-dawn-firefly-atybpffe` (`vibe-launch-l001-2026-07-21T08-53-19-589Z`, parent `main`/`br-raspy-bread-atcew3is`, role `neondb_owner`): `src/__tests__/beatProgress.integration.test.ts` 3/3 including 8-way concurrent race (`furthestBeatIndex=7`, `checked`/`completed` latched, stamp retained); branch deleted and verified absent. Evidence: [L-001.md](../2026-07-20-vibe-code-quest-launch/evidence/L-001.md). | ✅ LIVE SQL PASS |
 
 ## Known pre-existing flake (not introduced by engagement-v2)
 

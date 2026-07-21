@@ -40,3 +40,6 @@
 - [R036] Lesson completion works with guide APIs blocked (added: 2026-07-19)
 - [R037] The reward pilot ships no XP mechanics (added: 2026-07-19)
 - [R038] The reward pilot ships no streak mechanics (added: 2026-07-19)
+- [R039] Public product name is Vibe Code Quest by Truline (added: 2026-07-21)
+- [R040] Public product byline links to https://truline.io (added: 2026-07-21)
+- [R041] Leaderboard shame copy is disabled (added: 2026-07-21)

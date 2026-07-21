@@ -1,8 +1,8 @@
 # KICKOFF — Vibe Code Quest launch mission (2026-07-20)
 
 **Mission:** take code-tutor from its completed engagement-v2 pilot state to the fully
-gamified, free, open-source, production-deployed **"Vibe Code Quest by Trueline"** —
-a marketing asset demonstrating what Trueline (https://trueline.io) + Constance tooling
+gamified, free, open-source, production-deployed **"Vibe Code Quest by Truline"** —
+a marketing asset demonstrating what Truline (https://truline.io) + Constance tooling
 can build with a no-code founder. Full AFK execution; every stop condition is listed in §6.
 
 **Authorization:** owner (Desmond) decisions recorded 2026-07-20 in this file, the
@@ -39,7 +39,7 @@ non-blocking side rail and completion works with guide APIs blocked (R035–R036
 |---|---|
 | A4.1 | **Factory before study.** The 48-landmark beat factory builds NOW. The 5–8 founder usability study moves post-launch as iteration input, not authorization. |
 | A4.2 | **Free + open source.** No paywall. Stripe gating removed from the user path; billing seam stays dormant behind its existing "unconfigured" graceful path (do not delete the code). Public GitHub repo under **MIT license**. |
-| A4.3 | **Name.** Public product name string is exactly **"Vibe Code Quest by Trueline"** ("Vibe Code Quest" standalone where the full string is too long; "by Trueline" links https://trueline.io). Deploys on the existing Vercel project URL; custom domain is a later owner step. |
+| A4.3 | **Name.** Public product name string is exactly **"Vibe Code Quest by Truline"** ("Vibe Code Quest" standalone where the full string is too long; "by Truline" links https://truline.io). Deploys on the existing Vercel project URL; custom domain is a later owner step. **Amended 2026-07-21:** owner corrected brand spelling Truline (never Trueline). |
 | A4.4 | **Leaderboard authorized** (overrides engagement-v2 forbidden pattern #5 by explicit owner decision). Design constraints in §4. New API routes allowed for it. |
 | A4.5 | **Ship everything:** XP, collectible pixel props, map-canvas glow, leaderboard. **Streaks stay excluded.** No lives/timers/fake urgency/sound — the rest of the forbidden-pattern table (§2 of the design contract) still holds. |
 | A4.6 | **Production deploy authorized** from this mission (Vercel project `code-tutor`, already public). |
@@ -80,12 +80,12 @@ non-blocking side rail and completion works with guide APIs blocked (R035–R036
 - **L-006 — Free-tier conversion.** Remove paywall gating from the user path (guide
   rail free within caps); billing code stays dormant behind unconfigured-Stripe path;
   keep fixture tests passing or skip-guard them explicitly.
-- **L-007 — Rebrand.** "Vibe Code Quest by Trueline" across metadata, OG/share cards,
-  header, README; "by Trueline" footer attribution linking https://trueline.io plus a
+- **L-007 — Rebrand.** "Vibe Code Quest by Truline" across metadata, OG/share cards,
+  header, README; "by Truline" footer attribution linking https://truline.io plus a
   "governed by Constance" mention. Legal pages adapted per A4.7 (warnings stay).
 - **L-008 — Self-host + OSS packaging.** A4.9 no-DB mode; `.env.example` with BYO-key
   docs (gateway key, `DATABASE_URL` optional, `AUTH_SECRET`); README overhaul (what it
-  is, play link, self-host quickstart, architecture tour, Trueline/Constance story);
+  is, play link, self-host quickstart, architecture tour, Truline/Constance story);
   MIT `LICENSE`; secret scan of full git history before publish (`gitleaks` or
   equivalent read-only tool); then create/publish the public GitHub repo and push.
 - **L-009 — Guide model swap.** Hosted default → Kimi K2 through the gateway seam;

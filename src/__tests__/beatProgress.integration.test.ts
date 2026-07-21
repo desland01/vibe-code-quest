@@ -90,4 +90,66 @@ describeWithDatabase('beat progress SQL merge', () => {
     expect(state.furthestBeatIndex).toBe(4);
     expect('old' in state).toBe(false);
   });
+
+  it('concurrent racing upserts keep GREATEST index and terminal stamp', async () => {
+    // Eight concurrently submitted upserts over the two-connection pool (max: 2).
+    // Do NOT check out dedicated clients inside Promise.all — that deadlocks the pool.
+    const raceLandmark = 'race-concurrent';
+    await pool.query('DELETE FROM progress WHERE profile_id = $1 AND landmark = $2', [
+      userId,
+      raceLandmark,
+    ]);
+
+    try {
+      const stamp = '2026-07-21T07:00:00.000Z';
+      const mid = beatState({ furthestBeatIndex: 6, checked: true });
+      const terminal = beatState({
+        furthestBeatIndex: 7,
+        checked: true,
+        completed: true,
+        stampedAt: stamp,
+      });
+      const stale = beatState({ furthestBeatIndex: 2 });
+      const midHigh = beatState({ furthestBeatIndex: 5, checked: true });
+
+      // Seed a non-terminal row, then race mixed advances + a terminal stamp + stale writes.
+      await pool.query(BEAT_PROGRESS_UPSERT_SQL, [
+        userId,
+        region,
+        raceLandmark,
+        beatState({ furthestBeatIndex: 3 }),
+      ]);
+
+      await Promise.all([
+        pool.query(BEAT_PROGRESS_UPSERT_SQL, [userId, region, raceLandmark, mid]),
+        pool.query(BEAT_PROGRESS_UPSERT_SQL, [userId, region, raceLandmark, terminal]),
+        pool.query(BEAT_PROGRESS_UPSERT_SQL, [userId, region, raceLandmark, stale]),
+        pool.query(BEAT_PROGRESS_UPSERT_SQL, [userId, region, raceLandmark, midHigh]),
+        pool.query(BEAT_PROGRESS_UPSERT_SQL, [userId, region, raceLandmark, terminal]),
+        pool.query(BEAT_PROGRESS_UPSERT_SQL, [userId, region, raceLandmark, stale]),
+        pool.query(BEAT_PROGRESS_UPSERT_SQL, [userId, region, raceLandmark, mid]),
+        pool.query(BEAT_PROGRESS_UPSERT_SQL, [
+          userId,
+          region,
+          raceLandmark,
+          beatState({ furthestBeatIndex: 4 }),
+        ]),
+      ]);
+
+      const final = await pool.query(
+        `SELECT state FROM progress WHERE profile_id = $1 AND region = $2 AND landmark = $3`,
+        [userId, region, raceLandmark]
+      );
+      const state = final.rows[0].state as Record<string, unknown>;
+      expect(state.furthestBeatIndex).toBe(7);
+      expect(state.checked).toBe(true);
+      expect(state.completed).toBe(true);
+      expect(String(state.stampedAt)).toContain('2026-07-21T07:00:00');
+    } finally {
+      await pool.query('DELETE FROM progress WHERE profile_id = $1 AND landmark = $2', [
+        userId,
+        raceLandmark,
+      ]);
+    }
+  });
 });

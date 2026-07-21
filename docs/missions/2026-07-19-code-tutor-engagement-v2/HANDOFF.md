@@ -2,6 +2,12 @@
 
 **Status:** E-002 → E-005 COMPLETE (2026-07-20) · **Stopped after E-005 per kickoff**
 
+> **SUPERSEDED FOR NEXT STEPS (2026-07-20, Amendment A4):** the owner authorized the
+> launch mission — factory before the usability study (study moves post-launch), free +
+> open-source, leaderboard/XP/collectibles/glow, production deploy. Active packet:
+> [../2026-07-20-vibe-code-quest-launch/KICKOFF.md](../2026-07-20-vibe-code-quest-launch/KICKOFF.md).
+> The "Next session" line below is historical. DESIGN_CONTRACT.md remains frozen design law.
+
 | Slice | Commit | What landed |
 |---|---|---|
 | E-002 + E-003 + E-004 | `32ce7b9` | BeatPlayer React player, Play tab, progress write-through, pilot Playwright loop, stamp + 6 pips + next-offer |

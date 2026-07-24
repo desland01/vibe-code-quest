@@ -15,10 +15,11 @@
 | L-001 | Committed `3ab22f5` |
 | L-002 | Committed `4f1616f` |
 | L-003 | Committed `b8663cc` + docs `28b5aa3` |
-| L-004 | Closed 2026-07-24 — fresh disposable proof PASS + main Neon `0010` + 48/48 e2e |
+| L-004 | Closed `b13717a` — fresh disposable proof PASS + main Neon `0010` + 48/48 e2e |
+| L-005 comps | Closed 2026-07-24 — HTML + 6 captures + judge record (docs-only) |
 | Main Neon | Migrations through `0010_leaderboard.sql` |
 | L-004 disposable proof | Fresh PASS `vibe-launch-l004-2026-07-24T14-38-24-121Z` / `br-sweet-glitter-atu37lne` (deleted+verified) |
-| Next | L-005 comps gate commit **before** collectible/glow implementation |
+| Next | L-005 implementation (comps already gated) |
 | Preview | Must run on `http://localhost:3100` only |
 | Foreign dirt | Leave alone and uncommitted: `CLAUDE.md`, `constants.md*`, `.claude/*`, `.agents/*`, manifest/next-env churn |
 

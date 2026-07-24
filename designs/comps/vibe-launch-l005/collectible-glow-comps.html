@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>code-tutor — L-005 collectible + map-glow comps (cozy-pixel)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens from designs/map-style.md + app/globals.css.
+     Pixel font = headings/labels; Inter = body. Hard outlines + offset shadows.
+     No glass, blur shadows, or neon. */
+  :root {
+    --sea: #7ec8c9;
+    --sea-deep: #5aa8ad;
+    --land: #a8d17a;
+    --land-shore: #e8d8a0;
+    --banner: #f4e9d0;
+    --banner-border: #8a6d4a;
+    --ink: #3b3245;
+    --paper: #fff8e9;
+    --accent: #d96c6c; /* git region accent */
+    --pixel: "Press Start 2P", "Pixelify Sans", monospace;
+    --body: Inter, ui-sans-serif, system-ui, sans-serif;
+    --region-accent: #d96c6c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--sea); color: var(--ink); font-family: var(--body); }
+  [data-comp][hidden], [hidden] { display: none !important; }
+
+  .stage {
+    min-height: 100vh;
+    padding: clamp(16px, 3vw, 40px);
+    padding-inline: max(clamp(16px, 3vw, 40px), 24px);
+    display: grid;
+    place-items: start center;
+  }
+  .panel {
+    width: min(760px, 100%);
+    border: 4px solid var(--ink);
+    background: var(--banner);
+    box-shadow: 8px 8px 0 var(--banner-border);
+    padding: clamp(20px, 4vw, 36px);
+  }
+  .kicker { margin: 0 0 4px; font-weight: 700; }
+  h1.title {
+    margin: 0 0 18px;
+    font: 700 clamp(1.25rem, 3.2vw, 2rem)/1.35 var(--pixel);
+    letter-spacing: 0;
+  }
+  .subhead {
+    margin: -8px 0 18px;
+    font-size: 1rem;
+    max-width: 48rem;
+  }
+
+  .stamp-wrap {
+    display: grid;
+    gap: 18px;
+    justify-items: center;
+    text-align: center;
+    padding: 12px 8px;
+    overflow: visible;
+  }
+  .stamp {
+    transform: rotate(-3deg);
+    max-width: min(320px, 90%);
+    margin: 0 auto;
+    border: 4px solid var(--banner-border);
+    background: var(--banner);
+    box-shadow: 5px 5px 0 var(--banner-border);
+    padding: 14px 22px;
+    font: 700 1rem/1.2 var(--pixel);
+    color: var(--ink);
+    position: relative;
+    animation: stamp-in 480ms steps(6, end) both;
+  }
+  @keyframes stamp-in {
+    0% { opacity: 0; transform: rotate(-3deg) scale(1.35) translateY(-8px); }
+    70% { opacity: 1; transform: rotate(-3deg) scale(0.97) translateY(1px); }
+    100% { opacity: 1; transform: rotate(-3deg) scale(1) translateY(0); }
+  }
+  .stamp::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 2px dashed var(--banner-border);
+    pointer-events: none;
+  }
+  .stamp .sub {
+    display: block;
+    margin-top: 6px;
+    font: 600 0.8rem/1 var(--body);
+  }
+
+  .collectible-grant {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: center;
+    width: min(420px, 100%);
+    margin: 0 auto;
+    padding: 14px 16px;
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    box-shadow: 4px 4px 0 var(--banner-border);
+    text-align: left;
+  }
+  .collectible-tile {
+    width: 56px;
+    height: 56px;
+    border: 3px solid var(--ink);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--region-accent) 55%, var(--paper)) 0 50%, var(--paper) 50% 100%);
+    box-shadow: inset -3px -3px 0 color-mix(in srgb, var(--ink) 18%, transparent);
+    display: grid;
+    place-items: center;
+    font: 700 0.7rem/1 var(--pixel);
+    flex: none;
+  }
+  .collectible-grant strong {
+    display: block;
+    font: 700 0.78rem/1.35 var(--pixel);
+    margin-bottom: 4px;
+  }
+  .collectible-grant p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .region-line { margin: 0; font-size: 1rem; }
+  .region-line b { font-family: var(--pixel); font-size: 0.8rem; }
+
+  .next-actions { display: grid; gap: 12px; width: 100%; max-width: 420px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 12px 18px;
+    border: 3px solid var(--ink);
+    font: 700 0.9rem/1 var(--pixel);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--banner);
+  }
+  .btn.primary { background: var(--accent); box-shadow: 4px 4px 0 var(--banner-border); }
+  .btn.secondary {
+    background: transparent;
+    border-color: var(--banner-border);
+    box-shadow: none;
+    font-size: 0.78rem;
+  }
+  .btn:focus-visible {
+    outline: 3px solid #fff3c4;
+    outline-offset: 2px;
+  }
+
+  .shelf-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .shelf-card {
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    box-shadow: 4px 4px 0 var(--banner-border);
+    padding: 14px;
+    min-height: 150px;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+  }
+  .shelf-card.is-earned {
+    background: color-mix(in srgb, var(--region-accent) 12%, var(--paper));
+  }
+  .shelf-card.is-locked {
+    opacity: 0.92;
+    background: color-mix(in srgb, var(--banner-border) 8%, var(--paper));
+  }
+  .shelf-card .tile {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--ink);
+    display: grid;
+    place-items: center;
+    font: 700 0.65rem/1 var(--pixel);
+    background: var(--banner);
+  }
+  .shelf-card.is-earned .tile {
+    background: color-mix(in srgb, var(--region-accent) 45%, var(--banner));
+  }
+  .shelf-card.is-locked .tile {
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--paper),
+      var(--paper) 6px,
+      color-mix(in srgb, var(--banner-border) 25%, var(--paper)) 6px,
+      color-mix(in srgb, var(--banner-border) 25%, var(--paper)) 12px
+    );
+  }
+  .shelf-card h2 {
+    margin: 0;
+    font: 700 0.72rem/1.35 var(--pixel);
+  }
+  .shelf-card p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .status-chip {
+    width: max-content;
+    border: 2px solid var(--ink);
+    padding: 4px 8px;
+    font: 700 0.65rem/1 var(--pixel);
+    background: var(--banner);
+  }
+  .shelf-card.is-earned .status-chip {
+    background: color-mix(in srgb, #2f7d4f 18%, var(--banner));
+  }
+  .shelf-note {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    border: 2px solid var(--ink);
+    background: #fff8df;
+    box-shadow: 3px 3px 0 var(--banner-border);
+    font-weight: 600;
+  }
+
+  .map-shell {
+    width: min(980px, 100%);
+    border: 5px solid var(--ink);
+    background: var(--land-shore);
+    box-shadow: 10px 10px 0 var(--sea-deep);
+    padding: clamp(18px, 3vw, 28px);
+  }
+  .map-banner {
+    border: 4px solid var(--ink);
+    background: color-mix(in srgb, var(--region-accent) 28%, var(--banner));
+    box-shadow: 6px 6px 0 color-mix(in srgb, var(--region-accent) 55%, var(--banner-border));
+    padding: 18px 20px;
+    margin-bottom: 18px;
+  }
+  .map-banner h1 {
+    margin: 4px 0 8px;
+    font: 700 clamp(1.4rem, 3.5vw, 2.4rem)/1.2 var(--pixel);
+  }
+  .map-banner p { margin: 0; max-width: 60ch; }
+  .landmark-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    padding: 12px;
+    background: color-mix(in srgb, var(--region-accent) 14%, var(--land));
+  }
+  .landmark-card {
+    position: relative;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    border: 4px solid var(--ink);
+    background: var(--banner);
+    color: var(--ink);
+    padding: 18px 16px 16px;
+    box-shadow: 6px 6px 0 var(--banner-border);
+    text-decoration: none;
+  }
+  .landmark-card strong {
+    padding-right: 40px;
+    font: 700 0.95rem/1.25 var(--pixel);
+  }
+  .landmark-card .hook {
+    font-size: 0.9rem;
+  }
+  .marker-number {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--ink);
+    background: var(--region-accent);
+    font-family: var(--pixel);
+    font-size: 0.7rem;
+  }
+
+  .landmark-card.is-stamped {
+    background: color-mix(in srgb, var(--region-accent) 22%, var(--banner));
+    outline: 4px solid var(--region-accent);
+    outline-offset: 0;
+    animation: landmark-glow 1200ms ease-in-out 3 both;
+  }
+  .landmark-card.is-stamped.is-settled,
+  .landmark-card.is-stamped.reduced {
+    animation: none;
+    box-shadow:
+      6px 6px 0 var(--banner-border),
+      0 0 0 3px color-mix(in srgb, #fff3c4 70%, transparent);
+  }
+  @keyframes landmark-glow {
+    0%, 100% {
+      box-shadow: 6px 6px 0 var(--banner-border);
+      filter: none;
+    }
+    50% {
+      box-shadow:
+        6px 6px 0 var(--banner-border),
+        0 0 0 4px color-mix(in srgb, #fff3c4 85%, transparent);
+    }
+  }
+  .stamped-badge {
+    width: max-content;
+    margin-top: 4px;
+    border: 2px solid var(--ink);
+    background: #fff3c4;
+    padding: 4px 8px;
+    font: 700 0.62rem/1 var(--pixel);
+  }
+  .collectible-chip {
+    width: max-content;
+    border: 2px solid var(--ink);
+    background: color-mix(in srgb, var(--region-accent) 30%, var(--banner));
+    padding: 4px 8px;
+    font: 700 0.62rem/1.2 var(--pixel);
+  }
+  .open-label {
+    width: max-content;
+    border: 2px dashed var(--banner-border);
+    padding: 4px 8px;
+    font: 700 0.62rem/1 var(--pixel);
+    background: var(--paper);
+  }
+
+  .legend {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    border: 2px solid var(--ink);
+    background: var(--banner);
+    padding: 6px 10px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stamp { animation: none; }
+    .landmark-card.is-stamped { animation: none; }
+    .landmark-card.is-stamped {
+      box-shadow:
+        6px 6px 0 var(--banner-border),
+        0 0 0 3px color-mix(in srgb, #fff3c4 70%, transparent);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .shelf-grid,
+    .landmark-grid { grid-template-columns: 1fr; }
+    h1.title { font-size: 1.1rem; line-height: 1.35; }
+    .landmark-card { min-height: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COMP 1 · Stamp moment grants one collectible -->
+<section class="stage" data-comp="01-stamp-collectible">
+  <article class="panel" aria-labelledby="t1">
+    <p class="kicker">Git · Landmark 1 of 6</p>
+    <h1 class="title" id="t1">Commits as checkpoints</h1>
+    <p class="subhead">A new keepsake joins your shelf when the stamp lands.</p>
+    <div class="stamp-wrap">
+      <div class="stamp" role="img" aria-label="Stamped: landmark complete">
+        STAMPED
+        <span class="sub">Commits as checkpoints · ~3 min</span>
+      </div>
+      <div class="collectible-grant" data-testid="collectible-grant">
+        <div class="collectible-tile" aria-hidden="true">CK</div>
+        <div>
+          <strong>Checkpoint Coin</strong>
+          <p>Your shelf keeps it for the next visit.</p>
+        </div>
+      </div>
+      <p class="region-line">Git River — <b>1 of 6</b> stamped</p>
+      <div class="next-actions">
+        <a class="btn primary" href="#next">Next: Branches as isolation →</a>
+        <a class="btn secondary" href="#map">Back to map</a>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- COMP 2 · Collection shelf -->
+<section class="stage" data-comp="02-collection-shelf">
+  <article class="panel" aria-labelledby="t2">
+    <p class="kicker">Git River · Collection shelf</p>
+    <h1 class="title" id="t2">Your Git keepsakes</h1>
+    <p class="subhead">Each stamped landmark adds one keepsake. Explore the rest whenever you are ready.</p>
+    <div class="shelf-grid" data-testid="collection-shelf">
+      <article class="shelf-card is-earned">
+        <div class="tile" aria-hidden="true">CK</div>
+        <h2>Checkpoint Coin</h2>
+        <p>Commits as checkpoints</p>
+        <span class="status-chip">Earned</span>
+      </article>
+      <article class="shelf-card is-locked">
+        <div class="tile" aria-hidden="true">··</div>
+        <h2>Branch Badge</h2>
+        <p>Still on the path</p>
+        <span class="status-chip">Open</span>
+      </article>
+      <article class="shelf-card is-locked">
+        <div class="tile" aria-hidden="true">··</div>
+        <h2>Merge Marker</h2>
+        <p>Still on the path</p>
+        <span class="status-chip">Open</span>
+      </article>
+      <article class="shelf-card is-locked">
+        <div class="tile" aria-hidden="true">··</div>
+        <h2>Review Ribbon</h2>
+        <p>Still on the path</p>
+        <span class="status-chip">Open</span>
+      </article>
+      <article class="shelf-card is-locked">
+        <div class="tile" aria-hidden="true">··</div>
+        <h2>Revert Relic</h2>
+        <p>Still on the path</p>
+        <span class="status-chip">Open</span>
+      </article>
+      <article class="shelf-card is-locked">
+        <div class="tile" aria-hidden="true">··</div>
+        <h2>Hygiene Charm</h2>
+        <p>Still on the path</p>
+        <span class="status-chip">Open</span>
+      </article>
+    </div>
+    <p class="shelf-note" role="status">1 earned on Git River. Stamp another landmark whenever you want another keepsake.</p>
+  </article>
+</section>
+
+<!-- COMP 3 · Region sub-map stamped glow -->
+<section class="stage" data-comp="03-map-glow">
+  <div class="map-shell" aria-labelledby="t3">
+    <header class="map-banner">
+      <p class="kicker">Region map · Git</p>
+      <h1 class="title" id="t3" style="margin:0">Git River</h1>
+      <p>Stamped landmarks stay warmly lit. Open paths are ready whenever you are.</p>
+    </header>
+    <div class="landmark-grid" data-testid="region-landmark-grid">
+      <a class="landmark-card is-stamped is-settled" href="#lm1" data-testid="landmark-stamped">
+        <span class="marker-number" aria-hidden="true">1</span>
+        <strong>Commits as checkpoints</strong>
+        <span class="hook">One reviewed change that passes its checks.</span>
+        <span class="stamped-badge">Stamped</span>
+        <span class="collectible-chip">Checkpoint Coin</span>
+      </a>
+      <a class="landmark-card" href="#lm2" data-testid="landmark-open">
+        <span class="marker-number" aria-hidden="true">2</span>
+        <strong>Branches as isolation</strong>
+        <span class="hook">Try the risky path without breaking main.</span>
+        <span class="open-label">Open</span>
+      </a>
+      <a class="landmark-card" href="#lm3">
+        <span class="marker-number" aria-hidden="true">3</span>
+        <strong>Pull requests and review</strong>
+        <span class="hook">A second set of eyes before merge.</span>
+        <span class="open-label">Open</span>
+      </a>
+      <a class="landmark-card" href="#lm4">
+        <span class="marker-number" aria-hidden="true">4</span>
+        <strong>Merge conflicts</strong>
+        <span class="hook">Two edits, one file, calm resolution.</span>
+        <span class="open-label">Open</span>
+      </a>
+      <a class="landmark-card" href="#lm5">
+        <span class="marker-number" aria-hidden="true">5</span>
+        <strong>Revert and recovery</strong>
+        <span class="hook">Undo without rewriting history panic.</span>
+        <span class="open-label">Open</span>
+      </a>
+      <a class="landmark-card" href="#lm6">
+        <span class="marker-number" aria-hidden="true">6</span>
+        <strong>Working tree hygiene</strong>
+        <span class="hook">Know what is staged before you ship.</span>
+        <span class="open-label">Open</span>
+      </a>
+    </div>
+    <div class="legend" aria-label="Map legend">
+      <span><b class="stamped-badge">Stamped</b> plus collectible name</span>
+      <span><b class="open-label">Open</b> ready path</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const compNames = ['01-stamp-collectible', '02-collection-shelf', '03-map-glow'];
+
+    function showComp(name, { focus = true } = {}) {
+      if (!compNames.includes(name)) return;
+      for (const section of document.querySelectorAll('[data-comp]')) {
+        section.hidden = section.dataset.comp !== name;
+      }
+      const active = document.querySelector(`[data-comp="${name}"]`);
+      if (focus && active) {
+        const heading = active.querySelector('h1');
+        heading?.setAttribute('tabindex', '-1');
+        heading?.focus({ preventScroll: true });
+      }
+      active?.scrollIntoView({ block: 'start', behavior: 'auto' });
+    }
+
+    function armGlow({ reduced = false } = {}) {
+      const card = document.querySelector('[data-testid="landmark-stamped"]');
+      if (!card) return;
+      card.classList.remove('is-settled', 'reduced');
+      if (reduced) {
+        card.classList.add('reduced');
+        return;
+      }
+      void card.offsetWidth;
+      card.classList.add('is-stamped');
+    }
+
+    window.__l005Prototype = { showComp, armGlow, compNames };
+    showComp('01-stamp-collectible', { focus: false });
+  })();
+</script>
+</body>
+</html>

@@ -55,6 +55,7 @@ export function LandmarkView({
       {format === 'overview' && <OverviewFormat landmark={landmark} />}
       {playMode && (
         <BeatPlayer
+          key={`${regionId}/${landmark.id}`}
           sequence={beats.sequence}
           landmark={landmark}
           regionId={regionId}

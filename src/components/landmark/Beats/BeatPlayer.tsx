@@ -24,6 +24,14 @@ import {
   type PlayerState,
 } from './beatReducer';
 import {
+  collectibleFor,
+  COLLECTIBLE_CONFIRMED_EVENT,
+  COLLECTIBLE_GLOW_STORAGE_KEY,
+  isServerConfirmedCompletion,
+  upsertCollectibleGlowMarker,
+  type Collectible,
+} from '@/lib/collectibles';
+import {
   readLocalBeatProgress,
   toBeatProgressState,
   writeLocalBeatProgress,
@@ -136,6 +144,19 @@ export function BeatPlayer({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [quizChoice, setQuizChoice] = useState('');
   const [sessionStamped, setSessionStamped] = useState(false);
+  // Collectible ownership is server-confirmed only (never local/optimistic).
+  const [collectibleConfirmed, setCollectibleConfirmed] = useState(
+    () => initialProgress?.completed === true,
+  );
+  // Fresh grant announcement only — resumed ownership stays quiet (no aria-live).
+  const [collectibleJustConfirmed, setCollectibleJustConfirmed] = useState(false);
+  const collectibleConfirmedRef = useRef(initialProgress?.completed === true);
+  // Set in onStamp; glow marker + confirmed event only after a real stamp gesture.
+  const freshStampGestureRef = useRef(false);
+  const collectible = useMemo(
+    () => collectibleFor(regionId, landmark.id),
+    [regionId, landmark.id],
+  );
 
   const estimatedMinutes = useMemo(() => {
     const seconds = sequence.beats.reduce((sum, item) => sum + item.estimatedSeconds, 0);
@@ -199,26 +220,66 @@ export function BeatPlayer({
         .then(async (response) => {
           if (!response.ok) return;
           const body = (await response.json()) as {
+            state?: unknown;
             xp?: {
               total?: number;
               newPoints?: number;
               awarded?: Array<{ awardKey: string; points: number }>;
             };
           };
+
+          // XP branch is independent of collectible ownership.
           const xp = body.xp;
-          // Emit only when the server confirms newly inserted awards (idempotent replay = 0).
-          if (!xp || typeof xp.newPoints !== 'number' || xp.newPoints <= 0) return;
-          if (typeof xp.total !== 'number') return;
-          recordClientEvent('xp_awarded', {
-            region: regionId,
-            landmark: landmark.id,
-            points: xp.newPoints,
-            total: xp.total,
-            award_count: Array.isArray(xp.awarded) ? xp.awarded.length : 0,
-          });
+          if (
+            xp
+            && typeof xp.newPoints === 'number'
+            && xp.newPoints > 0
+            && typeof xp.total === 'number'
+          ) {
+            recordClientEvent('xp_awarded', {
+              region: regionId,
+              landmark: landmark.id,
+              points: xp.newPoints,
+              total: xp.total,
+              award_count: Array.isArray(xp.awarded) ? xp.awarded.length : 0,
+            });
+          }
+
+          // Collectible ownership only after server-merged completed === true.
+          // Never from local reducer, localStorage, or outgoing payload.
+          // Glow marker + live announcement only after a real stamp gesture this session
+          // (resume of already-completed must stay static / no glow replay).
+          if (
+            !collectibleConfirmedRef.current
+            && isServerConfirmedCompletion(body.state)
+          ) {
+            collectibleConfirmedRef.current = true;
+            setCollectibleConfirmed(true);
+            if (freshStampGestureRef.current) {
+              setCollectibleJustConfirmed(true);
+              try {
+                const current = window.sessionStorage.getItem(COLLECTIBLE_GLOW_STORAGE_KEY);
+                const next = upsertCollectibleGlowMarker(current, regionId, landmark.id);
+                window.sessionStorage.setItem(COLLECTIBLE_GLOW_STORAGE_KEY, next);
+              } catch {
+                // Private mode / blocked storage — shelf still works from server progress.
+              }
+              // Same-tab event closes stamp→map race (storage events are cross-tab only).
+              try {
+                window.dispatchEvent(
+                  new CustomEvent(COLLECTIBLE_CONFIRMED_EVENT, {
+                    detail: { regionId, landmarkId: landmark.id },
+                  }),
+                );
+              } catch {
+                // Non-browser / blocked events — region map will catch up on next GET.
+              }
+            }
+          }
         })
         .catch(() => {
           // Offline / 401 — localStorage is the floor; play never blocks.
+          // Collectible stays hidden until a server-confirmed PUT lands.
         });
     }
   }, [state, regionId, landmark.id]);
@@ -298,6 +359,7 @@ export function BeatPlayer({
     // Gesture-based emission: stamp means "learner pressed stamp", never resume.
     if (state.completed || stampedEvent.current) return;
     stampedEvent.current = true;
+    freshStampGestureRef.current = true;
     recordClientEvent('landmark_stamped', {
       region: regionId,
       landmark: landmark.id,
@@ -391,6 +453,9 @@ export function BeatPlayer({
             nextLandmark={nextLandmark}
             regionId={regionId}
             onNext={onNextLandmark}
+            collectible={collectibleConfirmed ? collectible : null}
+            announceCollectible={collectibleJustConfirmed}
+            animateStamp={sessionStamped}
           />
         ) : (
           <>
@@ -615,6 +680,9 @@ function StampPanel({
   nextLandmark,
   regionId,
   onNext,
+  collectible,
+  announceCollectible,
+  animateStamp,
 }: {
   landmarkTitle: string;
   regionTitle: string;
@@ -624,18 +692,45 @@ function StampPanel({
   nextLandmark: { id: string; title: string } | null;
   regionId: string;
   onNext: () => void;
+  collectible: Collectible | null;
+  /** Live region only for a freshly server-confirmed stamp this session. */
+  announceCollectible: boolean;
+  /** Stamp-in motion only after a real stamp gesture this session (not resume). */
+  animateStamp: boolean;
 }) {
   // E-004: 6-pip region progress (R030) — reuse beat pips classes.
   const regionPips = Array.from({ length: regionLandmarkCount }, (_, index) => index < stampedCount);
 
   return (
     <div className={styles.stampWrap} data-testid="beat-stamp-panel">
-      <div className={styles.stamp} role="img" aria-label="Stamped: landmark complete">
+      <div
+        className={`${styles.stamp}${animateStamp ? ` ${styles.stampFresh}` : ''}`}
+        role="img"
+        aria-label="Stamped: landmark complete"
+        data-stamp-animate={animateStamp ? 'true' : 'false'}
+      >
         STAMPED
         <span className={styles.sub}>
           {landmarkTitle} · ~{estimatedMinutes} min
         </span>
       </div>
+      {collectible && (
+        <div
+          className={styles.collectibleGrant}
+          data-testid="collectible-grant"
+          {...(announceCollectible
+            ? { role: 'status' as const, 'aria-live': 'polite' as const }
+            : {})}
+        >
+          <div className={styles.collectibleTile} aria-hidden="true">
+            {collectible.sigil}
+          </div>
+          <div>
+            <strong>{collectible.name}</strong>
+            <p>Your shelf keeps it for the next visit.</p>
+          </div>
+        </div>
+      )}
       <p className={styles.regionLine}>
         {regionTitle} — <b>{stampedCount} of {regionLandmarkCount}</b> stamped
       </p>

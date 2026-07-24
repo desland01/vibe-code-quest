@@ -18,10 +18,136 @@
 .scene :global(.landmark-card:nth-child(even)) { margin-top: 18px; }
 .scene :global(.landmark-card:hover), .scene :global(.landmark-card:focus-visible) { outline: 4px solid #fff3c4; box-shadow: 10px 10px 0 var(--banner-border); }
 .scene :global(.landmark-card.is-selected) { background: color-mix(in srgb, var(--region-accent) 25%, var(--banner)); outline: 4px solid var(--region-accent); }
+/* L-005 stamped glow — one 1200ms × 3 loop then settled; never color-only */
+.scene :global(.landmark-card.is-stamped) {
+  background: color-mix(in srgb, var(--region-accent) 22%, var(--banner));
+  outline: 4px solid var(--region-accent);
+  outline-offset: 0;
+}
+.scene :global(.landmark-card.is-stamped.is-fresh-glow) {
+  animation: landmark-glow 1200ms ease-in-out 3 both;
+}
+.scene :global(.landmark-card.is-stamped.is-settled),
+.scene :global(.landmark-card.is-stamped.is-fresh-glow.is-settled) {
+  animation: none;
+  box-shadow:
+    6px 6px 0 var(--banner-border),
+    0 0 0 3px color-mix(in srgb, #fff3c4 70%, transparent);
+}
+@keyframes landmark-glow {
+  0% {
+    box-shadow: 6px 6px 0 var(--banner-border);
+  }
+  50% {
+    box-shadow:
+      6px 6px 0 var(--banner-border),
+      0 0 0 4px color-mix(in srgb, #fff3c4 85%, transparent);
+  }
+  /* End on settled warm halo so 3 loops leave a static highlight (fill-mode: both). */
+  100% {
+    box-shadow:
+      6px 6px 0 var(--banner-border),
+      0 0 0 3px color-mix(in srgb, #fff3c4 70%, transparent);
+  }
+}
 .scene :global(.landmark-card strong) { padding-right: 36px; font: 700 1.15rem/1.2 var(--font-pixel), monospace; }
-.scene :global(.landmark-card > span:not(.marker-number, .draft-chip)) { font-size: .92rem; }
+.scene :global(.landmark-card > span:not(.marker-number, .draft-chip, .stamped-badge, .collectible-chip, .open-label)) { font-size: .92rem; }
 .scene :global(.marker-number) { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 30px; height: 30px; border: 3px solid var(--ink); background: var(--region-accent); font-family: var(--font-pixel), monospace; }
 .scene :global(.draft-chip) { width: max-content; border: 2px solid var(--banner-border); background: #fff3c4; padding: 2px 7px; color: var(--ink); font: 700 .78rem/1.2 var(--font-pixel), monospace; text-transform: uppercase; }
+.scene :global(.stamped-badge) {
+  width: max-content;
+  margin-top: 4px;
+  border: 2px solid var(--ink);
+  background: #fff3c4;
+  padding: 4px 8px;
+  font: 700 .62rem/1 var(--font-pixel), monospace;
+}
+.scene :global(.collectible-chip) {
+  width: max-content;
+  border: 2px solid var(--ink);
+  background: color-mix(in srgb, var(--region-accent) 30%, var(--banner));
+  padding: 4px 8px;
+  font: 700 .62rem/1.2 var(--font-pixel), monospace;
+}
+.scene :global(.open-label) {
+  width: max-content;
+  border: 2px dashed var(--banner-border);
+  padding: 4px 8px;
+  font: 700 .62rem/1 var(--font-pixel), monospace;
+  background: #fff8e9;
+}
+/* L-005 collection shelf — positive earned framing only */
+.scene :global(.collection-shelf) {
+  margin: 20px 0 0;
+  border: 4px solid var(--ink);
+  background: var(--banner);
+  box-shadow: 6px 6px 0 var(--banner-border);
+  padding: clamp(16px, 3vw, 28px);
+}
+.scene :global(.collection-shelf-header) { margin-bottom: 14px; }
+.scene :global(.collection-shelf-header h2) {
+  margin: 0 0 6px;
+  font: 700 clamp(1.1rem, 2.8vw, 1.5rem)/1.3 var(--font-pixel), monospace;
+}
+.scene :global(.collection-shelf-header p) { margin: 0; max-width: 60ch; font-weight: 600; }
+.scene :global(.collection-shelf-grid) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.scene :global(.collection-shelf-card) {
+  border: 3px solid var(--ink);
+  background: #fff8e9;
+  box-shadow: 4px 4px 0 var(--banner-border);
+  padding: 14px;
+  min-height: 150px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.scene :global(.collection-shelf-card.is-earned) {
+  background: color-mix(in srgb, var(--region-accent) 12%, #fff8e9);
+}
+.scene :global(.collection-shelf-card.is-open) {
+  opacity: 0.92;
+  background: color-mix(in srgb, var(--banner-border) 8%, #fff8e9);
+}
+.scene :global(.collection-shelf-tile) {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--ink);
+  display: grid;
+  place-items: center;
+  font: 700 .65rem/1 var(--font-pixel), monospace;
+  background: var(--banner);
+}
+.scene :global(.collection-shelf-card.is-earned .collection-shelf-tile) {
+  background: color-mix(in srgb, var(--region-accent) 45%, var(--banner));
+}
+.scene :global(.collection-shelf-card.is-open .collection-shelf-tile) {
+  background: repeating-linear-gradient(
+    -45deg,
+    #fff8e9,
+    #fff8e9 6px,
+    color-mix(in srgb, var(--banner-border) 25%, #fff8e9) 6px,
+    color-mix(in srgb, var(--banner-border) 25%, #fff8e9) 12px
+  );
+}
+.scene :global(.collection-shelf-card h3) {
+  margin: 0;
+  font: 700 .72rem/1.35 var(--font-pixel), monospace;
+}
+.scene :global(.collection-shelf-card p) { margin: 0; font-size: .9rem; }
+.scene :global(.collection-shelf-chip) {
+  width: max-content;
+  border: 2px solid var(--ink);
+  padding: 4px 8px;
+  font: 700 .65rem/1 var(--font-pixel), monospace;
+  background: var(--banner);
+}
+.scene :global(.collection-shelf-card.is-earned .collection-shelf-chip) {
+  background: color-mix(in srgb, #2f7d4f 18%, var(--banner));
+}
 .scene :global(.landmark-detail) { margin-top: 28px; border: 4px solid var(--ink); background: var(--banner); padding: clamp(20px, 4vw, 42px); box-shadow: 8px 8px 0 var(--banner-border); }
 .scene :global(.landmark-detail-header) { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
 .scene :global(.landmark-detail h2) { margin: 4px 0 10px; font: 700 clamp(1.8rem, 4vw, 3rem)/1 var(--font-pixel), monospace; }
@@ -39,5 +165,20 @@
 .scene :global(.landmark-quiz label) { display: block; padding: 10px; border: 2px solid var(--banner-border); cursor: pointer; }
 .scene :global(.landmark-quiz button), .scene :global(.landmark-detail textarea + button) { min-height: 44px; border: 3px solid var(--ink); background: var(--region-accent); padding: 8px 14px; font-family: var(--font-pixel), monospace; cursor: pointer; }
 .scene :global(.landmark-detail textarea) { display: block; width: 100%; min-height: 88px; margin: 8px 0; border: 3px solid var(--ink); padding: 10px; font: inherit; }
-@media (prefers-reduced-motion: reduce) { .scene :global(.sub-map-zoom) { animation: none; } .scene :global(.landmark-card), .scene :global(.back-to-map) { transition: none; } .scene :global(.back-to-map:hover), .scene :global(.back-to-map:focus-visible), .scene :global(.landmark-card:hover), .scene :global(.landmark-card:focus-visible) { transform: none; } }
-@media (max-width: 760px) { .scene :global(.landmark-grid) { grid-template-columns: 1fr; } .scene :global(.landmark-card:nth-child(even)) { margin-top: 0; } .scene :global(.tradeoff-grid) { grid-template-columns: 1fr; gap: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .scene :global(.sub-map-zoom) { animation: none; }
+  .scene :global(.landmark-card), .scene :global(.back-to-map) { transition: none; }
+  .scene :global(.back-to-map:hover), .scene :global(.back-to-map:focus-visible), .scene :global(.landmark-card:hover), .scene :global(.landmark-card:focus-visible) { transform: none; }
+  .scene :global(.landmark-card.is-stamped.is-fresh-glow) {
+    animation: none;
+    box-shadow:
+      6px 6px 0 var(--banner-border),
+      0 0 0 3px color-mix(in srgb, #fff3c4 70%, transparent);
+  }
+}
+@media (max-width: 760px) {
+  .scene :global(.landmark-grid) { grid-template-columns: 1fr; }
+  .scene :global(.landmark-card:nth-child(even)) { margin-top: 0; }
+  .scene :global(.tradeoff-grid) { grid-template-columns: 1fr; gap: 0; }
+  .scene :global(.collection-shelf-grid) { grid-template-columns: 1fr; }
+}

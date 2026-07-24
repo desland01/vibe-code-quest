@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useSession } from '@/lib/auth/SessionProvider';
 import { regions } from '@/lib/content-client';
 import { UpgradeAccountModal } from '@/components/UpgradeAccountModal';
@@ -9,6 +10,7 @@ import { XpHud } from '@/components/XpHud';
 import { MapCanvas } from '@/components/map/MapCanvas';
 import { RegionControls } from '@/components/map/RegionControls';
 import { RegionPanel } from '@/components/map/RegionPanel';
+import { LEADERBOARD_COPY } from '@/lib/leaderboard';
 import { initialMapState, mapReducer } from '@/lib/mapState';
 import '@/components/map/Accessibility.css';
 import { recordClientEvent } from '@/components/landmark/clientEvents';
@@ -56,6 +58,9 @@ export function MapExperience() {
         <div><h1>code-tutor</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div>
         <div className="map-header-actions">
           <XpHud />
+          <Link href="/leaderboard" className="map-header-link" data-testid="quest-board-link">
+            {LEADERBOARD_COPY.mapNav}
+          </Link>
           <UpgradeAccountModal />
         </div>
       </header>

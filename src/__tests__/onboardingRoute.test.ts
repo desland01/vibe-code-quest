@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { OnboardingState } from '@/server/onboarding';
 
@@ -39,10 +39,15 @@ function post(body: Record<string, unknown>) {
 }
 
 beforeEach(() => {
+  vi.stubEnv('DATABASE_URL', 'test');
   db.profile = {};
   db.state = null;
   parseAnswerMock.mockClear();
   parseAnswerMock.mockImplementation(async (_id, _field, text) => text);
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
 });
 
 describe('onboarding route atomic state transition', () => {

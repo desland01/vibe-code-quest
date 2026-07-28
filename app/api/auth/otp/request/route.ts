@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { pool } from '@/lib/db';
 import { sendOtpEmail } from '@/server/email';
+import { isHostedMode } from '@/server/hosting';
 import {
   createOtpChallenge,
   InvalidEmailError,
@@ -13,6 +14,9 @@ import {
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
+  if (!isHostedMode()) {
+    return NextResponse.json({ error: 'Saving progress by email needs a hosted database.' }, { status: 503 });
+  }
   const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   const session = token ? await verifySessionToken(token) : null;
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

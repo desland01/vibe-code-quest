@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { withUserTransaction } from '@/lib/db';
 import { BEAT_PROGRESS_UPSERT_SQL, resolveProgressWrite } from '@/server/beatProgress';
+import { isHostedMode } from '@/server/hosting';
 import { applyXpAwards, getXpTotal } from '@/server/xp';
 
 export const dynamic = 'force-dynamic';
@@ -53,6 +54,10 @@ export async function GET() {
   const userId = await authenticatedUserId();
   if (!userId) return unauthorized();
 
+  if (!isHostedMode()) {
+    return NextResponse.json({ items: [], xp: { total: 0 }, hosted: false });
+  }
+
   const payload = await withUserTransaction(userId, async (client) => {
     const result = await client.query<ProgressRow>(
       `SELECT region, landmark, state, updated_at
@@ -89,6 +94,17 @@ export async function PUT(request: Request) {
   const plan = resolveProgressWrite(body.region, body.landmark, body.state);
   if (plan.path === 'reject') {
     return NextResponse.json({ error: plan.error }, { status: plan.status });
+  }
+
+  if (!isHostedMode()) {
+    return NextResponse.json({
+      region: body.region,
+      landmark: body.landmark,
+      state: plan.path === 'beat' ? plan.state : body.state,
+      updated_at: new Date().toISOString(),
+      xp: { total: 0, awarded: [], newPoints: 0 },
+      hosted: false,
+    });
   }
 
   // One transaction: progress upsert + XP awards from the *merged* returned state.

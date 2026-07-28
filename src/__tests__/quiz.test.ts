@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getLandmark, regions } from '@/lib/content';
-import { gradeQuiz } from '../../app/api/quiz/route';
+import { gradeQuiz } from '@/server/quiz';
 import { buildOverview } from '@/components/landmark/OverviewFormat';
 
 describe('deterministic quiz grading', () => {

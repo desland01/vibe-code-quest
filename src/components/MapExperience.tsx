@@ -57,11 +57,16 @@ export function MapExperience() {
       <header className="map-header">
         <div><h1>Vibe Code Quest</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div>
         <div className="map-header-actions">
-          <XpHud />
-          <Link href="/leaderboard" className="map-header-link" data-testid="quest-board-link">
-            {LEADERBOARD_COPY.mapNav}
-          </Link>
-          <UpgradeAccountModal />
+          {session.hosted === true && <>
+            <XpHud />
+            <Link href="/leaderboard" className="map-header-link" data-testid="quest-board-link">
+              {LEADERBOARD_COPY.mapNav}
+            </Link>
+            <UpgradeAccountModal />
+          </>}
+          {session.hosted === false && <p data-testid="local-mode-note">
+            Self-host mode — your progress is saved in this browser only.
+          </p>}
         </div>
       </header>
       <section className="map-shell" aria-label="Learning map">
@@ -71,8 +76,8 @@ export function MapExperience() {
         </div>
         {selectedRegion && <RegionPanel region={selectedRegion} onClose={closePanel} restoreFocus={() => lastTriggerRef.current?.focus()} />}
       </section>
-      <OnboardingChat />
-      {session.status === 'authenticated' && <ShareProgress />}
+      {session.hosted === true && <OnboardingChat />}
+      {session.status === 'authenticated' && session.hosted === true && <ShareProgress />}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true" data-testid="map-live-region">
         {liveMessage}
       </p>

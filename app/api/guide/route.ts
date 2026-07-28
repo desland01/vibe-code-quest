@@ -6,9 +6,10 @@ import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { getLandmark } from '@/lib/content';
 import { queryAsUser } from '@/lib/db';
 import { DRILL_HEADER_NAME, drillForUser } from '@/server/aiDrill';
-import { runGuideTurn } from '@/server/guide';
+import { GUIDE_OFFLINE_BANNER, runGuideTurn } from '@/server/guide';
 import { checkAccess } from '@/server/access';
 import { recordEvent } from '@/server/events';
+import { isHostedMode } from '@/server/hosting';
 
 export const dynamic = 'force-dynamic';
 const schema = z.object({
@@ -33,9 +34,21 @@ export async function POST(request: Request) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   let body: z.infer<typeof schema>;
   try { body = schema.parse(await request.json()); } catch { return NextResponse.json({ error: 'Invalid request body' }, { status: 400 }); }
-  if (!getLandmark(body.regionId, body.landmarkId)) return NextResponse.json({ error: 'Landmark not found' }, { status: 404 });
+  const landmark = getLandmark(body.regionId, body.landmarkId);
+  if (!landmark) return NextResponse.json({ error: 'Landmark not found' }, { status: 404 });
   // L-006: no subscription 402. Usage caps are enforced atomically inside runGuideTurn
   // via reserveUsage; exhaustion degrades to the canonical offline path.
+  if (!isHostedMode()) {
+    return NextResponse.json({
+      kind: 'offline',
+      canonical: landmark.definition,
+      message: landmark.definition,
+      banner: GUIDE_OFFLINE_BANNER,
+      escalated: false,
+      reason: null,
+      escalations: 0,
+    });
+  }
 
   const result = await queryAsUser<{
     escalations: number;

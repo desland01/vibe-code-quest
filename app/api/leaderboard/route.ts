@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { withUserTransaction } from '@/lib/db';
+import { isHostedMode } from '@/server/hosting';
 import {
   LEADERBOARD_TOP_N,
   fetchLeaderboardBoard,
@@ -67,7 +68,7 @@ export async function GET(request: Request) {
 
   // A4.9 no-DB self-host: hide the board gracefully. Hosted DB failures must not
   // look identical to "no database" — return a generic 503 without details.
-  if (!process.env.DATABASE_URL) {
+  if (!isHostedMode()) {
     return NextResponse.json(emptyBoard(period, true), { status: 200 });
   }
 
@@ -101,7 +102,7 @@ export async function PUT(request: Request) {
   if (!userId) return unauthorized();
 
   // Self-hosted instances never write to the hosted board (A4.9 / KICKOFF L-004).
-  if (!process.env.DATABASE_URL) {
+  if (!isHostedMode()) {
     return NextResponse.json(
       { error: 'Leaderboard opt-in needs a hosted database.' },
       { status: 503 },
@@ -206,7 +207,7 @@ export async function DELETE() {
   const userId = await authenticatedUserId();
   if (!userId) return unauthorized();
 
-  if (!process.env.DATABASE_URL) {
+  if (!isHostedMode()) {
     return NextResponse.json({ optedIn: false, handle: null });
   }
 

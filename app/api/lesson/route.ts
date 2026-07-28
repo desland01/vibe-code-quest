@@ -4,7 +4,8 @@ import { z } from 'zod';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { getLandmark } from '@/lib/content';
 import { queryAsUser } from '@/lib/db';
-import { LESSON_MAX_TURNS, runLessonTurn } from '@/server/lesson';
+import { LESSON_MAX_TURNS, lessonFallback, runLessonTurn } from '@/server/lesson';
+import { isHostedMode } from '@/server/hosting';
 
 const message = z.object({ role: z.enum(['user', 'assistant']), content: z.string().min(1).max(1_000) });
 const schema = z.object({ regionId: z.string().min(1), landmarkId: z.string().min(1), messages: z.array(message).max(LESSON_MAX_TURNS * 2).default([]) });
@@ -16,6 +17,9 @@ export async function POST(request: Request) {
   try { body = schema.parse(await request.json()); } catch { return NextResponse.json({ error: 'Invalid request body' }, { status: 400 }); }
   const landmark = getLandmark(body.regionId, body.landmarkId);
   if (!landmark) return NextResponse.json({ error: 'Landmark not found' }, { status: 404 });
+  if (!isHostedMode()) {
+    return NextResponse.json({ message: lessonFallback, turn: 1, done: true, fallback: true });
+  }
   const profile = (await queryAsUser(session.userId, 'SELECT persona, interests, intent, depth_preference, current_project, lesson_progress FROM profiles WHERE id = $1', [session.userId])).rows[0] ?? {};
   const lessonKey = `${body.regionId}/${body.landmarkId}`;
   const lessonProgress = profile.lesson_progress && typeof profile.lesson_progress === 'object' ? profile.lesson_progress as Record<string, unknown> : {};

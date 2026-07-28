@@ -2,15 +2,10 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
-import { getLandmark } from '@/lib/content';
 import { recordEvent } from '@/server/events';
+import { gradeQuiz } from '@/server/quiz';
 
 const schema = z.object({ regionId: z.string().min(1), landmarkId: z.string().min(1), choice: z.string(), correct: z.boolean().optional() });
-export function gradeQuiz(regionId: string, landmarkId: string, choice: string) {
-  const landmark = getLandmark(regionId, landmarkId);
-  if (!landmark) return null;
-  return { correct: choice === landmark.quiz.answer, answer: landmark.quiz.answer, explanation: landmark.quiz.explanation };
-}
 export async function POST(request: Request) {
   const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   const session = token ? await verifySessionToken(token) : null;

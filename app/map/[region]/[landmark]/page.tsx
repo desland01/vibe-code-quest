@@ -9,6 +9,7 @@ import { parseBeatProgressState } from '@/components/landmark/Beats/beatStorage'
 import { getLandmark, getRegion, regions } from '@/lib/content';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { queryAsUser } from '@/lib/db';
+import { isHostedMode } from '@/server/hosting';
 
 export function generateStaticParams() {
   return regions.flatMap((region) =>
@@ -35,7 +36,7 @@ export default async function LandmarkMapPage({
   if (!requestedFormat) {
     const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
     const session = token ? await verifySessionToken(token) : null;
-    if (session) {
+    if (session && isHostedMode()) {
       const depth = (
         await queryAsUser<{ depth_preference: string | null }>(
           session.userId,
@@ -68,7 +69,7 @@ export default async function LandmarkMapPage({
 
     const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
     const session = token ? await verifySessionToken(token) : null;
-    if (session) {
+    if (session && isHostedMode()) {
       const progressRows = await queryAsUser<{ landmark: string; state: unknown }>(
         session.userId,
         `SELECT landmark, state

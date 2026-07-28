@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { createSnapshot, revokeSnapshot } from '@/server/share';
+import { isHostedMode } from '@/server/hosting';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +12,9 @@ function validToken(value: unknown): value is string {
 }
 
 export async function POST(request: Request) {
+  if (!isHostedMode()) {
+    return NextResponse.json({ error: 'Share links need a hosted database.' }, { status: 503 });
+  }
   const sessionToken = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   const session = sessionToken ? await verifySessionToken(sessionToken) : null;
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

@@ -6,6 +6,7 @@ import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { queryAsUser, withUserTransaction } from '@/lib/db';
 import { recordEvent } from '@/server/events';
 import { advanceState, applyAnswer, generateQuestionText, getNextStep, initialOnboardingState, parseAnswer, skip, type OnboardingField, type OnboardingState } from '@/server/onboarding';
+import { isHostedMode } from '@/server/hosting';
 
 export const dynamic = 'force-dynamic';
 const bodySchema = z.object({ action: z.enum(['start', 'answer', 'skip', 'finish']), text: z.string().max(1_000).optional() });
@@ -25,6 +26,9 @@ async function loadState(id: string): Promise<OnboardingState> {
 }
 
 export async function POST(request: Request) {
+  if (!isHostedMode()) {
+    return NextResponse.json({ step: null, questionText: null, count: 0, mapUnlocked: true, done: true, profile: {} });
+  }
   const id = await userId();
   if (!id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   let body: z.infer<typeof bodySchema>;

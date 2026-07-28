@@ -7,14 +7,14 @@ export const termsContent = {
     {
       heading: '1. Who we are and what these terms cover',
       paragraphs: [
-        'These Terms of Service govern your use of code-tutor, “A Map for Post-AI Builders,” operated by Truline, a trade name of Desmond Landry (“Truline,” “we,” “us,” or “our”). code-tutor is a free, open-source educational service with an interactive learning map, progress tools, quizzes, and AI-assisted explanations for people building software with AI agents.',
-        'By using code-tutor, you agree to these Terms. If you do not agree, do not use the service.'
+        'These Terms of Service govern your use of Vibe Code Quest by Truline, “A Map for Post-AI Builders” (the “service”), operated by Truline, a trade name of Desmond Landry (“Truline,” “we,” “us,” or “our”). Vibe Code Quest is a free, open-source educational service with an interactive learning map, progress tools, quizzes, and AI-assisted explanations for people building software with AI agents.',
+        'By using Vibe Code Quest, you agree to these Terms. If you do not agree, do not use the service.'
       ]
     },
     {
       heading: '2. The service is free',
       paragraphs: [
-        'code-tutor is free to use. We do not charge you, offer a paid tier, run a trial that later becomes paid, provide a checkout, collect a payment card, or create a billing account.',
+        'Vibe Code Quest is free to use. We do not charge you, offer a paid tier, run a trial that later becomes paid, provide a checkout, collect a payment card, or create a billing account.',
         'Using the service does not create any present or future obligation to pay Truline.'
       ]
     },
@@ -28,14 +28,14 @@ export const termsContent = {
     {
       heading: '4. Eligibility',
       paragraphs: [
-        'You must be able to form a binding contract under the laws of the State of Florida, United States, to use the service. If you use code-tutor for an organization, you represent that you have authority to accept these Terms for that organization.',
+        'You must be able to form a binding contract under the laws of the State of Florida, United States, to use the service. If you use Vibe Code Quest for an organization, you represent that you have authority to accept these Terms for that organization.',
         'The service is not directed to children under 13. A higher minimum age may apply where you live.'
       ]
     },
     {
       heading: '5. Anonymous use and optional email',
       paragraphs: [
-        'You may use code-tutor anonymously. An app-issued anonymous session identity lets the service save progress on that device.',
+        'You may use Vibe Code Quest anonymously. An app-issued anonymous session identity lets the service save progress on that device.',
         'You may optionally provide an email address and verify it with a one-time passcode so your progress follows you across devices. Email does not provide a paid tier. You are responsible for access to your email and for activity under your profile.',
         'Do not share verification codes or try to access another person’s profile. Contact admin@truline.io if you believe your profile has been compromised.'
       ]
@@ -49,7 +49,7 @@ export const termsContent = {
     },
     {
       heading: '7. Acceptable use',
-      paragraphs: ['You agree not to misuse code-tutor or help anyone else do so. In particular, you must not:'],
+      paragraphs: ['You agree not to misuse Vibe Code Quest or help anyone else do so. In particular, you must not:'],
       items: [
         'break the law, infringe another person’s rights, or submit harmful or unlawful material;',
         'probe, bypass, disable, or interfere with security, fair-use limits, access controls, or service operation;',
@@ -63,14 +63,14 @@ export const termsContent = {
     {
       heading: '8. Educational and AI-generated content',
       paragraphs: [
-        'code-tutor is an educational tool, not a substitute for professional advice. Explanations, recommendations, quizzes, and other material—including content generated or adapted by AI—may be incomplete, outdated, or inaccurate. Always review outputs, test code, verify important claims against authoritative sources, and use qualified professionals when legal, financial, medical, security, or other high-stakes advice is needed.',
+        'Vibe Code Quest is an educational tool, not a substitute for professional advice. Explanations, recommendations, quizzes, and other material—including content generated or adapted by AI—may be incomplete, outdated, or inaccurate. Always review outputs, test code, verify important claims against authoritative sources, and use qualified professionals when legal, financial, medical, security, or other high-stakes advice is needed.',
         'You are responsible for decisions, code, systems, and outcomes produced using information from the service.'
       ]
     },
     {
       heading: '9. Availability and warranties',
       paragraphs: [
-        'To the maximum extent permitted by law, code-tutor is provided “as is” and “as available.” Truline disclaims all warranties, express or implied, including merchantability, fitness for a particular purpose, non-infringement, accuracy, and uninterrupted availability. Some jurisdictions do not allow certain disclaimers, so parts of this section may not apply to you.'
+        'To the maximum extent permitted by law, Vibe Code Quest is provided “as is” and “as available.” Truline disclaims all warranties, express or implied, including merchantability, fitness for a particular purpose, non-infringement, accuracy, and uninterrupted availability. Some jurisdictions do not allow certain disclaimers, so parts of this section may not apply to you.'
       ]
     },
     {

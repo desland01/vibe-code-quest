@@ -10,8 +10,8 @@ type PageProps = { params: Promise<{ token: string }> };
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { token } = await params;
   return {
-    title: 'Learning progress · code-tutor',
-    description: 'A code-tutor learning progress snapshot.',
+    title: 'Learning progress · Vibe Code Quest',
+    description: 'A Vibe Code Quest learning progress snapshot.',
     openGraph: { images: [`/s/${token}/opengraph-image`] }
   };
 }
@@ -23,7 +23,7 @@ export default async function SharePage({ params }: PageProps) {
 
   return <main className="share-page" id="main-content">
     <header className="share-hero">
-      <p className="region-kicker">code-tutor progress snapshot</p>
+      <p className="region-kicker">Vibe Code Quest progress snapshot</p>
       <h1>{snapshot.totals.landmarksCompleted} of {snapshot.totals.landmarksTotal} landmarks explored</h1>
       <p>{snapshot.totals.regionsStarted} learning regions started.</p>
     </header>

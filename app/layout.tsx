@@ -8,8 +8,8 @@ import './globals.css';
 const pixelify = Pixelify_Sans({ subsets: ['latin'], display: 'swap', variable: '--font-pixel' });
 
 export const metadata: Metadata = {
-  title: 'code-tutor — A Map for Post-AI Builders',
-  description: 'code-tutor — A Map for Post-AI Builders'
+  title: 'Vibe Code Quest by Truline — A Map for Post-AI Builders',
+  description: 'A free learning map for people building software with AI agents. 48 landmarks across 8 regions.'
 };
 
 export default function RootLayout({

@@ -31,6 +31,25 @@ export function SiteFooter() {
           </Link>
         ))}
       </nav>
+      <div
+        style={{
+          marginTop: 16,
+          textAlign: 'center',
+          fontSize: '0.75rem',
+          lineHeight: 1.5,
+          color: 'inherit'
+        }}
+      >
+        <p data-testid="site-byline" style={{ margin: 0, color: 'inherit' }}>
+          Vibe Code Quest by{' '}
+          <a href="https://truline.io" rel="noreferrer" style={{ color: 'inherit', fontWeight: 700 }}>
+            Truline
+          </a>
+        </p>
+        <p data-testid="site-constance" style={{ margin: '4px 0 0', color: 'inherit', opacity: 0.75 }}>
+          Governed by Constance
+        </p>
+      </div>
     </footer>
   );
 }

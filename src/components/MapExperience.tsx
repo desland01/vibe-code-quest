@@ -55,7 +55,7 @@ export function MapExperience() {
         </ul>
       </section>
       <header className="map-header">
-        <div><h1>code-tutor</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div>
+        <div><h1>Vibe Code Quest</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div>
         <div className="map-header-actions">
           <XpHud />
           <Link href="/leaderboard" className="map-header-link" data-testid="quest-board-link">

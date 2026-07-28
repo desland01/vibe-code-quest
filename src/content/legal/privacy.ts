@@ -7,13 +7,13 @@ export const privacyContent = {
     {
       heading: '1. Scope and privacy contact',
       paragraphs: [
-        'This Privacy Policy explains how Truline, a trade name of Desmond Landry (“Truline,” “we,” “us,” or “our”), collects, uses, shares, and retains information when you use code-tutor, “A Map for Post-AI Builders.” Privacy, security, and rights requests may be sent to admin@truline.io.'
+        'This Privacy Policy explains how Truline, a trade name of Desmond Landry (“Truline,” “we,” “us,” or “our”), collects, uses, shares, and retains information when you use Vibe Code Quest, “A Map for Post-AI Builders.” Privacy, security, and rights requests may be sent to admin@truline.io.'
       ]
     },
     {
       heading: '2. Anonymous sessions and optional email',
       paragraphs: [
-        'An essential HTTP-only cookie carries an app-issued anonymous session identity so code-tutor can save your progress. Disabling or clearing that cookie breaks saved progress and account features for the anonymous profile on that device.',
+        'An essential HTTP-only cookie carries an app-issued anonymous session identity so Vibe Code Quest can save your progress. Disabling or clearing that cookie breaks saved progress and account features for the anonymous profile on that device.',
         'You may optionally provide an email address and verify it with a one-time passcode so progress follows you across devices. Email unlocks no paid tier. One-time-passcode challenge records expire within minutes.'
       ]
     },
@@ -68,7 +68,7 @@ export const privacyContent = {
     {
       heading: '9. Essential cookie',
       paragraphs: [
-        'code-tutor uses the essential HTTP-only session cookie to recognize your anonymous identity, protect the session, and associate saved progress with the correct profile. The service does not use that cookie to advertise to you.'
+        'Vibe Code Quest uses the essential HTTP-only session cookie to recognize your anonymous identity, protect the session, and associate saved progress with the correct profile. The service does not use that cookie to advertise to you.'
       ]
     },
     {
@@ -88,7 +88,7 @@ export const privacyContent = {
     {
       heading: '12. Children',
       paragraphs: [
-        'code-tutor is not directed to children under 13, and we do not knowingly collect personal information from children under 13. A higher age threshold may apply where you live. If you believe a child provided information, contact admin@truline.io.'
+        'Vibe Code Quest is not directed to children under 13, and we do not knowingly collect personal information from children under 13. A higher age threshold may apply where you live. If you believe a child provided information, contact admin@truline.io.'
       ]
     },
     {

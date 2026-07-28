@@ -23,7 +23,7 @@ export function LegalPage({ document }: { document: LegalDocument }) {
           lineHeight: 1.5
         }}
       >
-        This page explains how code-tutor works. It is general information, not legal advice.
+        This page explains how Vibe Code Quest works. It is general information, not legal advice.
       </p>
       <header style={{ marginBottom: 32 }}>
         <h1 style={{ margin: '0 0 10px', fontFamily: 'var(--font-pixel), monospace' }}>

@@ -11,10 +11,21 @@ export type GatewayResult =
   | { kind: 'rate_limited_fallback'; text: string; usage: GatewayUsage }
   | { kind: 'gateway_down' };
 
+/**
+ * The gateway authenticates with an explicit API key or, on a Vercel deployment,
+ * the automatically-injected OIDC token. Checking only for the key would disable
+ * the guide in production even where OIDC would have worked.
+ * https://vercel.com/docs/ai-gateway/authentication-and-byok
+ */
+export function hasGatewayCredentials(): boolean {
+  return Boolean(process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN);
+}
+
+// Gateway ids use dots in version numbers; scripts/check-gateway-models.mjs verifies them.
 export const AI_MODELS = Object.freeze({
-  executor: process.env.AI_MODEL_EXECUTOR || 'anthropic/claude-sonnet-4-5',
-  fallback: process.env.AI_MODEL_FALLBACK || 'anthropic/claude-haiku-4-5',
-  advisor: process.env.AI_MODEL_ADVISOR || 'anthropic/claude-opus-4-6',
+  executor: process.env.AI_MODEL_EXECUTOR || 'openai/gpt-5.6-luna',
+  fallback: process.env.AI_MODEL_FALLBACK || 'openai/gpt-5.4-nano',
+  advisor: process.env.AI_MODEL_ADVISOR || 'openai/gpt-5.6-sol',
 });
 
 export type GatewayTransportResult = {
@@ -39,7 +50,19 @@ export type GenerateWithGatewayParams = {
   transport?: GatewayTransport;
 };
 
-const REAL_MODEL_TIMEOUT_MS = 8_000;
+/**
+ * Server-side per-attempt gateway timeout.
+ *
+ * Must stay meaningfully below GuideChat's 12_000 ms client abort, so the server
+ * wins the race and returns the graceful offline fallback rather than the browser
+ * failing generically. Raise it deliberately — and raise the client abort with it —
+ * if a slower or reasoning-heavy model is ever configured.
+ */
+const configuredRealModelTimeoutMs = Number(process.env.AI_REAL_MODEL_TIMEOUT_MS);
+const REAL_MODEL_TIMEOUT_MS =
+  Number.isFinite(configuredRealModelTimeoutMs) && configuredRealModelTimeoutMs > 0
+    ? configuredRealModelTimeoutMs
+    : 8_000;
 
 function usageOf(result: GatewayTransportResult): GatewayUsage {
   return {
@@ -96,7 +119,7 @@ export async function generateWithGateway(
   const drill = params.drill ?? persistentDrill();
 
   if (drill === 'force_5xx') return { kind: 'gateway_down' };
-  if (!params.transport && !process.env.AI_GATEWAY_API_KEY) return { kind: 'gateway_down' };
+  if (!params.transport && !hasGatewayCredentials()) return { kind: 'gateway_down' };
 
   const transport = params.transport ?? sdkTransport;
   const callTransport = (model: string) => {

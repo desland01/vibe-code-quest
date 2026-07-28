@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   AI_MODELS,
   generateWithGateway,
+  hasGatewayCredentials,
   type GatewayTransport,
 } from '@/server/ai';
 import {
@@ -40,11 +41,75 @@ function httpError(statusCode: number): Error & { statusCode: number } {
 }
 
 afterEach(() => {
+  vi.restoreAllMocks();
   vi.unstubAllEnvs();
   vi.resetModules();
 });
 
+describe('AI model configuration', () => {
+  it('uses valid gateway model ids', () => {
+    for (const model of Object.values(AI_MODELS)) {
+      expect(model).toMatch(/^[a-z0-9-]+\/[a-z0-9.-]+$/);
+    }
+  });
+
+  it('does not use a dash between version digits', () => {
+    for (const model of Object.values(AI_MODELS)) {
+      expect(model).not.toMatch(/\d-\d/);
+    }
+  });
+
+  it('keeps exactly the three non-empty model roles', () => {
+    expect(Object.keys(AI_MODELS).sort()).toEqual(['advisor', 'executor', 'fallback']);
+    for (const model of Object.values(AI_MODELS)) {
+      expect(model).not.toBe('');
+    }
+  });
+});
+
 describe('AI Gateway transport', () => {
+  it('reports no credentials and does not attempt a network call when neither is set', async () => {
+    vi.stubEnv('AI_GATEWAY_API_KEY', '');
+    vi.stubEnv('VERCEL_OIDC_TOKEN', '');
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
+
+    expect(hasGatewayCredentials()).toBe(false);
+    await expect(
+      generateWithGateway({
+        surface: 'guide',
+        prompt: 'Explain this landmark.',
+        maxOutputTokens: 200,
+      })
+    ).resolves.toEqual({ kind: 'gateway_down' });
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it('accepts an explicit gateway API key', () => {
+    vi.stubEnv('AI_GATEWAY_API_KEY', 'test-key');
+    vi.stubEnv('VERCEL_OIDC_TOKEN', '');
+
+    expect(hasGatewayCredentials()).toBe(true);
+  });
+
+  it('accepts the Vercel-injected OIDC token', () => {
+    vi.stubEnv('AI_GATEWAY_API_KEY', '');
+    vi.stubEnv('VERCEL_OIDC_TOKEN', 'test-oidc-token');
+
+    expect(hasGatewayCredentials()).toBe(true);
+  });
+
+  it('lets an injected transport bypass the credential check', async () => {
+    vi.stubEnv('AI_GATEWAY_API_KEY', '');
+    vi.stubEnv('VERCEL_OIDC_TOKEN', '');
+    const transport = vi.fn<GatewayTransport>().mockResolvedValue({ text: 'Transport answer' });
+
+    await expect(request(transport)).resolves.toMatchObject({
+      kind: 'ok',
+      text: 'Transport answer',
+    });
+    expect(transport).toHaveBeenCalledTimes(1);
+  });
+
   it('returns text and SDK usage on the executor success path', async () => {
     const transport = vi.fn<GatewayTransport>().mockResolvedValue({
       text: 'Executor answer',

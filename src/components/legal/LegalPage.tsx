@@ -2,9 +2,6 @@ import Link from 'next/link';
 
 import type { LegalDocument } from '@/content/legal/types';
 
-const draftNotice =
-  '⚠ Draft — pending legal review; placeholders in [BRACKETS] must be completed before launch';
-
 export function LegalPage({ document }: { document: LegalDocument }) {
   return (
     <main
@@ -17,25 +14,17 @@ export function LegalPage({ document }: { document: LegalDocument }) {
       <Link href="/" style={{ color: 'var(--ink)', fontWeight: 700 }}>
         ← Back to the map
       </Link>
-      <aside
-        role="note"
-        aria-label="Legal draft notice"
-        data-testid="legal-draft-banner"
+      <p
+        data-testid="legal-not-legal-advice"
         style={{
           margin: '24px 0',
-          border: '3px solid var(--ink)',
-          background: 'var(--banner)',
-          padding: '16px 18px',
-          boxShadow: '5px 5px 0 var(--banner-border)',
-          fontWeight: 800,
+          color: 'var(--ink)',
+          fontSize: '0.875rem',
           lineHeight: 1.5
         }}
       >
-        {draftNotice}
-        <div style={{ marginTop: 6, fontWeight: 600 }}>
-          This agent-drafted document has not been reviewed by a lawyer and is not final legal advice.
-        </div>
-      </aside>
+        This page explains how code-tutor works. It is general information, not legal advice.
+      </p>
       <header style={{ marginBottom: 32 }}>
         <h1 style={{ margin: '0 0 10px', fontFamily: 'var(--font-pixel), monospace' }}>
           {document.title}

@@ -82,15 +82,21 @@ async function resolveTier(
   );
   const entitlement = result.rows[0];
   if (!entitlement) return 'anonymous';
-  if (
-    entitlement.status === 'trial' ||
-    (entitlement.trial_starts_at &&
-      entitlement.trial_ends_at &&
-      entitlement.trial_starts_at <= now &&
-      entitlement.trial_ends_at > now)
-  ) {
-    return 'trial';
-  }
+
+  // L-006: trial tier only while status is trial-like AND the date window is open.
+  // Billing writes status 'trialing' (not bare 'trial'). Expired, canceled, or
+  // missing windows resolve to free so the guide stays available under free
+  // usage caps — never a paywall, and never elevated caps after cancel.
+  const trialStatus =
+    entitlement.status === 'trial' || entitlement.status === 'trialing';
+  const trialActive =
+    trialStatus &&
+    entitlement.trial_starts_at != null &&
+    entitlement.trial_ends_at != null &&
+    entitlement.trial_starts_at <= now &&
+    entitlement.trial_ends_at > now;
+  if (trialActive) return 'trial';
+
   if (entitlement.status === 'active' && entitlement.tier !== 'free') return 'active';
   return 'free';
 }
@@ -142,15 +148,8 @@ async function decide(
   config: AccessConfig,
   now: Date
 ): Promise<Decision> {
-  if (surface === 'guide' && !identity.tier) {
-    const billing = await database.query<{ status: string; trial_ends_at: Date | null }>(
-      'SELECT status, trial_ends_at FROM entitlements WHERE profile_id = $1', [identity.userId]
-    );
-    const row = billing.rows[0];
-    if (row?.trial_ends_at && row.trial_ends_at <= now && row.status !== 'active') {
-      return { allowed: false, banner: 'guide_disabled', reason: 'subscription required', tier: 'free' };
-    }
-  }
+  // L-006 free product path: no subscription/trial wall on any surface.
+  // Expired or absent entitlements resolve to free tier; usage caps remain authoritative.
   const tier = await resolveTier(identity, database, now);
   const zeroReason = capZero(config, tier, surface);
   if (zeroReason) return { allowed: false, banner: bannerFor(surface, tier, false), reason: zeroReason, tier };

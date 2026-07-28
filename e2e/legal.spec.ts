@@ -7,13 +7,16 @@ const legalPages = [
 ] as const;
 
 for (const legalPage of legalPages) {
-  test(`${legalPage.heading} renders with its draft warning and footer links`, async ({ page }) => {
+  test(`${legalPage.heading} renders with its legal notice and footer links`, async ({ page }) => {
     await page.goto(legalPage.path);
 
     await expect(page.getByRole('heading', { level: 1, name: legalPage.heading })).toBeVisible();
-    await expect(page.getByTestId('legal-draft-banner')).toContainText(
-      'Draft — pending legal review'
-    );
+    await expect(page.getByTestId('legal-not-legal-advice')).toBeVisible();
+    await expect(page.getByTestId('legal-not-legal-advice')).toContainText('not legal advice');
+
+    const bodyText = await page.locator('body').innerText();
+    expect(bodyText).not.toMatch(/\[[A-Z][A-Z ]+\]/);
+    expect(bodyText).not.toMatch(/subscription|refund a payment|credit card|Stripe/i);
 
     const footer = page.getByRole('contentinfo');
     for (const destination of legalPages) {

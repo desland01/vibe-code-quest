@@ -20,12 +20,11 @@ const schema = z.object({
 export async function GET() {
   const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
   const session = token ? await verifySessionToken(token) : null;
-  if (!session) return NextResponse.json({ allowed: true, verifiedEmail: false });
-  const [access, profile] = await Promise.all([
-    checkAccess({ userId: session.userId }, 'guide'),
-    queryAsUser<{ email: string | null }>(session.userId, 'SELECT email FROM profiles WHERE id=$1', [session.userId]),
-  ]);
-  return NextResponse.json({ allowed: access.allowed, verifiedEmail: Boolean(profile.rows[0]?.email), reason: access.reason });
+  // L-006: guide is free within caps. Anonymous visitors are allowed; authenticated
+  // callers still get the cap-aware preflight for observability, never a paywall.
+  if (!session) return NextResponse.json({ allowed: true });
+  const access = await checkAccess({ userId: session.userId }, 'guide');
+  return NextResponse.json({ allowed: access.allowed, reason: access.reason, banner: access.banner });
 }
 
 export async function POST(request: Request) {
@@ -35,8 +34,8 @@ export async function POST(request: Request) {
   let body: z.infer<typeof schema>;
   try { body = schema.parse(await request.json()); } catch { return NextResponse.json({ error: 'Invalid request body' }, { status: 400 }); }
   if (!getLandmark(body.regionId, body.landmarkId)) return NextResponse.json({ error: 'Landmark not found' }, { status: 404 });
-  const access = await checkAccess({ userId: session.userId }, 'guide');
-  if (!access.allowed && access.reason === 'subscription required') return NextResponse.json({ error: 'Subscription required' }, { status: 402 });
+  // L-006: no subscription 402. Usage caps are enforced atomically inside runGuideTurn
+  // via reserveUsage; exhaustion degrades to the canonical offline path.
 
   const result = await queryAsUser<{
     escalations: number;

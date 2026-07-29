@@ -9,13 +9,19 @@ L-011 closeout is this document plus [`QA-MATRIX.md`](./QA-MATRIX.md).
 
 ## 1. The short version
 
-The product is finished, verified, and packaged. Three things remain, and **all three are one
-owner decision each** — none is blocked by anything in the code:
+**Shipped and live.** The repo is public at
+[github.com/desland01/vibe-code-quest](https://github.com/desland01/vibe-code-quest) (MIT), the
+Vercel project is renamed `vibe-code-quest`, and production is deployed and smoked at
+**38 / 40 criteria**.
 
-1. **Publish the public GitHub repo** (L-008). Scan is clean; there is no remote yet.
-2. **Deploy to production** (L-010). Attempted, correctly denied by the safety floor.
-3. **Prove the AI guide works live** (G-8). It has *never* executed a real request; L-009 fixed
-   the two reasons it couldn't, but the fix is unproven until it runs in production.
+**One thing is left, and it is one environment variable.** The G-8 criterion fails: the
+production AI guide returns canonical offline text because the runtime has no gateway
+credentials — neither `AI_GATEWAY_API_KEY` nor `VERCEL_OIDC_TOKEN`. Set either one and redeploy.
+Full diagnosis and both fixes: [`evidence/L-010.md`](./evidence/L-010.md) §4.
+
+The guide has still never executed a single real request. Everything else — map, 48 landmarks,
+beats, stamps, collectibles, XP, leaderboard, share cards, OG images, legal, reduced motion,
+keyboard-only — is verified working on the live URL at desktop and mobile.
 
 ## 2. Mission source of truth
 
@@ -70,29 +76,36 @@ pass/fail. It is a small addition to the smoke if the owner prefers it.
 This turned out to be the right call: L-009 proved the guide had never executed a real request
 at all, and a visual-only pass would never have revealed that.
 
-## 5. The three owner actions
+## 5. The one remaining owner action
+
+Give the production runtime gateway credentials, then redeploy and re-run the smoke. Either
+option works:
+
+- **A (recommended)** — add `AI_GATEWAY_API_KEY` to the **Production** environment in the Vercel
+  dashboard (Project → Settings → Environment Variables). Use the dashboard, **not**
+  `vercel env add` piped from stdin: that path is known on this machine to store an empty value,
+  and `echo` adds a trailing newline.
+- **B** — enable **OIDC Federation** (Settings → Security). Vercel then injects
+  `VERCEL_OIDC_TOKEN` automatically and no key is needed; L-009 made the code accept it.
 
 ```bash
 cd /Users/thebeast/code-tutor
-
-# 1. Publish (L-008). History scan is clean: gitleaks 8.30.1, 114 commits, no leaks.
-gh repo create vibe-code-quest --public --source=. --remote=origin --push
-
-# 2. Optional, carried over from L-007 (G-4). Safe: .vercel/project.json links by projectId.
-vercel project rename code-tutor vibe-code-quest
-
-# 3. Deploy (L-010). Confirm DATABASE_URL and AUTH_SECRET are set first.
-vercel env ls production
 vercel deploy --prod
+PROD_URL=<new production URL> \
+  node docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l010-prod-smoke.mjs
 ```
 
-Then run the live smoke in [`evidence/L-010.md`](./evidence/L-010.md) §4, **including the G-8
-guide proof in §4.1**.
+A pass reads `G-8 guide returns MODEL-GENERATED text — live model reply`.
 
-Before publishing, know what full-history publication actually exposes: Neon branch and endpoint
-identifiers, the Vercel project id, and ledger lines noting that a Gemini API key was once
-pasted into a chat transcript and should be rotated. None are secrets and the scan is clean;
-G-5 chose full history knowingly, and this is the concrete content of that choice.
+While it runs, note the latency of that first real guide turn. If turns approach or exceed 8 s,
+set `AI_REAL_MODEL_TIMEOUT_MS` above the default **and** raise `GuideChat`'s 12 000 ms client
+abort to stay ahead of it — the open follow-up from grill defect #9.
+
+**Already published, for the record:** the public repo carries the full history by G-5's
+explicit choice, which includes Neon branch and endpoint identifiers, the Vercel project id, and
+ledger lines noting that a Gemini API key was once pasted into a chat transcript and should be
+rotated. None are secrets — `gitleaks` is clean across all 116 commits — but that rotation is
+still worth doing.
 
 ## 6. Packet corrections — EXECUTION_PLAN is stale in two places
 
@@ -151,8 +164,8 @@ option rather than a blocker.
 ## Kickoff (paste into a fresh session, after the owner has published and deployed)
 
 ```text
-Finish the Vibe Code Quest launch mission at /Users/thebeast/code-tutor (branch main).
-FIRST run `node /Users/thebeast/Constance/dist/constance.mjs session-start`, then read docs/missions/2026-07-20-vibe-code-quest-launch/HANDOFF.md, QA-MATRIX.md, evidence/L-010.md and KICKOFF.md §6.
-L-001–L-009 are committed and green. Remaining: run the L-010 live smoke on the production URL at desktop and mobile per evidence/L-010.md §4, and prove the G-8 criterion in §4.1 — a real model-generated guide turn, not the offline banner. Record the observed guide latency and set AI_REAL_MODEL_TIMEOUT_MS if turns approach 8s. Then close L-011 against the real results.
+Close out the Vibe Code Quest launch mission at /Users/thebeast/code-tutor (branch main).
+FIRST run `node /Users/thebeast/Constance/dist/constance.mjs session-start`, then read docs/missions/2026-07-20-vibe-code-quest-launch/HANDOFF.md and evidence/L-010.md §4.
+L-001–L-011 are committed. The repo is public (github.com/desland01/vibe-code-quest, MIT) and production is deployed and smoked at 38/40. The ONLY open item is G-8: the production guide returns offline canonical text because the runtime has no gateway credentials. Once the owner has set AI_GATEWAY_API_KEY for Production (via the Vercel dashboard, never `vercel env add` stdin) or enabled OIDC Federation, redeploy and re-run `PROD_URL=<url> node docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l010-prod-smoke.mjs` — it must report "G-8 guide returns MODEL-GENERATED text — live model reply". Record that turn's latency; if it approaches 8s, set AI_REAL_MODEL_TIMEOUT_MS and raise GuideChat's 12s client abort together (grill defect #9). Then update QA-MATRIX.md, WORK_LEDGER.md and this HANDOFF with the real result and commit.
 Guardrails: Truline only; bunx never npx; Playwright only http://localhost:3100 workers=1 and warm the Neon pool first; neonctl needs --org-id org-soft-forest-80534150 --project-id rapid-haze-29688965; never print secrets; leave Constance self-writes uncommitted and never git add -A; .ts/.tsx edits go through `constance-worker-wrap codex-worker` and you vet the diff; STOP only for KICKOFF §6.
 ```

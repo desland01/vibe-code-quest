@@ -23,8 +23,8 @@ Verdicts are from actual runs on 2026-07-28, not from intent. Anything unproven 
 | L-007 rebrand | `16ffb40` | ⚠️ PASS in code; Vercel project rename **not done** (blocked) |
 | L-008 OSS + self-host packaging | `f3247f4` | ⚠️ PASS in code; **public GitHub publish not done** (deferred) |
 | L-009 gateway models + OIDC | `6098461` | ⚠️ PASS in code; **no real model round trip has ever executed** |
-| L-010 production deploy | — | ❌ **NOT DONE** — blocked on owner approval |
-| L-011 closeout | this commit | ✅ this document |
+| L-010 production deploy + smoke | `dpl_9ZgCA1Xqy2CSyQ3r5TnLGc8tDoyb` | ⚠️ deployed and smoked — **38/40 PASS**, G-8 fails (no gateway credentials in production) |
+| L-011 closeout | `2becc06` | ✅ this document |
 
 ## 2. Gates at HEAD
 
@@ -83,10 +83,15 @@ longer timeout.
 | `.env.example` documented, no secrets | rewritten to annotated `KEY=` form | ✅ PASS |
 | Full-history secret scan clean | `gitleaks` 8.30.1, 114 commits, no leaks | ✅ PASS |
 | Gateway model ids valid | verified against the live 306-model list | ✅ PASS |
-| Public GitHub repo | — | ❌ **NOT DONE** |
-| Production deployed | — | ❌ **NOT DONE** |
-| Live smoke at desktop + mobile | — | ❌ **NOT DONE** |
-| **G-8: real model-generated guide turn in production** | — | ❌ **NOT DONE — the single most important unproven claim** |
+| Public GitHub repo | `github.com/desland01/vibe-code-quest` — PUBLIC, MIT, `main` | ✅ PASS |
+| Vercel project renamed (G-4) | now `vibe-code-quest`, same project id | ✅ PASS |
+| Production deployed | `dpl_9ZgCA1Xqy2CSyQ3r5TnLGc8tDoyb` READY, `hosted:true` | ✅ PASS |
+| Live smoke at desktop + mobile | `scripts/l010-prod-smoke.mjs` — 38/40 | ✅ PASS |
+| Full landmark → stamp → collectible in production | 13 interactions, both viewports; `evidence/L-010/prod-stamp-mobile.png` | ✅ PASS |
+| Leaderboard opt-in, weekly + all-time, opt-out cleanup | all HTTP 200 | ✅ PASS |
+| Share card + public link + OG image | HTTP 200 `image/png` | ✅ PASS |
+| Reduced motion + keyboard-only in production | `data-reduced-motion="true"`; Tab reaches a region control | ✅ PASS |
+| **G-8: real model-generated guide turn in production** | returns `kind:"offline"` in 0.34 s — no gateway credentials in the production runtime | ❌ **FAIL — see `evidence/L-010.md` §4** |
 
 ## 4. Known issues carried forward
 

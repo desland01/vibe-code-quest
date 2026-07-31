@@ -238,6 +238,31 @@ ISSUE-032 and the follow-up mission-state fix proved the closeout packaging rule
 - The final HITL packet lists decisions (price, name, legal, live-mode, D3) and credentials separately from actions (production deploy, drill, posting). Nothing in that packet is agent-executable.
 - Fresh sessions must STOP at the gate rather than "complete" the mission by toggling status fields. Completion happens only after owner decisions land in the closeout record.
 
+### 26. Slow/external parsing stays outside a short atomic state-transition transaction
+
+Concurrent onboarding submissions proved that a load/mutate/save sequence can lose updates even when each individual write succeeds.
+
+- Run slow model or external parsing before taking the database lock.
+- Inside one short transaction, re-read the current row with `SELECT ... FOR UPDATE`, validate the expected step, update derived profile fields, and save the new state.
+- If another request already advanced the step, return `409` without writing and have the client re-sync from the server-owned state.
+- Prove the race at route level with an interleaving regression test; unit tests of the pure reducer cannot establish transaction behavior.
+
+### 27. Clickable-looking comps must be executable prototypes with interaction proof
+
+Static comps with dead controls are not sufficient evidence for an interaction design.
+
+- Put a deterministic state machine behind the visible controls and exercise the intended success, retry, stamp, and next-step paths for real.
+- Add a headless smoke test that drives the same controls a user would use and asserts the resulting states.
+- Make capture tooling drive the shared prototype controller instead of maintaining a separate screenshot-only path that can drift from the interactive behavior.
+
+### 28. Agent-owned sibling worktrees stay outside host lint and test globs
+
+Parallel agent sessions can place independent worktrees under directories such as `.claude/**`; broad repository discovery then sweeps another session's incomplete work and fails the host suite for the wrong reason.
+
+- Add explicit sibling-worktree ignores to both lint and test-runner discovery, not just one tool.
+- Keep the exclusion scoped to known agent-owned worktree roots; do not hide normal product directories or real host-repo failures.
+- When a suite reports files outside the active checkout's owned paths, inspect discovery roots before changing product code.
+
 ## Verification menu
 
 - Docs/skills only: read back changed files and run `git diff --check`.

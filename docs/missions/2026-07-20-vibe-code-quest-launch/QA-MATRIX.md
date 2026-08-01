@@ -98,11 +98,11 @@ longer timeout.
 | Issue | Detail | Handling |
 |---|---|---|
 | `e2e/onboarding.spec.ts` Neon-latency failure | Fails the 5 s "Map unlocked" expect whenever a Neon round trip costs ~0.5 s. Answer POST measured **2.47 s** early in the session (pass) and **5.15 s** at the end (fail); the path makes ~20 sequential round trips, so wall time scales directly with per-hop latency. **This is the only failing test and it is a real performance signal, not a flake to be silenced.** | **Do not bump timeouts.** Real fix is reducing round trips on the onboarding answer path — chiefly the duplicated `checkAccess` + `reserveUsage` cycle below. That touches the access seam, so it needs its own slice. |
-| Wasted reservation work when the gateway is down | `generateWithGateway` returns `gateway_down` immediately without credentials, but callers have already paid a full `checkAccess` + `reserveUsage` cycle — twice per onboarding answer. | Flagged at L-006, still open. Main contributor to the issue above. |
+| Wasted reservation work when the gateway is down | `generateWithGateway` returns `gateway_down` immediately without credentials, but callers have already paid a full `checkAccess` + `reserveUsage` cycle — twice per onboarding answer. | Flagged at L-006, still open. Main contributor to the issue above. Note: production now HAS credentials (2026-08-01), so this path no longer triggers there — it still applies to any environment without them. |
 | `landmark-formats.spec.ts` parallel-load flake | Pre-existing; passes solo. | Do not bump timeouts. |
 | `entitlements` is vestigial | Table and migration retained, read by `access.ts`, written by nothing. Trial branch is dead code. | Documented in the README rather than removed; removing it would churn the frozen access seam. |
 | Dead analytics events | `trial_started`, `subscribe_clicked`, `paywall_shown` are unreachable. | Retained — the taxonomy is frozen by the engagement-v2 contract §11. |
-| `REAL_MODEL_TIMEOUT_MS` unvalidated | 8 s default, coupled to GuideChat's 12 s client abort. No real latency measurement exists. | Now `AI_REAL_MODEL_TIMEOUT_MS`; set it from the L-010 smoke. |
+| ~~`REAL_MODEL_TIMEOUT_MS` unvalidated~~ | **CLOSED 2026-08-01.** Measured live in production: 1556 / 1191 / 1268 ms including the first turn — a wide margin under the 8 s server default and GuideChat's 12 s client abort. | No change. `AI_REAL_MODEL_TIMEOUT_MS` stays unset. |
 | Vercel CLI 56.2.1 | 58.0.0 is current. | Optional upgrade. |
 
 ## 5. Usability study

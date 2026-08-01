@@ -119,12 +119,22 @@ async function run(label, viewport, isMobile) {
       message: 'In one sentence, when should I reach for SQL instead of a spreadsheet?',
     },
   });
-  const guideBody = await guide.json().catch(() => ({}));
+  const guideStatus = guide.status();
+  const guideText = await guide.text();
+  const guideBody = await Promise.resolve().then(() => JSON.parse(guideText || '{}')).catch(() => ({}));
   const live = guideBody.kind === 'ok';
+  const guideBodyPreview = guideText.slice(0, 200);
+  const guideDetail = live
+    ? 'live model reply'
+    : guideBody.kind === 'offline'
+      ? `HTTP ${guideStatus} kind=offline — canonical offline text (gateway not reached)`
+      : guideStatus < 200 || guideStatus >= 300
+        ? `HTTP ${guideStatus} server error — body: ${guideBodyPreview}`
+        : `HTTP ${guideStatus} unexpected response shape — body: ${guideBodyPreview}`;
   check(
     `${label} G-8 guide returns MODEL-GENERATED text`,
     live,
-    live ? 'live model reply' : `kind=${guideBody.kind ?? '?'} — offline canonical text, gateway not reached`
+    guideDetail
   );
 
   await context.close();

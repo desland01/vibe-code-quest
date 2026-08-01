@@ -192,16 +192,33 @@ option rather than a blocker.
 - **Vercel** project `code-tutor` `prj_WClQa03dfcb9UG1AE9aONshzxZzk`, team
   `team_nlF2ZXKWNjzMtLm84ZH2N0Sm`, Next.js preset, Node 24.x. Authenticated `desmond-5183`.
   Deploy permission allowlisted in `.claude/settings.local.json` (gitignored, never committed).
-  Local CLI 56.2.1; 58.0.0 is current.
-- **Git remote:** none.
+  Local CLI 56.2.1; 58.4.4 is current.
+- **AI Gateway:** key `vibe-code-quest-production` set as `AI_GATEWAY_API_KEY` on the
+  **Production** target only (encrypted, written via the REST API). OIDC Federation is also
+  enabled (`oidcTokenConfig {"enabled":true,"issuerMode":"team"}`), so the runtime has two
+  independent paths to the gateway. Preview and Development have neither and will still degrade
+  to the canonical offline path by design.
+- **Git remote:** `origin` → [github.com/desland01/vibe-code-quest](https://github.com/desland01/vibe-code-quest)
+  (public, MIT). A pre-push review hook runs on every push and takes a few minutes; let it finish
+  rather than reaching for `--no-verify`, which is banned.
 
 ---
 
-## Kickoff (paste into a fresh session, after the owner has published and deployed)
+## Mission status: COMPLETE
 
-```text
-Close out the Vibe Code Quest launch mission at /Users/thebeast/code-tutor (branch main).
-FIRST run `node /Users/thebeast/Constance/dist/constance.mjs session-start`, then read docs/missions/2026-07-20-vibe-code-quest-launch/HANDOFF.md and evidence/L-010.md §4.
-L-001–L-011 are committed. The repo is public (github.com/desland01/vibe-code-quest, MIT) and production is deployed and smoked at 38/40. The ONLY open item is G-8: the production guide returns offline canonical text because the runtime has no gateway credentials. Once the owner has set AI_GATEWAY_API_KEY for Production (via the Vercel dashboard, never `vercel env add` stdin) or enabled OIDC Federation, redeploy and re-run `PROD_URL=<url> node docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l010-prod-smoke.mjs` — it must report "G-8 guide returns MODEL-GENERATED text — live model reply". Record that turn's latency; if it approaches 8s, set AI_REAL_MODEL_TIMEOUT_MS and raise GuideChat's 12s client abort together (grill defect #9). Then update QA-MATRIX.md, WORK_LEDGER.md and this HANDOFF with the real result and commit.
-Guardrails: Truline only; bunx never npx; Playwright only http://localhost:3100 workers=1 and warm the Neon pool first; neonctl needs --org-id org-soft-forest-80534150 --project-id rapid-haze-29688965; never print secrets; leave Constance self-writes uncommitted and never git add -A; .ts/.tsx edits go through `constance-worker-wrap codex-worker` and you vet the diff; STOP only for KICKOFF §6.
+L-001 → L-011 are closed, committed, and pushed. Production is live and verified at **40 / 40**.
+There is no open owner action and no kickoff block — nothing is waiting on a fresh session.
+
+If you need to re-verify production later:
+
+```bash
+cd /Users/thebeast/code-tutor
+PROD_URL=https://code-tutor-puce.vercel.app \
+  node docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l010-prod-smoke.mjs
 ```
+
+Standing guardrails for any future work in this repo: Truline only; `bunx` never `npx`; Playwright
+only on `http://localhost:3100` with `--workers=1` and warm the Neon pool first; `neonctl` needs
+`--org-id org-soft-forest-80534150 --project-id rapid-haze-29688965`; never print secrets; leave
+Constance self-writes uncommitted and never `git add -A`; `.ts/.tsx/.mjs/.sql` edits go through
+`constance-worker-wrap codex-worker` and you vet the diff.

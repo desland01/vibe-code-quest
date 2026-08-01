@@ -12,6 +12,10 @@ const args = process.argv.slice(2);
 await appendFile(process.env.NEONCTL_LOG, JSON.stringify(args) + '\\n');
 
 if (args[0] === 'branches' && args[1] === 'create') {
+  if (process.env.NEONCTL_CREATE_ERROR === 'true') {
+    console.error('neon unavailable');
+    process.exitCode = 1;
+  }
   const name = args[args.indexOf('--name') + 1];
   const sleepMs = Number(process.env.NEONCTL_CREATE_SLEEP_MS || 0);
   if (sleepMs > 0) await new Promise((resolve) => setTimeout(resolve, sleepMs));
@@ -149,6 +153,26 @@ describe('with-neon-branch', () => {
     expect(deleteCalls(calls)).toContainEqual(expect.arrayContaining(['branches', 'delete', branchName]));
   });
 
+  it('returns 78 when branch creation cannot run', async () => {
+    const fixture = await setup();
+    delete fixture.env.TEST_DATABASE_URL;
+    fixture.env.NEONCTL_CREATE_ERROR = 'true';
+
+    const result = await runWrapper(fixture.env).result;
+
+    expect(result.code).toBe(78);
+  });
+
+  it('remaps a child exit code of 78 to 1', async () => {
+    const fixture = await setup();
+    delete fixture.env.TEST_DATABASE_URL;
+
+    const result = await runWrapper(fixture.env, 78).result;
+
+    expect(result.code).toBe(1);
+    expect(result.stderr).toContain('child exited with 78; remapping to 1');
+  });
+
   it('uses a non-empty existing TEST_DATABASE_URL without creating a branch', async () => {
     const fixture = await setup();
     fixture.env.TEST_DATABASE_URL = 'postgres://existing.example/db';
@@ -158,6 +182,18 @@ describe('with-neon-branch', () => {
     expect(result.code).toBe(0);
     expect(createCalls(calls)).toHaveLength(0);
     expect(await readFile(fixture.observedEnvFile, 'utf8')).toBe('postgres://existing.example/db');
+  });
+
+  it('remaps an inherited child exit code of 78 to 1 without creating a branch', async () => {
+    const fixture = await setup();
+    fixture.env.TEST_DATABASE_URL = 'postgres://existing.example/db';
+
+    const result = await runWrapper(fixture.env, 78).result;
+    const calls = await callsAt(fixture.logFile);
+
+    expect(result.code).toBe(1);
+    expect(result.stderr).toContain('child exited with 78; remapping to 1');
+    expect(createCalls(calls)).toHaveLength(0);
   });
 
   it('creates a branch when TEST_DATABASE_URL is set to an empty string', async () => {

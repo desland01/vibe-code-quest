@@ -11,6 +11,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "gate:prepush": "npm run test:db",
     "test:db": "node scripts/with-neon-branch.mjs vitest run --no-file-parallelism src/__tests__/*.integration.test.ts",
     "check:models": "node scripts/check-gateway-models.mjs",
     "test:e2e": "playwright test",

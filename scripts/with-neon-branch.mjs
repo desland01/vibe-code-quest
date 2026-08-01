@@ -55,6 +55,14 @@ function runInherited(file, args, env, onSignal) {
   });
 }
 
+function normalizeChildExit(code) {
+  if (code === 78) {
+    console.error('NOTE: child exited with 78; remapping to 1 to distinguish it from setup failure.');
+    return 1;
+  }
+  return code;
+}
+
 async function main() {
   if (!command) {
     console.error('Usage: node scripts/with-neon-branch.mjs <command> [args...]');
@@ -62,7 +70,7 @@ async function main() {
   }
 
   if (process.env.TEST_DATABASE_URL?.trim()) {
-    return runInherited(command, commandArgs, process.env);
+    return normalizeChildExit(await runInherited(command, commandArgs, process.env));
   }
 
   const orgId = process.env.NEON_ORG_ID || 'org-soft-forest-80534150';
@@ -141,10 +149,11 @@ async function main() {
 
     const childEnv = { ...process.env, TEST_DATABASE_URL: connectionString };
     // Keep this await: finally must wait for the child before tearing down the branch.
-    return await runInherited(command, commandArgs, childEnv, teardown);
+    return normalizeChildExit(await runInherited(command, commandArgs, childEnv, teardown));
   } catch (error) {
     console.error(`Neon test branch setup failed: ${error.message}`);
-    return 1;
+    // 78 means setup could not run; child failures keep their own exit code distinct.
+    return 78;
   } finally {
     for (const [signal, handler] of branchSignalHandlers) process.removeListener(signal, handler);
     await teardown();

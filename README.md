@@ -161,6 +161,26 @@ the suites against it, and deletes the branch afterwards — including on failur
 The wrapper is [`scripts/with-neon-branch.mjs`](scripts/with-neon-branch.mjs); point it at another
 project with `NEON_ORG_ID` / `NEON_PROJECT_ID`.
 
+### Running it as a push gate (opt-in)
+
+`package.json` also exposes `gate:prepush`, which just calls `test:db`. **Nothing in this
+repository invokes it** — it is a convention a pre-push hook can call, and a fresh clone has no
+such hook. To wire it up yourself:
+
+```bash
+printf '#!/bin/sh\nexec npm run gate:prepush\n' > .git/hooks/pre-push
+chmod +x .git/hooks/pre-push
+```
+
+The script's exit codes are designed for that use: `0` passes, and **`78` means the gate could
+not run** — no Neon login, no network, Neon down — so a hook can warn and let the push through
+instead of stranding you. Any other non-zero is a real failure and should block. A child process
+that exits 78 on its own is remapped to 1, so the two cases can never be confused.
+
+If you already set `core.hooksPath` globally, writing to `.git/hooks/` above will do nothing;
+add the call to the hook that path points at instead, rather than overriding it locally and
+losing whatever else it does.
+
 Two things about that script are load-bearing and should not be "simplified":
 
 - It runs vitest with `--no-file-parallelism`. Several suites `TRUNCATE ... CASCADE` in a

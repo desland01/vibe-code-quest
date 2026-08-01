@@ -3,19 +3,27 @@ import { spawn } from 'node:child_process';
 const command = process.argv[2];
 const commandArgs = process.argv.slice(3);
 
-function runCaptured(file, args) {
+function runCaptured(file, args, includeStderr = true) {
   return new Promise((resolve, reject) => {
-    const child = spawn(file, args, { stdio: ['ignore', 'pipe', 'ignore'] });
+    const child = spawn(file, args, { stdio: ['ignore', 'pipe', 'pipe'] });
     let stdout = '';
+    let stderr = '';
 
     child.stdout.setEncoding('utf8');
+    child.stderr.setEncoding('utf8');
     child.stdout.on('data', (chunk) => {
       stdout += chunk;
+    });
+    child.stderr.on('data', (chunk) => {
+      stderr += chunk;
     });
     child.on('error', reject);
     child.on('close', (code, signal) => {
       if (code === 0) resolve(stdout);
-      else reject(new Error(`${file} failed${signal ? ` with ${signal}` : ` with exit code ${code}`}`));
+      else {
+        const stderrDetails = includeStderr && stderr.trim() ? `: ${stderr.trim()}` : '';
+        reject(new Error(`${file} failed${signal ? ` with ${signal}` : ` with exit code ${code}`}${stderrDetails}`));
+      }
     });
   });
 }
@@ -61,24 +69,44 @@ async function main() {
   const projectId = process.env.NEON_PROJECT_ID || 'rapid-haze-29688965';
   const branchName = `ephemeral-test-${Date.now()}-${process.pid}`;
   const neonArgs = ['--org-id', orgId, '--project-id', projectId];
-  let branchCreated = false;
+  let createAttempted = false;
+  let createPromise;
   let teardownStarted = false;
   let signalReceived = false;
   let signalExitCode;
   const branchSignalHandlers = new Map();
 
   const teardown = async () => {
-    if (!branchCreated || teardownStarted) return;
+    if (!createAttempted || teardownStarted) return;
     teardownStarted = true;
+    if (createPromise) {
+      try {
+        await createPromise;
+      } catch {
+        // Creation may have failed before Neon provisioned the branch.
+      }
+    }
     try {
       await runCaptured('neonctl', ['branches', 'delete', branchName, ...neonArgs]);
-    } catch {
+    } catch (error) {
+      if (/(?:not found|does not exist)/i.test(error.message)) return;
       console.error(`WARNING: failed to delete Neon branch ${branchName}; remove it by hand.`);
     }
   };
 
+  for (const signal of ['SIGINT', 'SIGTERM']) {
+    const handler = () => {
+      signalReceived = true;
+      signalExitCode = signal === 'SIGINT' ? 130 : 143;
+      void teardown();
+    };
+    branchSignalHandlers.set(signal, handler);
+    process.once(signal, handler);
+  }
+
   try {
-    const createOutput = await runCaptured('neonctl', [
+    createAttempted = true;
+    createPromise = runCaptured('neonctl', [
       'branches',
       'create',
       ...neonArgs,
@@ -87,16 +115,7 @@ async function main() {
       '--output',
       'json',
     ]);
-    branchCreated = true;
-    for (const signal of ['SIGINT', 'SIGTERM']) {
-      const handler = () => {
-        signalReceived = true;
-        signalExitCode = signal === 'SIGINT' ? 130 : 143;
-        void teardown();
-      };
-      branchSignalHandlers.set(signal, handler);
-      process.once(signal, handler);
-    }
+    const createOutput = await createPromise;
 
     let connectionString;
     try {
@@ -113,7 +132,7 @@ async function main() {
         ...neonArgs,
         '--role-name',
         'neondb_owner',
-      ]).then((value) => value.trim());
+      ], false).then((value) => value.trim());
     }
 
     for (const [signal, handler] of branchSignalHandlers) process.removeListener(signal, handler);

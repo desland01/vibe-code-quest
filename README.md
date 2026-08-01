@@ -168,14 +168,25 @@ repository invokes it** — it is a convention a pre-push hook can call, and a f
 such hook. To wire it up yourself:
 
 ```bash
-printf '#!/bin/sh\nexec npm run gate:prepush\n' > .git/hooks/pre-push
+cat > .git/hooks/pre-push <<'SH'
+#!/bin/sh
+npm run gate:prepush
+rc=$?
+# 78 means the gate could not run (no Neon login, no network). Warn, don't block.
+if [ "$rc" -eq 78 ]; then
+  echo "pre-push: gate:prepush could not run — allowing push." >&2
+  exit 0
+fi
+exit "$rc"
+SH
 chmod +x .git/hooks/pre-push
 ```
 
-The script's exit codes are designed for that use: `0` passes, and **`78` means the gate could
-not run** — no Neon login, no network, Neon down — so a hook can warn and let the push through
-instead of stranding you. Any other non-zero is a real failure and should block. A child process
-that exits 78 on its own is remapped to 1, so the two cases can never be confused.
+That `78` branch is the whole point and is easy to drop by accident: a hook that just
+`exec npm run gate:prepush` propagates 78 to git, which blocks the push — so losing a Neon login
+or boarding a plane would make an unrelated docs fix unpushable. The exit codes are `0` passes,
+**`78` the gate could not run** (warn and allow), any other non-zero a real failure (block). A
+child process that exits 78 on its own is remapped to 1, so the two can never be confused.
 
 If you already set `core.hooksPath` globally, writing to `.git/hooks/` above will do nothing;
 add the call to the hook that path points at instead, rather than overriding it locally and

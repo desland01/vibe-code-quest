@@ -1,27 +1,27 @@
 # HANDOFF — Vibe Code Quest launch mission
 
-**Date:** 2026-07-28
-**Repo:** `/Users/thebeast/code-tutor` · **Branch:** `main` · **HEAD:** `6098461`
-**Status:** L-001 → L-009 closed and committed. **L-010 blocked on owner approval.**
+**Date:** 2026-08-01 (was 2026-07-28)
+**Repo:** `/Users/thebeast/code-tutor` · **Branch:** `main`
+**Status:** L-001 → L-011 closed and committed. **MISSION COMPLETE — production smoke 40 / 40.**
 L-011 closeout is this document plus [`QA-MATRIX.md`](./QA-MATRIX.md).
 
 ---
 
 ## 1. The short version
 
-**Shipped and live.** The repo is public at
+**Shipped, live, and fully verified.** The repo is public at
 [github.com/desland01/vibe-code-quest](https://github.com/desland01/vibe-code-quest) (MIT), the
 Vercel project is renamed `vibe-code-quest`, and production is deployed and smoked at
-**38 / 40 criteria**.
+**40 / 40 criteria**. G-8 reads `live model reply` on desktop and mobile.
 
-**One thing is left, and it is one environment variable.** The G-8 criterion fails: the
-production AI guide returns canonical offline text because the runtime has no gateway
-credentials — neither `AI_GATEWAY_API_KEY` nor `VERCEL_OIDC_TOKEN`. Set either one and redeploy.
-Full diagnosis and both fixes: [`evidence/L-010.md`](./evidence/L-010.md) §4.
+**The 2026-07-28 diagnosis of G-8 was wrong.** It was recorded as a missing gateway credential.
+The credential was part of it, but the actual blocker was a **PostgreSQL data-modifying-CTE bug
+in `app/api/guide/route.ts` that made the first guide turn return HTTP 503** — the gateway was
+never reached at all. See §5 for the full root cause. Both are now fixed.
 
-The guide has still never executed a single real request. Everything else — map, 48 landmarks,
-beats, stamps, collectibles, XP, leaderboard, share cards, OG images, legal, reduced motion,
-keyboard-only — is verified working on the live URL at desktop and mobile.
+Everything else — map, 48 landmarks, beats, stamps, collectibles, XP, leaderboard, share cards,
+OG images, legal, reduced motion, keyboard-only — remains verified on the live URL at both
+viewports.
 
 ## 2. Mission source of truth
 
@@ -76,30 +76,66 @@ pass/fail. It is a small addition to the smoke if the owner prefers it.
 This turned out to be the right call: L-009 proved the guide had never executed a real request
 at all, and a visual-only pass would never have revealed that.
 
-## 5. The one remaining owner action
+## 5. L-010 — CLOSED 2026-08-01, and the real root cause
 
-Give the production runtime gateway credentials, then redeploy and re-run the smoke. Either
-option works:
+Nothing is outstanding. Resolved in one session, in this order:
 
-- **A (recommended)** — add `AI_GATEWAY_API_KEY` to the **Production** environment in the Vercel
-  dashboard (Project → Settings → Environment Variables). Use the dashboard, **not**
-  `vercel env add` piped from stdin: that path is known on this machine to store an empty value,
-  and `echo` adds a trailing newline.
-- **B** — enable **OIDC Federation** (Settings → Security). Vercel then injects
-  `VERCEL_OIDC_TOKEN` automatically and no key is needed; L-009 made the code accept it.
+**Credential (necessary, not sufficient).** OIDC Federation turned out to be *already* enabled
+(`oidcTokenConfig {"enabled":true,"issuerMode":"team"}`), so the recorded "no credentials at all"
+finding was already inaccurate. A dedicated key was minted with
+`vercel ai-gateway api-keys create --name vibe-code-quest-production` and written to Production
+as `AI_GATEWAY_API_KEY` through the **Vercel REST API** (`POST /v10/projects/:id/env`,
+`type: encrypted`, `target: ["production"]`). The CLI-stdin path stays banned: it stores an empty
+value on this machine, and `echo` appends a newline. After redeploy the smoke was **still 38/40**.
+
+**The actual blocker — a PostgreSQL data-modifying-CTE bug.** `app/api/guide/route.ts` was
+returning **HTTP 503 `{"error":"Guide unavailable"}`**; the gateway was never reached on the
+failing path. The handler ran:
+
+```sql
+WITH inserted AS (
+  INSERT INTO guide_sessions (profile_id, region, landmark) VALUES ($1,$2,$3)
+  ON CONFLICT (profile_id, region, landmark) DO NOTHING
+)
+SELECT gs.escalations, p.persona, …
+  FROM guide_sessions gs JOIN profiles p ON p.id = gs.profile_id
+ WHERE gs.profile_id = $1 AND gs.region = $2 AND gs.landmark = $3
+```
+
+In PostgreSQL, rows inserted by a data-modifying CTE are **not visible to the main `SELECT` of
+the same statement** — both run in one snapshot. So the **first** guide turn for any
+`(profile_id, region, landmark)` triple selected zero rows, `row` was `undefined`, and the route
+returned 503. The second turn worked, because the first statement had committed the row.
+Reproduced live before the fix: call 1 → `503`, calls 2 and 3 → `200 kind:"ok"`.
+
+**Why it hid for so long.** `scripts/l010-prod-smoke.mjs` prints the hardcoded string
+`offline canonical text, gateway not reached` for **any** response where `kind !== 'ok'` —
+including a bare `{"error":…}` that carries no `kind` field at all. The smoke's own failure
+message asserted a cause it never measured, and that assertion was copied into the packet as
+fact. **When a check reports a diagnosis rather than the observed response, distrust the
+diagnosis** — read the real status code and body.
+
+**Fix** (`codex-worker` via `constance-worker-wrap`, diff vetted): the `INSERT` became
+`ON CONFLICT … DO UPDATE SET region = EXCLUDED.region RETURNING profile_id, escalations`, and the
+main `SELECT` reads from the CTE. `DO UPDATE` rather than `DO NOTHING` so `RETURNING` always
+yields exactly one row, including under concurrent first-calls. Safe under RLS: `0007` grants
+`UPDATE` on `guide_sessions` to `app_user` with a matching policy, and the `reject_owner_change()`
+`BEFORE UPDATE` trigger only raises when `profile_id` changes. One file, no migration.
+
+Gates: typecheck 0 · lint 0 errors / 1 pre-existing `OnboardingChat` warning · 180 passed /
+39 skipped · build pass. Redeployed → **smoke PASS, 40 / 40**.
+
+**Grill defect #9 — closed, no change needed.** Measured live guide latency including the first
+turn: **1556 / 1191 / 1268 ms**, far under the 8 s server timeout and `GuideChat`'s 12 s client
+abort. `AI_REAL_MODEL_TIMEOUT_MS` stays unset.
+
+To re-verify at any time:
 
 ```bash
 cd /Users/thebeast/code-tutor
-vercel deploy --prod
-PROD_URL=<new production URL> \
+PROD_URL=https://code-tutor-puce.vercel.app \
   node docs/missions/2026-07-20-vibe-code-quest-launch/scripts/l010-prod-smoke.mjs
 ```
-
-A pass reads `G-8 guide returns MODEL-GENERATED text — live model reply`.
-
-While it runs, note the latency of that first real guide turn. If turns approach or exceed 8 s,
-set `AI_REAL_MODEL_TIMEOUT_MS` above the default **and** raise `GuideChat`'s 12 000 ms client
-abort to stay ahead of it — the open follow-up from grill defect #9.
 
 **Already published, for the record:** the public repo carries the full history by G-5's
 explicit choice, which includes Neon branch and endpoint identifiers, the Vercel project id, and

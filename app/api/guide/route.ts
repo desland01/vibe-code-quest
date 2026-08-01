@@ -57,13 +57,13 @@ export async function POST(request: Request) {
     intent: string | null;
     depth_preference: string | null;
     current_project: string | null;
-  }>(session.userId, `WITH inserted AS (
+  }>(session.userId, `WITH upserted AS (
       INSERT INTO guide_sessions (profile_id, region, landmark) VALUES ($1, $2, $3)
-      ON CONFLICT (profile_id, region, landmark) DO NOTHING
+      ON CONFLICT (profile_id, region, landmark) DO UPDATE SET region = EXCLUDED.region
+      RETURNING profile_id, escalations
     )
     SELECT gs.escalations, p.persona, p.interests, p.intent, p.depth_preference, p.current_project
-      FROM guide_sessions gs JOIN profiles p ON p.id = gs.profile_id
-      WHERE gs.profile_id = $1 AND gs.region = $2 AND gs.landmark = $3`,
+      FROM upserted gs JOIN profiles p ON p.id = gs.profile_id`,
   [session.userId, body.regionId, body.landmarkId]);
   const row = result.rows[0];
   if (!row) return NextResponse.json({ error: 'Guide unavailable' }, { status: 503 });

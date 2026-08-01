@@ -22,8 +22,8 @@ Verdicts are from actual runs on 2026-07-28, not from intent. Anything unproven 
 | L-006 free product path | `96f266f` | ✅ PASS |
 | L-007 rebrand | `16ffb40` | ⚠️ PASS in code; Vercel project rename **not done** (blocked) |
 | L-008 OSS + self-host packaging | `f3247f4` | ⚠️ PASS in code; **public GitHub publish not done** (deferred) |
-| L-009 gateway models + OIDC | `6098461` | ⚠️ PASS in code; **no real model round trip has ever executed** |
-| L-010 production deploy + smoke | `dpl_9ZgCA1Xqy2CSyQ3r5TnLGc8tDoyb` | ⚠️ deployed and smoked — **38/40 PASS**, G-8 fails (no gateway credentials in production) |
+| L-009 gateway models + OIDC | `6098461` | ✅ PASS — real model round trips now verified in production (2026-08-01) |
+| L-010 production deploy + smoke | `dpl_Fmeg3fZ…` → guide fix redeploy | ✅ **PASS — 40/40** (2026-08-01). Needed both an `AI_GATEWAY_API_KEY` in Production **and** a fix to the data-modifying-CTE 503 in `app/api/guide/route.ts`; see HANDOFF §5 |
 | L-011 closeout | `2becc06` | ✅ this document |
 
 ## 2. Gates at HEAD
@@ -86,12 +86,12 @@ longer timeout.
 | Public GitHub repo | `github.com/desland01/vibe-code-quest` — PUBLIC, MIT, `main` | ✅ PASS |
 | Vercel project renamed (G-4) | now `vibe-code-quest`, same project id | ✅ PASS |
 | Production deployed | `dpl_9ZgCA1Xqy2CSyQ3r5TnLGc8tDoyb` READY, `hosted:true` | ✅ PASS |
-| Live smoke at desktop + mobile | `scripts/l010-prod-smoke.mjs` — 38/40 | ✅ PASS |
+| Live smoke at desktop + mobile | `scripts/l010-prod-smoke.mjs` — **40/40** (2026-08-01) | ✅ PASS |
 | Full landmark → stamp → collectible in production | 13 interactions, both viewports; `evidence/L-010/prod-stamp-mobile.png` | ✅ PASS |
 | Leaderboard opt-in, weekly + all-time, opt-out cleanup | all HTTP 200 | ✅ PASS |
 | Share card + public link + OG image | HTTP 200 `image/png` | ✅ PASS |
 | Reduced motion + keyboard-only in production | `data-reduced-motion="true"`; Tab reaches a region control | ✅ PASS |
-| **G-8: real model-generated guide turn in production** | returns `kind:"offline"` in 0.34 s — no gateway credentials in the production runtime | ❌ **FAIL — see `evidence/L-010.md` §4** |
+| **G-8: real model-generated guide turn in production** | returns `kind:"ok"` with model-generated text on desktop and mobile; measured latency 1556 / 1191 / 1268 ms including the first turn | ✅ **PASS (2026-08-01)** — required an `AI_GATEWAY_API_KEY` in Production *and* the CTE-visibility fix in `app/api/guide/route.ts`. The pre-fix failure was an HTTP 503, **not** the offline banner: the smoke prints "gateway not reached" for any non-`ok` response, so its message misattributed the cause. See HANDOFF §5 |
 
 ## 4. Known issues carried forward
 

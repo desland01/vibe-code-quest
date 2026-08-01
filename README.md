@@ -146,13 +146,32 @@ A few load-bearing decisions worth knowing before you change things:
 npm run dev          # dev server on :3000
 npm run typecheck    # tsc --noEmit
 npm run lint         # eslint
-npm run test         # vitest unit suite
+npm run test         # vitest unit suite (no network, no database)
+npm run test:db      # integration suites against a disposable Postgres branch
 npm run build        # content manifest + next build
 npm run test:e2e     # Playwright
 ```
 
 Tests that need a database are guarded and skip themselves when `TEST_DATABASE_URL` is unset, so
-`npm run test` is green on a clean clone.
+`npm run test` is green and fast on a clean clone with no network.
+
+`npm run test:db` runs the seven `*.integration.test.ts` suites for real. If `TEST_DATABASE_URL`
+is already set it uses that database; otherwise it provisions a **disposable Neon branch**, runs
+the suites against it, and deletes the branch afterwards — including on failure and on Ctrl-C.
+The wrapper is [`scripts/with-neon-branch.mjs`](scripts/with-neon-branch.mjs); point it at another
+project with `NEON_ORG_ID` / `NEON_PROJECT_ID`.
+
+Two things about that script are load-bearing and should not be "simplified":
+
+- It runs vitest with `--no-file-parallelism`. Several suites `TRUNCATE ... CASCADE` in a
+  `beforeEach`, so running the files concurrently against one database makes them delete each
+  other's fixtures and fail on foreign keys.
+- It uses `return await` before the child process call. `return promise` inside a `try` whose
+  `finally` performs teardown runs that `finally` *before* the promise settles, which would drop
+  the database branch while the tests were still connected to it.
+
+Without a Neon CLI login, `npm run test:db` fails at branch creation; set `TEST_DATABASE_URL` to
+any Postgres database with the migrations applied and it will use that instead.
 
 For the Playwright suite, run the preview on port 3100 and use one worker:
 

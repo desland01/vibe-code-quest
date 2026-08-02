@@ -399,6 +399,51 @@ test.describe('engagement-v2 BeatPlayer (E-003/E-004)', () => {
     await expect(avatar).toHaveAttribute('data-reaction', 'celebrate');
   });
 
+  // ISSUE-018 — VAL-025, VAL-026, VAL-027.
+  test('audio is muted on load, creates no context before a gesture, and the mute toggle works', async ({ page }) => {
+    await blockAiApis(page);
+
+    // Count AudioContext construction from the page's own side. Asserting "no
+    // sound" is not testable in CI; asserting the context was never CREATED is,
+    // and it is the stronger claim — nothing can autoplay if nothing exists.
+    await page.addInitScript(() => {
+      const w = window as unknown as { __ctxCount: number; AudioContext: unknown };
+      w.__ctxCount = 0;
+      const Original = w.AudioContext as new () => unknown;
+      w.AudioContext = class extends (Original as new () => object) {
+        constructor() {
+          super();
+          w.__ctxCount += 1;
+        }
+      };
+    });
+
+    await openPlayer(page, PILOT);
+    const toggle = page.getByTestId('audio-mute');
+
+    // VAL-027: visible, and labelled with text, not colour alone.
+    await expect(toggle).toBeVisible();
+    await expect(toggle).toContainText('SOUND: OFF');
+    // VAL-025: muted on initial load.
+    await expect(toggle).toHaveAttribute('data-muted', 'true');
+    // VAL-026: no AudioContext resumed — or even constructed — before a gesture.
+    expect(await page.evaluate(() => (window as unknown as { __ctxCount: number }).__ctxCount)).toBe(0);
+
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('data-muted', 'false');
+    await expect(toggle).toContainText('SOUND: ON');
+    expect(await page.evaluate(() => (window as unknown as { __ctxCount: number }).__ctxCount)).toBe(1);
+
+    // The M shortcut is the same control, not a second one.
+    await page.keyboard.press('m');
+    await expect(toggle).toHaveAttribute('data-muted', 'true');
+    await expect(toggle).toContainText('SOUND: OFF');
+
+    // And the preference survives a reload (VAL-028, at the browser boundary).
+    await page.reload();
+    await expect(page.getByTestId('audio-mute')).toHaveAttribute('data-muted', 'true');
+  });
+
   test('reduced-motion disables beat enter animation', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await blockAiApis(page);

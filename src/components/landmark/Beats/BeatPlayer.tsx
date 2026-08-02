@@ -37,6 +37,7 @@ import {
   writeLocalBeatProgress,
 } from './beatStorage';
 import { Avatar, type AvatarReaction } from '@/components/Avatar';
+import { useAudio } from '@/audio/useAudio';
 import styles from './beats.module.css';
 
 export type BeatPlayerProps = {
@@ -184,6 +185,10 @@ export function BeatPlayer({
   // it with a second `setState` inside the effect is what triggers the cascading
   // render this codebase's lint rule exists to stop.
   const [thinkingFor, setThinkingFor] = useState<string | null>(null);
+  // ISSUE-018. Muted until the player opts in; the engine is not even created
+  // until a gesture, so nothing can autoplay.
+  const audio = useAudio(sequence.level);
+  const [streak, setStreak] = useState(0);
   // ISSUE-017: the reaction state machine. The avatar reacts to the ANSWER, and
   // it lives on the stage rather than inside the question card (VAL-017) so a
   // celebration never covers the thing the player is reading.
@@ -409,7 +414,29 @@ export function BeatPlayer({
   };
 
   const onChoose = (optionId: string) => {
+    // Every click is a gesture, so the first one is also when the engine may be
+    // created. It starts MUTED unless the player has already opted in, so this
+    // makes no sound on its own — it only means the scheduler is running and on
+    // the beat if they unmute later.
+    audio.unlock();
     dispatch({ type: 'choose', optionId });
+
+    if (!isChoiceBeat(beat)) return;
+    const correct = optionId === beat.correctOptionId;
+    // predict resolves on any pick and is not graded, so it neither sounds a
+    // verdict nor moves the streak.
+    if (beat.type === 'predict') return;
+    if (correct) {
+      const next = streak + 1;
+      setStreak(next);
+      audio.setStreak(next);
+      audio.sfx('sfx-correct');
+      if (next >= 3) audio.engine.current?.playStreak(next);
+    } else {
+      setStreak(0);
+      audio.dip();
+      audio.sfx('sfx-wrong');
+    }
   };
 
   const onClassify = (itemId: string, side: 'pro' | 'con') => {
@@ -437,6 +464,8 @@ export function BeatPlayer({
       ms_total: Math.max(0, Math.round(nowMs() - mountMs.current)),
     });
     setSessionStamped(true);
+    audio.sfx('sfx-stamp');
+    audio.sfx('jingle-level');
     dispatch({ type: 'stamp', stampedAt: new Date().toISOString() });
   };
 
@@ -510,6 +539,20 @@ export function BeatPlayer({
           <span className={styles.sr}>Level </span>
           {LEVEL_LABELS[sequence.level]}
         </p>
+        {/* Icon AND text, never colour alone (REQ-022 / VAL-041). The `M`
+            shortcut is named in the label so it is discoverable without a
+            legend. */}
+        <button
+          type="button"
+          className={styles.muteToggle}
+          data-testid="audio-mute"
+          data-muted={audio.muted ? 'true' : 'false'}
+          aria-pressed={audio.muted ? 'true' : 'false'}
+          onClick={audio.toggleMute}
+        >
+          <span aria-hidden="true">{audio.muted ? '🔇' : '🔊'}</span>
+          SOUND: {audio.muted ? 'OFF' : 'ON'} — M
+        </button>
         {hud}
       </header>
 

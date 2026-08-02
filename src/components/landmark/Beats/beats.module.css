@@ -55,6 +55,22 @@
   font-size: clamp(1.05rem, 2.4vh, 1.5rem);
   line-height: 1.15;
 }
+.muteToggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 3px solid var(--ink);
+  background: var(--paper, #fff8e9);
+  color: var(--ink);
+  font: 700 0.75rem/1 var(--font-pixel), monospace;
+  cursor: pointer;
+}
+.muteToggle[data-muted='false'] { background: var(--region-accent, #d96c6c); }
+.muteToggle:focus-visible { outline: 3px solid #fff3c4; outline-offset: 2px; }
+
 .levelChip {
   margin: 0;
   padding: 4px 10px;

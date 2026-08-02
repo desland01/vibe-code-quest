@@ -1,40 +1,43 @@
 import type { Landmark } from '../schema.ts';
 
+// Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
 export const landmark = {
   id: 'revert-and-recovery',
   title: 'Revert and recovery',
   draft: false,
   hook: 'Back out agent mistakes without erasing the trail.',
-  definition: 'Git offers different recovery tools for committed, staged, and working-tree changes. A revert records a new commit that reverses an earlier commit, making it the safer default for shared history.',
+  definition:
+    'Git has one recovery tool per state. Committed, staged, and working-tree changes each need a different one. A revert adds a new commit that undoes an old one.',
   when_to_use: [
-    'An agent commit reached a shared branch and caused a regression.',
-    'You need to restore one file from a known-good commit.',
-    'You staged the wrong changes but want to keep the files.',
-    'You need to locate the commit where working behavior changed.'
+    'An agent commit reached main and broke something.',
+    'You need one file back from a good commit.',
+    'You staged the wrong changes but want the files.',
+    'You need to find where working behavior changed.'
   ],
   tradeoffs: {
     pros: [
-      'Reverts preserve an auditable shared history.',
-      'Restore can target working-tree or staged file content.',
-      'Bisect narrows a regression using known good and bad commits.'
+      'Reverts keep shared history whole and auditable.',
+      'Restore can target working-tree or staged content.',
+      'Bisect narrows a break between good and bad commits.'
     ],
     cons: [
-      'Reverting dependent commits can create conflicts or partial behavior.',
-      'Restore, reset, and clean can destroy uncommitted work when misused.'
+      'Reverting dependent commits can create conflicts.',
+      'Reset and clean can destroy uncommitted work.'
     ]
   },
-  example: 'An agent deployment changes checkout behavior and tests missed the regression. Revert the focused commit on the shared branch, verify checkout, then investigate the failure on a separate branch.',
+  example:
+    'An agent deploy broke checkout and the tests missed it. The bad commit is already on the shared branch.',
   gotchas: [
-    'Inspect status and save valuable uncommitted work before any recovery command.',
-    'Prefer revert for published commits; avoid rewriting history others may use.',
-    'Require an exact path and source commit before letting an agent run restore or reset.'
+    'Check status and save uncommitted work first.',
+    'Do not rewrite history other people already pulled.',
+    'Make the agent name the exact path first.'
   ],
-  vibe_coder_default: 'Revert a bad shared commit, restore only named files when needed, and use destructive reset or clean commands only after explicit review.',
+  vibe_coder_default: 'Revert the bad shared commit. Reset only after review.',
   quiz: {
     question: 'How should you undo a bad commit already on a shared branch?',
     options: ['Create a revert commit', 'Hard-reset the shared branch', 'Delete the changed files manually'],
     answer: 'Create a revert commit',
-    explanation: 'A revert preserves shared history while recording the inverse change for review and deployment.'
+    explanation: 'A revert keeps shared history and records the inverse change for review.'
   },
   sources: [
     { url: 'https://git-scm.com/docs/git-revert', checked: '2026-07-17' },

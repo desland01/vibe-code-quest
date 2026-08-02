@@ -18,12 +18,16 @@ function play(actions: Parameters<typeof playerReducer>[2][], from?: PlayerState
 }
 
 // indexes: 0 hook · 1 predict · 2 reveal · 3 scenario · 4 gotcha · 5 default · 6 check · 7 recap
+const revealBeat = seq.beats[2]!;
+const revealCards = 'cards' in revealBeat ? revealBeat.cards : [];
+
+// The reveal beat gates advance until every card is shown, so the walk to the
+// scenario beat has to step through however many cards the content carries.
 const toScenario = [
   { type: 'advance' as const },                                     // hook -> predict
   { type: 'choose' as const, optionId: 'everything' },              // predict: any pick resolves
   { type: 'advance' as const },                                     // predict -> reveal
-  { type: 'reveal_next' as const },
-  { type: 'reveal_next' as const },
+  ...revealCards.slice(1).map(() => ({ type: 'reveal_next' as const })),
   { type: 'advance' as const },                                     // reveal -> scenario
 ];
 
@@ -55,21 +59,29 @@ describe('beat reducer — frozen contract rules', () => {
   });
 
   it('reveal: one card at a time; advance blocked until all cards shown', () => {
-    const atReveal = play([
+    // Card count is read from the sequence, not hard-coded: this asserts reducer
+    // behaviour, and re-voicing content (ISSUE-012) legitimately changes how many
+    // sentences the reveal beat carries.
+    const cardCount = revealCards.length;
+    expect(cardCount).toBeGreaterThan(1);
+
+    let state = play([
       { type: 'advance' }, { type: 'choose', optionId: 'everything' }, { type: 'advance' },
     ]);
-    expect(atReveal.displayIndex).toBe(2);
-    expect(atReveal.revealCount).toBe(1); // first card visible immediately on entry
-    expect(canAdvance(seq.beats[2], atReveal)).toBe(false);
-    const one = playerReducer(seq, atReveal, { type: 'reveal_next' });
-    expect(one.revealCount).toBe(2);
-    expect(canAdvance(seq.beats[2], one)).toBe(true); // both cards shown
-    const two = playerReducer(seq, one, { type: 'reveal_next' });
-    expect(two.revealCount).toBe(2);
-    expect(canAdvance(seq.beats[2], two)).toBe(true);
+    expect(state.displayIndex).toBe(2);
+    expect(state.revealCount).toBe(1); // first card visible immediately on entry
+
+    for (let shown = 1; shown < cardCount; shown += 1) {
+      expect(canAdvance(seq.beats[2], state)).toBe(false);
+      state = playerReducer(seq, state, { type: 'reveal_next' });
+      expect(state.revealCount).toBe(shown + 1);
+    }
+    expect(canAdvance(seq.beats[2], state)).toBe(true); // every card shown
+
     // reveal_next never advances beyond card count
-    const three = playerReducer(seq, two, { type: 'reveal_next' });
-    expect(three.revealCount).toBe(2);
+    const past = playerReducer(seq, state, { type: 'reveal_next' });
+    expect(past.revealCount).toBe(cardCount);
+    expect(canAdvance(seq.beats[2], past)).toBe(true);
   });
 
   it('advance never sets completed — only stamp does', () => {

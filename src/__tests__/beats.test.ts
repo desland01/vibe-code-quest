@@ -28,6 +28,7 @@ import {
   validateBeatSequences,
 } from '@/content/beats';
 import { L3_SHAPE } from '@/content/beats/schema';
+import { sequenceVoiceViolations, VERDICT_LEADS } from '@/content/beats/voice';
 import { canonicalLandmarkSchema, landmarkLevelsSchema } from '@/content/schema';
 import { fixtureLevels, tieredLandmark, untieredLandmark } from '@/content/__fixtures__/tiered-landmark';
 import { sequence as pilot } from '@/content/git/beats/commits-as-checkpoints';
@@ -542,6 +543,69 @@ describe('public manifest projection (DATA_MODEL §8)', () => {
         expect(content.assessment.answer).toBe(landmark.quiz.answer);
         expect(content.assessment.explanation).toBe(landmark.quiz.explanation);
         expect(getSequence({ regionId, landmarkId: landmark.id, level: 'l3' })).toBeDefined();
+      }
+    }
+  });
+});
+
+describe('Git reference corpus — L3 (ISSUE-012: VAL-050, VAL-051, VAL-052, VAL-056)', () => {
+  const GIT_LANDMARK_IDS = [
+    'commits-as-checkpoints',
+    'branches-as-isolation',
+    'pull-requests-and-review',
+    'merge-conflicts',
+    'working-tree-hygiene',
+    'revert-and-recovery',
+  ] as const;
+
+  it('covers all six Git landmarks', () => {
+    expect(landmarkRegistry.git!.map((landmark) => landmark.id).sort()).toEqual(
+      [...GIT_LANDMARK_IDS].sort(),
+    );
+  });
+
+  // The corpus-wide gate is REPORT-only for legacy landmarks (ISSUE-008 scoping
+  // call), so nothing else would notice a Git regression. This is the assertion
+  // that makes the re-voice stick: zero, not "fewer than before".
+  it('every Git L3 run has zero voice violations (VAL-050, VAL-051, VAL-052)', () => {
+    for (const landmarkId of GIT_LANDMARK_IDS) {
+      const sequence = getSequence({ regionId: 'git', landmarkId, level: 'l3' });
+      expect(sequence, `git/${landmarkId}/l3 must be registered`).toBeDefined();
+      expect(sequenceVoiceViolations(sequence!), `git/${landmarkId}/l3`).toEqual([]);
+    }
+  });
+
+  it('pins every Git L3 run to the L3_SHAPE (id, type) tuple with check at index 6 (VAL-056)', () => {
+    for (const landmarkId of GIT_LANDMARK_IDS) {
+      const sequence = getSequence({ regionId: 'git', landmarkId, level: 'l3' })!;
+      expect(sequence.beats.map((beat) => [beat.id, beat.type])).toEqual(
+        L3_SHAPE.map((pair) => [...pair]),
+      );
+      expect(sequence.beats[6]!.type).toBe('check');
+    }
+  });
+
+  // ISSUE-012 also normalizes the two hand-authored sequences onto the pinned
+  // ids so their XP award thresholds cannot drift from the derived factory tuple.
+  it('normalizes both hand-authored sequences onto the pinned L3 beat ids', () => {
+    for (const handAuthored of [pilot, transferSource]) {
+      expect(handAuthored.beats.map((beat) => [beat.id, beat.type])).toEqual(
+        L3_SHAPE.map((pair) => [...pair]),
+      );
+    }
+  });
+
+  it('keeps every Git L3 feedback line inside the three allowlisted verdict leads', () => {
+    for (const landmarkId of GIT_LANDMARK_IDS) {
+      const sequence = getSequence({ regionId: 'git', landmarkId, level: 'l3' })!;
+      for (const beat of sequence.beats) {
+        if (!('options' in beat)) continue;
+        for (const option of beat.options) {
+          expect(
+            VERDICT_LEADS.some((lead) => option.feedback.startsWith(lead)),
+            `git/${landmarkId}/l3 ${beat.id}/${option.id}: "${option.feedback}"`,
+          ).toBe(true);
+        }
       }
     }
   });

@@ -1,40 +1,43 @@
 import type { Landmark } from '../schema.ts';
 
+// Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
 export const landmark = {
   id: 'working-tree-hygiene',
   title: 'Working-tree hygiene',
   draft: false,
   hook: 'Know what is dirty before an agent touches it.',
-  definition: 'Your working tree contains checked-out files plus tracked, modified, staged, ignored, and untracked state. Inspecting that state protects existing work and keeps one agent task from absorbing another task’s changes.',
+  definition:
+    'Your working tree is every file you have checked out. Each file is tracked, changed, staged, ignored, or untracked. Reading that state stops one task from eating another.',
   when_to_use: [
-    'Before you give an agent permission to edit repository files.',
-    'Before switching branches, merging, rebasing, or generating a commit.',
-    'After a tool creates manifests, caches, migrations, or build output.',
-    'When several workers or sessions share a repository.'
+    'Before you let an agent edit repository files.',
+    'Before you switch branches, merge, or commit.',
+    'After a tool writes caches, migrations, or builds.',
+    'When several sessions share one repository.'
   ],
   tradeoffs: {
     pros: [
-      'Preflight status checks reveal work that needs protection.',
-      'Explicit staging keeps commits aligned with task scope.',
-      'Ignore rules reduce noise from reproducible local artifacts.'
+      'A status check reveals work that needs protecting.',
+      'Explicit staging keeps commits inside the task scope.',
+      'Ignore rules cut noise from local build artifacts.'
     ],
     cons: [
-      'Cleanliness checks add deliberate pauses to fast workflows.',
-      'Poor ignore rules can hide files that actually belong in history.'
+      'The check adds a pause to fast work.',
+      'Bad ignore rules hide files that belong in history.'
     ]
   },
-  example: 'An agent starts a Git lesson while an untracked mission prompt already exists. Tell it to classify and preserve that file, edit only the assigned paths, and stage explicit files instead of the entire tree.',
+  example:
+    'An agent starts a Git lesson while an untracked mission file already sits in the tree, owned by nobody.',
   gotchas: [
-    'Run status before and after agent work, then explain every changed path.',
-    'Never discard, overwrite, or stash unknown changes without confirming their owner and purpose.',
-    'Review ignore rules so secrets stay untracked while required artifacts remain visible.'
+    'Run status before and after every agent task.',
+    'Never discard unknown changes without finding the owner.',
+    'Check ignore rules so secrets stay untracked.'
   ],
-  vibe_coder_default: 'Start every agent task with a status check, preserve unrelated changes, use separate worktrees for concurrent tasks, and stage explicit paths.',
+  vibe_coder_default: 'Check status, keep other work, stage named paths.',
   quiz: {
     question: 'What should an agent do after finding an unrelated untracked file?',
     options: ['Preserve and classify it before editing', 'Delete it to restore a clean tree', 'Include it in the next task commit'],
     answer: 'Preserve and classify it before editing',
-    explanation: 'Unknown work may belong to another person or task, so ownership comes before cleanup or staging.'
+    explanation: 'Unknown work may belong to someone else, so ownership comes before cleanup.'
   },
   sources: [
     { url: 'https://git-scm.com/docs/git-status', checked: '2026-07-17' },

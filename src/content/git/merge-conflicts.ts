@@ -1,40 +1,43 @@
 import type { Landmark } from '../schema.ts';
 
+// Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
 export const landmark = {
   id: 'merge-conflicts',
   title: 'Merge conflicts',
   draft: false,
   hook: 'A conflict is a design decision, not cleanup.',
-  definition: 'A merge conflict occurs when Git cannot combine competing changes automatically. You must choose a correct result, then test the combined behavior because either side may be incomplete alone.',
+  definition:
+    'A merge conflict means Git cannot combine two changes. You pick the right result yourself. Then you test it, because either side may be incomplete.',
   when_to_use: [
-    'Git stops a merge or rebase and marks unmerged paths.',
-    'Two agent tasks changed the same function, schema, or configuration.',
-    'One branch renamed a file that another branch edited.',
-    'A clean automatic merge still combines related behavior from separate tasks.'
+    'Git stops a merge and marks unmerged paths.',
+    'Two agent tasks changed the same function or schema.',
+    'One branch renamed a file another branch edited.',
+    'A clean merge still joins work from separate tasks.'
   ],
   tradeoffs: {
     pros: [
-      'Conflict markers expose changes Git cannot safely reconcile.',
-      'Resolution creates a deliberate combined result.',
-      'Frequent integration reveals incompatible assumptions early.'
+      'Markers show what Git cannot safely reconcile.',
+      'Resolving one creates a deliberate combined result.',
+      'Merging early reveals bad assumptions early.'
     ],
     cons: [
-      'A syntactically clean resolution can still break behavior.',
-      'Large or stale branches increase resolution effort and uncertainty.'
+      'A clean-looking fix can still break behavior.',
+      'Stale branches make resolution slower and riskier.'
     ]
   },
-  example: 'One agent changes the account schema while another updates its API validation. Resolve the conflict from the shared contract, then rerun migration, API, and authorization tests.',
+  example:
+    'One agent changed the account schema. Another changed the checks that guard it. Both touch the same contract.',
   gotchas: [
-    'Read both branches and the surrounding code before accepting either side.',
-    'Search for every conflict marker before completing the merge.',
-    'Run tests for both tasks after resolution; generated resolutions can compile while dropping behavior.'
+    'Read both sides before you accept either one.',
+    'Search for every conflict marker before finishing.',
+    'Run the tests for both tasks after resolving.'
   ],
-  vibe_coder_default: 'Resolve conflicts yourself from the intended contract, ask an agent for analysis when useful, and verify the combined behavior before committing.',
+  vibe_coder_default: 'Resolve it yourself from the contract, then test.',
   quiz: {
     question: 'What should guide a merge-conflict resolution?',
     options: ['The intended combined behavior and its tests', 'Whichever branch changed the file last', 'The version with fewer lines'],
     answer: 'The intended combined behavior and its tests',
-    explanation: 'Conflict resolution must preserve the product contract across both changes, not favor a mechanical side.'
+    explanation: 'Resolution has to keep the product contract across both changes.'
   },
   sources: [
     { url: 'https://git-scm.com/docs/git-merge', checked: '2026-07-17' },

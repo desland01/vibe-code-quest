@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-02T17:37:17.462Z",
+  "generatedAt": "2026-08-02T20:46:41.432Z",
   "regions": [
     {
       "id": "languages",
@@ -1775,32 +1775,32 @@
           "id": "commits-as-checkpoints",
           "title": "Commits as checkpoints",
           "draft": false,
-          "hook": "A commit makes agent work inspectable and reversible.",
-          "definition": "A commit records a project snapshot with its parent history and a message. In an AI-assisted workflow, a focused commit gives you a boundary to inspect, test, compare, or undo.",
+          "hook": "A commit is a save point you can go back to.",
+          "definition": "A commit records a snapshot of the whole project. It stores the parent history and a message you write. A focused one gives you a point to inspect, test, compare, or undo.",
           "when_to_use": [
-            "Your agent has completed one coherent change and its checks pass.",
-            "You want a stable point before asking an agent to attempt a risky edit.",
-            "You need to compare generated work with the last known-good state.",
-            "You want review history that explains why a change exists."
+            "Your agent finished one change and its checks pass.",
+            "You want a stable point before a risky edit.",
+            "You need to compare new work against known-good.",
+            "You want history that explains why a change exists."
           ],
           "tradeoffs": {
             "pros": [
               "Focused snapshots make generated changes easier to review.",
-              "History provides known points for comparison and recovery.",
-              "Commit messages preserve intent beyond the current agent session."
+              "History gives you known points for comparison and recovery.",
+              "Messages keep intent alive past the agent session."
             ],
             "cons": [
               "Large mixed commits hide unrelated mistakes.",
-              "Frequent checkpoints still require tests and human review."
+              "Checkpoints still need tests and human review."
             ]
           },
-          "example": "Your agent adds invoice reminders across a route, queue, and tests. Ask it to run the relevant checks, show the staged diff, and create one checkpoint only after you approve the scope.",
+          "example": "Your agent changed a route, a queue, and the tests. The staged diff is sitting there, ready to commit.",
           "gotchas": [
-            "Review the staged diff before committing; agents can include generated files or unrelated edits.",
-            "Keep secrets, local environment files, and credentials out of every snapshot.",
-            "Do not treat a clean commit as proof that the behavior is correct."
+            "Review the staged diff before you commit.",
+            "Keep secrets and local env files out of snapshots.",
+            "A clean commit is not proof the code works."
           ],
-          "vibe_coder_default": "Commit one reviewed, tested task at a time with a message that states the outcome; split unrelated agent changes first.",
+          "vibe_coder_default": "Commit one reviewed, tested task. Split unrelated changes first.",
           "quiz": {
             "question": "When should you create an agent-work checkpoint?",
             "options": [
@@ -1809,7 +1809,7 @@
               "After combining several unrelated tasks"
             ],
             "answer": "After one coherent change passes review and checks",
-            "explanation": "A useful checkpoint captures one understandable outcome that you can inspect and recover independently."
+            "explanation": "A useful checkpoint holds one outcome you can inspect and recover on its own."
           },
           "sources": [
             {
@@ -1830,41 +1830,41 @@
           "id": "branches-as-isolation",
           "title": "Branches as isolation",
           "draft": false,
-          "hook": "Give each agent task its own line of work.",
-          "definition": "A Git branch is a movable name for one line of commit history. Separate branches isolate agent tasks so you can review, combine, or discard them without mixing unfinished work.",
+          "hook": "Two agents, one folder, zero survivors. Give each its own lane.",
+          "definition": "A branch is a movable name for one history. Separate branches keep agent tasks apart. You can review, combine, or drop each one on its own.",
           "when_to_use": [
-            "You are starting an agent task that will change repository files.",
-            "Two tasks may proceed without depending on the same unfinished code.",
-            "You want to compare alternative implementations before choosing one.",
-            "A change needs review before it reaches the shared branch."
+            "An agent task will change files in the repo.",
+            "Two tasks do not depend on the same code.",
+            "You want to compare two builds before choosing.",
+            "A change needs review before it reaches main."
           ],
           "tradeoffs": {
             "pros": [
-              "Tasks remain independently reviewable and discardable.",
-              "The shared branch stays stable while work is unfinished.",
-              "Alternative agent approaches can coexist for comparison."
+              "Each task stays reviewable and easy to drop.",
+              "The shared branch stays stable while work is open.",
+              "Two agent attempts can sit side by side."
             ],
             "cons": [
-              "Long-lived branches drift and become harder to combine.",
-              "Branches do not isolate uncommitted files in one working directory."
+              "Long-lived branches drift and get harder to combine.",
+              "Branches do not isolate files in one folder."
             ]
           },
-          "example": "You need an export feature while another task repairs authentication. Create separate branches and working directories, then tell each agent its exact scope and verification command.",
+          "example": "One agent builds export while another fixes login. Give each its own branch and its own folder.",
           "gotchas": [
-            "Start from the intended, current base branch before assigning work.",
-            "Use separate worktrees or clones for simultaneous agents; branch names alone do not separate files on disk.",
-            "Rebase or merge the current base before final review when the branch has drifted."
+            "Branch names do not separate files on disk.",
+            "Start from the current base branch before assigning work.",
+            "Rebase or merge the base before final review."
           ],
-          "vibe_coder_default": "Create a short-lived branch for every agent task, and pair concurrent branches with separate Git worktrees.",
+          "vibe_coder_default": "One short branch per agent task. Worktrees for two.",
           "quiz": {
             "question": "What safely isolates two agents working at the same time?",
             "options": [
               "Separate branches in separate worktrees",
-              "Two branches in one shared working directory",
+              "Two branches in one shared folder",
               "One branch with different commit messages"
             ],
             "answer": "Separate branches in separate worktrees",
-            "explanation": "Branches separate histories, while worktrees also separate the files each agent edits."
+            "explanation": "Branches separate histories. Worktrees also separate the files each agent edits."
           },
           "sources": [
             {
@@ -1885,41 +1885,41 @@
           "id": "pull-requests-and-review",
           "title": "Pull requests and review",
           "draft": false,
-          "hook": "Review the agent’s proposal before it becomes shared history.",
-          "definition": "A pull request proposes merging one branch into another and provides a place to review its changes. It is an evidence packet for agent work, not a guarantee that the work is safe.",
+          "hook": "Review the proposal before it becomes shared history.",
+          "definition": "A pull request asks to merge one branch into another. It gives you one place to read the changes. It is evidence, not proof that the work is safe.",
           "when_to_use": [
-            "An agent change will affect a shared or protected branch.",
-            "You need another person to review behavior, security, or architecture.",
-            "Automated checks must run before a change can merge.",
-            "The decision needs a durable record of discussion and revisions."
+            "An agent change will land on a shared branch.",
+            "Someone else needs to review behavior or security.",
+            "Checks must run before a change can merge.",
+            "The decision needs a durable written record."
           ],
           "tradeoffs": {
             "pros": [
-              "Diffs and comments keep review tied to the proposed change.",
-              "Required checks can block known failures from merging.",
-              "The conversation records decisions and requested revisions."
+              "Diffs and comments keep review tied to the change.",
+              "Required checks block known failures from merging.",
+              "The thread records decisions and requested revisions."
             ],
             "cons": [
-              "Large pull requests overload reviewers and conceal risk.",
-              "Passing checks cannot detect every invented assumption or product mistake."
+              "Big pull requests overload reviewers and hide risk.",
+              "Passing checks miss invented assumptions and product mistakes."
             ]
           },
-          "example": "Your agent adds team invitations and updates authorization rules. Require a pull request that explains the threat boundary, links tests, and calls out migrations before you review the diff.",
+          "example": "Your agent added team invites and changed who is allowed to do what. The diff touches your access rules.",
           "gotchas": [
-            "Read the changed code and test results; do not approve from the agent summary alone.",
-            "Require the author to disclose migrations, dependency changes, generated files, and unresolved risks.",
-            "Re-review changed lines after new commits arrive."
+            "Read the code, not just the agent summary.",
+            "Make the author disclose migrations and generated files.",
+            "Re-read changed lines after new commits arrive."
           ],
-          "vibe_coder_default": "Use a small GitHub pull request with a clear outcome, test evidence, and required review before merging agent-produced code.",
+          "vibe_coder_default": "Keep it small, show test evidence, require review.",
           "quiz": {
             "question": "What is the strongest basis for approving an agent pull request?",
             "options": [
-              "The reviewed diff, evidence, and passing required checks",
+              "The reviewed diff, evidence, and passing checks",
               "A confident summary from the agent",
               "A small number of changed files"
             ],
-            "answer": "The reviewed diff, evidence, and passing required checks",
-            "explanation": "Approval should rest on the actual change and its evidence, not the author’s confidence or diff size."
+            "answer": "The reviewed diff, evidence, and passing checks",
+            "explanation": "Approval rests on the change and its evidence, not on confidence or diff size."
           },
           "sources": [
             {
@@ -1941,31 +1941,31 @@
           "title": "Merge conflicts",
           "draft": false,
           "hook": "A conflict is a design decision, not cleanup.",
-          "definition": "A merge conflict occurs when Git cannot combine competing changes automatically. You must choose a correct result, then test the combined behavior because either side may be incomplete alone.",
+          "definition": "A merge conflict means Git cannot combine two changes. You pick the right result yourself. Then you test it, because either side may be incomplete.",
           "when_to_use": [
-            "Git stops a merge or rebase and marks unmerged paths.",
-            "Two agent tasks changed the same function, schema, or configuration.",
-            "One branch renamed a file that another branch edited.",
-            "A clean automatic merge still combines related behavior from separate tasks."
+            "Git stops a merge and marks unmerged paths.",
+            "Two agent tasks changed the same function or schema.",
+            "One branch renamed a file another branch edited.",
+            "A clean merge still joins work from separate tasks."
           ],
           "tradeoffs": {
             "pros": [
-              "Conflict markers expose changes Git cannot safely reconcile.",
-              "Resolution creates a deliberate combined result.",
-              "Frequent integration reveals incompatible assumptions early."
+              "Markers show what Git cannot safely reconcile.",
+              "Resolving one creates a deliberate combined result.",
+              "Merging early reveals bad assumptions early."
             ],
             "cons": [
-              "A syntactically clean resolution can still break behavior.",
-              "Large or stale branches increase resolution effort and uncertainty."
+              "A clean-looking fix can still break behavior.",
+              "Stale branches make resolution slower and riskier."
             ]
           },
-          "example": "One agent changes the account schema while another updates its API validation. Resolve the conflict from the shared contract, then rerun migration, API, and authorization tests.",
+          "example": "One agent changed the account schema. Another changed the checks that guard it. Both touch the same contract.",
           "gotchas": [
-            "Read both branches and the surrounding code before accepting either side.",
-            "Search for every conflict marker before completing the merge.",
-            "Run tests for both tasks after resolution; generated resolutions can compile while dropping behavior."
+            "Read both sides before you accept either one.",
+            "Search for every conflict marker before finishing.",
+            "Run the tests for both tasks after resolving."
           ],
-          "vibe_coder_default": "Resolve conflicts yourself from the intended contract, ask an agent for analysis when useful, and verify the combined behavior before committing.",
+          "vibe_coder_default": "Resolve it yourself from the contract, then test.",
           "quiz": {
             "question": "What should guide a merge-conflict resolution?",
             "options": [
@@ -1974,7 +1974,7 @@
               "The version with fewer lines"
             ],
             "answer": "The intended combined behavior and its tests",
-            "explanation": "Conflict resolution must preserve the product contract across both changes, not favor a mechanical side."
+            "explanation": "Resolution has to keep the product contract across both changes."
           },
           "sources": [
             {
@@ -1996,31 +1996,31 @@
           "title": "Working-tree hygiene",
           "draft": false,
           "hook": "Know what is dirty before an agent touches it.",
-          "definition": "Your working tree contains checked-out files plus tracked, modified, staged, ignored, and untracked state. Inspecting that state protects existing work and keeps one agent task from absorbing another task’s changes.",
+          "definition": "Your working tree is every file you have checked out. Each file is tracked, changed, staged, ignored, or untracked. Reading that state stops one task from eating another.",
           "when_to_use": [
-            "Before you give an agent permission to edit repository files.",
-            "Before switching branches, merging, rebasing, or generating a commit.",
-            "After a tool creates manifests, caches, migrations, or build output.",
-            "When several workers or sessions share a repository."
+            "Before you let an agent edit repository files.",
+            "Before you switch branches, merge, or commit.",
+            "After a tool writes caches, migrations, or builds.",
+            "When several sessions share one repository."
           ],
           "tradeoffs": {
             "pros": [
-              "Preflight status checks reveal work that needs protection.",
-              "Explicit staging keeps commits aligned with task scope.",
-              "Ignore rules reduce noise from reproducible local artifacts."
+              "A status check reveals work that needs protecting.",
+              "Explicit staging keeps commits inside the task scope.",
+              "Ignore rules cut noise from local build artifacts."
             ],
             "cons": [
-              "Cleanliness checks add deliberate pauses to fast workflows.",
-              "Poor ignore rules can hide files that actually belong in history."
+              "The check adds a pause to fast work.",
+              "Bad ignore rules hide files that belong in history."
             ]
           },
-          "example": "An agent starts a Git lesson while an untracked mission prompt already exists. Tell it to classify and preserve that file, edit only the assigned paths, and stage explicit files instead of the entire tree.",
+          "example": "An agent starts a Git lesson while an untracked mission file already sits in the tree, owned by nobody.",
           "gotchas": [
-            "Run status before and after agent work, then explain every changed path.",
-            "Never discard, overwrite, or stash unknown changes without confirming their owner and purpose.",
-            "Review ignore rules so secrets stay untracked while required artifacts remain visible."
+            "Run status before and after every agent task.",
+            "Never discard unknown changes without finding the owner.",
+            "Check ignore rules so secrets stay untracked."
           ],
-          "vibe_coder_default": "Start every agent task with a status check, preserve unrelated changes, use separate worktrees for concurrent tasks, and stage explicit paths.",
+          "vibe_coder_default": "Check status, keep other work, stage named paths.",
           "quiz": {
             "question": "What should an agent do after finding an unrelated untracked file?",
             "options": [
@@ -2029,7 +2029,7 @@
               "Include it in the next task commit"
             ],
             "answer": "Preserve and classify it before editing",
-            "explanation": "Unknown work may belong to another person or task, so ownership comes before cleanup or staging."
+            "explanation": "Unknown work may belong to someone else, so ownership comes before cleanup."
           },
           "sources": [
             {
@@ -2055,31 +2055,31 @@
           "title": "Revert and recovery",
           "draft": false,
           "hook": "Back out agent mistakes without erasing the trail.",
-          "definition": "Git offers different recovery tools for committed, staged, and working-tree changes. A revert records a new commit that reverses an earlier commit, making it the safer default for shared history.",
+          "definition": "Git has one recovery tool per state. Committed, staged, and working-tree changes each need a different one. A revert adds a new commit that undoes an old one.",
           "when_to_use": [
-            "An agent commit reached a shared branch and caused a regression.",
-            "You need to restore one file from a known-good commit.",
-            "You staged the wrong changes but want to keep the files.",
-            "You need to locate the commit where working behavior changed."
+            "An agent commit reached main and broke something.",
+            "You need one file back from a good commit.",
+            "You staged the wrong changes but want the files.",
+            "You need to find where working behavior changed."
           ],
           "tradeoffs": {
             "pros": [
-              "Reverts preserve an auditable shared history.",
-              "Restore can target working-tree or staged file content.",
-              "Bisect narrows a regression using known good and bad commits."
+              "Reverts keep shared history whole and auditable.",
+              "Restore can target working-tree or staged content.",
+              "Bisect narrows a break between good and bad commits."
             ],
             "cons": [
-              "Reverting dependent commits can create conflicts or partial behavior.",
-              "Restore, reset, and clean can destroy uncommitted work when misused."
+              "Reverting dependent commits can create conflicts.",
+              "Reset and clean can destroy uncommitted work."
             ]
           },
-          "example": "An agent deployment changes checkout behavior and tests missed the regression. Revert the focused commit on the shared branch, verify checkout, then investigate the failure on a separate branch.",
+          "example": "An agent deploy broke checkout and the tests missed it. The bad commit is already on the shared branch.",
           "gotchas": [
-            "Inspect status and save valuable uncommitted work before any recovery command.",
-            "Prefer revert for published commits; avoid rewriting history others may use.",
-            "Require an exact path and source commit before letting an agent run restore or reset."
+            "Check status and save uncommitted work first.",
+            "Do not rewrite history other people already pulled.",
+            "Make the agent name the exact path first."
           ],
-          "vibe_coder_default": "Revert a bad shared commit, restore only named files when needed, and use destructive reset or clean commands only after explicit review.",
+          "vibe_coder_default": "Revert the bad shared commit. Reset only after review.",
           "quiz": {
             "question": "How should you undo a bad commit already on a shared branch?",
             "options": [
@@ -2088,7 +2088,7 @@
               "Delete the changed files manually"
             ],
             "answer": "Create a revert commit",
-            "explanation": "A revert preserves shared history while recording the inverse change for review and deployment."
+            "explanation": "A revert keeps shared history and records the inverse change for review."
           },
           "sources": [
             {

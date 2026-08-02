@@ -29,10 +29,10 @@ const PILOT: LandmarkScript = {
   url: '/map/git/commits-as-checkpoints?format=lesson',
   evidenceDir: path.join(EVIDENCE_ROOT, 'E-003'),
   predictPick: /Everything it touched so far/,
-  scenarioWrong: /Commit everything right now/,
-  scenarioRight: /Stage, review the diff/,
-  gotchaWrong: /A staged diff you already reviewed/,
-  gotchaRight: /\.env\.local with your keys/,
+  scenarioWrong: /Commit all of it right now/,
+  scenarioRight: /Read the diff, split, commit one task/,
+  gotchaWrong: /A staged diff you already read/,
+  gotchaRight: /The env file holding your keys/,
   quizAnswer: /After one coherent change passes review and checks/,
   nextHref: /\/map\/git\/branches-as-isolation\?format=lesson/,
   regionTitle: /Git/i,
@@ -132,9 +132,15 @@ async function playThroughToStamp(
   await expect(playerStatus(page)).toBeVisible();
   await advance(page);
 
-  // 2 reveal — two cards
+  // 2 reveal — advance is gated until every card is shown. The card count is a
+  // content decision (re-voicing changes how many sentences the definition has),
+  // so drive the button until it is gone rather than clicking a fixed number of times.
   await noteType('reveal');
-  await page.getByRole('button', { name: /Show next card/ }).click();
+  const showNextCard = page.getByRole('button', { name: /Show next card/ });
+  for (let guard = 0; guard < 3 && (await showNextCard.count()) > 0; guard += 1) {
+    await showNextCard.click();
+  }
+  await expect(showNextCard).toHaveCount(0);
   await advance(page);
 
   // 3 scenario — wrong then right
@@ -293,22 +299,26 @@ test.describe('engagement-v2 BeatPlayer (E-003/E-004)', () => {
     await focusAndPress(page.getByTestId('beat-advance')); // → reveal
     await expect(page.locator('[data-beat-type="reveal"]')).toBeVisible();
 
-    await focusAndPress(page.getByRole('button', { name: /Show next card/ }));
+    // Card count is content, not contract — step until the control is gone.
+    const nextCard = page.getByRole('button', { name: /Show next card/ });
+    for (let guard = 0; guard < 3 && (await nextCard.count()) > 0; guard += 1) {
+      await focusAndPress(nextCard);
+    }
     await focusAndPress(page.getByTestId('beat-advance')); // → scenario
     await expect(page.locator('[data-beat-type="scenario"]')).toBeVisible();
 
-    await focusAndPress(page.getByRole('button', { name: /Stage, review the diff/ }));
+    await focusAndPress(page.getByRole('button', { name: PILOT.scenarioRight }));
     await focusAndPress(page.getByTestId('beat-advance'));
     await expect(page.locator('[data-beat-type="gotcha"]')).toBeVisible();
 
-    await focusAndPress(page.getByRole('button', { name: /\.env\.local with your keys/ }));
+    await focusAndPress(page.getByRole('button', { name: PILOT.gotchaRight }));
     await focusAndPress(page.getByTestId('beat-advance'));
     await expect(page.locator('[data-beat-type="default"]')).toBeVisible();
 
     await focusAndPress(page.getByTestId('beat-advance')); // default → check
     await expect(page.locator('[data-beat-type="check"]')).toBeVisible();
 
-    const quizRadio = page.getByRole('radio', { name: /After one coherent change passes review and checks/ });
+    const quizRadio = page.getByRole('radio', { name: PILOT.quizAnswer });
     await focusAndPress(quizRadio, 'Space');
     await focusAndPress(page.getByRole('button', { name: 'Check answer' }));
     await expect(playerStatus(page)).toContainText(/Correct|Good call/i);

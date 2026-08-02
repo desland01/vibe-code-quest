@@ -1,8 +1,15 @@
 import type { BeatSequence } from '../../beats/schema.ts';
 
-// Pilot beat sequence for engagement-v2 (frozen DESIGN_CONTRACT §12).
-// Copy loyalty: derived strictly from the canonical landmark file's fields —
-// no new git or security facts beyond src/content/git/commits-as-checkpoints.ts.
+// Hand-authored L3 run for commits-as-checkpoints (frozen DESIGN_CONTRACT §12 pilot,
+// re-voiced for the arcade in ISSUE-012 against CREATIVE_BIBLE §6).
+//
+// Copy loyalty: every claim traces to src/content/git/commits-as-checkpoints.ts —
+// no new git facts. Hand-authored sequences are exempt from the mechanical
+// provenance check (their copy is written, not projected) and are held to the
+// voice suite instead: word budgets, the three allowlisted verdict leads, the
+// banned-phrase list, and the grade-8 ceiling.
+//
+// Beat ids and types are the pinned L3_SHAPE tuple, with `check` at index 6.
 export const sequence: BeatSequence = {
   regionId: 'git',
   landmarkId: 'commits-as-checkpoints',
@@ -11,85 +18,122 @@ export const sequence: BeatSequence = {
     question: 'When should you create an agent-work checkpoint?',
     options: ['After one coherent change passes review and checks', 'Whenever the agent pauses mid-edit', 'After combining several unrelated tasks'],
     answer: 'After one coherent change passes review and checks',
-    explanation: 'A useful checkpoint captures one understandable outcome that you can inspect and recover independently.',
+    explanation: 'A useful checkpoint holds one outcome you can inspect and recover on its own.',
   },
   beats: [
     {
       id: 'hook',
       type: 'hook',
-      prompt: 'A commit makes agent work inspectable and reversible.',
+      prompt: 'A commit is a save point you can go back to.',
       estimatedSeconds: 10,
     },
     {
       id: 'predict-core',
       type: 'predict',
-      prompt: 'Your agent just changed invoice reminders across a route, a queue, and tests. What belongs in the checkpoint?',
+      prompt: 'Your agent touched a route, a queue, and tests. What gets committed?',
       options: [
-        { id: 'one-reviewed', label: 'One reviewed change that passes its checks', feedback: 'That is the instinct the pros use. See why in the next cards.' },
-        { id: 'everything', label: 'Everything it touched so far', feedback: 'Understandable guess — but a pile of unrelated edits hides mistakes. Keep going.' },
-        { id: 'batch-later', label: 'Wait and batch more changes first', feedback: 'Tempting, but big batches bury the intent. Keep going.' },
+        {
+          id: 'one-reviewed',
+          label: 'One reviewed change that passes its checks',
+          feedback: 'Noted. That is the boundary you can inspect and undo.',
+        },
+        {
+          id: 'everything',
+          label: 'Everything it touched so far',
+          feedback: 'Not that one. Large mixed commits hide unrelated mistakes.',
+        },
+        {
+          id: 'batch-later',
+          label: 'Wait and batch more changes first',
+          feedback: 'Not that one. A bigger pile buries the intent.',
+        },
       ],
       correctOptionId: 'one-reviewed',
-      hint: 'Think about what you could inspect and undo on its own.',
+      hint: 'Think about what you could undo on its own.',
       estimatedSeconds: 20,
     },
     {
       id: 'reveal-definition',
       type: 'reveal',
-      prompt: 'What a commit actually is.',
+      prompt: 'Commits as checkpoints',
       cards: [
-        'A commit records a project snapshot with its parent history and a message.',
-        'In an AI-assisted workflow, a focused commit gives you a boundary to inspect, test, compare, or undo.',
+        'A commit records a snapshot of the whole project.',
+        'It stores the parent history and a message you write.',
+        'A focused one is a point you can inspect or undo.',
       ],
       estimatedSeconds: 25,
     },
     {
       id: 'scenario-default',
       type: 'scenario',
-      prompt: 'The agent finished the invoice reminders across the route, queue, and tests. The staged diff is ready. Your move?',
+      prompt: 'The route, the queue, and the tests are done. The staged diff is sitting there. Your move?',
       options: [
-        { id: 'commit-all', label: 'Commit everything right now', feedback: 'Agents can sweep generated files or unrelated edits into a snapshot. Review the staged diff first.' },
-        { id: 'review-split', label: 'Stage, review the diff, split unrelated edits, commit one outcome', feedback: 'Right. Review the staged diff, split anything unrelated, then commit one tested outcome.' },
-        { id: 'keep-working', label: 'Let the agent keep working uncommitted', feedback: 'Uncommitted work has no boundary to inspect, test, or undo. Checkpoint first.' },
+        {
+          id: 'commit-all',
+          label: 'Commit all of it right now',
+          feedback: 'Not that one. Agents sweep in generated files you never read.',
+        },
+        {
+          id: 'review-split',
+          label: 'Read the diff, split, commit one task',
+          feedback: 'Yep. It costs you a minute, and it is still right.',
+        },
+        {
+          id: 'keep-working',
+          label: 'Let the agent keep working uncommitted',
+          feedback: 'Not that one. Uncommitted work has no point to fall back to.',
+        },
       ],
       correctOptionId: 'review-split',
-      hint: 'What would make this snapshot safe to trust?',
+      hint: 'What makes this snapshot safe to trust later?',
       estimatedSeconds: 45,
     },
     {
       id: 'gotcha-trap',
       type: 'gotcha',
-      prompt: 'Spot the trap: which of these sneaks into agent commits if you are not watching?',
+      prompt: 'One of these rides along into the commit. Find it.',
       options: [
-        { id: 'staged-diff', label: 'A staged diff you already reviewed', feedback: 'A reviewed diff is exactly what belongs in a snapshot.' },
-        { id: 'env-file', label: '.env.local with your keys', feedback: 'Caught it. Keep secrets, local environment files, and credentials out of every snapshot.' },
-        { id: 'tests', label: 'Test files for the change', feedback: 'Tests belong with the change. They are not the trap.' },
+        {
+          id: 'staged-diff',
+          label: 'A staged diff you already read',
+          feedback: 'Not that one. A reviewed diff is what belongs in a snapshot.',
+        },
+        {
+          id: 'env-file',
+          label: 'The env file holding your keys',
+          feedback: 'Yep. Keep secrets and local env files out of snapshots.',
+        },
+        {
+          id: 'tests',
+          label: 'Test files for the change',
+          feedback: 'Not that one. Tests belong with the change they cover.',
+        },
       ],
       correctOptionId: 'env-file',
-      hint: 'What should never appear in any snapshot?',
+      hint: 'Two of these are fine. One is not.',
       estimatedSeconds: 25,
     },
     {
       id: 'default-commit',
       type: 'default',
-      prompt: 'Commit one reviewed, tested task at a time with a message that states the outcome; split unrelated agent changes first.',
+      prompt: 'Commit one reviewed, tested task. Split unrelated changes first.',
       estimatedSeconds: 15,
     },
     {
       id: 'check-quiz',
       type: 'check',
-      prompt: 'Prove it: when should you create an agent-work checkpoint?',
-      hint: 'One understandable, recoverable outcome.',
+      prompt: 'When should you create an agent-work checkpoint?',
+      hint: 'One outcome you could recover on its own.',
       estimatedSeconds: 20,
     },
     {
       id: 'recap',
       type: 'recap',
-      prompt: 'Commits are your inspection and recovery points when agents do the typing.',
+      prompt: 'A commit is a save point you can go back to.',
       bullets: [
-        'A commit records a snapshot with history and a message.',
-        'Review the staged diff and split unrelated edits before committing.',
-        'A clean commit is not proof the behavior is correct — checks are.',
+        'A commit records a snapshot of the whole project.',
+        'Read the staged diff and split unrelated edits.',
+        'A clean commit is not proof the code works.',
       ],
       estimatedSeconds: 20,
     },

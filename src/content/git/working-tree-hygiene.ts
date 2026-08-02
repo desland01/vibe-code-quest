@@ -1,7 +1,8 @@
+import { legacyLevelContent } from '../beats/derive.ts';
 import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
-export const landmark = {
+const base = {
   id: 'working-tree-hygiene',
   title: 'Working-tree hygiene',
   draft: false,
@@ -85,3 +86,56 @@ export const l1: LevelContent = {
     explanation: 'A repo is the folder and the history Git keeps for it.'
   }
 };
+
+// L2 "THE AGENT MADE A BRANCH" (ISSUE-014). One agent decision: it wants to
+// discard files to unblock itself. Grounding: UGC finding C3 — someone who
+// wiped a repo and its history and was "baffled" at how both went at once.
+export const l2: LevelContent = {
+  hook: 'Your agent wants to clean up. Ask what that means.',
+  definition:
+    'Some cleanup is free. Discarding brand-new files is not. Nothing ever saved them, so nothing can bring them back.',
+  when_to_use: [
+    'Your agent offers to tidy the folder.',
+    'It wants to discard changes to continue.',
+    'You do not recognise the files it lists.',
+    'Another session may be using this repo.'
+  ],
+  tradeoffs: {
+    pros: [
+      'A clean tree makes the next step clear.',
+      'Naming the files first shows you what dies.',
+      'You can save anything worth keeping first.'
+    ],
+    cons: [
+      'Listing every file takes an extra step.',
+      'Some clutter really is safe to remove.'
+    ]
+  },
+  example: 'There are nine files in the way here. I am going to discard all of them. OK?',
+  gotchas: [
+    'New files have no save point at all.',
+    'Discard and delete mean the same thing here.',
+    'Some of those files may not be yours.'
+  ],
+  vibe_coder_default: 'Make it list the files before it discards.',
+  assessment: {
+    question: 'Your agent wants to discard nine files. What do you say?',
+    options: ['List them first', 'Go ahead, Git can undo it', 'Discard only the new ones'],
+    answer: 'List them first',
+    explanation: 'Git can undo a saved change. It cannot undo a file it never saw.'
+  }
+};
+
+// L3 "TIME TRAVEL RESPONSIBLY" is the tier this landmark already shipped, so it
+// is projected from the canonical top-level fields rather than restated. That
+// projection is the same function the registry used during the L3-only
+// compatibility window, which is what keeps the re-voiced L3 run byte-identical
+// as this landmark gains its lower tiers (ISSUE-014, DATA_MODEL §6 step 1).
+export const l3: LevelContent = legacyLevelContent(base);
+
+// ISSUE-015 flips this one line to `{ ...base, levels: { l1, l2, l3 } }`.
+// Registering L1 and L2 changes which run the landmark page serves, and the
+// page resolver that picks the unlocked level is ISSUE-015's slice — wiring
+// them here would serve L1 from a route that still hard-codes L3 and every
+// write would come back 423 Level locked.
+export const landmark = base satisfies Landmark;

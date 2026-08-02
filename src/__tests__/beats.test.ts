@@ -30,20 +30,20 @@ import {
 import { L3_SHAPE } from '@/content/beats/schema';
 import { sequenceVoiceViolations, VERDICT_LEADS } from '@/content/beats/voice';
 import { textCoversTerm, ugcTermsForRegion, UGC_TERMS } from '@/content/beats/ugcTerms';
-import { landmark as gitCommits, l1 as gitCommitsL1 } from '@/content/git/commits-as-checkpoints';
-import { landmark as gitBranches, l1 as gitBranchesL1 } from '@/content/git/branches-as-isolation';
-import { landmark as gitPrs, l1 as gitPrsL1 } from '@/content/git/pull-requests-and-review';
-import { landmark as gitMerge, l1 as gitMergeL1 } from '@/content/git/merge-conflicts';
-import { landmark as gitTree, l1 as gitTreeL1 } from '@/content/git/working-tree-hygiene';
-import { landmark as gitRevert, l1 as gitRevertL1 } from '@/content/git/revert-and-recovery';
+import { landmark as gitCommits, l1 as gitCommitsL1, l2 as gitCommitsL2 } from '@/content/git/commits-as-checkpoints';
+import { landmark as gitBranches, l1 as gitBranchesL1, l2 as gitBranchesL2 } from '@/content/git/branches-as-isolation';
+import { landmark as gitPrs, l1 as gitPrsL1, l2 as gitPrsL2 } from '@/content/git/pull-requests-and-review';
+import { landmark as gitMerge, l1 as gitMergeL1, l2 as gitMergeL2 } from '@/content/git/merge-conflicts';
+import { landmark as gitTree, l1 as gitTreeL1, l2 as gitTreeL2 } from '@/content/git/working-tree-hygiene';
+import { landmark as gitRevert, l1 as gitRevertL1, l2 as gitRevertL2 } from '@/content/git/revert-and-recovery';
 
 const gitLevelSources = [
-  { landmark: gitCommits, l1: gitCommitsL1 },
-  { landmark: gitBranches, l1: gitBranchesL1 },
-  { landmark: gitPrs, l1: gitPrsL1 },
-  { landmark: gitMerge, l1: gitMergeL1 },
-  { landmark: gitTree, l1: gitTreeL1 },
-  { landmark: gitRevert, l1: gitRevertL1 },
+  { landmark: gitCommits, l1: gitCommitsL1, l2: gitCommitsL2 },
+  { landmark: gitBranches, l1: gitBranchesL1, l2: gitBranchesL2 },
+  { landmark: gitPrs, l1: gitPrsL1, l2: gitPrsL2 },
+  { landmark: gitMerge, l1: gitMergeL1, l2: gitMergeL2 },
+  { landmark: gitTree, l1: gitTreeL1, l2: gitTreeL2 },
+  { landmark: gitRevert, l1: gitRevertL1, l2: gitRevertL2 },
 ];
 import { canonicalLandmarkSchema, landmarkLevelsSchema } from '@/content/schema';
 import { fixtureLevels, tieredLandmark, untieredLandmark } from '@/content/__fixtures__/tiered-landmark';
@@ -66,10 +66,17 @@ const FACTORY_TYPE_ORDER = [
   'recap',
 ] as const;
 
-// Every landmark still carries only legacy top-level fields, so each registers
-// exactly its L3 run during the L3-only compatibility window.
+// Built from each landmark's own declared levels rather than from a hard-coded
+// list, so it tracks the islands as their tiers are wired in (ISSUE-015 for
+// Git, M4-M6 for the rest). Today every landmark registers its L3 run alone.
 const ALL_CANONICAL_KEYS = Object.entries(landmarkRegistry)
-  .flatMap(([regionId, landmarks]) => landmarks.map((landmark) => `${regionId}/${landmark.id}/l3`))
+  .flatMap(([regionId, landmarks]) =>
+    landmarks.flatMap((landmark) =>
+      [...landmarkLevelSources(landmark).keys()].map(
+        (level) => `${regionId}/${landmark.id}/${level}`,
+      ),
+    ),
+  )
   .sort();
 
 describe('beat sequence schema', () => {
@@ -136,9 +143,13 @@ describe('beat sequence schema', () => {
 });
 
 describe('beat registry (L-002 full factory)', () => {
-  it('registers exactly 48 sequences covering every canonical landmark', () => {
+  it('registers every declared level of every canonical landmark', () => {
     const report = validateBeatSequences();
+    // Every landmark still registers its L3 run alone: Git's authored L1 and L2
+    // sources exist but are not wired into `levels` until ISSUE-015 adds the
+    // resolver that can serve them.
     expect(report.count).toBe(48);
+    expect(ALL_CANONICAL_KEYS).toHaveLength(48);
     expect(report.keys).toEqual(ALL_CANONICAL_KEYS);
     expect(listBeatSequenceKeys()).toEqual(ALL_CANONICAL_KEYS);
 
@@ -176,17 +187,29 @@ describe('beat registry (L-002 full factory)', () => {
 
 describe('L-002 factory derive — structure, mapping, provenance, determinism', () => {
   const framing = factoryFramingValues();
-  const derivedKeys = ALL_CANONICAL_KEYS.filter(
-    (key) => key !== 'git/commits-as-checkpoints/l3' && key !== 'security/trust-boundaries/l3',
+  // Every registered run that the factory actually produces, resolved through
+  // the same level source the registry uses. Keying off the landmark's declared
+  // levels rather than assuming L3 is what lets this block keep covering every
+  // island as the tiers land.
+  const derived = Object.entries(landmarkRegistry).flatMap(([regionId, landmarks]) =>
+    landmarks.flatMap((landmark) =>
+      [...landmarkLevelSources(landmark).entries()]
+        .filter(
+          ([level]) =>
+            `${regionId}/${landmark.id}/${level}` !== 'git/commits-as-checkpoints/l3' &&
+            `${regionId}/${landmark.id}/${level}` !== 'security/trust-boundaries/l3',
+        )
+        .map(([level, content]) => ({ regionId, landmark, level, content })),
+    ),
+  );
+  const derivedKeys = derived.map(
+    ({ regionId, landmark, level }) => `${regionId}/${landmark.id}/${level}`,
   );
 
-  it('derives 46 sequences with fixed 8-type grammar and unique ids', () => {
+  it('derives every non-hand-authored run with the fixed 8-type grammar and unique ids', () => {
     expect(derivedKeys).toHaveLength(46);
-    for (const key of derivedKeys) {
-      const [regionId, landmarkId] = key.split('/') as [string, string, string];
-      const landmark = landmarkRegistry[regionId]!.find((entry) => entry.id === landmarkId)!;
-      const content = legacyLevelContent(landmark);
-      const sequence = deriveLevelSequence(regionId, landmark, 'l3', content);
+    for (const { regionId, landmark, level, content } of derived) {
+      const sequence = deriveLevelSequence(regionId, landmark, level, content);
       expect(sequence.beats).toHaveLength(8);
       expect(sequence.beats.map((beat) => beat.type)).toEqual([...FACTORY_TYPE_ORDER]);
       const ids = sequence.beats.map((beat) => beat.id);
@@ -204,11 +227,8 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
   });
 
   it('maps derived beats to exact canonical fields of the same landmark', () => {
-    for (const key of derivedKeys) {
-      const [regionId, landmarkId] = key.split('/') as [string, string, string];
-      const landmark = landmarkRegistry[regionId]!.find((entry) => entry.id === landmarkId)!;
-      const content = legacyLevelContent(landmark);
-      const sequence = deriveLevelSequence(regionId, landmark, 'l3', content);
+    for (const { regionId, landmark, level, content } of derived) {
+      const sequence = deriveLevelSequence(regionId, landmark, level, content);
       const [hook, predict, reveal, scenario, gotcha, def, check, recap] = sequence.beats;
 
       expect(hook).toMatchObject({ type: 'hook', prompt: content.hook });
@@ -225,9 +245,14 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
           expect(content.definition.includes(card) || card === content.definition).toBe(true);
         }
       }
+      // §6.1 rule 10: an L2 scenario is the agent's own line and carries no
+      // narrator frame. Every other tier keeps the neutral setup frame.
       expect(scenario).toMatchObject({
         type: 'scenario',
-        prompt: `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`,
+        prompt:
+          level === 'l2'
+            ? content.example
+            : `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`,
       });
       if (scenario && 'options' in scenario) {
         const correct = scenario.options.find((option) => option.id === scenario.correctOptionId);
@@ -341,11 +366,9 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
 
   it('is deterministic and rotates correct-option slots across the factory set', () => {
     const slots = new Set<number>();
-    for (const key of derivedKeys) {
-      const [regionId, landmarkId] = key.split('/') as [string, string, string];
-      const landmark = landmarkRegistry[regionId]!.find((entry) => entry.id === landmarkId)!;
-      const a = deriveLevelSequence(regionId, landmark, 'l3', legacyLevelContent(landmark));
-      const b = deriveLevelSequence(regionId, landmark, 'l3', legacyLevelContent(landmark));
+    for (const { regionId, landmark, level, content } of derived) {
+      const a = deriveLevelSequence(regionId, landmark, level, content);
+      const b = deriveLevelSequence(regionId, landmark, level, content);
       expect(a).toEqual(b);
       for (const beat of a.beats) {
         if ('options' in beat) {
@@ -355,7 +378,7 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
         }
       }
     }
-    // Across 46 landmarks × 3 choice beats, slots must not collapse to always-0.
+    // Across every derived run × 3 choice beats, slots must not collapse to always-0.
     expect(slots.size).toBeGreaterThan(1);
     expect(slots.has(0)).toBe(true);
   });
@@ -373,7 +396,7 @@ describe('arcade level identity (VAL-003, VAL-011, VAL-012, VAL-056)', () => {
       expect(['l1', 'l2', 'l3']).toContain(key.split('/')[2]);
     }
     expect(hasSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l3' })).toBe(true);
-    // L1/L2 are not registered until their island content is authored (M4–M6).
+    // L1/L2 sources are authored for Git but not registered until ISSUE-015.
     expect(hasSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l1' })).toBe(false);
     expect(getSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l3' })?.level).toBe('l3');
   });
@@ -698,6 +721,92 @@ describe('Git reference corpus — L1 (ISSUE-013: VAL-005, VAL-006, VAL-050-052)
     expect(textCoversTerm('a debranching step', branch)).toBe(false);
     const commit = UGC_TERMS.find((entry) => entry.term === 'commit')!;
     expect(textCoversTerm('a real commitment', commit)).toBe(false);
+  });
+});
+
+describe('Git reference corpus — L2 (ISSUE-014: VAL-007, agent-chat-bubble contract)', () => {
+  // Same posture as ISSUE-013: the L2 sources are authored and validated through
+  // `deriveLevelSequence`, the exact function the registry calls. Registering
+  // them changes which run the landmark page serves, and the resolver that can
+  // serve a non-L3 run is ISSUE-015's slice — wiring them here would serve L1
+  // from a route that still hard-codes L3 and every write would return 423.
+  const GIT_L2 = gitLevelSources.map((entry) => ({
+    ...entry,
+    sequence: deriveLevelSequence('git', entry.landmark, 'l2', entry.l2),
+  }));
+
+  it('authors an L2 source for all six Git landmarks', () => {
+    expect(GIT_L2).toHaveLength(6);
+    expect(GIT_L2.map((entry) => entry.landmark.id).sort()).toEqual(
+      landmarkRegistry.git!.map((landmark) => landmark.id).sort(),
+    );
+    for (const { sequence } of GIT_L2) expect(sequence.level).toBe('l2');
+  });
+
+  // REQ-004 / VAL-007: ONE agent decision per L2 run. The scenario beat is that
+  // decision by construction — predict and gotcha are comprehension beats, and
+  // the scenario is the only beat rendered as the agent asking.
+  it('has exactly one agent-decision beat, with a correct option and feedback on every option (VAL-007)', () => {
+    for (const { landmark, sequence } of GIT_L2) {
+      const decisions = sequence.beats.filter((beat) => beat.type === 'scenario');
+      expect(decisions, `git/${landmark.id}/l2`).toHaveLength(1);
+
+      const decision = decisions[0]!;
+      expect('options' in decision).toBe(true);
+      if (!('options' in decision)) continue;
+
+      expect(decision.correctOptionId).toBeTruthy();
+      expect(decision.options.filter((o) => o.id === decision.correctOptionId)).toHaveLength(1);
+      for (const option of decision.options) {
+        expect(option.feedback.trim().length, `${landmark.id}/${option.id}`).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  // The rendering contract, asserted at the content boundary: an L2 decision
+  // prompt is the agent's own line with no narrator frame in front of it. The
+  // `AGENT` chrome is added by BeatPlayer, so the word never becomes a canonical
+  // fact of the landmark — which is exactly why provenance still passes.
+  it('renders the L2 decision as the agent speaking, with no narrator frame', () => {
+    for (const { landmark, sequence } of GIT_L2) {
+      const decision = sequence.beats.find((beat) => beat.type === 'scenario')!;
+      expect(decision.prompt.startsWith(FACTORY_FRAMING.scenarioPromptPrefix)).toBe(false);
+      expect(decision.prompt, landmark.id).not.toMatch(/\bAGENT\b/);
+      // It ends by asking the player to answer (§6.1 rules 9-10).
+      expect(decision.prompt.trim(), landmark.id).toMatch(/\?$/);
+    }
+  });
+
+  it('keeps the narrator frame on every non-L2 tier', () => {
+    for (const { landmark, l1 } of GIT_L2) {
+      const l1Sequence = deriveLevelSequence('git', landmark, 'l1', l1);
+      const scenario = l1Sequence.beats.find((beat) => beat.type === 'scenario')!;
+      expect(scenario.prompt.startsWith(FACTORY_FRAMING.scenarioPromptPrefix), landmark.id).toBe(true);
+    }
+  });
+
+  it('passes the full voice suite and tier-aware provenance with zero violations', () => {
+    for (const { landmark, l2, sequence } of GIT_L2) {
+      expect(sequenceVoiceViolations(sequence), `git/${landmark.id}/l2`).toEqual([]);
+      expect(
+        sequenceProvenanceViolations(sequence, landmark.title, l2),
+        `git/${landmark.id}/l2`,
+      ).toEqual([]);
+    }
+  });
+
+  // The full 18-run Git corpus, proven before it is wired: whatever ISSUE-015
+  // registers is already known to be clean at every tier.
+  it('has all 18 Git runs authored and clean across every tier', () => {
+    const runs = gitLevelSources.flatMap(({ landmark, l1, l2 }) => [
+      deriveLevelSequence('git', landmark, 'l1', l1),
+      deriveLevelSequence('git', landmark, 'l2', l2),
+      getSequence({ regionId: 'git', landmarkId: landmark.id, level: 'l3' })!,
+    ]);
+    expect(runs).toHaveLength(18);
+    for (const run of runs) {
+      expect(sequenceVoiceViolations(run), `git/${run.landmarkId}/${run.level}`).toEqual([]);
+    }
   });
 });
 

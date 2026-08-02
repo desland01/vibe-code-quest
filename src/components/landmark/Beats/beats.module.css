@@ -25,6 +25,39 @@
 }
 .beatCard:focus-visible { outline: 3px solid #fff3c4; outline-offset: 3px; }
 .prompt { margin: 0 0 20px; font-size: clamp(1.15rem, 2.6vw, 1.45rem); line-height: 1.35; font-weight: 600; }
+/* L2 agent chat bubble (ISSUE-014, CREATIVE_BIBLE §6.1 rule 10). The tail is a
+   square notch rather than a triangle so it stays on the pixel grid at every
+   zoom level, matching the rest of the board furniture. */
+.agentBubble {
+  position: relative;
+  margin: 0 0 26px;
+  padding: 14px 18px 4px;
+  border: 3px solid var(--ink);
+  background: color-mix(in srgb, var(--region-accent, #d96c6c) 12%, var(--paper, #fff8e9));
+  box-shadow: 4px 4px 0 var(--banner-border);
+}
+.agentBubble::after {
+  content: '';
+  position: absolute;
+  left: 26px;
+  bottom: -13px;
+  width: 10px;
+  height: 10px;
+  border: 3px solid var(--ink);
+  border-top: 0;
+  border-left: 0;
+  background: color-mix(in srgb, var(--region-accent, #d96c6c) 12%, var(--paper, #fff8e9));
+}
+.agentName {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  color: var(--ink);
+}
+.agentBubble .prompt { margin: 0 0 12px; }
+
 .hint {
   margin: 16px 0 0; font-size: 0.95rem;
   border-left: 8px solid var(--region-accent, #d96c6c); padding: 10px 14px;

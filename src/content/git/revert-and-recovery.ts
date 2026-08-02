@@ -1,7 +1,8 @@
+import { legacyLevelContent } from '../beats/derive.ts';
 import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
-export const landmark = {
+const base = {
   id: 'revert-and-recovery',
   title: 'Revert and recovery',
   draft: false,
@@ -85,3 +86,56 @@ export const l1: LevelContent = {
     explanation: 'A revert adds a commit. The old one stays in the history.'
   }
 };
+
+// L2 "THE AGENT MADE A BRANCH" (ISSUE-014). One agent decision: it wants to
+// hard reset a shared branch. Grounding: UGC finding C3, and §6.1 rule 4 —
+// state the true stakes flat.
+export const l2: LevelContent = {
+  hook: 'Your agent wants to undo. There are two ways.',
+  definition:
+    'Revert adds a commit. Reset removes them. Both undo the change, and only one is safe once other people have it.',
+  when_to_use: [
+    'Your agent offers to undo a bad change.',
+    'The bad commit is already pushed up.',
+    'Other people are working on the same branch.',
+    'You need the change gone right now.'
+  ],
+  tradeoffs: {
+    pros: [
+      'Revert works even after the commit is shared.',
+      'The record of what happened stays readable.',
+      'You can revert a revert if you need to.'
+    ],
+    cons: [
+      'Revert leaves two extra commits in the log.',
+      'Reset is faster when nothing is shared.'
+    ]
+  },
+  example: 'That commit broke checkout. I am going to hard reset the shared branch back. OK?',
+  gotchas: [
+    'Reset on a shared branch breaks other people.',
+    'Hard reset can delete work nobody saved.',
+    'Fast and safe are not the same here.'
+  ],
+  vibe_coder_default: 'Say no. Ask it to revert instead.',
+  assessment: {
+    question: 'Your agent wants to hard reset a shared branch. What now?',
+    options: ['Say no and ask for a revert', 'Let it, the commit was bad', 'Delete the branch'],
+    answer: 'Say no and ask for a revert',
+    explanation: 'Reset rewrites history other people already have. Revert does not.'
+  }
+};
+
+// L3 "TIME TRAVEL RESPONSIBLY" is the tier this landmark already shipped, so it
+// is projected from the canonical top-level fields rather than restated. That
+// projection is the same function the registry used during the L3-only
+// compatibility window, which is what keeps the re-voiced L3 run byte-identical
+// as this landmark gains its lower tiers (ISSUE-014, DATA_MODEL §6 step 1).
+export const l3: LevelContent = legacyLevelContent(base);
+
+// ISSUE-015 flips this one line to `{ ...base, levels: { l1, l2, l3 } }`.
+// Registering L1 and L2 changes which run the landmark page serves, and the
+// page resolver that picks the unlocked level is ISSUE-015's slice — wiring
+// them here would serve L1 from a route that still hard-codes L3 and every
+// write would come back 423 Level locked.
+export const landmark = base satisfies Landmark;

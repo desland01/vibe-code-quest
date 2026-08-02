@@ -128,6 +128,9 @@ export function BeatPlayer({
   );
 
   const beat = sequence.beats[state.displayIndex]!;
+  // ISSUE-014: the L2 agent-chat-bubble render mode. Prototyped here on the Git
+  // corpus before 48 L2 runs are written against it (CREATIVE_BIBLE §8.5).
+  const agentBubble = sequence.level === 'l2' && beat.type === 'scenario';
   const terminal = sequence.beats.length - 1;
   const belowFrontier = state.displayIndex < state.furthestBeatIndex;
   const mayAdvance = belowFrontier || canAdvance(beat, state);
@@ -464,7 +467,18 @@ export function BeatPlayer({
           />
         ) : (
           <>
-            <p className={styles.prompt}>{beat.prompt}</p>
+            {agentBubble ? (
+              // §6.1 rule 10: an L2 decision beat renders as the agent talking,
+              // and the options are what a person types back. The `AGENT` label
+              // is chrome, not content — it is presentational so the word never
+              // becomes a canonical fact of the landmark.
+              <div className={styles.agentBubble} data-render-mode="agent-bubble">
+                <span className={styles.agentName}>AGENT</span>
+                <p className={styles.prompt}>{beat.prompt}</p>
+              </div>
+            ) : (
+              <p className={styles.prompt}>{beat.prompt}</p>
+            )}
 
             {beat.type === 'reveal' && (
               <ul className={styles.cards} aria-live="polite">

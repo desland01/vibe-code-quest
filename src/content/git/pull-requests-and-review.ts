@@ -1,7 +1,8 @@
+import { legacyLevelContent } from '../beats/derive.ts';
 import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
-export const landmark = {
+const base = {
   id: 'pull-requests-and-review',
   title: 'Pull requests and review',
   draft: false,
@@ -84,3 +85,56 @@ export const l1: LevelContent = {
     explanation: 'Push copies commits up. Merging into main is a separate ask.'
   }
 };
+
+// L2 "THE AGENT MADE A BRANCH" (ISSUE-014). One agent decision: it wants to
+// merge its own work into main. Grounding: UGC finding A20 — people who cannot
+// tell whether a change is trustworthy and have nobody to ask.
+export const l2: LevelContent = {
+  hook: 'Your agent wants this in main. Right now.',
+  definition:
+    'Pushing is reversible. Merging into main is where other people start using it. That is the line worth slowing down at.',
+  when_to_use: [
+    'Your agent offers to merge its own work.',
+    'Nobody else has read the change yet.',
+    'The change touches money, login, or data.',
+    'You are the only person who can say no.'
+  ],
+  tradeoffs: {
+    pros: [
+      'A pull request costs one extra minute.',
+      'Someone else may spot what you missed.',
+      'The change is written down before it lands.'
+    ],
+    cons: [
+      'Waiting for review slows a fast build.',
+      'A review is not a guarantee of anything.'
+    ]
+  },
+  example: 'Tests pass. I am going to merge this straight into main and skip the pull request. OK?',
+  gotchas: [
+    'Passing tests is not the same as reviewed.',
+    'Main is what your users actually get.',
+    'Merging is much harder to undo than pushing.'
+  ],
+  vibe_coder_default: 'Push it, but open the pull request first.',
+  assessment: {
+    question: 'Your agent wants to skip the pull request. What do you say?',
+    options: ['Push it, but open the request', 'Merge it, the tests passed', 'Delete the branch and restart'],
+    answer: 'Push it, but open the request',
+    explanation: 'Pushing is cheap to undo. Landing in main is the expensive step.'
+  }
+};
+
+// L3 "TIME TRAVEL RESPONSIBLY" is the tier this landmark already shipped, so it
+// is projected from the canonical top-level fields rather than restated. That
+// projection is the same function the registry used during the L3-only
+// compatibility window, which is what keeps the re-voiced L3 run byte-identical
+// as this landmark gains its lower tiers (ISSUE-014, DATA_MODEL §6 step 1).
+export const l3: LevelContent = legacyLevelContent(base);
+
+// ISSUE-015 flips this one line to `{ ...base, levels: { l1, l2, l3 } }`.
+// Registering L1 and L2 changes which run the landmark page serves, and the
+// page resolver that picks the unlocked level is ISSUE-015's slice — wiring
+// them here would serve L1 from a route that still hard-codes L3 and every
+// write would come back 423 Level locked.
+export const landmark = base satisfies Landmark;

@@ -1,9 +1,10 @@
+import { legacyLevelContent } from '../beats/derive.ts';
 import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6). This landmark's
 // L3 run is hand-authored in ./beats/commits-as-checkpoints.ts and overrides the
 // derived projection; these fields stay the canonical fact source behind it.
-export const landmark = {
+const base = {
   id: 'commits-as-checkpoints',
   title: 'Commits as checkpoints',
   draft: false,
@@ -86,3 +87,56 @@ export const l1: LevelContent = {
     explanation: 'A commit is one saved state. The list of them is your history.'
   }
 };
+
+// L2 "THE AGENT MADE A BRANCH" (ISSUE-014). One agent decision: it wants to
+// commit everything it touched. Grounding: UGC finding B13 — people who cannot
+// tell what the tool actually did on their behalf.
+export const l2: LevelContent = {
+  hook: 'Your agent wants to save. It never said what.',
+  definition:
+    'Committing is safe. It only saves what is already sitting there. The risk is what gets swept in with it.',
+  when_to_use: [
+    'Your agent says it is ready to commit.',
+    'You cannot tell what it changed.',
+    'The change touches more files than you expected.',
+    'You want a save point before the next step.'
+  ],
+  tradeoffs: {
+    pros: [
+      'Reading the list first takes about ten seconds.',
+      'A commit you understand is one you can undo.',
+      'You find surprise files before they are saved.'
+    ],
+    cons: [
+      'Reading every change slows the agent down.',
+      'You will not catch a subtle logic bug.'
+    ]
+  },
+  example: 'I finished the login fix. I am going to commit all fourteen changed files now. OK?',
+  gotchas: [
+    'Fourteen changed files is not one change.',
+    'Agents commit files you never opened.',
+    'A commit is easy to undo. Read it anyway.'
+  ],
+  vibe_coder_default: 'Ask it to list the files first.',
+  assessment: {
+    question: 'Your agent wants to commit fourteen files at once. What now?',
+    options: ['Ask which files and why', 'Say yes, commits are reversible', 'Tell it to stop committing'],
+    answer: 'Ask which files and why',
+    explanation: 'A commit is easy to undo. Knowing what went in is the hard part.'
+  }
+};
+
+// L3 "TIME TRAVEL RESPONSIBLY" is the tier this landmark already shipped, so it
+// is projected from the canonical top-level fields rather than restated. That
+// projection is the same function the registry used during the L3-only
+// compatibility window, which is what keeps the re-voiced L3 run byte-identical
+// as this landmark gains its lower tiers (ISSUE-014, DATA_MODEL §6 step 1).
+export const l3: LevelContent = legacyLevelContent(base);
+
+// ISSUE-015 flips this one line to `{ ...base, levels: { l1, l2, l3 } }`.
+// Registering L1 and L2 changes which run the landmark page serves, and the
+// page resolver that picks the unlocked level is ISSUE-015's slice — wiring
+// them here would serve L1 from a route that still hard-codes L3 and every
+// write would come back 423 Level locked.
+export const landmark = base satisfies Landmark;

@@ -46,6 +46,12 @@ export const FACTORY_FRAMING = {
   gotchaWrongWhenPrefix: "Not that one. That's when it fits: ",
   // The colon crutch is gone; the check beat asks the question plainly.
   checkPromptPrefix: '',
+  // L2 register is dialogue (§6.1 rule 10). The scenario beat IS the agent
+  // asking, so its prompt is the agent's own line with NO narrator frame in
+  // front of it. The `AGENT:` chrome around that line is a render mode
+  // (BeatPlayer), not content — putting it in the string would make the word
+  // "AGENT" a canonical fact of the landmark, which it is not.
+  agentScenarioPromptPrefix: '',
   // §6.4 item 5: the suffix is deleted. The recap earns its exit.
   recapPromptSuffix: '',
 } as const;
@@ -254,6 +260,13 @@ export function deriveLevelSequence(
     FACTORY_FRAMING.gotchaCorrectLead,
   );
 
+  // §6.1 rule 10: an L2 scenario is the agent talking, so it carries no narrator
+  // frame. Every other tier keeps the neutral setup frame.
+  const scenarioPrompt =
+    level === 'l2'
+      ? `${FACTORY_FRAMING.agentScenarioPromptPrefix}${content.example}`
+      : `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`;
+
   const firstDefinition = sentences(content.definition)[0] ?? content.definition;
   const recapBullets = uniqueLabels([
     firstDefinition,
@@ -291,7 +304,7 @@ export function deriveLevelSequence(
     {
       id: 'scenario-default',
       type: 'scenario',
-      prompt: `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`,
+      prompt: scenarioPrompt,
       options: scenario.options,
       correctOptionId: scenario.correctOptionId,
       hint: FACTORY_FRAMING.scenarioHint,
@@ -468,6 +481,7 @@ export function sequenceProvenanceViolations(
   ]);
   const composites = new Set<string>([
     `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`,
+    `${FACTORY_FRAMING.agentScenarioPromptPrefix}${content.example}`,
     `${FACTORY_FRAMING.checkPromptPrefix}${content.assessment.question}`,
     `${content.hook}${FACTORY_FRAMING.recapPromptSuffix}`,
   ]);

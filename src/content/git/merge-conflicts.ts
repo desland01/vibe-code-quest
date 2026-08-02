@@ -1,7 +1,8 @@
+import { legacyLevelContent } from '../beats/derive.ts';
 import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
-export const landmark = {
+const base = {
   id: 'merge-conflicts',
   title: 'Merge conflicts',
   draft: false,
@@ -84,3 +85,55 @@ export const l1: LevelContent = {
     explanation: 'Git stops when two changes touch the same lines. You pick.'
   }
 };
+
+// L2 "THE AGENT MADE A BRANCH" (ISSUE-014). One agent decision: it wants to
+// resolve a conflict by picking its own side. Grounding: UGC finding B13.
+export const l2: LevelContent = {
+  hook: 'Your agent hit a conflict. It wants to guess.',
+  definition:
+    'A conflict means two changes disagree. Git will not choose between them. Whoever chooses needs to know what the code is for.',
+  when_to_use: [
+    'Your agent says it resolved a conflict.',
+    'Two agents worked on the same file.',
+    'You do not know which version is right.',
+    'The merge touches something you care about.'
+  ],
+  tradeoffs: {
+    pros: [
+      'An agent can explain both sides quickly.',
+      'You still decide which behavior you want.',
+      'Asking first costs you one question.'
+    ],
+    cons: [
+      'Explaining the intent takes longer than merging.',
+      'You may not know the answer either.'
+    ]
+  },
+  example: 'You and I both changed the price field. I am picking my version. OK?',
+  gotchas: [
+    'An agent picks what builds, not what is right.',
+    'A resolved conflict can still lose behavior.',
+    'Both sides can be wrong at the same time.'
+  ],
+  vibe_coder_default: 'Ask what each side does before you choose.',
+  assessment: {
+    question: 'Your agent wants to resolve a conflict its own way. What now?',
+    options: ['Ask what each version does', 'Let it pick, the code builds', 'Undo both changes'],
+    answer: 'Ask what each version does',
+    explanation: 'Git stopped because it cannot know the intent. Neither can the agent.'
+  }
+};
+
+// L3 "TIME TRAVEL RESPONSIBLY" is the tier this landmark already shipped, so it
+// is projected from the canonical top-level fields rather than restated. That
+// projection is the same function the registry used during the L3-only
+// compatibility window, which is what keeps the re-voiced L3 run byte-identical
+// as this landmark gains its lower tiers (ISSUE-014, DATA_MODEL §6 step 1).
+export const l3: LevelContent = legacyLevelContent(base);
+
+// ISSUE-015 flips this one line to `{ ...base, levels: { l1, l2, l3 } }`.
+// Registering L1 and L2 changes which run the landmark page serves, and the
+// page resolver that picks the unlocked level is ISSUE-015's slice — wiring
+// them here would serve L1 from a route that still hard-codes L3 and every
+// write would come back 423 Level locked.
+export const landmark = base satisfies Landmark;

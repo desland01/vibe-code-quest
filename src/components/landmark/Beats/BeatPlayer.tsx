@@ -36,6 +36,7 @@ import {
   toBeatProgressState,
   writeLocalBeatProgress,
 } from './beatStorage';
+import { Avatar, type AvatarReaction } from '@/components/Avatar';
 import styles from './beats.module.css';
 
 export type BeatPlayerProps = {
@@ -108,6 +109,20 @@ function actionLabel(beat: Beat): string {
  * ("SAVE POINTS", "THE AGENT MADE A BRANCH") are content and belong to the
  * island content issues; the HUD needs a label that is true for all 48.
  */
+/**
+ * Non-visual alt text per reaction. The verdict is already double-coded in the
+ * pose (§1) and in the status line; this is the third path, for a player who
+ * sees neither.
+ */
+const AVATAR_ALT: Record<AvatarReaction, string> = {
+  idle: 'waiting',
+  thinking: 'thinking',
+  celebrate: 'celebrating a correct answer',
+  shrug: 'shrugging at a wrong answer',
+  'level-clear': 'celebrating the finished level',
+  'island-clear': 'celebrating the finished island',
+};
+
 const LEVEL_LABELS: Record<LevelId, string> = {
   l1: '1 · VOCAB',
   l2: '2 · DECISION',
@@ -160,6 +175,32 @@ export function BeatPlayer({
   const hasMounted = useRef(false);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [quizChoice, setQuizChoice] = useState('');
+  // "Thinking" is a dwell state, not an outcome: it fires when the player has sat
+  // on a choice beat for a while (§1). It is deliberately NOT a nudge — nothing
+  // changes on screen except the dog tilting its head.
+  //
+  // The timer records WHICH beat it fired for rather than a bare boolean, so the
+  // reset is derived at render instead of written back from an effect. Clearing
+  // it with a second `setState` inside the effect is what triggers the cascading
+  // render this codebase's lint rule exists to stop.
+  const [thinkingFor, setThinkingFor] = useState<string | null>(null);
+  // ISSUE-017: the reaction state machine. The avatar reacts to the ANSWER, and
+  // it lives on the stage rather than inside the question card (VAL-017) so a
+  // celebration never covers the thing the player is reading.
+  // `info` feedback — the predict beat, where any pick resolves — deliberately
+  // leaves the avatar neutral. A guess made before the reveal is not a verdict,
+  // and shrugging at it would break "never mock the player" (§6.1 rule 5) in
+  // pixels rather than in words.
+  const avatarReaction: AvatarReaction = state.completed
+    ? 'level-clear'
+    : state.feedback?.kind === 'correct'
+      ? 'celebrate'
+      : state.feedback?.kind === 'wrong'
+        ? 'shrug'
+        : thinkingFor === beat.id && !state.feedback
+          ? 'thinking'
+          : 'idle';
+
   const [sessionStamped, setSessionStamped] = useState(false);
   // Collectible ownership is server-confirmed only (never local/optimistic).
   const [collectibleConfirmed, setCollectibleConfirmed] = useState(
@@ -179,6 +220,14 @@ export function BeatPlayer({
     const seconds = sequence.beats.reduce((sum, item) => sum + item.estimatedSeconds, 0);
     return Math.max(1, Math.round(seconds / 60));
   }, [sequence.beats]);
+
+  // Dwell timer for the thinking pose. Reset on every beat change and on every
+  // answer, so it only fires when the player really has stopped.
+  useEffect(() => {
+    if (!isChoiceBeat(beat) || state.feedback) return;
+    const timer = setTimeout(() => setThinkingFor(beat.id), 4000);
+    return () => clearTimeout(timer);
+  }, [beat, state.feedback]);
 
   // Initialize timers once on mount (purity: no performance/Date during render).
   useEffect(() => {
@@ -731,7 +780,9 @@ export function BeatPlayer({
             </li>
           ))}
         </ol>
-        <div className={styles.avatarSlot} data-stage-region="avatar" aria-hidden="true" />
+        <div className={styles.avatarSlot} data-stage-region="avatar">
+          <Avatar reaction={avatarReaction} label={`SUDO, ${AVATAR_ALT[avatarReaction]}`} />
+        </div>
       </div>
     </section>
   );

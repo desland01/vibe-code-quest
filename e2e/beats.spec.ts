@@ -365,6 +365,40 @@ test.describe('engagement-v2 BeatPlayer (E-003/E-004)', () => {
     await expect(page.getByTestId('beat-stamp-panel')).toBeVisible();
   });
 
+  // ISSUE-017 — VAL-017 / VAL-018.
+  test('the avatar is on the stage and reacts to the answer', async ({ page }) => {
+    await blockAiApis(page);
+    await openPlayer(page, PILOT);
+
+    const avatar = page.locator('[data-avatar]');
+    // VAL-017: visible ON THE STAGE, never inside the question card — a
+    // celebration must not cover the thing the player is reading.
+    await expect(avatar).toBeVisible();
+    await expect(page.locator('[data-stage] [data-stage-region="avatar"] [data-avatar]')).toHaveCount(1);
+    await expect(page.locator('[data-beat-id] [data-avatar]')).toHaveCount(0);
+    await expect(avatar).toHaveAttribute('data-reaction', 'idle');
+
+    // Walk to the scenario beat, which is GRADED. The predict beat deliberately
+    // does not move the avatar: a guess made before the reveal is not a verdict,
+    // and shrugging at it would be the copy rule "never mock the player" broken
+    // in pixels instead of words.
+    await advance(page); // → predict
+    await choose(page, PILOT.predictPick);
+    await expect(avatar).toHaveAttribute('data-reaction', 'idle');
+    await advance(page); // → reveal
+    const showNextCard = page.getByRole('button', { name: /Show next card/ });
+    for (let guard = 0; guard < 3 && (await showNextCard.count()) > 0; guard += 1) {
+      await showNextCard.click();
+    }
+    await advance(page); // → scenario
+
+    // VAL-018: wrong ⇒ shrug, correct ⇒ celebrate.
+    await choose(page, PILOT.scenarioWrong);
+    await expect(avatar).toHaveAttribute('data-reaction', 'shrug');
+    await choose(page, PILOT.scenarioRight);
+    await expect(avatar).toHaveAttribute('data-reaction', 'celebrate');
+  });
+
   test('reduced-motion disables beat enter animation', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await blockAiApis(page);

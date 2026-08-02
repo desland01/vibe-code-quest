@@ -85,12 +85,18 @@
   justify-content: space-between;
   gap: clamp(10px, 2vw, 20px);
 }
-/* The avatar corner. Empty until ISSUE-017 fills it — reserved here so the
-   stage geometry the fit harness measures is the final one. */
+/* The avatar CORNER, and corner is the operative word: SUDO is positioned
+   against the stage rather than laid out in the trail row. Sprites render at
+   integer scale only (x2 = 64px), so a slot that flexed with viewport height
+   would either clip the dog or blur him — and at 1024x640 the stage has no 64px
+   of vertical budget to give a layout row. Out of flow costs nothing. */
 .avatarSlot {
-  width: clamp(40px, 7vh, 64px);
-  height: clamp(40px, 7vh, 64px);
-  flex: 0 0 auto;
+  position: absolute;
+  right: clamp(14px, 3vw, 40px);
+  bottom: clamp(10px, 2vh, 22px);
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
 }
 
 /* Stage-scoped compression.

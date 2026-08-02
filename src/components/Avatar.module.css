@@ -1,0 +1,52 @@
+/* ISSUE-017 — sprite-strip animation, the codebase's existing idiom.
+   `background-position` keyframes with `steps(N)`, never a JS tween and never an
+   animation library (REQ-013's no-dependency rule, EXECUTION_PLAN). */
+
+.avatar {
+  display: block;
+  width: var(--px);
+  height: var(--px);
+  background-image: var(--sprite);
+  background-repeat: no-repeat;
+  /* One frame wide, N frames of background. With this sizing, background-position-x
+     0% is frame 1 and 100% is frame N, so one keyframe pair drives every strip
+     and only the step COUNT changes per reaction. */
+  background-size: calc(var(--frames) * 100%) 100%;
+  background-position: 0% 0%;
+  image-rendering: pixelated;
+}
+
+@keyframes sprite-strip {
+  from { background-position-x: 0%; }
+  to { background-position-x: 100%; }
+}
+
+.f2 { --frames: 2; animation-timing-function: steps(2); }
+.f3 { --frames: 3; animation-timing-function: steps(3); }
+.f4 { --frames: 4; animation-timing-function: steps(4); }
+.f6 { --frames: 6; animation-timing-function: steps(6); }
+.f8 { --frames: 8; animation-timing-function: steps(8); }
+
+.loop {
+  animation-name: sprite-strip;
+  animation-duration: 1200ms;
+  animation-iteration-count: infinite;
+}
+.once {
+  animation-name: sprite-strip;
+  animation-duration: 360ms;
+  animation-iteration-count: 1;
+  /* Hold the last frame. The one-shot reactions ARE their final pose: ears up
+     and airborne for correct, held shrug for wrong. */
+  animation-fill-mode: forwards;
+}
+
+/* Reduced motion: every reaction renders its FINAL frame as a static pose, and
+   the pose alone carries the verdict — ears up = correct, ears flat + eyes
+   closed = wrong. No animation, no information lost (REQ-022). */
+@media (prefers-reduced-motion: reduce) {
+  .avatar {
+    animation: none !important;
+    background-position-x: 100%;
+  }
+}

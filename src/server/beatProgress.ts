@@ -1,11 +1,12 @@
 import 'server-only';
 
 import { getRegion } from '@/lib/content';
-import { hasBeatSequence, getBeatSequence } from '@/content/beats';
+import { getSequence, hasSequence } from '@/content/beats';
 import {
   beatProgressStateSchema,
   validateBeatStateConsistency,
   type BeatProgressState,
+  type SequenceRef,
 } from '@/content/beats/schema';
 
 // Server-side validation for beat-sequence progress writes (frozen DESIGN_CONTRACT §8).
@@ -17,23 +18,25 @@ export type BeatStateValidation =
   | { ok: false; status: number; error: string };
 
 export function validateBeatStateWrite(
-  regionId: string,
-  landmarkId: string,
+  ref: SequenceRef,
   rawState: unknown
 ): BeatStateValidation {
+  const { regionId, landmarkId } = ref;
   const region = getRegion(regionId);
   if (!region) return { ok: false, status: 400, error: 'Unknown region' };
   if (!region.landmarks.some((landmark) => landmark.id === landmarkId)) {
     return { ok: false, status: 400, error: 'Landmark does not belong to region' };
   }
-  if (!hasBeatSequence(regionId, landmarkId)) {
+  if (!hasSequence(ref)) {
     return { ok: false, status: 400, error: 'No beat sequence registered for landmark' };
   }
   const parsed = beatProgressStateSchema.safeParse(rawState);
   if (!parsed.success) return { ok: false, status: 400, error: 'Invalid beat progress state' };
   const state = parsed.data;
 
-  const sequence = getBeatSequence(regionId, landmarkId)!;
+  // Bounds come from the EXACT selected sequence, so an L1 run's shorter beat
+  // list can never be validated against L3's terminal index.
+  const sequence = getSequence(ref)!;
   const terminalIndex = sequence.beats.length - 1;
   if (state.furthestBeatIndex > terminalIndex) {
     return { ok: false, status: 400, error: 'furthestBeatIndex out of bounds' };
@@ -65,12 +68,11 @@ export type ProgressWritePlan =
   | { path: 'reject'; status: number; error: string };
 
 export function resolveProgressWrite(
-  regionId: string,
-  landmarkId: string,
+  ref: SequenceRef,
   state: Record<string, unknown>
 ): ProgressWritePlan {
-  if (hasBeatSequence(regionId, landmarkId)) {
-    const validation = validateBeatStateWrite(regionId, landmarkId, state);
+  if (hasSequence(ref)) {
+    const validation = validateBeatStateWrite(ref, state);
     if (!validation.ok) {
       return { path: 'reject', status: validation.status, error: validation.error };
     }
@@ -91,10 +93,15 @@ export function resolveProgressWrite(
 // stored JSON null forever and a later real timestamp could never land. NULLIF maps JSON null
 // to SQL NULL so the first real stamp wins; the trailing 'null'::jsonb keeps the key present
 // as JSON null for unstamped rows so the read-side zod schema always sees a stampedAt field.
+// Four-part conflict identity (DATA_MODEL §3). The merge algebra is unchanged —
+// GREATEST for the frontier, OR for terminal facts, first non-null stamp — but
+// L1, L2 and L3 are now three INDEPENDENT join semilattices for one landmark.
+// Interleaved writes across levels can no longer compare frontiers or copy a
+// terminal fact from one level onto another.
 export const BEAT_PROGRESS_UPSERT_SQL = `
-INSERT INTO progress (profile_id, region, landmark, state)
-VALUES ($1, $2, $3, $4::jsonb)
-ON CONFLICT (profile_id, region, landmark)
+INSERT INTO progress (profile_id, region, landmark, level, state)
+VALUES ($1, $2, $3, $4, $5::jsonb)
+ON CONFLICT (profile_id, region, landmark, level)
 DO UPDATE SET
   state = CASE
     WHEN progress.state->>'kind' IS DISTINCT FROM 'beat-sequence'
@@ -118,5 +125,5 @@ DO UPDATE SET
     )
   END,
   updated_at = now()
-RETURNING region, landmark, state, updated_at
+RETURNING region, landmark, level, state, updated_at
 `;

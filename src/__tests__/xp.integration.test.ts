@@ -8,7 +8,7 @@ import {
   XP_PER_LANDMARK,
   XP_TOTAL_SQL,
   applyXpAwards,
-  deriveXpAwardsForLandmark,
+  deriveXpAwardsForLevel,
 } from '@/server/xp';
 
 const connectionString = process.env.TEST_DATABASE_URL;
@@ -113,9 +113,9 @@ describeWithDatabase('L-003 xp_awards SQL + RLS', () => {
         completed: true,
         stampedAt: '2026-07-21T12:00:00.000Z',
       };
-      expect(deriveXpAwardsForLandmark(region, landmark, stamped)).toHaveLength(4);
+      expect(deriveXpAwardsForLevel({ regionId: region, landmarkId: landmark, level: 'l3' }, stamped)).toHaveLength(4);
 
-      const first = await applyXpAwards(client, userA, region, landmark, stamped);
+      const first = await applyXpAwards(client, userA, region, landmark, 'l3', stamped);
       expect(first.newPoints).toBe(XP_PER_LANDMARK);
       expect(first.total).toBe(100);
       expect(first.awarded.map((a) => a.awardKey).sort()).toEqual([
@@ -125,7 +125,7 @@ describeWithDatabase('L-003 xp_awards SQL + RLS', () => {
         'scenario_solved',
       ]);
 
-      const replay = await applyXpAwards(client, userA, region, landmark, stamped);
+      const replay = await applyXpAwards(client, userA, region, landmark, 'l3', stamped);
       expect(replay.newPoints).toBe(0);
       expect(replay.total).toBe(100);
       expect(replay.awarded).toEqual([]);
@@ -145,16 +145,18 @@ describeWithDatabase('L-003 xp_awards SQL + RLS', () => {
         userA,
         region,
         landmark,
+        'l3',
         beatState({ furthestBeatIndex: 3 }),
       ]);
       const merged = await client.query(BEAT_PROGRESS_UPSERT_SQL, [
         userA,
         region,
         landmark,
+        'l3',
         beatState({ furthestBeatIndex: 4 }),
       ]);
       const state = merged.rows[0].state;
-      const xp = await applyXpAwards(client, userA, region, landmark, state);
+      const xp = await applyXpAwards(client, userA, region, landmark, 'l3', state);
       expect(xp.newPoints).toBe(15);
       expect(xp.total).toBe(15);
       await client.query('COMMIT');

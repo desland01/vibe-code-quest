@@ -34,6 +34,26 @@ try {
   for (const name of files) {
     const sql = await readFile(path.join(migrationsDirectory, name), 'utf8');
     const checksum = createHash('sha256').update(sql).digest('hex');
+
+    // Gated migrations carry `-- GATED: <NAME>` on their first line and are
+    // skipped unless <NAME>_APPROVED=1 is set for this run. A migration that
+    // crosses a point of no return must never be applied by an ordinary
+    // `npm run db:migrate`; the marker is what makes "requires explicit owner
+    // approval" a mechanism rather than a comment.
+    const gate = /^--\s*GATED:\s*([A-Z0-9_]+)\s*$/m.exec(sql.split('\n', 1)[0] ?? '');
+    if (gate) {
+      const flag = `${gate[1]}_APPROVED`;
+      if (process.env[flag] !== '1') {
+        const applied = await client.query(
+          'SELECT 1 FROM schema_migrations WHERE name = $1',
+          [name]
+        );
+        if (applied.rowCount) continue;
+        console.log(`Skipped ${name} — gated migration, set ${flag}=1 to apply it`);
+        continue;
+      }
+      console.log(`Applying GATED migration ${name} — ${flag}=1 was set for this run`);
+    }
     const existing = await client.query<{ checksum: string }>(
       'SELECT checksum FROM schema_migrations WHERE name = $1',
       [name]

@@ -2,9 +2,9 @@ import 'server-only';
 
 import type { PoolClient } from 'pg';
 
-import type { BeatSequence } from '@/content/beats/schema';
+import type { BeatSequence, LevelId, SequenceRef } from '@/content/beats/schema';
 import { beatProgressStateSchema, type BeatProgressState } from '@/content/beats/schema';
-import { getBeatSequence } from '@/content/beats';
+import { getSequence } from '@/content/beats';
 
 // L-003 competence XP (A4.5 / R042–R045).
 // Server-derived from progress facts only. Zero penalties, zero decay.
@@ -25,12 +25,20 @@ export type XpAward = {
   points: number;
 };
 
-/** Max XP for one fully stamped landmark (15+15+20+50). */
-export const XP_PER_LANDMARK =
+/** Max XP for one fully stamped LEVEL (15+15+20+50). */
+export const XP_PER_LEVEL =
   XP_AWARD_POINTS.scenario_solved +
   XP_AWARD_POINTS.gotcha_solved +
   XP_AWARD_POINTS.check_passed +
   XP_AWARD_POINTS.landmark_stamped;
+
+/**
+ * Max XP for one landmark across all three levels. The cap is per level (100)
+ * and per landmark (300) — point VALUES are unchanged and there are still only
+ * four unqualified award keys; what changed is that the same key may now exist
+ * once per level (DATA_MODEL §3).
+ */
+export const XP_PER_LANDMARK = XP_PER_LEVEL * 3;
 
 export type XpClient = Pick<PoolClient, 'query'>;
 
@@ -70,21 +78,24 @@ export function deriveXpAwards(
   return awards;
 }
 
-export function deriveXpAwardsForLandmark(
-  regionId: string,
-  landmarkId: string,
-  rawState: unknown,
-): XpAward[] {
+export function deriveXpAwardsForLevel(ref: SequenceRef, rawState: unknown): XpAward[] {
   const state = parseProgressStateForXp(rawState);
   if (!state) return [];
-  return deriveXpAwards(state, getBeatSequence(regionId, landmarkId));
+  // Scenario and gotcha positions are read from the EXACT selected sequence, so
+  // award thresholds follow that level's own beat layout.
+  return deriveXpAwards(state, getSequence(ref));
 }
 
+// Five-column conflict identity (DATA_MODEL §3). The same four unqualified award
+// keys remain the only valid keys — 0009's CHECK is untouched, and no 'l1_'/'l2_'
+// /'l3_' variant exists. What the level column buys is that one key may be earned
+// once per level, which is what makes the 300-point landmark ceiling reachable
+// without inventing new keys or changing any point value.
 export const XP_AWARD_INSERT_SQL = `
-INSERT INTO xp_awards (profile_id, region, landmark, award_key, points)
-VALUES ($1, $2, $3, $4, $5)
-ON CONFLICT (profile_id, region, landmark, award_key) DO NOTHING
-RETURNING award_key, points
+INSERT INTO xp_awards (profile_id, region, landmark, level, award_key, points)
+VALUES ($1, $2, $3, $4, $5, $6)
+ON CONFLICT (profile_id, region, landmark, level, award_key) DO NOTHING
+RETURNING level, award_key, points
 `;
 
 export const XP_TOTAL_SQL = `
@@ -109,9 +120,10 @@ export async function applyXpAwards(
   userId: string,
   regionId: string,
   landmarkId: string,
+  level: LevelId,
   rawState: unknown,
 ): Promise<XpWriteResult> {
-  const awards = deriveXpAwardsForLandmark(regionId, landmarkId, rawState);
+  const awards = deriveXpAwardsForLevel({ regionId, landmarkId, level }, rawState);
   const awarded: Array<{ awardKey: XpAwardKey; points: number }> = [];
 
   for (const award of awards) {
@@ -119,6 +131,7 @@ export async function applyXpAwards(
       userId,
       regionId,
       landmarkId,
+      level,
       award.awardKey,
       award.points,
     ]);

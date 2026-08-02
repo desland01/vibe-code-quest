@@ -1,4 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
+
+import { classifyTestTarget, preflight } from '../../scripts/with-neon-branch.mjs';
 import { chmod, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -68,6 +70,10 @@ async function setup(): Promise<{
       ...process.env,
       PATH: `${binDir}:${process.env.PATH ?? ''}`,
       NEONCTL_LOG: join(root, 'calls.log'),
+      // These fixtures deliberately exercise the branch-creation path against a
+      // fake neonctl, so they carry the ISSUE-010 approval flag explicitly. That
+      // is the point of the flag: creation never happens without it.
+      NEON_EPHEMERAL_BRANCH_APPROVED: '1',
       OBSERVED_ENV_FILE: join(root, 'observed-env.txt'),
     },
   };
@@ -175,18 +181,18 @@ describe('with-neon-branch', () => {
 
   it('uses a non-empty existing TEST_DATABASE_URL without creating a branch', async () => {
     const fixture = await setup();
-    fixture.env.TEST_DATABASE_URL = 'postgres://existing.example/db';
+    fixture.env.TEST_DATABASE_URL = 'postgres://existing@localhost:5432/db';
     const result = await runWrapper(fixture.env).result;
     const calls = await callsAt(fixture.logFile);
 
     expect(result.code).toBe(0);
     expect(createCalls(calls)).toHaveLength(0);
-    expect(await readFile(fixture.observedEnvFile, 'utf8')).toBe('postgres://existing.example/db');
+    expect(await readFile(fixture.observedEnvFile, 'utf8')).toBe('postgres://existing@localhost:5432/db');
   });
 
   it('remaps an inherited child exit code of 78 to 1 without creating a branch', async () => {
     const fixture = await setup();
-    fixture.env.TEST_DATABASE_URL = 'postgres://existing.example/db';
+    fixture.env.TEST_DATABASE_URL = 'postgres://existing@localhost:5432/db';
 
     const result = await runWrapper(fixture.env, 78).result;
     const calls = await callsAt(fixture.logFile);
@@ -220,7 +226,10 @@ describe('with-neon-branch', () => {
     expect(deleteCalls(finalCalls)).toContainEqual(expect.arrayContaining(['branches', 'delete', branchName]));
   });
 
-  it('prints a warning naming the branch when deletion fails for another reason', async () => {
+  it('FAILS the gate when deletion leaves a branch behind (VAL-064)', async () => {
+    // Changed by ISSUE-010: this used to warn and exit 0. A leaked Neon branch is
+    // a real external resource, and a warning inside a PASSING run is a leak
+    // nobody reads. Cleanup failure now fails the gate.
     const fixture = await setup();
     delete fixture.env.TEST_DATABASE_URL;
     fixture.env.NEONCTL_DELETE_ERROR = 'other';
@@ -229,8 +238,33 @@ describe('with-neon-branch', () => {
     const created = createCalls(await callsAt(fixture.logFile))[0];
     const branchName = created[created.indexOf('--name') + 1];
 
-    expect(result.code).toBe(0);
-    expect(result.stderr).toContain(`WARNING: failed to delete Neon branch ${branchName}`);
+    expect(result.code).toBe(1);
+    expect(result.stderr).toContain(`ERROR: failed to delete Neon branch ${branchName}`);
+    expect(result.stderr).toContain('Gate FAILED: a Neon test branch was left behind');
+  });
+
+  it('refuses to create a branch without recorded owner approval (VAL-064)', async () => {
+    const fixture = await setup();
+    delete fixture.env.TEST_DATABASE_URL;
+    delete fixture.env.NEON_EPHEMERAL_BRANCH_APPROVED;
+    const result = await runWrapper(fixture.env).result;
+
+    // 78 = "the gate could not RUN", distinct from a real test failure.
+    expect(result.code).toBe(78);
+    expect(result.stderr).toContain('CREATE A REAL NEON BRANCH');
+    // The load-bearing assertion: no branch was created.
+    expect(createCalls(await callsAt(fixture.logFile))).toHaveLength(0);
+  });
+
+  it('refuses an unproven TEST_DATABASE_URL and creates nothing (VAL-064)', async () => {
+    const fixture = await setup();
+    delete fixture.env.NEON_EPHEMERAL_BRANCH_APPROVED;
+    fixture.env.TEST_DATABASE_URL = 'postgres://u:p@ep-prod-main-1-x.aws.neon.tech/db';
+    const result = await runWrapper(fixture.env).result;
+
+    expect(result.code).toBe(78);
+    expect(result.stderr).toContain('not a proven disposable target');
+    expect(createCalls(await callsAt(fixture.logFile))).toHaveLength(0);
   });
 
   it('quietly ignores a not-found deletion failure', async () => {
@@ -241,5 +275,59 @@ describe('with-neon-branch', () => {
 
     expect(result.code).toBe(0);
     expect(result.stderr).not.toContain('WARNING: failed to delete Neon branch');
+  });
+});
+
+describe('DB-test preflight (ISSUE-010, VAL-064)', () => {
+  it('classifies local and clearly-ephemeral targets as disposable', () => {
+    expect(classifyTestTarget('postgres://u:p@localhost:5432/db').kind).toBe('disposable');
+    expect(classifyTestTarget('postgres://u:p@127.0.0.1:5432/db').kind).toBe('disposable');
+    expect(classifyTestTarget('postgres://u:p@ep-ephemeral-test-1-x.aws.neon.tech/db').kind).toBe(
+      'disposable',
+    );
+  });
+
+  it('refuses an unproven target rather than guessing it is safe', () => {
+    expect(classifyTestTarget('postgres://u:p@ep-prod-main-1-x.aws.neon.tech/db').kind).toBe(
+      'unproven',
+    );
+    expect(classifyTestTarget('not a url').kind).toBe('unparseable');
+    expect(classifyTestTarget('').kind).toBe('absent');
+    expect(classifyTestTarget(undefined).kind).toBe('absent');
+  });
+
+  it('refuses to run at all when TEST_DATABASE_URL is unset and no approval exists', () => {
+    const gate = preflight({});
+    expect(gate.ok).toBe(false);
+    expect(gate.reason).toMatch(/CREATE A REAL NEON BRANCH/);
+  });
+
+  it('refuses an unproven TEST_DATABASE_URL even though one is set', () => {
+    const gate = preflight({ TEST_DATABASE_URL: 'postgres://u:p@ep-prod-main-1-x.aws.neon.tech/db' });
+    expect(gate.ok).toBe(false);
+    expect(gate.reason).toMatch(/not a proven disposable target/);
+  });
+
+  it('allows a proven disposable target without creating a branch', () => {
+    const gate = preflight({ TEST_DATABASE_URL: 'postgres://u:p@localhost:5432/db' });
+    expect(gate).toMatchObject({ ok: true, mode: 'existing' });
+  });
+
+  it('allows branch creation only with recorded owner approval for that run', () => {
+    expect(preflight({ NEON_EPHEMERAL_BRANCH_APPROVED: '1' })).toMatchObject({
+      ok: true,
+      mode: 'create',
+    });
+    // Any value other than an explicit '1' is not approval.
+    expect(preflight({ NEON_EPHEMERAL_BRANCH_APPROVED: 'true' }).ok).toBe(false);
+    expect(preflight({ NEON_EPHEMERAL_BRANCH_APPROVED: '0' }).ok).toBe(false);
+    // Approval does NOT override an unproven explicit target — that would let a
+    // production URL through under an ephemeral-branch approval.
+    expect(
+      preflight({
+        NEON_EPHEMERAL_BRANCH_APPROVED: '1',
+        TEST_DATABASE_URL: 'postgres://u:p@ep-prod-main-1-x.aws.neon.tech/db',
+      }).ok,
+    ).toBe(false);
   });
 });

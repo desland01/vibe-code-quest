@@ -4,6 +4,10 @@ import { describe, expect, it } from 'vitest';
 
 import {
   BEAT_PROGRESS_UPSERT_SQL,
+  LANDMARK_PROGRESS_FOR_SHARE_SQL,
+  computeHighestUnlockedLevel,
+  gateLevelWrite,
+  isLevelUnlocked,
   resolveProgressWrite,
   validateBeatStateWrite,
 } from '@/server/beatProgress';
@@ -200,5 +204,109 @@ describe('arcade level expand migration (ISSUE-004, VAL-060)', () => {
       '0009_xp.sql',
       '0010_leaderboard.sql',
     ]);
+  });
+});
+
+describe('hosted level gating (ISSUE-005: VAL-009, VAL-046, VAL-054, VAL-059)', () => {
+  const done = (level: 'l1' | 'l2' | 'l3') => ({
+    level,
+    state: {
+      v: 1,
+      kind: 'beat-sequence',
+      furthestBeatIndex: 7,
+      checked: true,
+      completed: true,
+      stampedAt: '2026-08-02T00:00:00.000Z',
+    },
+  });
+  const partial = (level: 'l1' | 'l2' | 'l3', furthestBeatIndex = 3) => ({
+    level,
+    state: { v: 1, kind: 'beat-sequence', furthestBeatIndex, checked: false, completed: false, stampedAt: null },
+  });
+
+  it('opens L1 to a brand-new profile and nothing above it', () => {
+    expect(computeHighestUnlockedLevel([])).toBe('l1');
+    expect(isLevelUnlocked('l1', 'l1')).toBe(true);
+    expect(isLevelUnlocked('l2', 'l1')).toBe(false);
+    expect(isLevelUnlocked('l3', 'l1')).toBe(false);
+  });
+
+  it('rejects a write above the highest unlocked level with 423 (VAL-009)', () => {
+    const locked = gateLevelWrite('l2', []);
+    expect(locked.ok).toBe(false);
+    if (!locked.ok) {
+      expect(locked.status).toBe(423);
+      expect(locked.body).toEqual({
+        error: 'Level locked',
+        requestedLevel: 'l2',
+        highestUnlockedLevel: 'l1',
+      });
+    }
+    // An L3 write from a profile that has only completed L1 is still locked.
+    const l3FromL1 = gateLevelWrite('l3', [done('l1')]);
+    expect(l3FromL1.ok).toBe(false);
+  });
+
+  it('advances the unlock one tier at a time as levels are completed', () => {
+    expect(computeHighestUnlockedLevel([partial('l1')])).toBe('l1');
+    expect(computeHighestUnlockedLevel([done('l1')])).toBe('l2');
+    expect(computeHighestUnlockedLevel([done('l1'), partial('l2')])).toBe('l2');
+    expect(computeHighestUnlockedLevel([done('l1'), done('l2')])).toBe('l3');
+    expect(gateLevelWrite('l2', [done('l1')]).ok).toBe(true);
+    expect(gateLevelWrite('l3', [done('l1'), done('l2')]).ok).toBe(true);
+  });
+
+  it('grandfathers a legacy L3 row without synthesizing L1 or L2 (VAL-054)', () => {
+    // 0011 backfills existing rows to L3 only. Requiring a completed L2 for L3
+    // would lock every existing player out of the tier they were playing.
+    const legacy = [partial('l3', 5)];
+    expect(computeHighestUnlockedLevel(legacy)).toBe('l3');
+    expect(gateLevelWrite('l3', legacy).ok).toBe(true);
+    // Lower levels stay selectable and start empty — no retroactive unlock is
+    // recorded and no L1/L2 row is invented.
+    expect(gateLevelWrite('l1', legacy).ok).toBe(true);
+    expect(gateLevelWrite('l2', legacy).ok).toBe(true);
+    expect(legacy.some((row) => row.level !== 'l3')).toBe(false);
+  });
+
+  it('does not let an anonymous local L3 claim promote a hosted write (VAL-059)', () => {
+    // The gate reads DATABASE rows only. A browser-held L3 contributes nothing,
+    // so after sign-in a profile with no rows is still capped at L1.
+    expect(computeHighestUnlockedLevel([])).toBe('l1');
+    expect(gateLevelWrite('l3', []).ok).toBe(false);
+    // Even a completed local L1 is worthless until it lands as a hosted row.
+    expect(gateLevelWrite('l2', []).ok).toBe(false);
+  });
+
+  it('ignores a malformed stored state when computing unlock', () => {
+    expect(computeHighestUnlockedLevel([{ level: 'l1', state: { completed: true } }])).toBe('l1');
+    expect(computeHighestUnlockedLevel([{ level: 'l1', state: null }])).toBe('l1');
+    expect(computeHighestUnlockedLevel([{ level: 'l1', state: 'nonsense' }])).toBe('l1');
+  });
+
+  it('reads prerequisites with FOR SHARE inside the transaction (VAL-046)', () => {
+    const sql = LANDMARK_PROGRESS_FOR_SHARE_SQL.replace(/\s+/g, ' ').trim();
+    expect(sql).toContain('SELECT level, state');
+    expect(sql).toContain('WHERE profile_id = $1 AND region = $2 AND landmark = $3');
+    expect(sql).toContain('FOR SHARE');
+  });
+
+  it('validates state against the SELECTED level, not a fixed sequence (VAL-046)', () => {
+    // The server owns beat kind and bounds per level. A frontier past the chosen
+    // sequence's terminal index is rejected.
+    const l3 = { regionId: 'git', landmarkId: 'branches-as-isolation', level: 'l3' } as const;
+    expect(validateBeatStateWrite(l3, state({ furthestBeatIndex: 8 }))).toMatchObject({
+      ok: false,
+      status: 400,
+    });
+    expect(validateBeatStateWrite(l3, state({ furthestBeatIndex: 7 })).ok).toBe(true);
+    // A level with no registered sequence is rejected outright rather than
+    // falling back to another level's bounds.
+    expect(
+      validateBeatStateWrite(
+        { regionId: 'git', landmarkId: 'branches-as-isolation', level: 'l1' },
+        state({ furthestBeatIndex: 1 }),
+      ),
+    ).toMatchObject({ ok: false, status: 400 });
   });
 });

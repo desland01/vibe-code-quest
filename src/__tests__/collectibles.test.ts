@@ -168,3 +168,62 @@ describe('L-005 collectibles registry + ownership helpers', () => {
     }
   });
 });
+
+describe('landmark aggregates do not triple count across level rows (ISSUE-011, VAL-055)', () => {
+  const completed = {
+    v: 1,
+    kind: 'beat-sequence',
+    furthestBeatIndex: 7,
+    checked: true,
+    completed: true,
+    stampedAt: '2026-08-02T00:00:00.000Z',
+  };
+
+  const allThreeLevels = (landmark: string) =>
+    (['l1', 'l2', 'l3'] as const).map((level) => ({
+      region: 'git',
+      landmark,
+      level,
+      state: completed,
+    }));
+
+  it('reports 6 stamps, not 18, when all three levels are done on all six landmarks', () => {
+    const landmarks = [
+      'commits-as-checkpoints',
+      'branches-as-isolation',
+      'pull-requests-and-review',
+      'merge-conflicts',
+      'working-tree-hygiene',
+      'revert-and-recovery',
+    ];
+    const items = landmarks.flatMap(allThreeLevels);
+    expect(items).toHaveLength(18);
+
+    const owned = completedLandmarkIds(items, 'git');
+    expect(owned.size).toBe(6);
+    expect(owned.size).toBeLessThanOrEqual(landmarks.length);
+    expect([...owned].sort()).toEqual([...landmarks].sort());
+  });
+
+  it('counts a landmark once when only one of its levels is completed', () => {
+    const items = [
+      { region: 'git', landmark: 'merge-conflicts', level: 'l1', state: completed },
+      {
+        region: 'git',
+        landmark: 'merge-conflicts',
+        level: 'l2',
+        state: { ...completed, completed: false, checked: false, stampedAt: null },
+      },
+    ];
+    expect(completedLandmarkIds(items, 'git').size).toBe(1);
+  });
+
+  it('never counts a landmark from another region, whatever its level', () => {
+    const items = [
+      ...allThreeLevels('merge-conflicts'),
+      { region: 'databases', landmark: 'sql', level: 'l3', state: completed },
+    ];
+    expect(completedLandmarkIds(items, 'git').size).toBe(1);
+    expect(completedLandmarkIds(items, 'databases').size).toBe(1);
+  });
+});

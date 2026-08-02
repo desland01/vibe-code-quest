@@ -391,6 +391,14 @@ export function isServerConfirmedCompletion(state: unknown): boolean {
   return (state as { completed?: unknown }).completed === true;
 }
 
+/**
+ * Landmark ids with ANY level completed, in this region.
+ *
+ * Collecting into a Set is the explicit OR across level rows: a landmark with
+ * L1, L2 and L3 all stamped contributes exactly one id, so collectible ownership
+ * and region stamp counts stay landmark-level facts. XP stays level-specific —
+ * this deduplication is about aggregates only.
+ */
 export function completedLandmarkIds(
   items: readonly ProgressLikeItem[] | null | undefined,
   regionId: string,

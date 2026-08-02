@@ -4,7 +4,13 @@ import { NextResponse } from 'next/server';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { withUserTransaction } from '@/lib/db';
 import { LEVEL_IDS, type LevelId } from '@/content/beats/schema';
-import { BEAT_PROGRESS_UPSERT_SQL, resolveProgressWrite } from '@/server/beatProgress';
+import {
+  BEAT_PROGRESS_UPSERT_SQL,
+  LANDMARK_PROGRESS_FOR_SHARE_SQL,
+  gateLevelWrite,
+  resolveProgressWrite,
+  type LevelProgressRow,
+} from '@/server/beatProgress';
 import { isHostedMode } from '@/server/hosting';
 import { applyXpAwards, getXpTotal } from '@/server/xp';
 
@@ -105,33 +111,54 @@ export async function PUT(request: Request) {
   // Engagement-v2: the server registry decides the write path — never client state.kind.
   // Beat-enabled landmarks are validated + atomically merged; everything else keeps the
   // legacy whole-object upsert. A forged/omitted kind cannot bypass beat validation.
+  // Step 1 (DATA_MODEL §4): reject an invalid LevelId at the HTTP boundary,
+  // before any transaction is opened.
   const level = readLevel(body as Record<string, unknown>);
   if (!level) {
     return NextResponse.json({ error: 'Invalid level' }, { status: 400 });
   }
-
-  const plan = resolveProgressWrite(
-    { regionId: body.region, landmarkId: body.landmark, level },
-    body.state,
-  );
-  if (plan.path === 'reject') {
-    return NextResponse.json({ error: plan.error }, { status: plan.status });
-  }
+  const ref = { regionId: body.region, landmarkId: body.landmark, level };
 
   if (!isHostedMode()) {
+    // Self-host: the server owns sequence existence, identity, level, terminal
+    // bounds and beat kinds, but cannot see browser-held prerequisites and does
+    // not pretend to. Nothing durable is written.
+    const localPlan = resolveProgressWrite(ref, body.state);
+    if (localPlan.path === 'reject') {
+      return NextResponse.json({ error: localPlan.error }, { status: localPlan.status });
+    }
     return NextResponse.json({
       region: body.region,
       landmark: body.landmark,
       level,
-      state: plan.path === 'beat' ? plan.state : body.state,
+      state: localPlan.path === 'beat' ? localPlan.state : body.state,
       updated_at: new Date().toISOString(),
       xp: { total: 0, awarded: [], newPoints: 0 },
       hosted: false,
     });
   }
 
-  // One transaction: progress upsert + XP awards from the *merged* returned state.
-  const payload = await withUserTransaction(userId, async (client) => {
+  // Hosted: resolution, the prerequisite read and the write are ONE transaction.
+  // Resolving before opening it — as this route used to — lets a concurrent write
+  // land between the unlock check and the upsert.
+  const gated = await withUserTransaction(userId, async (client) => {
+    // Steps 3-4: resolve the registry entry, then read every level row for this
+    // landmark with FOR SHARE so the unlock decision cannot be overtaken.
+    const existing = await client.query<LevelProgressRow>(LANDMARK_PROGRESS_FOR_SHARE_SQL, [
+      userId,
+      body.region,
+      body.landmark,
+    ]);
+
+    // Steps 5-6: compute highest unlock and reject a write above it with 423.
+    const gate = gateLevelWrite(level, existing.rows);
+    if (!gate.ok) return { locked: gate, rejected: undefined, payload: undefined } as const;
+
+    // Step 7: validate the state against the SELECTED sequence's bounds.
+    const plan = resolveProgressWrite(ref, body.state);
+    if (plan.path === 'reject') return { locked: undefined, rejected: plan, payload: undefined } as const;
+
+    // Step 8: the four-part atomic upsert, then XP from the merged state.
     if (plan.path === 'beat') {
       const result = await client.query<ProgressRow>(BEAT_PROGRESS_UPSERT_SQL, [
         userId,
@@ -143,7 +170,7 @@ export async function PUT(request: Request) {
       const row = result.rows[0]!;
       // Awards from server-merged RETURNING state, never the incoming client payload.
       const xp = await applyXpAwards(client, userId, body.region, body.landmark, level, row.state);
-      return { ...row, xp };
+      return { locked: undefined, rejected: undefined, payload: { ...row, xp } } as const;
     }
 
     const result = await client.query<ProgressRow>(
@@ -158,10 +185,20 @@ export async function PUT(request: Request) {
     // Legacy/non-beat path: no awards, still return current total for HUD.
     const total = await getXpTotal(client, userId);
     return {
-      ...row,
-      xp: { total, awarded: [] as Array<{ awardKey: string; points: number }>, newPoints: 0 },
-    };
+      locked: undefined,
+      rejected: undefined,
+      payload: {
+        ...row,
+        xp: { total, awarded: [] as Array<{ awardKey: string; points: number }>, newPoints: 0 },
+      },
+    } as const;
   });
 
-  return NextResponse.json(payload);
+  if (gated.locked) {
+    return NextResponse.json(gated.locked.body, { status: gated.locked.status });
+  }
+  if (gated.rejected) {
+    return NextResponse.json({ error: gated.rejected.error }, { status: gated.rejected.status });
+  }
+  return NextResponse.json(gated.payload);
 }

@@ -21,7 +21,10 @@ import styles from './SubMapScene.module.css';
 export type { LandmarkFormat } from '@/components/landmark/FormatSwitcher';
 
 type ProgressResponse = {
-  items?: Array<{ region?: unknown; landmark?: unknown; state?: unknown }>;
+  // `level` is part of every progress row's identity now. Ownership and stamp
+  // counts stay landmark-level facts, so consumers must collapse the three level
+  // rows for one landmark rather than counting them.
+  items?: Array<{ region?: unknown; landmark?: unknown; level?: unknown; state?: unknown }>;
 };
 
 export function SubMapScene({

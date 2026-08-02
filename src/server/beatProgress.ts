@@ -6,6 +6,7 @@ import {
   beatProgressStateSchema,
   validateBeatStateConsistency,
   type BeatProgressState,
+  type LevelId,
   type SequenceRef,
 } from '@/content/beats/schema';
 
@@ -127,3 +128,89 @@ DO UPDATE SET
   updated_at = now()
 RETURNING region, landmark, level, state, updated_at
 `;
+
+// ── Level gating (ISSUE-005, DATA_MODEL §4) ──────────────────────────────────
+
+export const LEVEL_ORDER = ['l1', 'l2', 'l3'] as const satisfies readonly LevelId[];
+
+/** Rows this profile already holds for one landmark, read inside the transaction. */
+export type LevelProgressRow = { level: LevelId; state: unknown };
+
+export const LANDMARK_PROGRESS_FOR_SHARE_SQL = `
+SELECT level, state
+FROM progress
+WHERE profile_id = $1 AND region = $2 AND landmark = $3
+FOR SHARE
+`;
+
+/**
+ * Highest level this profile may write, from progress facts alone.
+ *
+ * L1 is always open; a completed L1 opens L2; a completed L2 opens L3.
+ *
+ * The grandfather rule matters more than it looks: 0011 backfills every existing
+ * row to L3 without synthesizing L1 or L2, so requiring a completed L2 for L3
+ * would lock every existing player out of the tier they were already playing.
+ * An existing L3 row therefore opens L3 on its own. Lower levels stay selectable
+ * and simply start empty — no retroactive XP is created.
+ */
+export function computeHighestUnlockedLevel(rows: readonly LevelProgressRow[]): LevelId {
+  let hasL3Row = false;
+  const completed = new Set<LevelId>();
+  for (const row of rows) {
+    if (row.level === 'l3') hasL3Row = true;
+    const parsed = beatProgressStateSchema.safeParse(row.state);
+    if (parsed.success && parsed.data.completed) completed.add(row.level);
+  }
+  if (hasL3Row || completed.has('l2')) return 'l3';
+  if (completed.has('l1')) return 'l2';
+  return 'l1';
+}
+
+export function isLevelUnlocked(requested: LevelId, highestUnlocked: LevelId): boolean {
+  return LEVEL_ORDER.indexOf(requested) <= LEVEL_ORDER.indexOf(highestUnlocked);
+}
+
+export type LevelGateResult =
+  | { ok: true; highestUnlockedLevel: LevelId }
+  | { ok: false; status: 423; body: { error: string; requestedLevel: LevelId; highestUnlockedLevel: LevelId } };
+
+/**
+ * The hosted gate. Callers MUST pass rows read with `FOR SHARE` inside the same
+ * transaction as the write — a prerequisite read outside the transaction can be
+ * overtaken between the check and the upsert.
+ */
+export function gateLevelWrite(
+  requested: LevelId,
+  rows: readonly LevelProgressRow[],
+): LevelGateResult {
+  const highestUnlockedLevel = computeHighestUnlockedLevel(rows);
+  if (!isLevelUnlocked(requested, highestUnlockedLevel)) {
+    return {
+      ok: false,
+      status: 423,
+      body: { error: 'Level locked', requestedLevel: requested, highestUnlockedLevel },
+    };
+  }
+  return { ok: true, highestUnlockedLevel };
+}
+
+/**
+ * Self-host / anonymous authority boundary (DATA_MODEL §4).
+ *
+ * With no database the server cannot read the browser's local progress, so it
+ * does NOT claim to verify the held prerequisite. It still owns everything it
+ * can actually see: that the sequence exists, its identity, its level, its
+ * terminal bounds, its single check position, and its beat kinds. A forged local
+ * store can unlock local self-host content; it can never create a hosted row, an
+ * XP award, or a leaderboard result.
+ *
+ * The asymmetry is deliberate and is what keeps an anonymous L3 from becoming an
+ * authenticated grandfather token: a browser key has no server-verifiable
+ * creation proof, so after sign-in it stays local until hosted L2 is complete.
+ * Database grandfathering applies only to L3 rows that already existed at
+ * migration time.
+ */
+export function resolveSelfHostWrite(ref: SequenceRef, state: Record<string, unknown>): ProgressWritePlan {
+  return resolveProgressWrite(ref, state);
+}

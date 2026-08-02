@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url';
 import { spawn } from 'node:child_process';
 
 const command = process.argv[2];
@@ -55,6 +56,79 @@ function runInherited(file, args, env, onSignal) {
   });
 }
 
+
+/**
+ * ISSUE-010 preflight (VAL-064).
+ *
+ * Without this, running `npm run test:db` with no TEST_DATABASE_URL silently
+ * creates a REAL Neon branch against a hard-coded org and project. That is a
+ * live external mutation, and an unattended agent must not be able to trigger it
+ * by running what looks like an ordinary test command.
+ *
+ * A run is permitted only when one of these is true:
+ *   1. TEST_DATABASE_URL points at a PROVEN disposable or local target — a
+ *      localhost/127.0.0.1 host, or a Neon branch whose name marks it ephemeral.
+ *   2. The owner recorded approval for THIS run via
+ *      NEON_EPHEMERAL_BRANCH_APPROVED=1, which authorises creating one
+ *      disposable branch.
+ * Anything else exits non-zero BEFORE any branch is created.
+ */
+const DISPOSABLE_HOST = /^(localhost|127\.0\.0\.1|\[::1\]|host\.docker\.internal)$/i;
+const DISPOSABLE_BRANCH = /(^|[-_.])(ephemeral|disposable|test|ci|preview)([-_.]|$)/i;
+
+export function classifyTestTarget(rawUrl) {
+  const value = rawUrl?.trim();
+  if (!value) return { kind: 'absent' };
+  let url;
+  try {
+    url = new URL(value);
+  } catch {
+    return { kind: 'unparseable' };
+  }
+  if (DISPOSABLE_HOST.test(url.hostname)) {
+    return { kind: 'disposable', reason: `local host ${url.hostname}` };
+  }
+  // Neon encodes the branch in the endpoint id, e.g. ep-ephemeral-test-123-....
+  const [endpoint] = url.hostname.split('.');
+  if (endpoint && DISPOSABLE_BRANCH.test(endpoint)) {
+    return { kind: 'disposable', reason: `disposable endpoint ${endpoint}` };
+  }
+  return { kind: 'unproven', reason: `host ${url.hostname} is not a proven disposable target` };
+}
+
+export function preflight(env = process.env) {
+  const target = classifyTestTarget(env.TEST_DATABASE_URL);
+  if (target.kind === 'disposable') {
+    return { ok: true, mode: 'existing', reason: target.reason };
+  }
+  if (target.kind === 'unparseable') {
+    return { ok: false, reason: 'TEST_DATABASE_URL is set but is not a valid URL.' };
+  }
+  if (target.kind === 'unproven') {
+    return {
+      ok: false,
+      reason:
+        `Refusing to run database tests: ${target.reason}. ` +
+        'Point TEST_DATABASE_URL at a local or clearly-named ephemeral database, ' +
+        'or set NEON_EPHEMERAL_BRANCH_APPROVED=1 to authorise creating one disposable branch.',
+    };
+  }
+  if (env.NEON_EPHEMERAL_BRANCH_APPROVED === '1') {
+    return { ok: true, mode: 'create', reason: 'owner approved one ephemeral Neon branch for this run' };
+  }
+  return {
+    ok: false,
+    reason:
+      'Refusing to run database tests: TEST_DATABASE_URL is unset, so this command would ' +
+      'CREATE A REAL NEON BRANCH. Set TEST_DATABASE_URL to a proven disposable target, or set ' +
+      'NEON_EPHEMERAL_BRANCH_APPROVED=1 to authorise creating one for this run.',
+  };
+}
+
+// Module-scoped so the exit code can reflect a teardown failure that happens in
+// main()'s finally block, after its return value is already computed.
+let cleanupFailed = false;
+
 function normalizeChildExit(code) {
   if (code === 78) {
     console.error('NOTE: child exited with 78; remapping to 1 to distinguish it from setup failure.');
@@ -69,7 +143,20 @@ async function main() {
     return 2;
   }
 
-  if (process.env.TEST_DATABASE_URL?.trim()) {
+  const gate = preflight(process.env);
+  if (!gate.ok) {
+    console.error(gate.reason);
+    // 78 is this repo's "the gate could not RUN" code (see README Development and
+    // ~/.claude/bin/pr-review leg 3). A refused preflight is exactly that: no test
+    // failed, the suite was never allowed to start. Returning 1 here would make
+    // every unrelated push unpushable on a machine with no disposable database,
+    // which is a different failure from a real test failure and must stay
+    // distinguishable from it.
+    return 78;
+  }
+  console.error(`preflight: ${gate.reason}`);
+
+  if (gate.mode === 'existing') {
     return normalizeChildExit(await runInherited(command, commandArgs, process.env));
   }
 
@@ -98,7 +185,11 @@ async function main() {
       await runCaptured('neonctl', ['branches', 'delete', branchName, ...neonArgs]);
     } catch (error) {
       if (/(?:not found|does not exist)/i.test(error.message)) return;
-      console.error(`WARNING: failed to delete Neon branch ${branchName}; remove it by hand.`);
+      // VAL-064: a leaked branch is a real external resource. Failing to delete
+      // it FAILS the gate rather than warning — a warning in a passing run is a
+      // leak nobody reads.
+      cleanupFailed = true;
+      console.error(`ERROR: failed to delete Neon branch ${branchName}; remove it by hand.`);
     }
   };
 
@@ -160,6 +251,17 @@ async function main() {
   }
 }
 
-main().then((code) => {
+// Only self-execute. The preflight and target classifier are exported so their
+// contract can be unit-tested without spawning anything.
+const invokedDirectly =
+  process.argv[1] !== undefined &&
+  pathToFileURL(process.argv[1]).href === import.meta.url;
+
+if (invokedDirectly) main().then((code) => {
+  if (cleanupFailed) {
+    console.error('Gate FAILED: a Neon test branch was left behind. Delete it before re-running.');
+    process.exitCode = code === 0 ? 1 : code;
+    return;
+  }
   process.exitCode = code;
 });

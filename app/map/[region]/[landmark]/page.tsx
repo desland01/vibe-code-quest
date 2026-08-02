@@ -70,19 +70,27 @@ export default async function LandmarkMapPage({
     const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
     const session = token ? await verifySessionToken(token) : null;
     if (session && isHostedMode()) {
-      const progressRows = await queryAsUser<{ landmark: string; state: unknown }>(
+      const progressRows = await queryAsUser<{ landmark: string; level: string; state: unknown }>(
         session.userId,
-        `SELECT landmark, state
+        `SELECT landmark, level, state
          FROM progress
          WHERE profile_id = $1 AND region = $2`,
         [session.userId, regionId],
       );
+      // Region stamp count is a LANDMARK-level fact, not a row count. With three
+      // level rows per landmark, incrementing per completed row would report up
+      // to 18 stamps in a six-landmark region. Count distinct landmark ids for
+      // which ANY level is completed.
+      const stampedLandmarks = new Set<string>();
       for (const row of progressRows.rows) {
         const parsed = parseBeatProgressState(row.state);
         if (!parsed) continue;
-        if (parsed.completed) regionStampedCount += 1;
-        if (row.landmark === landmarkId) initialProgress = parsed;
+        if (parsed.completed) stampedLandmarks.add(row.landmark);
+        // The serialized sequence is L3 during the compatibility window, so the
+        // initial progress shown must come from that same level's row.
+        if (row.landmark === landmarkId && row.level === 'l3') initialProgress = parsed;
       }
+      regionStampedCount = stampedLandmarks.size;
     }
 
     beats = {

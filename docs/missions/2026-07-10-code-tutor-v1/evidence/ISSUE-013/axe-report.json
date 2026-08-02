@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T23:28:03.423Z",
+    "timestamp": "2026-07-28T20:16:24.623Z",
     "url": "http://localhost:3100/",
     "toolOptions": {
       "reporter": "v1"
@@ -525,25 +525,6 @@
         "description": "Ensure the banner landmark is at top level",
         "help": "Banner landmark should not be contained in another landmark",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/landmark-banner-is-top-level?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "link-in-text-block",
-        "impact": null,
-        "tags": [
-          "cat.color",
-          "wcag2a",
-          "wcag141",
-          "TTv5",
-          "TT13.a",
-          "EN-301-549",
-          "EN-9.1.4.1",
-          "RGAAv4",
-          "RGAA-10.6.1"
-        ],
-        "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
-        "help": "Links must be distinguishable without relying on color",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=playwright",
         "nodes": []
       },
       {
@@ -4395,6 +4376,134 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<div style=\"margin-top:16px;text-align:center;font-size:0.75rem;line-height:1.5;color:inherit\">",
+            "target": [
+              "footer > div"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<next-route-announcer style=\"position: absolute;\"></next-route-announcer>",
             "target": [
               "next-route-announcer"
@@ -4438,7 +4547,7 @@
             "impact": null,
             "html": "<button type=\"button\">Save progress via email</button>",
             "target": [
-              "header > button[type=\"button\"]"
+              ".map-header-actions > button[type=\"button\"]"
             ]
           },
           {
@@ -4780,7 +4889,7 @@
                     ]
                   },
                   {
-                    "html": "<h1>code-tutor</h1>",
+                    "html": "<h1>Vibe Code Quest</h1>",
                     "target": [
                       "h1"
                     ]
@@ -4859,7 +4968,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1>code-tutor</h1>",
+            "html": "<h1>Vibe Code Quest</h1>",
             "target": [
               "h1"
             ]
@@ -4886,7 +4995,32 @@
             "impact": null,
             "html": "<p>A map for post-AI builders. Pick an island and start exploring.</p>",
             "target": [
-              "div > p"
+              "div:nth-child(1) > p"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a class=\"map-header-link\" data-testid=\"quest-board-link\" href=\"/leaderboard\">Quest board</a>",
+            "target": [
+              ".map-header-link"
             ]
           },
           {
@@ -4911,7 +5045,7 @@
             "impact": null,
             "html": "<button type=\"button\">Save progress via email</button>",
             "target": [
-              "header > button[type=\"button\"]"
+              ".map-header-actions > button[type=\"button\"]"
             ]
           },
           {
@@ -4959,7 +5093,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>0<!-- -->/5</span>",
+            "html": "<span>0/5</span>",
             "target": [
               ".onboarding-chat__header > div > span"
             ]
@@ -5163,6 +5297,81 @@
             "target": [
               "a[href$=\"refund\"]"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#696068",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 5.01,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 5.01"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
+            ]
           }
         ]
       },
@@ -5337,7 +5546,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1>code-tutor</h1>",
+            "html": "<h1>Vibe Code Quest</h1>",
             "target": [
               "h1"
             ]
@@ -5470,7 +5679,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1>code-tutor</h1>",
+            "html": "<h1>Vibe Code Quest</h1>",
             "target": [
               "h1"
             ]
@@ -5750,7 +5959,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"map-header\"><div><h1>code-tutor</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div><button type=\"button\">Save progress via email</button></header>",
+            "html": "<header class=\"map-header\">",
             "target": [
               "header"
             ]
@@ -6027,6 +6236,65 @@
             "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
             "target": [
               "nav[aria-label=\"Legal\"]"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "link-in-text-block",
+        "impact": null,
+        "tags": [
+          "cat.color",
+          "wcag2a",
+          "wcag141",
+          "TTv5",
+          "TT13.a",
+          "EN-301-549",
+          "EN-9.1.4.1",
+          "RGAAv4",
+          "RGAA-10.6.1"
+        ],
+        "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
+        "help": "Links must be distinguishable without relying on color",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "link-in-text-block",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+                    "target": [
+                      "p[data-testid=\"site-byline\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Links can be distinguished from surrounding text in some way other than by color"
+              },
+              {
+                "id": "link-in-text-block-style",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+                    "target": [
+                      "p[data-testid=\"site-byline\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Links can be distinguished from surrounding text by visual styling"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
             ]
           }
         ]
@@ -6309,6 +6577,32 @@
               }
             ],
             "impact": null,
+            "html": "<a class=\"map-header-link\" data-testid=\"quest-board-link\" href=\"/leaderboard\">Quest board</a>",
+            "target": [
+              ".map-header-link"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
             "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/terms\">Terms of Service</a>",
             "target": [
               "a[href$=\"terms\"]"
@@ -6364,6 +6658,32 @@
             "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
             "target": [
               "a[href$=\"refund\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
             ]
           }
         ]
@@ -6667,7 +6987,7 @@
             "impact": null,
             "html": "<button type=\"button\">Save progress via email</button>",
             "target": [
-              "header > button[type=\"button\"]"
+              ".map-header-actions > button[type=\"button\"]"
             ]
           },
           {
@@ -7385,7 +7705,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"map-header\"><div><h1>code-tutor</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div><button type=\"button\">Save progress via email</button></header>",
+            "html": "<header class=\"map-header\">",
             "target": [
               "header"
             ]
@@ -7405,9 +7725,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div><h1>code-tutor</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div>",
+            "html": "<div><h1>Vibe Code Quest</h1><p>A map for post-AI builders. Pick an island and start exploring.</p></div>",
             "target": [
-              "header > div"
+              "header > div:nth-child(1)"
             ]
           },
           {
@@ -7425,7 +7745,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1>code-tutor</h1>",
+            "html": "<h1>Vibe Code Quest</h1>",
             "target": [
               "h1"
             ]
@@ -7447,7 +7767,47 @@
             "impact": null,
             "html": "<p>A map for post-AI builders. Pick an island and start exploring.</p>",
             "target": [
-              "div > p"
+              "div:nth-child(1) > p"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"map-header-actions\"><a class=\"map-header-link\" data-testid=\"quest-board-link\" href=\"/leaderboard\">Quest board</a><button type=\"button\">Save progress via email</button></div>",
+            "target": [
+              ".map-header-actions"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a class=\"map-header-link\" data-testid=\"quest-board-link\" href=\"/leaderboard\">Quest board</a>",
+            "target": [
+              ".map-header-link"
             ]
           },
           {
@@ -7467,7 +7827,7 @@
             "impact": null,
             "html": "<button type=\"button\">Save progress via email</button>",
             "target": [
-              "header > button[type=\"button\"]"
+              ".map-header-actions > button[type=\"button\"]"
             ]
           },
           {
@@ -7905,7 +8265,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"onboarding-chat__header\"><div><strong id=\"onboarding-title\">Make this map yours</strong><span>0<!-- -->/5</span></div><button type=\"button\" aria-label=\"Dismiss onboarding\">×</button></div>",
+            "html": "<div class=\"onboarding-chat__header\"><div><strong id=\"onboarding-title\">Make this map yours</strong><span>0/5</span></div><button type=\"button\" aria-label=\"Dismiss onboarding\">×</button></div>",
             "target": [
               ".onboarding-chat__header"
             ]
@@ -7925,7 +8285,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div><strong id=\"onboarding-title\">Make this map yours</strong><span>0<!-- -->/5</span></div>",
+            "html": "<div><strong id=\"onboarding-title\">Make this map yours</strong><span>0/5</span></div>",
             "target": [
               ".onboarding-chat__header > div"
             ]
@@ -7965,7 +8325,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<span>0<!-- -->/5</span>",
+            "html": "<span>0/5</span>",
             "target": [
               ".onboarding-chat__header > div > span"
             ]
@@ -8385,6 +8745,86 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<div style=\"margin-top:16px;text-align:center;font-size:0.75rem;line-height:1.5;color:inherit\">",
+            "target": [
+              "footer > div"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<next-route-announcer style=\"position: absolute;\"></next-route-announcer>",
             "target": [
               "next-route-announcer"
@@ -8517,7 +8957,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T23:28:04.221Z",
+    "timestamp": "2026-07-28T20:16:25.415Z",
     "url": "http://localhost:3100/map/databases",
     "toolOptions": {
       "reporter": "v1"
@@ -9134,25 +9574,6 @@
         "nodes": []
       },
       {
-        "id": "link-in-text-block",
-        "impact": null,
-        "tags": [
-          "cat.color",
-          "wcag2a",
-          "wcag141",
-          "TTv5",
-          "TT13.a",
-          "EN-301-549",
-          "EN-9.1.4.1",
-          "RGAAv4",
-          "RGAA-10.6.1"
-        ],
-        "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
-        "help": "Links must be distinguishable without relying on color",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=playwright",
-        "nodes": []
-      },
-      {
         "id": "list",
         "impact": null,
         "tags": [
@@ -9886,7 +10307,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">1</span>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1) > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"sql\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -9918,7 +10339,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">2</span>",
             "target": [
-              "a[href$=\"nosql-document\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"nosql-document\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -9950,7 +10371,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">3</span>",
             "target": [
-              "a[href$=\"vector\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"vector\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -9982,7 +10403,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">4</span>",
             "target": [
-              "a[href$=\"graph\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"graph\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -10014,7 +10435,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">5</span>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -10046,7 +10467,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">6</span>",
             "target": [
-              ".landmark-card:nth-child(6) > .marker-number[aria-hidden=\"true\"]"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -10519,9 +10940,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1)"
+              "a[data-landmark-id=\"sql\"]"
             ]
           },
           {
@@ -10551,9 +10972,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" data-testid=\"landmark-open\" data-landmark-id=\"nosql-document\" href=\"/map/databases/nosql-document\">",
             "target": [
-              "a[href$=\"nosql-document\"]"
+              "a[data-landmark-id=\"nosql-document\"]"
             ]
           },
           {
@@ -10583,9 +11004,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" data-testid=\"landmark-open\" data-landmark-id=\"vector\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
-              "a[href$=\"vector\"]"
+              "a[data-landmark-id=\"vector\"]"
             ]
           },
           {
@@ -10615,9 +11036,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" data-testid=\"landmark-open\" data-landmark-id=\"graph\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
-              "a[href$=\"graph\"]"
+              "a[data-landmark-id=\"graph\"]"
             ]
           },
           {
@@ -10647,9 +11068,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" data-testid=\"landmark-open\" data-landmark-id=\"orm-vs-raw-sql\" href=\"/map/databases/orm-vs-raw-sql\">",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"]"
             ]
           },
           {
@@ -10679,9 +11100,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" data-testid=\"landmark-open\" data-landmark-id=\"hosted-vs-self-hosted-databases\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
             "target": [
-              ".landmark-card:nth-child(6)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6)"
             ]
           },
           {
@@ -10871,6 +11292,134 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<div style=\"margin-top:16px;text-align:center;font-size:0.75rem;line-height:1.5;color:inherit\">",
+            "target": [
+              "footer > div"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<next-route-announcer style=\"position: absolute;\"></next-route-announcer>",
             "target": [
               "next-route-announcer"
@@ -11012,7 +11561,7 @@
             "impact": null,
             "html": "<p>Where app memory becomes product memory.</p>",
             "target": [
-              "p:nth-child(1)"
+              "header > p:nth-child(1)"
             ]
           },
           {
@@ -11087,7 +11636,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">1</span>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1) > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"sql\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -11112,7 +11661,7 @@
             "impact": null,
             "html": "<strong>SQL</strong>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1) > strong"
+              "a[data-landmark-id=\"sql\"] > strong"
             ]
           },
           {
@@ -11137,7 +11686,7 @@
             "impact": null,
             "html": "<span>The durable database choice that is often right.</span>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1) > span:nth-child(3)"
+              "a[data-landmark-id=\"sql\"] > span:nth-child(3)"
             ]
           },
           {
@@ -11162,7 +11711,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">2</span>",
             "target": [
-              "a[href$=\"nosql-document\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"nosql-document\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -11187,7 +11736,7 @@
             "impact": null,
             "html": "<strong>NoSQL document</strong>",
             "target": [
-              "a[href$=\"nosql-document\"] > strong"
+              "a[data-landmark-id=\"nosql-document\"] > strong"
             ]
           },
           {
@@ -11212,7 +11761,7 @@
             "impact": null,
             "html": "<span>Keep one thing together when rows would pull it apart.</span>",
             "target": [
-              "a[href$=\"nosql-document\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"nosql-document\"] > span:nth-child(3)"
             ]
           },
           {
@@ -11237,7 +11786,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">3</span>",
             "target": [
-              "a[href$=\"vector\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"vector\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -11262,7 +11811,7 @@
             "impact": null,
             "html": "<strong>Vector</strong>",
             "target": [
-              "a[href$=\"vector\"] > strong"
+              "a[data-landmark-id=\"vector\"] > strong"
             ]
           },
           {
@@ -11287,7 +11836,7 @@
             "impact": null,
             "html": "<span>Find what means the same thing, not only what uses the same words.</span>",
             "target": [
-              "a[href$=\"vector\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"vector\"] > span:nth-child(3)"
             ]
           },
           {
@@ -11312,7 +11861,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">4</span>",
             "target": [
-              "a[href$=\"graph\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"graph\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -11337,7 +11886,7 @@
             "impact": null,
             "html": "<strong>Graph</strong>",
             "target": [
-              "a[href$=\"graph\"] > strong"
+              "a[data-landmark-id=\"graph\"] > strong"
             ]
           },
           {
@@ -11362,7 +11911,7 @@
             "impact": null,
             "html": "<span>Use a graph when the connections are the product.</span>",
             "target": [
-              "a[href$=\"graph\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"graph\"] > span:nth-child(3)"
             ]
           },
           {
@@ -11387,7 +11936,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">5</span>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -11412,7 +11961,7 @@
             "impact": null,
             "html": "<strong>ORM vs raw SQL</strong>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > strong"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > strong"
             ]
           },
           {
@@ -11437,7 +11986,7 @@
             "impact": null,
             "html": "<span>Use the abstraction until the query needs to speak for itself.</span>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > span:nth-child(3)"
             ]
           },
           {
@@ -11462,7 +12011,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">6</span>",
             "target": [
-              ".landmark-card:nth-child(6) > .marker-number[aria-hidden=\"true\"]"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -11487,7 +12036,7 @@
             "impact": null,
             "html": "<strong>Hosted vs self-hosted</strong>",
             "target": [
-              ".landmark-card:nth-child(6) > strong"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > strong"
             ]
           },
           {
@@ -11512,7 +12061,7 @@
             "impact": null,
             "html": "<span>Pay with money or pay with operational attention.</span>",
             "target": [
-              ".landmark-card:nth-child(6) > span:nth-child(3)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > span:nth-child(3)"
             ]
           },
           {
@@ -11588,6 +12137,81 @@
             "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
             "target": [
               "a[href$=\"refund\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#696068",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 5.01,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 5.01"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
             ]
           }
         ]
@@ -12075,6 +12699,65 @@
         ]
       },
       {
+        "id": "link-in-text-block",
+        "impact": null,
+        "tags": [
+          "cat.color",
+          "wcag2a",
+          "wcag141",
+          "TTv5",
+          "TT13.a",
+          "EN-301-549",
+          "EN-9.1.4.1",
+          "RGAAv4",
+          "RGAA-10.6.1"
+        ],
+        "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
+        "help": "Links must be distinguishable without relying on color",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "link-in-text-block",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+                    "target": [
+                      "p[data-testid=\"site-byline\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Links can be distinguished from surrounding text in some way other than by color"
+              },
+              {
+                "id": "link-in-text-block-style",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+                    "target": [
+                      "p[data-testid=\"site-byline\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Links can be distinguished from surrounding text by visual styling"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          }
+        ]
+      },
+      {
         "id": "link-name",
         "impact": null,
         "tags": [
@@ -12170,9 +12853,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1)"
+              "a[data-landmark-id=\"sql\"]"
             ]
           },
           {
@@ -12196,9 +12879,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" data-testid=\"landmark-open\" data-landmark-id=\"nosql-document\" href=\"/map/databases/nosql-document\">",
             "target": [
-              "a[href$=\"nosql-document\"]"
+              "a[data-landmark-id=\"nosql-document\"]"
             ]
           },
           {
@@ -12222,9 +12905,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" data-testid=\"landmark-open\" data-landmark-id=\"vector\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
-              "a[href$=\"vector\"]"
+              "a[data-landmark-id=\"vector\"]"
             ]
           },
           {
@@ -12248,9 +12931,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" data-testid=\"landmark-open\" data-landmark-id=\"graph\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
-              "a[href$=\"graph\"]"
+              "a[data-landmark-id=\"graph\"]"
             ]
           },
           {
@@ -12274,9 +12957,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" data-testid=\"landmark-open\" data-landmark-id=\"orm-vs-raw-sql\" href=\"/map/databases/orm-vs-raw-sql\">",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"]"
             ]
           },
           {
@@ -12300,9 +12983,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" data-testid=\"landmark-open\" data-landmark-id=\"hosted-vs-self-hosted-databases\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
             "target": [
-              ".landmark-card:nth-child(6)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6)"
             ]
           },
           {
@@ -12381,6 +13064,32 @@
             "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
             "target": [
               "a[href$=\"refund\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
             ]
           }
         ]
@@ -12621,7 +13330,7 @@
             "impact": null,
             "html": "<p>Where app memory becomes product memory.</p>",
             "target": [
-              "p:nth-child(1)"
+              "header > p:nth-child(1)"
             ]
           },
           {
@@ -12699,7 +13408,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"landmark-grid\">",
+            "html": "<div class=\"landmark-grid\" data-testid=\"region-landmark-grid\">",
             "target": [
               ".landmark-grid"
             ]
@@ -12719,9 +13428,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:0\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1)"
+              "a[data-landmark-id=\"sql\"]"
             ]
           },
           {
@@ -12741,7 +13450,7 @@
             "impact": null,
             "html": "<strong>SQL</strong>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1) > strong"
+              "a[data-landmark-id=\"sql\"] > strong"
             ]
           },
           {
@@ -12761,7 +13470,7 @@
             "impact": null,
             "html": "<span>The durable database choice that is often right.</span>",
             "target": [
-              "a[href$=\"sql\"]:nth-child(1) > span:nth-child(3)"
+              "a[data-landmark-id=\"sql\"] > span:nth-child(3)"
             ]
           },
           {
@@ -12779,9 +13488,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" data-testid=\"landmark-open\" data-landmark-id=\"nosql-document\" href=\"/map/databases/nosql-document\">",
             "target": [
-              "a[href$=\"nosql-document\"]"
+              "a[data-landmark-id=\"nosql-document\"]"
             ]
           },
           {
@@ -12801,7 +13510,7 @@
             "impact": null,
             "html": "<strong>NoSQL document</strong>",
             "target": [
-              "a[href$=\"nosql-document\"] > strong"
+              "a[data-landmark-id=\"nosql-document\"] > strong"
             ]
           },
           {
@@ -12821,7 +13530,7 @@
             "impact": null,
             "html": "<span>Keep one thing together when rows would pull it apart.</span>",
             "target": [
-              "a[href$=\"nosql-document\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"nosql-document\"] > span:nth-child(3)"
             ]
           },
           {
@@ -12839,9 +13548,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" data-testid=\"landmark-open\" data-landmark-id=\"vector\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
-              "a[href$=\"vector\"]"
+              "a[data-landmark-id=\"vector\"]"
             ]
           },
           {
@@ -12861,7 +13570,7 @@
             "impact": null,
             "html": "<strong>Vector</strong>",
             "target": [
-              "a[href$=\"vector\"] > strong"
+              "a[data-landmark-id=\"vector\"] > strong"
             ]
           },
           {
@@ -12881,7 +13590,7 @@
             "impact": null,
             "html": "<span>Find what means the same thing, not only what uses the same words.</span>",
             "target": [
-              "a[href$=\"vector\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"vector\"] > span:nth-child(3)"
             ]
           },
           {
@@ -12899,9 +13608,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" data-testid=\"landmark-open\" data-landmark-id=\"graph\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
-              "a[href$=\"graph\"]"
+              "a[data-landmark-id=\"graph\"]"
             ]
           },
           {
@@ -12921,7 +13630,7 @@
             "impact": null,
             "html": "<strong>Graph</strong>",
             "target": [
-              "a[href$=\"graph\"] > strong"
+              "a[data-landmark-id=\"graph\"] > strong"
             ]
           },
           {
@@ -12941,7 +13650,7 @@
             "impact": null,
             "html": "<span>Use a graph when the connections are the product.</span>",
             "target": [
-              "a[href$=\"graph\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"graph\"] > span:nth-child(3)"
             ]
           },
           {
@@ -12959,9 +13668,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" data-testid=\"landmark-open\" data-landmark-id=\"orm-vs-raw-sql\" href=\"/map/databases/orm-vs-raw-sql\">",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"]"
             ]
           },
           {
@@ -12981,7 +13690,7 @@
             "impact": null,
             "html": "<strong>ORM vs raw SQL</strong>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > strong"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > strong"
             ]
           },
           {
@@ -13001,7 +13710,7 @@
             "impact": null,
             "html": "<span>Use the abstraction until the query needs to speak for itself.</span>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > span:nth-child(3)"
             ]
           },
           {
@@ -13019,9 +13728,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" data-testid=\"landmark-open\" data-landmark-id=\"hosted-vs-self-hosted-databases\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
             "target": [
-              ".landmark-card:nth-child(6)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6)"
             ]
           },
           {
@@ -13041,7 +13750,7 @@
             "impact": null,
             "html": "<strong>Hosted vs self-hosted</strong>",
             "target": [
-              ".landmark-card:nth-child(6) > strong"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > strong"
             ]
           },
           {
@@ -13061,7 +13770,7 @@
             "impact": null,
             "html": "<span>Pay with money or pay with operational attention.</span>",
             "target": [
-              ".landmark-card:nth-child(6) > span:nth-child(3)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > span:nth-child(3)"
             ]
           },
           {
@@ -13162,6 +13871,86 @@
             "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
             "target": [
               "a[href$=\"refund\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div style=\"margin-top:16px;text-align:center;font-size:0.75rem;line-height:1.5;color:inherit\">",
+            "target": [
+              "footer > div"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
             ]
           },
           {
@@ -13311,7 +14100,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2026-07-18T23:28:05.147Z",
+    "timestamp": "2026-07-28T20:16:26.812Z",
     "url": "http://localhost:3100/map/databases/sql",
     "toolOptions": {
       "reporter": "v1"
@@ -13889,59 +14678,6 @@
         "nodes": []
       },
       {
-        "id": "link-in-text-block",
-        "impact": null,
-        "tags": [
-          "cat.color",
-          "wcag2a",
-          "wcag141",
-          "TTv5",
-          "TT13.a",
-          "EN-301-549",
-          "EN-9.1.4.1",
-          "RGAAv4",
-          "RGAA-10.6.1"
-        ],
-        "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
-        "help": "Links must be distinguishable without relying on color",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "list",
-        "impact": null,
-        "tags": [
-          "cat.structure",
-          "wcag2a",
-          "wcag131",
-          "EN-301-549",
-          "EN-9.1.3.1",
-          "RGAAv4",
-          "RGAA-9.3.1"
-        ],
-        "description": "Ensure that lists are structured correctly",
-        "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/list?application=playwright",
-        "nodes": []
-      },
-      {
-        "id": "listitem",
-        "impact": null,
-        "tags": [
-          "cat.structure",
-          "wcag2a",
-          "wcag131",
-          "EN-301-549",
-          "EN-9.1.3.1",
-          "RGAAv4",
-          "RGAA-9.3.1"
-        ],
-        "description": "Ensure <li> elements are used semantically",
-        "help": "<li> elements must be contained in a <ul> or <ol>",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/listitem?application=playwright",
-        "nodes": []
-      },
-      {
         "id": "marquee",
         "impact": null,
         "tags": [
@@ -14346,7 +15082,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -14412,7 +15148,7 @@
               }
             ],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -14445,7 +15181,7 @@
               }
             ],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
             "target": [
               ".is-active"
             ]
@@ -14478,9 +15214,75 @@
               }
             ],
             "impact": null,
-            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
+            "html": "<section class=\"beats-module__U7Zb0W__panel\" data-testid=\"beat-player\" aria-labelledby=\"beat-player-title\">",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"]"
+              ".beats-module__U7Zb0W__panel"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
+            "html": "<ol class=\"beats-module__U7Zb0W__pips\" aria-label=\"Beat 1 of 8\">",
+            "target": [
+              "ol"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-allowed-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attributes are used correctly for the defined role"
+              },
+              {
+                "id": "aria-allowed-attr-elm",
+                "data": null,
+                "relatedNodes": [],
+                "message": "ARIA attributes are allowed for this element",
+                "impact": "critical"
+              }
+            ],
+            "none": [
+              {
+                "id": "aria-unsupported-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute is supported"
+              }
+            ],
+            "impact": null,
+            "html": "<li class=\"beats-module__U7Zb0W__current\" aria-current=\"step\"><span class=\"beats-module__U7Zb0W__sr\">current</span></li>",
+            "target": [
+              ".beats-module__U7Zb0W__current"
             ]
           },
           {
@@ -14644,7 +15446,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -14719,7 +15521,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -14755,7 +15557,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -14773,7 +15575,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
             "target": [
               ".is-active"
             ]
@@ -14791,9 +15593,45 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
+            "html": "<section class=\"beats-module__U7Zb0W__panel\" data-testid=\"beat-player\" aria-labelledby=\"beat-player-title\">",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"]"
+              ".beats-module__U7Zb0W__panel"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<ol class=\"beats-module__U7Zb0W__pips\" aria-label=\"Beat 1 of 8\">",
+            "target": [
+              "ol"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-conditional-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<li class=\"beats-module__U7Zb0W__current\" aria-current=\"step\"><span class=\"beats-module__U7Zb0W__sr\">current</span></li>",
+            "target": [
+              ".beats-module__U7Zb0W__current"
             ]
           },
           {
@@ -14902,7 +15740,7 @@
               }
             ],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -15047,7 +15885,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">2</span>",
             "target": [
-              "a[href$=\"nosql-document\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"nosql-document\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -15079,7 +15917,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">3</span>",
             "target": [
-              "a[href$=\"vector\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"vector\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -15111,7 +15949,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">4</span>",
             "target": [
-              "a[href$=\"graph\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"graph\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -15143,7 +15981,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">5</span>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -15175,7 +16013,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">6</span>",
             "target": [
-              ".landmark-card:nth-child(6) > .marker-number[aria-hidden=\"true\"]"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -15262,7 +16100,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -15298,7 +16136,7 @@
               }
             ],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -15316,7 +16154,7 @@
               }
             ],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
             "target": [
               ".is-active"
             ]
@@ -15334,9 +16172,45 @@
               }
             ],
             "impact": null,
-            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
+            "html": "<section class=\"beats-module__U7Zb0W__panel\" data-testid=\"beat-player\" aria-labelledby=\"beat-player-title\">",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"]"
+              ".beats-module__U7Zb0W__panel"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
+            "html": "<ol class=\"beats-module__U7Zb0W__pips\" aria-label=\"Beat 1 of 8\">",
+            "target": [
+              "ol"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "ARIA attribute is allowed"
+              }
+            ],
+            "impact": null,
+            "html": "<li class=\"beats-module__U7Zb0W__current\" aria-current=\"step\"><span class=\"beats-module__U7Zb0W__sr\">current</span></li>",
+            "target": [
+              ".beats-module__U7Zb0W__current"
             ]
           },
           {
@@ -15445,7 +16319,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -15516,7 +16390,7 @@
               }
             ],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -15633,7 +16507,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -15697,7 +16571,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -15729,7 +16603,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
             "target": [
               ".is-active"
             ]
@@ -15761,9 +16635,73 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
+            "html": "<section class=\"beats-module__U7Zb0W__panel\" data-testid=\"beat-player\" aria-labelledby=\"beat-player-title\">",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"]"
+              ".beats-module__U7Zb0W__panel"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<ol class=\"beats-module__U7Zb0W__pips\" aria-label=\"Beat 1 of 8\">",
+            "target": [
+              "ol"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "aria-valid-attr-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute values are valid"
+              },
+              {
+                "id": "aria-errormessage",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+              },
+              {
+                "id": "aria-level",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "aria-level values are valid"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<li class=\"beats-module__U7Zb0W__current\" aria-current=\"step\"><span class=\"beats-module__U7Zb0W__sr\">current</span></li>",
+            "target": [
+              ".beats-module__U7Zb0W__current"
             ]
           },
           {
@@ -15946,7 +16884,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -15982,7 +16920,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -16000,7 +16938,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
             "target": [
               ".is-active"
             ]
@@ -16018,9 +16956,45 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
+            "html": "<section class=\"beats-module__U7Zb0W__panel\" data-testid=\"beat-player\" aria-labelledby=\"beat-player-title\">",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"]"
+              ".beats-module__U7Zb0W__panel"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<ol class=\"beats-module__U7Zb0W__pips\" aria-label=\"Beat 1 of 8\">",
+            "target": [
+              "ol"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-valid-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA attribute name is valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li class=\"beats-module__U7Zb0W__current\" aria-current=\"step\"><span class=\"beats-module__U7Zb0W__sr\">current</span></li>",
+            "target": [
+              ".beats-module__U7Zb0W__current"
             ]
           },
           {
@@ -16174,7 +17148,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -16206,9 +17180,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" data-testid=\"landmark-open\" data-landmark-id=\"nosql-document\" href=\"/map/databases/nosql-document\">",
             "target": [
-              "a[href$=\"nosql-document\"]"
+              "a[data-landmark-id=\"nosql-document\"]"
             ]
           },
           {
@@ -16238,9 +17212,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" data-testid=\"landmark-open\" data-landmark-id=\"vector\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
-              "a[href$=\"vector\"]"
+              "a[data-landmark-id=\"vector\"]"
             ]
           },
           {
@@ -16270,9 +17244,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" data-testid=\"landmark-open\" data-landmark-id=\"graph\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
-              "a[href$=\"graph\"]"
+              "a[data-landmark-id=\"graph\"]"
             ]
           },
           {
@@ -16302,9 +17276,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" data-testid=\"landmark-open\" data-landmark-id=\"orm-vs-raw-sql\" href=\"/map/databases/orm-vs-raw-sql\">",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"]"
             ]
           },
           {
@@ -16334,9 +17308,41 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" data-testid=\"landmark-open\" data-landmark-id=\"hosted-vs-self-hosted-databases\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
             "target": [
-              ".landmark-card:nth-child(6)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6)"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<h3 id=\"beat-player-title\" style=\"margin:0 0 18px;font-family:var(--font-pixel), monospace\">SQL</h3>",
+            "target": [
+              "#beat-player-title"
             ]
           },
           {
@@ -16526,6 +17532,134 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<div style=\"margin-top:16px;text-align:center;font-size:0.75rem;line-height:1.5;color:inherit\">",
+            "target": [
+              "footer > div"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<next-route-announcer style=\"position: absolute;\"></next-route-announcer>",
             "target": [
               "next-route-announcer"
@@ -16567,9 +17701,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"\">Overview</button>",
             "target": [
-              ".is-active"
+              ".format-switcher > button[type=\"button\"]:nth-child(1)"
             ]
           },
           {
@@ -16585,9 +17719,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\">Lesson</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
+              ".is-active"
             ]
           },
           {
@@ -16606,6 +17740,24 @@
             "html": "<button type=\"button\" class=\"\">Quiz</button>",
             "target": [
               "button[type=\"button\"]:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has inner text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" class=\"beats-module__U7Zb0W__btn beats-module__U7Zb0W__primary\" data-testid=\"beat-advance\">Begin →</button>",
+            "target": [
+              ".beats-module__U7Zb0W__btn"
             ]
           },
           {
@@ -16674,9 +17826,9 @@
                     ]
                   },
                   {
-                    "html": "<h3 id=\"overview-heading\">Overview</h3>",
+                    "html": "<h3 id=\"beat-player-title\" style=\"margin:0 0 18px;font-family:var(--font-pixel), monospace\">SQL</h3>",
                     "target": [
-                      "#overview-heading"
+                      "#beat-player-title"
                     ]
                   }
                 ],
@@ -16924,7 +18076,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">2</span>",
             "target": [
-              "a[href$=\"nosql-document\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"nosql-document\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -16949,7 +18101,7 @@
             "impact": null,
             "html": "<strong>NoSQL document</strong>",
             "target": [
-              "a[href$=\"nosql-document\"] > strong"
+              "a[data-landmark-id=\"nosql-document\"] > strong"
             ]
           },
           {
@@ -16974,7 +18126,7 @@
             "impact": null,
             "html": "<span>Keep one thing together when rows would pull it apart.</span>",
             "target": [
-              "a[href$=\"nosql-document\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"nosql-document\"] > span:nth-child(3)"
             ]
           },
           {
@@ -16999,7 +18151,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">3</span>",
             "target": [
-              "a[href$=\"vector\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"vector\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -17024,7 +18176,7 @@
             "impact": null,
             "html": "<strong>Vector</strong>",
             "target": [
-              "a[href$=\"vector\"] > strong"
+              "a[data-landmark-id=\"vector\"] > strong"
             ]
           },
           {
@@ -17049,7 +18201,7 @@
             "impact": null,
             "html": "<span>Find what means the same thing, not only what uses the same words.</span>",
             "target": [
-              "a[href$=\"vector\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"vector\"] > span:nth-child(3)"
             ]
           },
           {
@@ -17074,7 +18226,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">4</span>",
             "target": [
-              "a[href$=\"graph\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"graph\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -17099,7 +18251,7 @@
             "impact": null,
             "html": "<strong>Graph</strong>",
             "target": [
-              "a[href$=\"graph\"] > strong"
+              "a[data-landmark-id=\"graph\"] > strong"
             ]
           },
           {
@@ -17124,7 +18276,7 @@
             "impact": null,
             "html": "<span>Use a graph when the connections are the product.</span>",
             "target": [
-              "a[href$=\"graph\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"graph\"] > span:nth-child(3)"
             ]
           },
           {
@@ -17149,7 +18301,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">5</span>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > .marker-number[aria-hidden=\"true\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -17174,7 +18326,7 @@
             "impact": null,
             "html": "<strong>ORM vs raw SQL</strong>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > strong"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > strong"
             ]
           },
           {
@@ -17199,7 +18351,7 @@
             "impact": null,
             "html": "<span>Use the abstraction until the query needs to speak for itself.</span>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > span:nth-child(3)"
             ]
           },
           {
@@ -17224,7 +18376,7 @@
             "impact": null,
             "html": "<span class=\"marker-number\" aria-hidden=\"true\">6</span>",
             "target": [
-              ".landmark-card:nth-child(6) > .marker-number[aria-hidden=\"true\"]"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > .marker-number[aria-hidden=\"true\"]"
             ]
           },
           {
@@ -17249,7 +18401,7 @@
             "impact": null,
             "html": "<strong>Hosted vs self-hosted</strong>",
             "target": [
-              ".landmark-card:nth-child(6) > strong"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > strong"
             ]
           },
           {
@@ -17274,7 +18426,7 @@
             "impact": null,
             "html": "<span>Pay with money or pay with operational attention.</span>",
             "target": [
-              ".landmark-card:nth-child(6) > span:nth-child(3)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > span:nth-child(3)"
             ]
           },
           {
@@ -17299,7 +18451,7 @@
             "impact": null,
             "html": "<p class=\"region-kicker\">Landmark detail</p>",
             "target": [
-              ".region-kicker"
+              "div > .region-kicker"
             ]
           },
           {
@@ -17333,31 +18485,6 @@
                 "id": "color-contrast",
                 "data": {
                   "fgColor": "#3b3245",
-                  "bgColor": "#d98f6c",
-                  "contrastRatio": 4.68,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.68"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
-            "target": [
-              ".is-active"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#3b3245",
                   "bgColor": "#fff8e9",
                   "contrastRatio": 11.48,
                   "fontSize": "12.0pt (16px)",
@@ -17372,9 +18499,34 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\">Lesson</button>",
+            "html": "<button type=\"button\" class=\"\">Overview</button>",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
+              ".format-switcher > button[type=\"button\"]:nth-child(1)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#d98f6c",
+                  "contrastRatio": 4.68,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 4.68"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
+            "target": [
+              ".is-active"
             ]
           },
           {
@@ -17410,6 +18562,31 @@
                   "fgColor": "#3b3245",
                   "bgColor": "#f4e9d0",
                   "contrastRatio": 10.07,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p class=\"region-kicker\">Databases<!-- --> · Landmark <!-- -->1<!-- --> of <!-- -->6</p>",
+            "target": [
+              ".beats-module__U7Zb0W__panel > .region-kicker"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
                   "fontSize": "14.0pt (18.72px)",
                   "fontWeight": "bold",
                   "expectedContrastRatio": "3:1"
@@ -17422,9 +18599,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3 id=\"overview-heading\">Overview</h3>",
+            "html": "<h3 id=\"beat-player-title\" style=\"margin:0 0 18px;font-family:var(--font-pixel), monospace\">SQL</h3>",
             "target": [
-              "#overview-heading"
+              "#beat-player-title"
             ]
           },
           {
@@ -17433,23 +18610,48 @@
                 "id": "color-contrast",
                 "data": {
                   "fgColor": "#3b3245",
-                  "bgColor": "#f4e9d0",
-                  "contrastRatio": 10.07,
-                  "fontSize": "12.0pt (16px)",
+                  "bgColor": "#fff8e9",
+                  "contrastRatio": 11.48,
+                  "fontSize": "17.4pt (23.2px)",
                   "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 10.07"
+                "message": "Element has sufficient color contrast of 11.48"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>",
+            "html": "<p class=\"beats-module__U7Zb0W__prompt\">The durable database choice that is often right.</p>",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"] > p"
+              ".beats-module__U7Zb0W__prompt"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#d98f6c",
+                  "contrastRatio": 4.68,
+                  "fontSize": "11.4pt (15.2px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 4.68"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" class=\"beats-module__U7Zb0W__btn beats-module__U7Zb0W__primary\" data-testid=\"beat-advance\">Begin →</button>",
+            "target": [
+              ".beats-module__U7Zb0W__btn"
             ]
           },
           {
@@ -17551,6 +18753,81 @@
             "target": [
               "a[href$=\"refund\"]"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#3b3245",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 10.07,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 10.07"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#696068",
+                  "bgColor": "#f4e9d0",
+                  "contrastRatio": 5.01,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 5.01"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
+            ]
           }
         ]
       },
@@ -17631,7 +18908,7 @@
             "any": [
               {
                 "id": "duplicate-id-aria",
-                "data": "overview-heading",
+                "data": "beat-player-title",
                 "relatedNodes": [],
                 "impact": "critical",
                 "message": "Document has no elements referenced with ARIA or labels that share the same id attribute"
@@ -17640,9 +18917,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3 id=\"overview-heading\">Overview</h3>",
+            "html": "<h3 id=\"beat-player-title\" style=\"margin:0 0 18px;font-family:var(--font-pixel), monospace\">SQL</h3>",
             "target": [
-              "#overview-heading"
+              "#beat-player-title"
             ]
           }
         ]
@@ -17707,9 +18984,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3 id=\"overview-heading\">Overview</h3>",
+            "html": "<h3 id=\"beat-player-title\" style=\"margin:0 0 18px;font-family:var(--font-pixel), monospace\">SQL</h3>",
             "target": [
-              "#overview-heading"
+              "#beat-player-title"
             ]
           }
         ]
@@ -17745,7 +19022,7 @@
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(3) > h3:nth-child(1)"
+                        "html > body > main:nth-child(2) > div:nth-child(2) > article:nth-child(4) > section:nth-child(3) > h3:nth-child(2)"
                       ],
                       "level": 3
                     }
@@ -17795,9 +19072,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3 id=\"overview-heading\">Overview</h3>",
+            "html": "<h3 id=\"beat-player-title\" style=\"margin:0 0 18px;font-family:var(--font-pixel), monospace\">SQL</h3>",
             "target": [
-              "#overview-heading"
+              "#beat-player-title"
             ]
           }
         ]
@@ -18136,7 +19413,7 @@
                 "id": "landmark-is-unique",
                 "data": {
                   "role": "region",
-                  "accessibleText": "overview"
+                  "accessibleText": "sql"
                 },
                 "relatedNodes": [],
                 "impact": "moderate",
@@ -18146,9 +19423,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
+            "html": "<section class=\"beats-module__U7Zb0W__panel\" data-testid=\"beat-player\" aria-labelledby=\"beat-player-title\">",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"]"
+              ".beats-module__U7Zb0W__panel"
             ]
           },
           {
@@ -18212,6 +19489,65 @@
             "html": "<nav aria-label=\"Legal\" style=\"display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px\">",
             "target": [
               "nav"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "link-in-text-block",
+        "impact": null,
+        "tags": [
+          "cat.color",
+          "wcag2a",
+          "wcag141",
+          "TTv5",
+          "TT13.a",
+          "EN-301-549",
+          "EN-9.1.4.1",
+          "RGAAv4",
+          "RGAA-10.6.1"
+        ],
+        "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
+        "help": "Links must be distinguishable without relying on color",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "link-in-text-block",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+                    "target": [
+                      "p[data-testid=\"site-byline\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Links can be distinguished from surrounding text in some way other than by color"
+              },
+              {
+                "id": "link-in-text-block-style",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+                    "target": [
+                      "p[data-testid=\"site-byline\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Links can be distinguished from surrounding text by visual styling"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
             ]
           }
         ]
@@ -18312,7 +19648,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -18338,9 +19674,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" data-testid=\"landmark-open\" data-landmark-id=\"nosql-document\" href=\"/map/databases/nosql-document\">",
             "target": [
-              "a[href$=\"nosql-document\"]"
+              "a[data-landmark-id=\"nosql-document\"]"
             ]
           },
           {
@@ -18364,9 +19700,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" data-testid=\"landmark-open\" data-landmark-id=\"vector\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
-              "a[href$=\"vector\"]"
+              "a[data-landmark-id=\"vector\"]"
             ]
           },
           {
@@ -18390,9 +19726,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" data-testid=\"landmark-open\" data-landmark-id=\"graph\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
-              "a[href$=\"graph\"]"
+              "a[data-landmark-id=\"graph\"]"
             ]
           },
           {
@@ -18416,9 +19752,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" data-testid=\"landmark-open\" data-landmark-id=\"orm-vs-raw-sql\" href=\"/map/databases/orm-vs-raw-sql\">",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"]"
             ]
           },
           {
@@ -18442,9 +19778,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" data-testid=\"landmark-open\" data-landmark-id=\"hosted-vs-self-hosted-databases\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
             "target": [
-              ".landmark-card:nth-child(6)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6)"
             ]
           },
           {
@@ -18523,6 +19859,230 @@
             "html": "<a style=\"color:inherit;font-weight:700\" href=\"/legal/refund\">Cancellation &amp; Refund Policy</a>",
             "target": [
               "a[href$=\"refund\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "list",
+        "impact": null,
+        "tags": [
+          "cat.structure",
+          "wcag2a",
+          "wcag131",
+          "EN-301-549",
+          "EN-9.1.3.1",
+          "RGAAv4",
+          "RGAA-9.3.1"
+        ],
+        "description": "Ensure that lists are structured correctly",
+        "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/list?application=playwright",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "only-listitems",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List element only has direct children that are allowed inside <li> elements"
+              }
+            ],
+            "impact": null,
+            "html": "<ol class=\"beats-module__U7Zb0W__pips\" aria-label=\"Beat 1 of 8\">",
+            "target": [
+              "ol"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "listitem",
+        "impact": null,
+        "tags": [
+          "cat.structure",
+          "wcag2a",
+          "wcag131",
+          "EN-301-549",
+          "EN-9.1.3.1",
+          "RGAAv4",
+          "RGAA-9.3.1"
+        ],
+        "description": "Ensure <li> elements are used semantically",
+        "help": "<li> elements must be contained in a <ul> or <ol>",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/listitem?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li class=\"beats-module__U7Zb0W__current\" aria-current=\"step\"><span class=\"beats-module__U7Zb0W__sr\">current</span></li>",
+            "target": [
+              ".beats-module__U7Zb0W__current"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(4)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(5)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(6)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(7)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "listitem",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(8)"
             ]
           }
         ]
@@ -18626,9 +20186,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"\">Overview</button>",
             "target": [
-              ".is-active"
+              ".format-switcher > button[type=\"button\"]:nth-child(1)"
             ]
           },
           {
@@ -18644,9 +20204,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\">Lesson</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
+              ".is-active"
             ]
           },
           {
@@ -18665,6 +20225,24 @@
             "html": "<button type=\"button\" class=\"\">Quiz</button>",
             "target": [
               "button[type=\"button\"]:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" class=\"beats-module__U7Zb0W__btn beats-module__U7Zb0W__primary\" data-testid=\"beat-advance\">Begin →</button>",
+            "target": [
+              ".beats-module__U7Zb0W__btn"
             ]
           },
           {
@@ -18933,7 +20511,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"landmark-grid\">",
+            "html": "<div class=\"landmark-grid\" data-testid=\"region-landmark-grid\">",
             "target": [
               ".landmark-grid"
             ]
@@ -18953,7 +20531,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
+            "html": "<a class=\"landmark-card is-selected\" style=\"--marker-index:0\" aria-current=\"page\" data-testid=\"landmark-open\" data-landmark-id=\"sql\" href=\"/map/databases/sql\"><span class=\"marker-number\" aria-hidden=\"true\">1</span><strong>SQL</strong><span>The durable database choice that is often right.</span></a>",
             "target": [
               ".is-selected"
             ]
@@ -19013,9 +20591,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" href=\"/map/databases/nosql-document\"><span class=\"marker-number\" aria-hidden=\"true\">2</span><strong>NoSQL document</strong><span>Keep one thing together when rows would pull it apart.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:1\" data-testid=\"landmark-open\" data-landmark-id=\"nosql-document\" href=\"/map/databases/nosql-document\">",
             "target": [
-              "a[href$=\"nosql-document\"]"
+              "a[data-landmark-id=\"nosql-document\"]"
             ]
           },
           {
@@ -19035,7 +20613,7 @@
             "impact": null,
             "html": "<strong>NoSQL document</strong>",
             "target": [
-              "a[href$=\"nosql-document\"] > strong"
+              "a[data-landmark-id=\"nosql-document\"] > strong"
             ]
           },
           {
@@ -19055,7 +20633,7 @@
             "impact": null,
             "html": "<span>Keep one thing together when rows would pull it apart.</span>",
             "target": [
-              "a[href$=\"nosql-document\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"nosql-document\"] > span:nth-child(3)"
             ]
           },
           {
@@ -19073,9 +20651,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:2\" data-testid=\"landmark-open\" data-landmark-id=\"vector\" href=\"/map/databases/vector\"><span class=\"marker-number\" aria-hidden=\"true\">3</span><strong>Vector</strong><span>Find what means the same thing, not only what uses the same words.</span></a>",
             "target": [
-              "a[href$=\"vector\"]"
+              "a[data-landmark-id=\"vector\"]"
             ]
           },
           {
@@ -19095,7 +20673,7 @@
             "impact": null,
             "html": "<strong>Vector</strong>",
             "target": [
-              "a[href$=\"vector\"] > strong"
+              "a[data-landmark-id=\"vector\"] > strong"
             ]
           },
           {
@@ -19115,7 +20693,7 @@
             "impact": null,
             "html": "<span>Find what means the same thing, not only what uses the same words.</span>",
             "target": [
-              "a[href$=\"vector\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"vector\"] > span:nth-child(3)"
             ]
           },
           {
@@ -19133,9 +20711,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:3\" data-testid=\"landmark-open\" data-landmark-id=\"graph\" href=\"/map/databases/graph\"><span class=\"marker-number\" aria-hidden=\"true\">4</span><strong>Graph</strong><span>Use a graph when the connections are the product.</span></a>",
             "target": [
-              "a[href$=\"graph\"]"
+              "a[data-landmark-id=\"graph\"]"
             ]
           },
           {
@@ -19155,7 +20733,7 @@
             "impact": null,
             "html": "<strong>Graph</strong>",
             "target": [
-              "a[href$=\"graph\"] > strong"
+              "a[data-landmark-id=\"graph\"] > strong"
             ]
           },
           {
@@ -19175,7 +20753,7 @@
             "impact": null,
             "html": "<span>Use a graph when the connections are the product.</span>",
             "target": [
-              "a[href$=\"graph\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"graph\"] > span:nth-child(3)"
             ]
           },
           {
@@ -19193,9 +20771,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" href=\"/map/databases/orm-vs-raw-sql\"><span class=\"marker-number\" aria-hidden=\"true\">5</span><strong>ORM vs raw SQL</strong><span>Use the abstraction until the query needs to speak for itself.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:4\" data-testid=\"landmark-open\" data-landmark-id=\"orm-vs-raw-sql\" href=\"/map/databases/orm-vs-raw-sql\">",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"]"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"]"
             ]
           },
           {
@@ -19215,7 +20793,7 @@
             "impact": null,
             "html": "<strong>ORM vs raw SQL</strong>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > strong"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > strong"
             ]
           },
           {
@@ -19235,7 +20813,7 @@
             "impact": null,
             "html": "<span>Use the abstraction until the query needs to speak for itself.</span>",
             "target": [
-              "a[href$=\"orm-vs-raw-sql\"] > span:nth-child(3)"
+              "a[data-landmark-id=\"orm-vs-raw-sql\"] > span:nth-child(3)"
             ]
           },
           {
@@ -19253,9 +20831,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" href=\"/map/databases/hosted-vs-self-hosted-databases\"><span class=\"marker-number\" aria-hidden=\"true\">6</span><strong>Hosted vs self-hosted</strong><span>Pay with money or pay with operational attention.</span></a>",
+            "html": "<a class=\"landmark-card\" style=\"--marker-index:5\" data-testid=\"landmark-open\" data-landmark-id=\"hosted-vs-self-hosted-databases\" href=\"/map/databases/hosted-vs-self-hosted-databases\">",
             "target": [
-              ".landmark-card:nth-child(6)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6)"
             ]
           },
           {
@@ -19275,7 +20853,7 @@
             "impact": null,
             "html": "<strong>Hosted vs self-hosted</strong>",
             "target": [
-              ".landmark-card:nth-child(6) > strong"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > strong"
             ]
           },
           {
@@ -19295,7 +20873,7 @@
             "impact": null,
             "html": "<span>Pay with money or pay with operational attention.</span>",
             "target": [
-              ".landmark-card:nth-child(6) > span:nth-child(3)"
+              ".landmark-card[data-testid=\"landmark-open\"]:nth-child(6) > span:nth-child(3)"
             ]
           },
           {
@@ -19375,7 +20953,7 @@
             "impact": null,
             "html": "<p class=\"region-kicker\">Landmark detail</p>",
             "target": [
-              ".region-kicker"
+              "div > .region-kicker"
             ]
           },
           {
@@ -19413,7 +20991,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button><button type=\"button\" class=\"\">Lesson</button><button type=\"button\" class=\"\">Quiz</button></div>",
+            "html": "<div class=\"format-switcher\" role=\"group\" aria-label=\"Landmark format\"><button type=\"button\" class=\"\">Overview</button><button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button><button type=\"button\" class=\"\">Quiz</button></div>",
             "target": [
               ".format-switcher"
             ]
@@ -19433,9 +21011,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Overview</button>",
+            "html": "<button type=\"button\" class=\"\">Overview</button>",
             "target": [
-              ".is-active"
+              ".format-switcher > button[type=\"button\"]:nth-child(1)"
             ]
           },
           {
@@ -19453,9 +21031,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button type=\"button\" class=\"\">Lesson</button>",
+            "html": "<button type=\"button\" class=\"is-active\" aria-current=\"true\">Play</button>",
             "target": [
-              "button[type=\"button\"]:nth-child(2)"
+              ".is-active"
             ]
           },
           {
@@ -19493,9 +21071,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section aria-labelledby=\"overview-heading\" data-testid=\"landmark-overview\">",
+            "html": "<section class=\"beats-module__U7Zb0W__panel\" data-testid=\"beat-player\" aria-labelledby=\"beat-player-title\">",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"]"
+              ".beats-module__U7Zb0W__panel"
             ]
           },
           {
@@ -19513,9 +21091,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3 id=\"overview-heading\">Overview</h3>",
+            "html": "<p class=\"region-kicker\">Databases<!-- --> · Landmark <!-- -->1<!-- --> of <!-- -->6</p>",
             "target": [
-              "#overview-heading"
+              ".beats-module__U7Zb0W__panel > .region-kicker"
             ]
           },
           {
@@ -19533,9 +21111,429 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p>",
+            "html": "<h3 id=\"beat-player-title\" style=\"margin:0 0 18px;font-family:var(--font-pixel), monospace\">SQL</h3>",
             "target": [
-              "section[aria-labelledby=\"overview-heading\"] > p"
+              "#beat-player-title"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<ol class=\"beats-module__U7Zb0W__pips\" aria-label=\"Beat 1 of 8\">",
+            "target": [
+              "ol"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li class=\"beats-module__U7Zb0W__current\" aria-current=\"step\"><span class=\"beats-module__U7Zb0W__sr\">current</span></li>",
+            "target": [
+              ".beats-module__U7Zb0W__current"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span class=\"beats-module__U7Zb0W__sr\">current</span>",
+            "target": [
+              ".beats-module__U7Zb0W__current > .beats-module__U7Zb0W__sr"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span class=\"beats-module__U7Zb0W__sr\">upcoming</span>",
+            "target": [
+              "li:nth-child(2) > .beats-module__U7Zb0W__sr"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span class=\"beats-module__U7Zb0W__sr\">upcoming</span>",
+            "target": [
+              "li:nth-child(3) > .beats-module__U7Zb0W__sr"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(4)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span class=\"beats-module__U7Zb0W__sr\">upcoming</span>",
+            "target": [
+              "li:nth-child(4) > .beats-module__U7Zb0W__sr"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(5)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span class=\"beats-module__U7Zb0W__sr\">upcoming</span>",
+            "target": [
+              "li:nth-child(5) > .beats-module__U7Zb0W__sr"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(6)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span class=\"beats-module__U7Zb0W__sr\">upcoming</span>",
+            "target": [
+              "li:nth-child(6) > .beats-module__U7Zb0W__sr"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(7)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span class=\"beats-module__U7Zb0W__sr\">upcoming</span>",
+            "target": [
+              "li:nth-child(7) > .beats-module__U7Zb0W__sr"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<li><span class=\"beats-module__U7Zb0W__sr\">upcoming</span></li>",
+            "target": [
+              "li:nth-child(8)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<span class=\"beats-module__U7Zb0W__sr\">upcoming</span>",
+            "target": [
+              "li:nth-child(8) > .beats-module__U7Zb0W__sr"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"beats-module__U7Zb0W__beatCard beats-module__U7Zb0W__entering\" tabindex=\"-1\" data-beat-id=\"hook\" data-beat-type=\"hook\">",
+            "target": [
+              ".beats-module__U7Zb0W__beatCard"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p class=\"beats-module__U7Zb0W__prompt\">The durable database choice that is often right.</p>",
+            "target": [
+              ".beats-module__U7Zb0W__prompt"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"beats-module__U7Zb0W__actions\"><button type=\"button\" class=\"beats-module__U7Zb0W__btn beats-module__U7Zb0W__primary\" data-testid=\"beat-advance\">Begin →</button></div>",
+            "target": [
+              ".beats-module__U7Zb0W__actions"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<button type=\"button\" class=\"beats-module__U7Zb0W__btn beats-module__U7Zb0W__primary\" data-testid=\"beat-advance\">Begin →</button>",
+            "target": [
+              ".beats-module__U7Zb0W__btn"
             ]
           },
           {
@@ -19693,6 +21691,86 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<div style=\"margin-top:16px;text-align:center;font-size:0.75rem;line-height:1.5;color:inherit\">",
+            "target": [
+              "footer > div"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-byline\" style=\"margin:0;color:inherit\">Vibe Code Quest by<!-- --> <a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a></p>",
+            "target": [
+              "p[data-testid=\"site-byline\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"https://truline.io\" rel=\"noreferrer\" style=\"color:inherit;font-weight:700\">Truline</a>",
+            "target": [
+              "a[href$=\"truline.io\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p data-testid=\"site-constance\" style=\"margin:4px 0 0;color:inherit;opacity:0.75\">Governed by Constance</p>",
+            "target": [
+              "p[data-testid=\"site-constance\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<next-route-announcer style=\"position: absolute;\"></next-route-announcer>",
             "target": [
               "next-route-announcer"
@@ -19801,6 +21879,24 @@
             "html": "<section class=\"island-detail\" id=\"landmark-list\" tabindex=\"-1\" aria-label=\"Databases landmarks\">",
             "target": [
               "#landmark-list"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "tabindex",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have a tabindex greater than 0"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"beats-module__U7Zb0W__beatCard beats-module__U7Zb0W__entering\" tabindex=\"-1\" data-beat-id=\"hook\" data-beat-type=\"hook\">",
+            "target": [
+              ".beats-module__U7Zb0W__beatCard"
             ]
           }
         ]

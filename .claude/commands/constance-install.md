@@ -69,9 +69,21 @@ It performs, and records in `.constance/install-manifest.json`:
   fences.
 - This command file dropped at `.claude/commands/constance-install.md` (so the project carries it).
 
-Then verify: `constance doctor` again, and confirm the hooks answer — e.g.
-`echo '{}' | constance hook stop` exits 0. Tell the user the hooks take effect for NEW sessions
-(the current session's hook set was loaded at startup).
+Then verify the hooks actually FIRE — not merely that they are wired. A wired hook that crashes
+renders nothing, and Constance then *looks* installed while governing nothing. (This exact bug
+shipped once: a dev-checkout `hooks/*.ts` wrapper used top-level `await`, which tsx compiles to
+CommonJS where top-level await is a hard TransformError — so `session-start` crashed every session
+and injected zero constants, invisibly.) Run all three:
+
+- `constance doctor` reports healthy.
+- `echo '{}' | constance hook stop` exits 0.
+- `echo '{"hook_event_name":"SessionStart","cwd":"'"$PWD"'"}' | constance hook session-start`
+  exits 0 **and prints** the global floor + `constants.md` (non-empty). Exit 0 with NO output — or a
+  thrown error — means the hook is broken; treat it as a hook self-check failure (Failure protocol).
+
+Tell the user the hooks take effect for NEW sessions (the current session's hook set was loaded at
+startup) — so enforcement is verified by executing these hook commands directly, never by watching
+the installing session behave differently.
 
 If the user passed `--skip-gauntlet`, stop here and report: the architecture is active with an
 empty (or existing) store, and they can run this command again anytime to constrain their docs.
@@ -152,6 +164,12 @@ mint constants; anything else becomes an owner note (`constance notes`), never a
   for CLI output.
 - Declare/ground failures are the convergence loop, not blockers (Phase 4).
 - A hook self-check failing after install → run `constance uninstall`, report exactly what
-  failed, and do not leave a half-wired settings file (the manifest revert guarantees this).
+  failed, and do not leave a half-wired settings file (the manifest revert guarantees this). A hook
+  that exits 0 but emits NOTHING counts as failing: `session-start` must render the floor +
+  constants, or the project looks installed while enforcing nothing.
+- No `pin`/`unpin` subcommand exists yet — if Phase 6.2 finds a load-bearing constant demoted out of
+  the capped `constants.md` (8 KB, R016), flag it to the owner for manual follow-up; do not promise a
+  CLI pin. To edit an existing first-party constant in place (no duplicate line), use
+  `constance amend <ruleId> "<new statement>" [--field/--kind/--op/--value/--unit …]`.
 - Anything requiring spend, deployment, or an external mutation → ask first. Nothing in this
   command requires any of those.

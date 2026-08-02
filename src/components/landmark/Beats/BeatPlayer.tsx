@@ -174,7 +174,7 @@ export function BeatPlayer({
   useEffect(() => {
     if (hydrated.current) return;
     hydrated.current = true;
-    const local = readLocalBeatProgress(regionId, landmark.id);
+    const local = readLocalBeatProgress({ regionId, landmarkId: landmark.id, level: sequence.level });
     if (local) {
       const before = state.furthestBeatIndex;
       dispatch({
@@ -211,11 +211,16 @@ export function BeatPlayer({
 
     if (shouldPersist(prev, next)) {
       const payload = toBeatProgressState(next);
-      writeLocalBeatProgress(regionId, landmark.id, payload);
+      writeLocalBeatProgress({ regionId, landmarkId: landmark.id, level: sequence.level }, payload);
       void fetch('/api/progress', {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ region: regionId, landmark: landmark.id, state: payload }),
+        body: JSON.stringify({
+          region: regionId,
+          landmark: landmark.id,
+          level: sequence.level,
+          state: payload,
+        }),
       })
         .then(async (response) => {
           if (!response.ok) return;
@@ -282,7 +287,7 @@ export function BeatPlayer({
           // Collectible stays hidden until a server-confirmed PUT lands.
         });
     }
-  }, [state, regionId, landmark.id]);
+  }, [state, regionId, landmark.id, sequence.level]);
 
   // beat_started on displayed beat change; focus the card only after real transitions.
   useEffect(() => {

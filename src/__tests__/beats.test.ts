@@ -223,8 +223,11 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
       }
       expect(def).toMatchObject({ type: 'default', prompt: content.vibe_coder_default });
       expect(check?.type).toBe('check');
-      expect(check?.prompt).toBe(`Prove it: ${content.assessment.question}`);
+      // §6.4: the "Prove it:" colon crutch is gone; the check asks plainly.
+      expect(check?.prompt).toBe(content.assessment.question);
       expect(check?.hint).not.toBe(content.assessment.explanation);
+      // §6.4 item 5: the trailing coach-ism suffix is deleted.
+      expect(recap?.prompt).toBe(content.hook);
       expect(recap?.type).toBe('recap');
       if (recap && recap.type === 'recap') {
         for (const bullet of recap.bullets) {

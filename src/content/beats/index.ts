@@ -13,6 +13,7 @@ import { sequence as commitsAsCheckpoints } from '../git/beats/commits-as-checkp
 import { sequence as trustBoundaries } from '../security/beats/trust-boundaries.ts';
 import { landmarkRegistry } from '../index.ts';
 import type { LevelId } from '../schema.ts';
+import { sequenceVoiceViolations } from './voice.ts';
 
 // Static beat-sequence registry. Server-side only.
 //
@@ -97,8 +98,9 @@ export function listBeatSequenceKeys(): string[] {
 // Called by build-manifest. The returned count is a build report, never a public manifest field.
 export function validateBeatSequences(
   entries: readonly BeatSequence[] = registryEntries,
-): { count: number; keys: string[] } {
+): { count: number; keys: string[]; pendingRevoice: string[] } {
   const keys: string[] = [];
+  const pendingRevoice: string[] = [];
   for (const entry of entries) {
     const parsedEntry = beatSequenceSchema.parse(entry);
     const key = sequenceKey(parsedEntry);
@@ -125,11 +127,27 @@ export function validateBeatSequences(
       }
     }
 
+    // Voice enforcement (ISSUE-008, VAL-014b). Arcade-authored content — any
+    // landmark that declares `levels` — MUST pass; a budget or banned-phrase
+    // violation fails the build. Legacy landmarks still carrying only pre-rebuild
+    // top-level fields are REPORTED, not failed: their copy is the coursework
+    // slop the mission exists to replace, and it is re-voiced landmark by
+    // landmark (Git in ISSUE-012, the rest in M4-M6). Failing them now would
+    // simply make the build red for the entire mission with nothing actionable.
+    const voice = sequenceVoiceViolations(parsedEntry);
+    if (voice.length > 0) {
+      if (landmark.levels) {
+        throw new Error(`Beat sequence voice violations:\n${voice.join('\n')}`);
+      }
+      pendingRevoice.push(...voice);
+    }
+
     keys.push(key);
   }
   return {
     count: entries === registryEntries ? registry.size : entries.length,
     keys: keys.sort(),
+    pendingRevoice,
   };
 }
 

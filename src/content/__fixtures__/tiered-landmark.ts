@@ -10,14 +10,14 @@ import type { Landmark, LevelContent } from '../schema.ts';
 
 const l1: LevelContent = {
   hook: 'A widget is the smallest thing the crew can name.',
-  definition: 'A widget is one named unit of work. The crew stores each widget in a bin.',
-  when_to_use: ['You need a name for one unit of work'],
+  definition: 'A widget is one named unit of work. The crew keeps each widget in a bin.',
+  when_to_use: ['You need a name for the unit'],
   tradeoffs: {
-    pros: ['Everyone says the same word for the same thing'],
-    cons: ['A name alone tells you nothing about cost'],
+    pros: ['Everyone uses one word for one thing'],
+    cons: ['A name says nothing about cost'],
   },
   example: 'The crew points at a bin and asks what to call the thing inside it.',
-  gotchas: ['Two crews use one word for two different things'],
+  gotchas: ['Two crews, one word, two meanings'],
   vibe_coder_default: 'Name the unit before you argue about it.',
   assessment: {
     question: 'What is a widget?',
@@ -30,38 +30,38 @@ const l1: LevelContent = {
 const l2: LevelContent = {
   hook: 'The crew asks whether to open a second bin.',
   definition: 'Opening a bin costs setup time. One bin holds forty widgets.',
-  when_to_use: ['A bin is full and more widgets are waiting'],
+  when_to_use: ['The first bin is full'],
   tradeoffs: {
-    pros: ['A second bin keeps waiting widgets moving'],
-    cons: ['Every open bin costs setup time you cannot recover'],
+    pros: ['A second bin keeps widgets moving'],
+    cons: ['Each open bin costs setup time'],
   },
   example: 'Thirty-nine widgets sit in the bin and four more arrive.',
-  gotchas: ['Opening a bin for one widget wastes the whole setup'],
-  vibe_coder_default: 'Open a second bin only when the first is full.',
+  gotchas: ['One widget does not repay a setup'],
+  vibe_coder_default: 'Open a second bin only when the first fills.',
   assessment: {
     question: 'When should the crew open a second bin?',
     options: ['Only when the first is full', 'Whenever a widget arrives', 'Never'],
     answer: 'Only when the first is full',
-    explanation: 'Setup time is unrecoverable, so it is spent only once the first bin is full.',
+    explanation: 'Setup time is spent once. Spend it when the bin fills.',
   },
 };
 
 const l3: LevelContent = {
   hook: 'Bins trade setup time for throughput.',
-  definition: 'Bin count sets throughput. Each bin adds fixed setup cost and one more thing to watch.',
+  definition: 'Bin count sets throughput. Each bin adds setup cost. Each bin adds one more thing to watch.',
   when_to_use: ['Throughput matters more than setup cost'],
   tradeoffs: {
     pros: ['More bins move more widgets at once'],
     cons: ['Each bin adds fixed setup cost'],
   },
   example: 'The crew must clear two hundred widgets before the shift ends.',
-  gotchas: ['Bin count grows past what one crew can watch'],
-  vibe_coder_default: 'Add bins until the crew can no longer watch them all.',
+  gotchas: ['Bin count outruns the watching crew'],
+  vibe_coder_default: 'Add bins until the crew cannot watch them.',
   assessment: {
     question: 'What limits how many bins the crew should open?',
     options: ['What the crew can watch', 'The number of widgets', 'The shift length'],
     answer: 'What the crew can watch',
-    explanation: 'Throughput stops improving once bins outrun the crew watching them.',
+    explanation: 'Throughput stops once bins outrun the crew.',
   },
 };
 

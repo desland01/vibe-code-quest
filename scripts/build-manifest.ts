@@ -35,6 +35,14 @@ await verifyRegistryFiles();
 // server key count never becomes a public manifest field (DATA_MODEL §8 item 4).
 const beatReport = validateBeatSequences();
 console.log(`Validated ${beatReport.count} beat sequences: ${beatReport.keys.join(', ') || '(none)'}`);
+if (beatReport.pendingRevoice.length > 0) {
+  // Not a failure: these are legacy landmarks awaiting their re-voice issue.
+  // Printed so the number cannot quietly grow, and so it visibly falls to zero
+  // as M1b and M4-M6 land.
+  console.log(
+    `Voice: ${beatReport.pendingRevoice.length} violation(s) in not-yet-re-voiced legacy content (arcade-authored content is gated).`,
+  );
+}
 const stamp = generatedAt();
 const manifest = buildContentManifest(stamp);
 if (process.argv.includes('--forbid-drafts')) {

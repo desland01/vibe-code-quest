@@ -14,28 +14,40 @@ import { beatSequenceSchema, type Beat, type BeatSequence } from './schema.ts';
 // label text. No invented facts.
 
 export const FACTORY_FRAMING = {
-  // Neutral task frames — never name the source field of the correct answer.
-  predictPrompt: 'Before the reveal: which of these is a real strength of this approach?',
-  predictHint: 'Pick the option that holds up under real use.',
-  scenarioPromptPrefix: 'This is the situation. Which move fits best?',
-  scenarioHint: 'Pick the safest default for this situation.',
-  gotchaPrompt: 'Which of these can burn you if you are not watching?',
-  gotchaHint: 'Pick the real risk, not a safe practice.',
+  // Re-voiced per CREATIVE_BIBLE §6.4. The old set was the single largest source
+  // of banned-phrase violations in the corpus ("this approach", "holds up under
+  // real use", "Which move fits best?", the "Prove it:" colon crutch, the
+  // trailing "Keep this default close." coach-ism). Framing is not landmark
+  // content, so replacing it changes voice without touching a single fact.
+  predictPrompt: 'One of these actually helps. Which?',
+  predictHint: 'One of these survives contact with reality.',
+  scenarioPromptPrefix: "Here's the spot you're in. What do you do?",
+  scenarioHint: 'Pick the safest default here.',
+  gotchaPrompt: 'One of these bites you later. Find it.',
+  gotchaHint: 'Two of these are fine. One is not.',
   checkHint: 'Trust the default you just locked in.',
-  // Correct leads (fixed)
-  predictCorrectLead: 'That strength holds.',
-  scenarioCorrectLead: 'Right — that is the default to keep.',
-  gotchaCorrectLead: 'Caught it.',
-  // Wrong-feedback frames (fixed). Each is completed with the exact canonical label.
-  predictWrongConPrefix: 'That is a tradeoff to plan for, not the strength: ',
-  predictWrongGotchaPrefix: 'That is a risk to watch, not the strength: ',
-  scenarioWrongGotchaPrefix: 'That is a risk to avoid here, not the default move: ',
-  scenarioWrongConPrefix: 'That is a tradeoff, not the default move: ',
-  scenarioWrongWhenPrefix: 'That describes when it fits, not the move itself: ',
-  gotchaWrongProPrefix: 'That is a benefit, not the trap: ',
-  gotchaWrongWhenPrefix: 'That describes when it fits, not the trap: ',
-  checkPromptPrefix: 'Prove it: ',
-  recapPromptSuffix: ' Keep this default close.',
+  // Correct leads. §6.1 rule 8 fixes the verdict vocabulary to three strings;
+  // these are the correct-answer lead plus its flat fact.
+  predictCorrectLead: 'Noted.',
+  scenarioCorrectLead: 'Yep.',
+  gotchaCorrectLead: 'Yep.',
+  // Wrong-feedback frames. Each opens with the fixed wrong verdict and is
+  // completed with the exact canonical label.
+  // These are kept to three words after the verdict lead ON PURPOSE. §6.3 budgets
+  // a feedback line at 12 words after the lead, and an option label at 9; a
+  // derived feedback is frame + label, so any longer frame makes the two budgets
+  // mutually unsatisfiable for real canonical labels.
+  predictWrongConPrefix: "Not that one. That's the cost: ",
+  predictWrongGotchaPrefix: "Not that one. That's a risk: ",
+  scenarioWrongGotchaPrefix: "Not that one. That's the risk: ",
+  scenarioWrongConPrefix: "Not that one. That's the cost: ",
+  scenarioWrongWhenPrefix: "Not that one. That's when, not what: ",
+  gotchaWrongProPrefix: "Not that one. That's a benefit: ",
+  gotchaWrongWhenPrefix: "Not that one. That's when it fits: ",
+  // The colon crutch is gone; the check beat asks the question plainly.
+  checkPromptPrefix: '',
+  // §6.4 item 5: the suffix is deleted. The recap earns its exit.
+  recapPromptSuffix: '',
 } as const;
 
 export type OptionSource = 'pro' | 'con' | 'gotcha' | 'when_to_use' | 'default';

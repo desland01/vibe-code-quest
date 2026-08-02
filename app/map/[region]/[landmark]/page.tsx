@@ -70,11 +70,23 @@ export default async function LandmarkMapPage({
     const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;
     const session = token ? await verifySessionToken(token) : null;
     if (session && isHostedMode()) {
-      const progressRows = await queryAsUser<{ landmark: string; level: string; state: unknown }>(
+      // Compatibility window: before 0011 lands there is no `level` column, and
+      // every existing row is the L3 run by definition (DATA_MODEL §6 step 1).
+      const levelled = await queryAsUser<{ ok: number }>(
         session.userId,
-        `SELECT landmark, level, state
-         FROM progress
-         WHERE profile_id = $1 AND region = $2`,
+        `SELECT 1 AS ok FROM information_schema.columns
+         WHERE table_name = 'progress' AND column_name = 'level' LIMIT 1`,
+      ).then((result) => (result.rowCount ?? 0) > 0);
+
+      const progressRows = await queryAsUser<{ landmark: string; level?: string; state: unknown }>(
+        session.userId,
+        levelled
+          ? `SELECT landmark, level, state
+             FROM progress
+             WHERE profile_id = $1 AND region = $2`
+          : `SELECT landmark, state
+             FROM progress
+             WHERE profile_id = $1 AND region = $2`,
         [session.userId, regionId],
       );
       // Region stamp count is a LANDMARK-level fact, not a row count. With three
@@ -88,7 +100,7 @@ export default async function LandmarkMapPage({
         if (parsed.completed) stampedLandmarks.add(row.landmark);
         // The serialized sequence is L3 during the compatibility window, so the
         // initial progress shown must come from that same level's row.
-        if (row.landmark === landmarkId && row.level === 'l3') initialProgress = parsed;
+        if (row.landmark === landmarkId && (row.level ?? 'l3') === 'l3') initialProgress = parsed;
       }
       regionStampedCount = stampedLandmarks.size;
     }

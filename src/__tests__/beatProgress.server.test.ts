@@ -225,14 +225,14 @@ describe('hosted level gating (ISSUE-005: VAL-009, VAL-046, VAL-054, VAL-059)', 
   });
 
   it('opens L1 to a brand-new profile and nothing above it', () => {
-    expect(computeHighestUnlockedLevel([])).toBe('l1');
+    expect(computeHighestUnlockedLevel([], ['l1', 'l2', 'l3'])).toBe('l1');
     expect(isLevelUnlocked('l1', 'l1')).toBe(true);
     expect(isLevelUnlocked('l2', 'l1')).toBe(false);
     expect(isLevelUnlocked('l3', 'l1')).toBe(false);
   });
 
   it('rejects a write above the highest unlocked level with 423 (VAL-009)', () => {
-    const locked = gateLevelWrite('l2', []);
+    const locked = gateLevelWrite('l2', [], ['l1', 'l2', 'l3']);
     expect(locked.ok).toBe(false);
     if (!locked.ok) {
       expect(locked.status).toBe(423);
@@ -243,17 +243,18 @@ describe('hosted level gating (ISSUE-005: VAL-009, VAL-046, VAL-054, VAL-059)', 
       });
     }
     // An L3 write from a profile that has only completed L1 is still locked.
-    const l3FromL1 = gateLevelWrite('l3', [done('l1')]);
+    const l3FromL1 = gateLevelWrite('l3', [done('l1')], ['l1', 'l2', 'l3']);
     expect(l3FromL1.ok).toBe(false);
   });
 
   it('advances the unlock one tier at a time as levels are completed', () => {
-    expect(computeHighestUnlockedLevel([partial('l1')])).toBe('l1');
-    expect(computeHighestUnlockedLevel([done('l1')])).toBe('l2');
-    expect(computeHighestUnlockedLevel([done('l1'), partial('l2')])).toBe('l2');
-    expect(computeHighestUnlockedLevel([done('l1'), done('l2')])).toBe('l3');
-    expect(gateLevelWrite('l2', [done('l1')]).ok).toBe(true);
-    expect(gateLevelWrite('l3', [done('l1'), done('l2')]).ok).toBe(true);
+    const all = ['l1', 'l2', 'l3'] as const;
+    expect(computeHighestUnlockedLevel([partial('l1')], all)).toBe('l1');
+    expect(computeHighestUnlockedLevel([done('l1')], all)).toBe('l2');
+    expect(computeHighestUnlockedLevel([done('l1'), partial('l2')], all)).toBe('l2');
+    expect(computeHighestUnlockedLevel([done('l1'), done('l2')], all)).toBe('l3');
+    expect(gateLevelWrite('l2', [done('l1')], all).ok).toBe(true);
+    expect(gateLevelWrite('l3', [done('l1'), done('l2')], all).ok).toBe(true);
   });
 
   it('grandfathers a legacy L3 row without synthesizing L1 or L2 (VAL-054)', () => {
@@ -272,16 +273,32 @@ describe('hosted level gating (ISSUE-005: VAL-009, VAL-046, VAL-054, VAL-059)', 
   it('does not let an anonymous local L3 claim promote a hosted write (VAL-059)', () => {
     // The gate reads DATABASE rows only. A browser-held L3 contributes nothing,
     // so after sign-in a profile with no rows is still capped at L1.
-    expect(computeHighestUnlockedLevel([])).toBe('l1');
-    expect(gateLevelWrite('l3', []).ok).toBe(false);
+    const all = ['l1', 'l2', 'l3'] as const;
+    expect(computeHighestUnlockedLevel([], all)).toBe('l1');
+    expect(gateLevelWrite('l3', [], all).ok).toBe(false);
     // Even a completed local L1 is worthless until it lands as a hosted row.
-    expect(gateLevelWrite('l2', []).ok).toBe(false);
+    expect(gateLevelWrite('l2', [], all).ok).toBe(false);
   });
 
   it('ignores a malformed stored state when computing unlock', () => {
-    expect(computeHighestUnlockedLevel([{ level: 'l1', state: { completed: true } }])).toBe('l1');
-    expect(computeHighestUnlockedLevel([{ level: 'l1', state: null }])).toBe('l1');
-    expect(computeHighestUnlockedLevel([{ level: 'l1', state: 'nonsense' }])).toBe('l1');
+    const all = ['l1', 'l2', 'l3'] as const;
+    expect(computeHighestUnlockedLevel([{ level: 'l1', state: { completed: true } }], all)).toBe('l1');
+    expect(computeHighestUnlockedLevel([{ level: 'l1', state: null }], all)).toBe('l1');
+    expect(computeHighestUnlockedLevel([{ level: 'l1', state: 'nonsense' }], all)).toBe('l1');
+  });
+
+  it('opens the only registered level instead of locking it behind unauthored tiers', () => {
+    // The bug this exists to prevent: with only L3 authored — which is the state
+    // of every landmark during the compatibility window — gating L3 behind a
+    // completed L1 locks a brand-new player out of the ONLY level that exists.
+    expect(computeHighestUnlockedLevel([], ['l3'])).toBe('l3');
+    expect(gateLevelWrite('l3', [], ['l3']).ok).toBe(true);
+    // L1 and L2 stay locked while they do not exist.
+    expect(gateLevelWrite('l1', [], ['l3']).ok).toBe(true); // below the unlock
+    expect(computeHighestUnlockedLevel([], ['l1', 'l3'])).toBe('l1');
+    expect(gateLevelWrite('l3', [], ['l1', 'l3']).ok).toBe(false);
+    // Once the existing tier is done, the next REGISTERED tier opens.
+    expect(computeHighestUnlockedLevel([done('l1')], ['l1', 'l3'])).toBe('l3');
   });
 
   it('reads prerequisites with FOR SHARE inside the transaction (VAL-046)', () => {

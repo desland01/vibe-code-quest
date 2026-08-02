@@ -154,7 +154,10 @@ FOR SHARE
  * An existing L3 row therefore opens L3 on its own. Lower levels stay selectable
  * and simply start empty — no retroactive XP is created.
  */
-export function computeHighestUnlockedLevel(rows: readonly LevelProgressRow[]): LevelId {
+export function computeHighestUnlockedLevel(
+  rows: readonly LevelProgressRow[],
+  available: readonly LevelId[] = LEVEL_ORDER,
+): LevelId {
   let hasL3Row = false;
   const completed = new Set<LevelId>();
   for (const row of rows) {
@@ -162,9 +165,26 @@ export function computeHighestUnlockedLevel(rows: readonly LevelProgressRow[]): 
     const parsed = beatProgressStateSchema.safeParse(row.state);
     if (parsed.success && parsed.data.completed) completed.add(row.level);
   }
-  if (hasL3Row || completed.has('l2')) return 'l3';
-  if (completed.has('l1')) return 'l2';
-  return 'l1';
+
+  // The legacy grandfather. 0011 backfills existing rows to L3 without
+  // synthesizing L1 or L2, so requiring a completed L2 for L3 would lock every
+  // existing player out of the tier they were already playing.
+  if (hasL3Row) return 'l3';
+
+  // The prerequisite chain only counts levels that EXIST. "Completed L1 opens
+  // L2" presupposes there is an L1 to complete: during the compatibility window
+  // — and for any landmark whose lower tiers are not authored yet — L3 is the
+  // only registered run, and gating it behind an unauthored L1 would lock every
+  // new player out of the only level in the product.
+  const ordered = LEVEL_ORDER.filter((level) => available.includes(level));
+  if (ordered.length === 0) return 'l1';
+
+  let highest = ordered[0]!;
+  for (let i = 0; i < ordered.length; i += 1) {
+    if (!completed.has(ordered[i]!)) break;
+    highest = ordered[i + 1] ?? ordered[i]!;
+  }
+  return highest;
 }
 
 export function isLevelUnlocked(requested: LevelId, highestUnlocked: LevelId): boolean {
@@ -183,8 +203,9 @@ export type LevelGateResult =
 export function gateLevelWrite(
   requested: LevelId,
   rows: readonly LevelProgressRow[],
+  available: readonly LevelId[] = LEVEL_ORDER,
 ): LevelGateResult {
-  const highestUnlockedLevel = computeHighestUnlockedLevel(rows);
+  const highestUnlockedLevel = computeHighestUnlockedLevel(rows, available);
   if (!isLevelUnlocked(requested, highestUnlockedLevel)) {
     return {
       ok: false,

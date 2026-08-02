@@ -5,6 +5,7 @@ import type { PoolClient } from 'pg';
 import type { BeatSequence, LevelId, SequenceRef } from '@/content/beats/schema';
 import { beatProgressStateSchema, type BeatProgressState } from '@/content/beats/schema';
 import { getSequence } from '@/content/beats';
+import { XP_AWARD_INSERT_SQL_PRE_LEVEL } from './levelCompatibility';
 
 // L-003 competence XP (A4.5 / R042–R045).
 // Server-derived from progress facts only. Zero penalties, zero decay.
@@ -122,19 +123,30 @@ export async function applyXpAwards(
   landmarkId: string,
   level: LevelId,
   rawState: unknown,
+  levelColumnPresent = true,
 ): Promise<XpWriteResult> {
   const awards = deriveXpAwardsForLevel({ regionId, landmarkId, level }, rawState);
   const awarded: Array<{ awardKey: XpAwardKey; points: number }> = [];
 
   for (const award of awards) {
-    const inserted = await client.query<{ award_key: string; points: number }>(XP_AWARD_INSERT_SQL, [
-      userId,
-      regionId,
-      landmarkId,
-      level,
-      award.awardKey,
-      award.points,
-    ]);
+    // Compatibility window: award identity loses its level column too, and every
+    // pre-migration award is an L3 award.
+    const inserted = levelColumnPresent
+      ? await client.query<{ award_key: string; points: number }>(XP_AWARD_INSERT_SQL, [
+          userId,
+          regionId,
+          landmarkId,
+          level,
+          award.awardKey,
+          award.points,
+        ])
+      : await client.query<{ award_key: string; points: number }>(XP_AWARD_INSERT_SQL_PRE_LEVEL, [
+          userId,
+          regionId,
+          landmarkId,
+          award.awardKey,
+          award.points,
+        ]);
     if (inserted.rows[0]) {
       const key = inserted.rows[0].award_key;
       if (key in XP_AWARD_POINTS) {

@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/auth/session';
 import { withUserTransaction } from '@/lib/db';
 import { LEVEL_IDS, type LevelId } from '@/content/beats/schema';
+import { availableLevels } from '@/content/beats';
 import {
   BEAT_PROGRESS_UPSERT_SQL,
   LANDMARK_PROGRESS_FOR_SHARE_SQL,
@@ -13,6 +14,13 @@ import {
 } from '@/server/beatProgress';
 import { isHostedMode } from '@/server/hosting';
 import { applyXpAwards, getXpTotal } from '@/server/xp';
+import {
+  BEAT_PROGRESS_UPSERT_SQL_PRE_LEVEL,
+  IMPLICIT_LEVEL,
+  LANDMARK_PROGRESS_FOR_SHARE_SQL_PRE_LEVEL,
+  canWriteLevel,
+  hasLevelColumn,
+} from '@/server/levelCompatibility';
 
 export const dynamic = 'force-dynamic';
 
@@ -79,15 +87,24 @@ export async function GET() {
   }
 
   const payload = await withUserTransaction(userId, async (client) => {
-    const result = await client.query<ProgressRow>(
-      `SELECT region, landmark, level, state, updated_at
-       FROM progress
-       WHERE profile_id = $1
-       ORDER BY updated_at DESC`,
+    // Compatibility window: before 0011 lands there is no `level` column, and
+    // every existing row is the L3 run by definition.
+    const levelled = await hasLevelColumn(client);
+    const result = await client.query<Omit<ProgressRow, 'level'> & { level?: LevelId }>(
+      levelled
+        ? `SELECT region, landmark, level, state, updated_at
+           FROM progress
+           WHERE profile_id = $1
+           ORDER BY updated_at DESC`
+        : `SELECT region, landmark, state, updated_at
+           FROM progress
+           WHERE profile_id = $1
+           ORDER BY updated_at DESC`,
       [userId],
     );
+    const items = result.rows.map((row) => ({ ...row, level: row.level ?? IMPLICIT_LEVEL }));
     const total = await getXpTotal(client, userId);
-    return { items: result.rows, xp: { total } };
+    return { items, xp: { total } };
   });
 
   return NextResponse.json(payload);
@@ -144,14 +161,38 @@ export async function PUT(request: Request) {
   const gated = await withUserTransaction(userId, async (client) => {
     // Steps 3-4: resolve the registry entry, then read every level row for this
     // landmark with FOR SHARE so the unlock decision cannot be overtaken.
-    const existing = await client.query<LevelProgressRow>(LANDMARK_PROGRESS_FOR_SHARE_SQL, [
-      userId,
-      body.region,
-      body.landmark,
-    ]);
+    const levelled = await hasLevelColumn(client);
+    if (!canWriteLevel(level, levelled)) {
+      // Pre-migration there is one row per landmark, so an L1/L2 write would
+      // silently overwrite the player's L3 progress. Refuse rather than destroy.
+      return {
+        locked: {
+          status: 423 as const,
+          body: { error: 'Level locked', requestedLevel: level, highestUnlockedLevel: IMPLICIT_LEVEL },
+        },
+        rejected: undefined,
+        payload: undefined,
+      } as const;
+    }
+
+    const existing = levelled
+      ? await client.query<LevelProgressRow>(LANDMARK_PROGRESS_FOR_SHARE_SQL, [
+          userId,
+          body.region,
+          body.landmark,
+        ])
+      : {
+          rows: (
+            await client.query<{ state: unknown }>(LANDMARK_PROGRESS_FOR_SHARE_SQL_PRE_LEVEL, [
+              userId,
+              body.region,
+              body.landmark,
+            ])
+          ).rows.map((row) => ({ level: IMPLICIT_LEVEL, state: row.state })),
+        };
 
     // Steps 5-6: compute highest unlock and reject a write above it with 423.
-    const gate = gateLevelWrite(level, existing.rows);
+    const gate = gateLevelWrite(level, existing.rows, availableLevels(body.region, body.landmark));
     if (!gate.ok) return { locked: gate, rejected: undefined, payload: undefined } as const;
 
     // Step 7: validate the state against the SELECTED sequence's bounds.
@@ -160,28 +201,43 @@ export async function PUT(request: Request) {
 
     // Step 8: the four-part atomic upsert, then XP from the merged state.
     if (plan.path === 'beat') {
-      const result = await client.query<ProgressRow>(BEAT_PROGRESS_UPSERT_SQL, [
-        userId,
-        body.region,
-        body.landmark,
-        level,
-        JSON.stringify(plan.state),
-      ]);
-      const row = result.rows[0]!;
+      const result = levelled
+        ? await client.query<ProgressRow>(BEAT_PROGRESS_UPSERT_SQL, [
+            userId,
+            body.region,
+            body.landmark,
+            level,
+            JSON.stringify(plan.state),
+          ])
+        : await client.query<Omit<ProgressRow, 'level'>>(BEAT_PROGRESS_UPSERT_SQL_PRE_LEVEL, [
+            userId,
+            body.region,
+            body.landmark,
+            JSON.stringify(plan.state),
+          ]);
+      const row = { level, ...result.rows[0]! };
       // Awards from server-merged RETURNING state, never the incoming client payload.
-      const xp = await applyXpAwards(client, userId, body.region, body.landmark, level, row.state);
+      const xp = await applyXpAwards(client, userId, body.region, body.landmark, level, row.state, levelled);
       return { locked: undefined, rejected: undefined, payload: { ...row, xp } } as const;
     }
 
-    const result = await client.query<ProgressRow>(
-      `INSERT INTO progress (profile_id, region, landmark, level, state)
-       VALUES ($1, $2, $3, $4, $5::jsonb)
-       ON CONFLICT (profile_id, region, landmark, level)
-       DO UPDATE SET state = EXCLUDED.state, updated_at = now()
-       RETURNING region, landmark, level, state, updated_at`,
-      [userId, body.region, body.landmark, level, JSON.stringify(body.state)],
+    const result = await client.query<Omit<ProgressRow, 'level'>>(
+      levelled
+        ? `INSERT INTO progress (profile_id, region, landmark, level, state)
+           VALUES ($1, $2, $3, $4, $5::jsonb)
+           ON CONFLICT (profile_id, region, landmark, level)
+           DO UPDATE SET state = EXCLUDED.state, updated_at = now()
+           RETURNING region, landmark, level, state, updated_at`
+        : `INSERT INTO progress (profile_id, region, landmark, state)
+           VALUES ($1, $2, $3, $4::jsonb)
+           ON CONFLICT (profile_id, region, landmark)
+           DO UPDATE SET state = EXCLUDED.state, updated_at = now()
+           RETURNING region, landmark, state, updated_at`,
+      levelled
+        ? [userId, body.region, body.landmark, level, JSON.stringify(body.state)]
+        : [userId, body.region, body.landmark, JSON.stringify(body.state)],
     );
-    const row = result.rows[0]!;
+    const row = { level, ...result.rows[0]! };
     // Legacy/non-beat path: no awards, still return current total for HUD.
     const total = await getXpTotal(client, userId);
     return {

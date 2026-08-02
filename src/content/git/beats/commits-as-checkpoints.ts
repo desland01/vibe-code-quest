@@ -6,6 +6,13 @@ import type { BeatSequence } from '../../beats/schema.ts';
 export const sequence: BeatSequence = {
   regionId: 'git',
   landmarkId: 'commits-as-checkpoints',
+  level: 'l3',
+  assessment: {
+    question: 'When should you create an agent-work checkpoint?',
+    options: ['After one coherent change passes review and checks', 'Whenever the agent pauses mid-edit', 'After combining several unrelated tasks'],
+    answer: 'After one coherent change passes review and checks',
+    explanation: 'A useful checkpoint captures one understandable outcome that you can inspect and recover independently.',
+  },
   beats: [
     {
       id: 'hook',
@@ -14,7 +21,7 @@ export const sequence: BeatSequence = {
       estimatedSeconds: 10,
     },
     {
-      id: 'predict-checkpoint',
+      id: 'predict-core',
       type: 'predict',
       prompt: 'Your agent just changed invoice reminders across a route, a queue, and tests. What belongs in the checkpoint?',
       options: [
@@ -37,7 +44,7 @@ export const sequence: BeatSequence = {
       estimatedSeconds: 25,
     },
     {
-      id: 'scenario-diff',
+      id: 'scenario-default',
       type: 'scenario',
       prompt: 'The agent finished the invoice reminders across the route, queue, and tests. The staged diff is ready. Your move?',
       options: [

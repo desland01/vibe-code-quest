@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { assessmentSchema, levelIdSchema, type LevelId } from '../schema.ts';
+
 // Engagement-v2 beat grammar (frozen DESIGN_CONTRACT §4/§8).
 // Beats are a typed projection of canonical landmark fields. Data-driven, deterministic,
 // never LLM-generated. Progress persists a minimal monotonic state — never per-beat arrays.
@@ -57,12 +59,33 @@ export const beatSchema = z.discriminatedUnion('type', [
 export type Beat = z.infer<typeof beatSchema>;
 export type ChoiceBeat = Extract<Beat, { options: unknown }>;
 
+/**
+ * The pinned L3 positional contract (DATA_MODEL §1, ADDITIONAL CONSEQUENCES
+ * "L3 beat types must be pinned with IDs"). XP derives scenario and gotcha
+ * awards by beat type and frontier position, so pinning IDs alone would still
+ * let award thresholds drift. Both the id AND the type of all eight beats are
+ * fixed, with `check` at zero-based index 6.
+ */
+export const L3_SHAPE = [
+  ['hook', 'hook'],
+  ['predict-core', 'predict'],
+  ['reveal-definition', 'reveal'],
+  ['scenario-default', 'scenario'],
+  ['gotcha-trap', 'gotcha'],
+  ['default-commit', 'default'],
+  ['check-quiz', 'check'],
+  ['recap', 'recap'],
+] as const satisfies readonly (readonly [string, BeatType])[];
+
 export const beatSequenceSchema = z
   .object({
     regionId: nonEmpty,
     landmarkId: beatId,
+    level: levelIdSchema,
+    assessment: assessmentSchema,
     beats: z.array(beatSchema).min(5).max(8),
   })
+  .strict()
   .superRefine((sequence, ctx) => {
     const ids = sequence.beats.map((beat) => beat.id);
     if (new Set(ids).size !== ids.length) {
@@ -82,12 +105,44 @@ export const beatSequenceSchema = z
     if (sequence.beats.at(-1)?.type !== 'recap') {
       ctx.addIssue({ code: 'custom', message: 'final beat must be recap (stamp path)' });
     }
-    if (!sequence.beats.some((beat) => beat.type === 'check')) {
-      ctx.addIssue({ code: 'custom', message: 'sequence must include a check beat' });
+    const checkCount = sequence.beats.filter((beat) => beat.type === 'check').length;
+    if (checkCount !== 1) {
+      ctx.addIssue({ code: 'custom', message: 'sequence must contain exactly one check beat' });
+    }
+    if (sequence.level === 'l3') {
+      const actual = sequence.beats.map((beat) => [beat.id, beat.type] as const);
+      if (JSON.stringify(actual) !== JSON.stringify(L3_SHAPE)) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'l3 must preserve the pinned eight beat id and type sequence',
+        });
+      }
     }
   });
 
 export type BeatSequence = z.infer<typeof beatSequenceSchema>;
+
+/** Immutable three-part runtime identity for exactly one playable sequence. */
+export type SequenceRef = Readonly<{
+  regionId: string;
+  landmarkId: string;
+  level: LevelId;
+}>;
+
+export const sequenceRefSchema = z
+  .object({
+    regionId: nonEmpty,
+    landmarkId: beatId,
+    level: levelIdSchema,
+  })
+  .strict();
+
+/** Canonical registry key for a sequence: `${regionId}/${landmarkId}/${level}`. */
+export function sequenceKey(ref: SequenceRef): string {
+  return `${ref.regionId}/${ref.landmarkId}/${ref.level}`;
+}
+
+export { LEVEL_IDS, levelIdSchema, type LevelId } from '../schema.ts';
 
 // Persisted progress state (frozen §8). `furthestBeatIndex` is the highest zero-based beat
 // index the learner has reached; back-review is local UI state and writes nothing.

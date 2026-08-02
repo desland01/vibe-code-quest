@@ -6,6 +6,13 @@ import type { BeatSequence } from '../../beats/schema.ts';
 export const sequence: BeatSequence = {
   regionId: 'security',
   landmarkId: 'trust-boundaries',
+  level: 'l3',
+  assessment: {
+    question: 'How should a model tool handler treat arguments produced by the model?',
+    options: ['As untrusted input requiring validation and authorization', 'As trusted because the model chose them', 'As safe after prompt instructions'],
+    answer: 'As untrusted input requiring validation and authorization',
+    explanation: 'Model output crosses a trust boundary and cannot replace application checks.',
+  },
   beats: [
     {
       id: 'hook',
@@ -14,7 +21,7 @@ export const sequence: BeatSequence = {
       estimatedSeconds: 10,
     },
     {
-      id: 'predict-boundary',
+      id: 'predict-core',
       type: 'predict',
       prompt: 'Your agent can read customer documents and issue refunds through a tool. Where should trust stop?',
       options: [
@@ -37,7 +44,7 @@ export const sequence: BeatSequence = {
       estimatedSeconds: 25,
     },
     {
-      id: 'scenario-refund',
+      id: 'scenario-default',
       type: 'scenario',
       prompt: 'A support agent reads customer documents and can issue refunds through a tool. Your move before the refund fires?',
       options: [
@@ -63,7 +70,7 @@ export const sequence: BeatSequence = {
       estimatedSeconds: 25,
     },
     {
-      id: 'default-boundaries',
+      id: 'default-commit',
       type: 'default',
       prompt: 'Draw browser, server, database, third-party, and model/tool boundaries, then authenticate, authorize, and validate every crossing.',
       estimatedSeconds: 15,

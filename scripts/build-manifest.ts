@@ -2,7 +2,7 @@ import { mkdir, readdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateBeatSequences } from '../src/content/beats/index.ts';
-import { buildContentManifest } from '../src/content/manifest.ts';
+import { buildContentManifest, buildPublicContentManifest } from '../src/content/manifest.ts';
 import { regionMetas } from '../src/content/regions.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -31,9 +31,12 @@ function generatedAt() {
 }
 
 await verifyRegistryFiles();
+// Registry validation is a build report, separate from manifest generation: the
+// server key count never becomes a public manifest field (DATA_MODEL §8 item 4).
 const beatReport = validateBeatSequences();
 console.log(`Validated ${beatReport.count} beat sequences: ${beatReport.keys.join(', ') || '(none)'}`);
-const manifest = buildContentManifest(generatedAt());
+const stamp = generatedAt();
+const manifest = buildContentManifest(stamp);
 if (process.argv.includes('--forbid-drafts')) {
   const drafts = manifest.regions.flatMap((region) =>
     region.landmarks.filter((landmark) => landmark.draft).map((landmark) => `${region.id}/${landmark.id}`)
@@ -44,3 +47,8 @@ const output = resolve(root, `public/content-manifest.v${manifest.version}.json`
 await mkdir(dirname(output), { recursive: true });
 await writeFile(output, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 console.log(`Validated ${manifest.regions.length} regions and 48 landmarks; wrote ${output}`);
+
+const publicManifest = buildPublicContentManifest(stamp);
+const publicOutput = resolve(root, `public/content-manifest.v${publicManifest.version}.json`);
+await writeFile(publicOutput, `${JSON.stringify(publicManifest, null, 2)}\n`, 'utf8');
+console.log(`Wrote public projection (no levels, assessments, or answer keys): ${publicOutput}`);

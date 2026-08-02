@@ -1,4 +1,4 @@
-import type { Landmark } from '../schema.ts';
+import type { Landmark, LevelContent, LevelId } from '../schema.ts';
 import { beatSequenceSchema, type Beat, type BeatSequence } from './schema.ts';
 
 // L-002 deterministic factory. Copy loyalty: every claim-bearing string is a verbatim
@@ -168,18 +168,37 @@ function choiceOptions(
   return { options, correctOptionId: correct.id };
 }
 
-export function deriveBeatSequence(regionId: string, landmark: Landmark): BeatSequence {
+/** Identity a derived sequence needs beyond its level content. */
+export type LandmarkIdentity = Readonly<{ id: string; title: string }>;
+
+/**
+ * Project one level's canonical content into one playable sequence (REQ-007).
+ *
+ * This replaces the level-blind `deriveBeatSequence()`: the factory now reads a
+ * single `LevelContent` source and carries `level` and `assessment` through to
+ * the sequence, so every claim in the run is provenance-checkable against that
+ * one tier's fields. An l3 projection emits the pinned `L3_SHAPE` tuple.
+ */
+export function deriveLevelSequence(
+  regionId: string,
+  landmark: LandmarkIdentity,
+  level: LevelId,
+  content: LevelContent,
+): BeatSequence {
+  // Slot stability key stays two-part on purpose: correct-option placement is a
+  // presentation concern with no level semantics, and holding it fixed keeps
+  // every existing L3 projection byte-identical across this rebuild.
   const landmarkKey = `${regionId}/${landmark.id}`;
-  const defCards = sentences(landmark.definition).slice(0, 3);
-  const revealCards = defCards.length > 0 ? defCards : [landmark.definition];
+  const defCards = sentences(content.definition).slice(0, 3);
+  const revealCards = defCards.length > 0 ? defCards : [content.definition];
 
   // Predict: benefit from tradeoffs.pros — NEVER the quiz (check owns the quiz).
   // Distractors: cons + gotchas (source-tagged for per-option feedback).
-  const predictCorrect = landmark.tradeoffs.pros[0]!;
+  const predictCorrect = content.tradeoffs.pros[0]!;
   const predictLabeled: LabeledSource[] = [
     { label: predictCorrect, source: 'pro' },
-    ...landmark.tradeoffs.cons.map((label) => ({ label, source: 'con' as const })),
-    ...landmark.gotchas.map((label) => ({ label, source: 'gotcha' as const })),
+    ...content.tradeoffs.cons.map((label) => ({ label, source: 'con' as const })),
+    ...content.gotchas.map((label) => ({ label, source: 'gotcha' as const })),
   ];
   const predict = choiceOptions(
     landmarkKey,
@@ -193,26 +212,26 @@ export function deriveBeatSequence(regionId: string, landmark: Landmark): BeatSe
   // Scenario: neutral frame + example; correct = vibe_coder_default.
   // Distractors: remaining gotchas, cons, when_to_use (source-tagged).
   const scenarioLabeled: LabeledSource[] = [
-    { label: landmark.vibe_coder_default, source: 'default' },
-    ...landmark.gotchas.slice(1).map((label) => ({ label, source: 'gotcha' as const })),
-    ...landmark.tradeoffs.cons.map((label) => ({ label, source: 'con' as const })),
-    ...landmark.when_to_use.map((label) => ({ label, source: 'when_to_use' as const })),
+    { label: content.vibe_coder_default, source: 'default' },
+    ...content.gotchas.slice(1).map((label) => ({ label, source: 'gotcha' as const })),
+    ...content.tradeoffs.cons.map((label) => ({ label, source: 'con' as const })),
+    ...content.when_to_use.map((label) => ({ label, source: 'when_to_use' as const })),
   ];
   const scenario = choiceOptions(
     landmarkKey,
     'scenario',
     'scenario',
     scenarioLabeled,
-    landmark.vibe_coder_default,
+    content.vibe_coder_default,
     FACTORY_FRAMING.scenarioCorrectLead,
   );
 
   // Gotcha: correct = first gotcha; distractors = pros + when_to_use (safe practices).
-  const gotchaTrap = landmark.gotchas[0]!;
+  const gotchaTrap = content.gotchas[0]!;
   const gotchaLabeled: LabeledSource[] = [
     { label: gotchaTrap, source: 'gotcha' },
-    ...landmark.tradeoffs.pros.map((label) => ({ label, source: 'pro' as const })),
-    ...landmark.when_to_use.map((label) => ({ label, source: 'when_to_use' as const })),
+    ...content.tradeoffs.pros.map((label) => ({ label, source: 'pro' as const })),
+    ...content.when_to_use.map((label) => ({ label, source: 'when_to_use' as const })),
   ];
   const gotcha = choiceOptions(
     landmarkKey,
@@ -223,22 +242,22 @@ export function deriveBeatSequence(regionId: string, landmark: Landmark): BeatSe
     FACTORY_FRAMING.gotchaCorrectLead,
   );
 
-  const firstDefinition = sentences(landmark.definition)[0] ?? landmark.definition;
+  const firstDefinition = sentences(content.definition)[0] ?? content.definition;
   const recapBullets = uniqueLabels([
     firstDefinition,
-    landmark.vibe_coder_default,
-    landmark.gotchas[0]!,
-    landmark.tradeoffs.pros[0]!,
+    content.vibe_coder_default,
+    content.gotchas[0]!,
+    content.tradeoffs.pros[0]!,
   ]).slice(0, 4);
   while (recapBullets.length < 2) {
-    recapBullets.push(landmark.hook);
+    recapBullets.push(content.hook);
   }
 
   const beats: Beat[] = [
     {
       id: 'hook',
       type: 'hook',
-      prompt: landmark.hook,
+      prompt: content.hook,
       estimatedSeconds: 10,
     },
     {
@@ -260,7 +279,7 @@ export function deriveBeatSequence(regionId: string, landmark: Landmark): BeatSe
     {
       id: 'scenario-default',
       type: 'scenario',
-      prompt: `${FACTORY_FRAMING.scenarioPromptPrefix} ${landmark.example}`,
+      prompt: `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`,
       options: scenario.options,
       correctOptionId: scenario.correctOptionId,
       hint: FACTORY_FRAMING.scenarioHint,
@@ -278,20 +297,20 @@ export function deriveBeatSequence(regionId: string, landmark: Landmark): BeatSe
     {
       id: 'default-commit',
       type: 'default',
-      prompt: landmark.vibe_coder_default,
+      prompt: content.vibe_coder_default,
       estimatedSeconds: 15,
     },
     {
       id: 'check-quiz',
       type: 'check',
-      prompt: `${FACTORY_FRAMING.checkPromptPrefix}${landmark.quiz.question}`,
+      prompt: `${FACTORY_FRAMING.checkPromptPrefix}${content.assessment.question}`,
       hint: FACTORY_FRAMING.checkHint,
       estimatedSeconds: 20,
     },
     {
       id: 'recap',
       type: 'recap',
-      prompt: `${landmark.hook}${FACTORY_FRAMING.recapPromptSuffix}`,
+      prompt: `${content.hook}${FACTORY_FRAMING.recapPromptSuffix}`,
       bullets: recapBullets,
       estimatedSeconds: 20,
     },
@@ -300,8 +319,55 @@ export function deriveBeatSequence(regionId: string, landmark: Landmark): BeatSe
   return beatSequenceSchema.parse({
     regionId,
     landmarkId: landmark.id,
+    level,
+    assessment: content.assessment,
     beats,
   });
+}
+
+/**
+ * Re-home a legacy landmark's top-level instructional fields as its L3 level
+ * content.
+ *
+ * This is a lossless projection of already-authored production content, not
+ * placeholder content: the arcade's L3 tier IS the tradeoffs tier the legacy
+ * landmark files already carry, and its `quiz` IS that tier's assessment. It
+ * keeps all 48 landmark URLs playable through the L3-only compatibility window
+ * (DATA_MODEL §6 step 1) while M4–M6 author real `levels` per landmark. A
+ * landmark that declares `levels` never goes through this path.
+ */
+export function legacyLevelContent(landmark: Landmark): LevelContent {
+  return {
+    hook: landmark.hook,
+    definition: landmark.definition,
+    when_to_use: [...landmark.when_to_use],
+    tradeoffs: {
+      pros: [...landmark.tradeoffs.pros],
+      cons: [...landmark.tradeoffs.cons],
+    },
+    example: landmark.example,
+    gotchas: [...landmark.gotchas],
+    vibe_coder_default: landmark.vibe_coder_default,
+    assessment: {
+      question: landmark.quiz.question,
+      // The legacy quiz allowed unbounded options; the assessment schema caps at 4.
+      options: landmark.quiz.options.slice(0, 4),
+      answer: landmark.quiz.answer,
+      explanation: landmark.quiz.explanation,
+    },
+  };
+}
+
+/** Every level a landmark can currently be played at, keyed by level id. */
+export function landmarkLevelSources(landmark: Landmark): ReadonlyMap<LevelId, LevelContent> {
+  if (landmark.levels) {
+    return new Map<LevelId, LevelContent>([
+      ['l1', landmark.levels.l1],
+      ['l2', landmark.levels.l2],
+      ['l3', landmark.levels.l3],
+    ]);
+  }
+  return new Map<LevelId, LevelContent>([['l3', legacyLevelContent(landmark)]]);
 }
 
 /** Flatten FACTORY_FRAMING values for provenance allowlist tests. */
@@ -309,47 +375,131 @@ export function factoryFramingValues(): string[] {
   return Object.values(FACTORY_FRAMING);
 }
 
-/** Exact allowed wrong-feedback composites for a landmark (provenance lock). */
-export function allowedWrongFeedbacks(landmark: Landmark): string[] {
+/** Exact allowed wrong-feedback composites for one level (provenance lock). */
+export function allowedWrongFeedbacks(content: LevelContent): string[] {
   const out: string[] = [];
-  for (const label of landmark.tradeoffs.cons) {
+  for (const label of content.tradeoffs.cons) {
     out.push(`${FACTORY_FRAMING.predictWrongConPrefix}${label}`);
     out.push(`${FACTORY_FRAMING.scenarioWrongConPrefix}${label}`);
   }
-  for (const label of landmark.gotchas) {
+  for (const label of content.gotchas) {
     out.push(`${FACTORY_FRAMING.predictWrongGotchaPrefix}${label}`);
     out.push(`${FACTORY_FRAMING.scenarioWrongGotchaPrefix}${label}`);
   }
-  for (const label of landmark.when_to_use) {
+  for (const label of content.when_to_use) {
     out.push(`${FACTORY_FRAMING.scenarioWrongWhenPrefix}${label}`);
     out.push(`${FACTORY_FRAMING.gotchaWrongWhenPrefix}${label}`);
   }
-  for (const label of landmark.tradeoffs.pros) {
+  for (const label of content.tradeoffs.pros) {
     out.push(`${FACTORY_FRAMING.gotchaWrongProPrefix}${label}`);
   }
   return out;
 }
 
-/** Collect every claim-bearing string from a landmark for provenance checks. */
-export function landmarkCorpus(landmark: Landmark): string[] {
+/**
+ * Collect every claim-bearing string for one level, for tier-aware provenance
+ * checks (VAL-012). A fact that is absent from THIS level's canonical fields is
+ * a leak even when it appears elsewhere in the same landmark.
+ */
+export function levelCorpus(title: string, content: LevelContent): string[] {
   return [
-    landmark.hook,
-    landmark.title,
-    landmark.definition,
-    landmark.example,
-    landmark.vibe_coder_default,
-    ...landmark.when_to_use,
-    ...landmark.gotchas,
-    ...landmark.tradeoffs.pros,
-    ...landmark.tradeoffs.cons,
-    landmark.quiz.question,
-    landmark.quiz.answer,
-    landmark.quiz.explanation,
-    ...landmark.quiz.options,
-    ...sentences(landmark.definition),
+    content.hook,
+    title,
+    content.definition,
+    content.example,
+    content.vibe_coder_default,
+    ...content.when_to_use,
+    ...content.gotchas,
+    ...content.tradeoffs.pros,
+    ...content.tradeoffs.cons,
+    content.assessment.question,
+    content.assessment.answer,
+    content.assessment.explanation,
+    ...content.assessment.options,
+    ...sentences(content.definition),
   ];
 }
 
 export function definitionSentences(text: string): string[] {
   return sentences(text);
+}
+
+/**
+ * Tier-aware provenance enforcement (REQ-007, VAL-012).
+ *
+ * `beatSequenceSchema` can only see structure — it has no canonical content to
+ * compare against, so on its own it will happily accept a beat carrying a fact
+ * that appears nowhere in the landmark. This is the check that makes provenance
+ * a real rejection boundary: every claim-bearing string in the sequence must be
+ * an exact member of THIS level's corpus or of the fixed framing allowlist.
+ * Exact membership only — no prefix/suffix matching, which would let an invented
+ * clause ride along behind an allowlisted frame.
+ *
+ * Scoping to one level is the point: a fact that is canonical for L2 is a leak
+ * inside an L1 run, because the player has not been taught it yet.
+ *
+ * Returns every violation rather than throwing, so a content author sees the
+ * whole list at once.
+ */
+export function sequenceProvenanceViolations(
+  sequence: BeatSequence,
+  title: string,
+  content: LevelContent,
+): string[] {
+  const corpus = new Set(levelCorpus(title, content));
+  const framing = new Set(factoryFramingValues());
+  const wrongAllowed = new Set(allowedWrongFeedbacks(content));
+  const correctLeads = new Set<string>([
+    FACTORY_FRAMING.predictCorrectLead,
+    FACTORY_FRAMING.scenarioCorrectLead,
+    FACTORY_FRAMING.gotchaCorrectLead,
+  ]);
+  const composites = new Set<string>([
+    `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`,
+    `${FACTORY_FRAMING.checkPromptPrefix}${content.assessment.question}`,
+    `${content.hook}${FACTORY_FRAMING.recapPromptSuffix}`,
+  ]);
+
+  const allowedProse = new Set<string>([...corpus, ...framing, ...composites]);
+  const violations: string[] = [];
+  const where = `${sequence.regionId}/${sequence.landmarkId}/${sequence.level}`;
+
+  for (const beat of sequence.beats) {
+    if (!allowedProse.has(beat.prompt)) {
+      violations.push(`${where} beat ${beat.id}: prompt not in level corpus: ${beat.prompt}`);
+    }
+    if (beat.hint && !allowedProse.has(beat.hint)) {
+      violations.push(`${where} beat ${beat.id}: hint not in level corpus: ${beat.hint}`);
+    }
+    if ('cards' in beat) {
+      for (const card of beat.cards) {
+        if (!corpus.has(card)) {
+          violations.push(`${where} beat ${beat.id}: card not in level corpus: ${card}`);
+        }
+      }
+    }
+    if ('bullets' in beat) {
+      for (const bullet of beat.bullets) {
+        if (!corpus.has(bullet)) {
+          violations.push(`${where} beat ${beat.id}: bullet not in level corpus: ${bullet}`);
+        }
+      }
+    }
+    if ('options' in beat) {
+      for (const option of beat.options) {
+        if (!corpus.has(option.label)) {
+          violations.push(`${where} beat ${beat.id}: option label not in level corpus: ${option.label}`);
+        }
+        const isCorrect = option.id === beat.correctOptionId;
+        const allowedFeedback = isCorrect ? correctLeads : wrongAllowed;
+        if (!allowedFeedback.has(option.feedback)) {
+          violations.push(
+            `${where} beat ${beat.id}: option ${option.id} feedback not allowlisted: ${option.feedback}`,
+          );
+        }
+      }
+    }
+  }
+
+  return violations;
 }

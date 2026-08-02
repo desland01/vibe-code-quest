@@ -8,18 +8,28 @@ import {
   validateBeatStateConsistency,
   type BeatProgressState,
 } from '@/content/beats/schema';
+import * as beatsModule from '@/content/beats';
 import {
   allowedWrongFeedbacks,
-  deriveBeatSequence,
+  availableLevels,
+  deriveLevelSequence,
   FACTORY_FRAMING,
   factoryFramingValues,
   getBeatSequence,
+  getSequence,
   hasBeatSequence,
+  hasSequence,
   isHandAuthoredBeatSequence,
-  landmarkCorpus,
+  landmarkLevelSources,
+  legacyLevelContent,
+  levelCorpus,
+  sequenceProvenanceViolations,
   listBeatSequenceKeys,
   validateBeatSequences,
 } from '@/content/beats';
+import { L3_SHAPE } from '@/content/beats/schema';
+import { canonicalLandmarkSchema, landmarkLevelsSchema } from '@/content/schema';
+import { fixtureLevels, tieredLandmark, untieredLandmark } from '@/content/__fixtures__/tiered-landmark';
 import { sequence as pilot } from '@/content/git/beats/commits-as-checkpoints';
 import { sequence as transferSource } from '@/content/security/beats/trust-boundaries';
 import { landmarkRegistry } from '@/content/index';
@@ -39,8 +49,10 @@ const FACTORY_TYPE_ORDER = [
   'recap',
 ] as const;
 
+// Every landmark still carries only legacy top-level fields, so each registers
+// exactly its L3 run during the L3-only compatibility window.
 const ALL_CANONICAL_KEYS = Object.entries(landmarkRegistry)
-  .flatMap(([regionId, landmarks]) => landmarks.map((landmark) => `${regionId}/${landmark.id}`))
+  .flatMap(([regionId, landmarks]) => landmarks.map((landmark) => `${regionId}/${landmark.id}/l3`))
   .sort();
 
 describe('beat sequence schema', () => {
@@ -148,15 +160,16 @@ describe('beat registry (L-002 full factory)', () => {
 describe('L-002 factory derive — structure, mapping, provenance, determinism', () => {
   const framing = factoryFramingValues();
   const derivedKeys = ALL_CANONICAL_KEYS.filter(
-    (key) => key !== 'git/commits-as-checkpoints' && key !== 'security/trust-boundaries',
+    (key) => key !== 'git/commits-as-checkpoints/l3' && key !== 'security/trust-boundaries/l3',
   );
 
   it('derives 46 sequences with fixed 8-type grammar and unique ids', () => {
     expect(derivedKeys).toHaveLength(46);
     for (const key of derivedKeys) {
-      const [regionId, landmarkId] = key.split('/') as [string, string];
+      const [regionId, landmarkId] = key.split('/') as [string, string, string];
       const landmark = landmarkRegistry[regionId]!.find((entry) => entry.id === landmarkId)!;
-      const sequence = deriveBeatSequence(regionId, landmark);
+      const content = legacyLevelContent(landmark);
+      const sequence = deriveLevelSequence(regionId, landmark, 'l3', content);
       expect(sequence.beats).toHaveLength(8);
       expect(sequence.beats.map((beat) => beat.type)).toEqual([...FACTORY_TYPE_ORDER]);
       const ids = sequence.beats.map((beat) => beat.id);
@@ -175,46 +188,47 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
 
   it('maps derived beats to exact canonical fields of the same landmark', () => {
     for (const key of derivedKeys) {
-      const [regionId, landmarkId] = key.split('/') as [string, string];
+      const [regionId, landmarkId] = key.split('/') as [string, string, string];
       const landmark = landmarkRegistry[regionId]!.find((entry) => entry.id === landmarkId)!;
-      const sequence = deriveBeatSequence(regionId, landmark);
+      const content = legacyLevelContent(landmark);
+      const sequence = deriveLevelSequence(regionId, landmark, 'l3', content);
       const [hook, predict, reveal, scenario, gotcha, def, check, recap] = sequence.beats;
 
-      expect(hook).toMatchObject({ type: 'hook', prompt: landmark.hook });
+      expect(hook).toMatchObject({ type: 'hook', prompt: content.hook });
       expect(predict?.type).toBe('predict');
       if (predict && 'options' in predict) {
         const correct = predict.options.find((option) => option.id === predict.correctOptionId);
-        expect(correct?.label).toBe(landmark.tradeoffs.pros[0]);
+        expect(correct?.label).toBe(content.tradeoffs.pros[0]);
         // Quiz is reserved for check — predict must not reuse quiz answer as its correct option.
-        expect(correct?.label).not.toBe(landmark.quiz.answer);
+        expect(correct?.label).not.toBe(content.assessment.answer);
       }
       expect(reveal).toMatchObject({ type: 'reveal', prompt: landmark.title });
       if (reveal && reveal.type === 'reveal') {
         for (const card of reveal.cards) {
-          expect(landmark.definition.includes(card) || card === landmark.definition).toBe(true);
+          expect(content.definition.includes(card) || card === content.definition).toBe(true);
         }
       }
       expect(scenario).toMatchObject({
         type: 'scenario',
-        prompt: `${FACTORY_FRAMING.scenarioPromptPrefix} ${landmark.example}`,
+        prompt: `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`,
       });
       if (scenario && 'options' in scenario) {
         const correct = scenario.options.find((option) => option.id === scenario.correctOptionId);
-        expect(correct?.label).toBe(landmark.vibe_coder_default);
+        expect(correct?.label).toBe(content.vibe_coder_default);
       }
       expect(gotcha?.type).toBe('gotcha');
       if (gotcha && 'options' in gotcha) {
         const correct = gotcha.options.find((option) => option.id === gotcha.correctOptionId);
-        expect(correct?.label).toBe(landmark.gotchas[0]);
+        expect(correct?.label).toBe(content.gotchas[0]);
       }
-      expect(def).toMatchObject({ type: 'default', prompt: landmark.vibe_coder_default });
+      expect(def).toMatchObject({ type: 'default', prompt: content.vibe_coder_default });
       expect(check?.type).toBe('check');
-      expect(check?.prompt).toBe(`Prove it: ${landmark.quiz.question}`);
-      expect(check?.hint).not.toBe(landmark.quiz.explanation);
+      expect(check?.prompt).toBe(`Prove it: ${content.assessment.question}`);
+      expect(check?.hint).not.toBe(content.assessment.explanation);
       expect(recap?.type).toBe('recap');
       if (recap && recap.type === 'recap') {
         for (const bullet of recap.bullets) {
-          expect(landmarkCorpus(landmark)).toContain(bullet);
+          expect(levelCorpus(landmark.title, content)).toContain(bullet);
         }
       }
 
@@ -232,9 +246,9 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
           }
         }
       }
-      expect(preCheckText).not.toContain(landmark.quiz.question);
-      expect(preCheckText).not.toContain(landmark.quiz.answer);
-      expect(preCheckText).not.toContain(landmark.quiz.explanation);
+      expect(preCheckText).not.toContain(content.assessment.question);
+      expect(preCheckText).not.toContain(content.assessment.answer);
+      expect(preCheckText).not.toContain(content.assessment.explanation);
     }
   });
 
@@ -245,20 +259,21 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
       FACTORY_FRAMING.gotchaCorrectLead,
     ]);
     for (const key of derivedKeys) {
-      const [regionId, landmarkId] = key.split('/') as [string, string];
+      const [regionId, landmarkId] = key.split('/') as [string, string, string];
       const landmark = landmarkRegistry[regionId]!.find((entry) => entry.id === landmarkId)!;
-      const corpus = new Set(landmarkCorpus(landmark));
-      const sequence = deriveBeatSequence(regionId, landmark);
-      const wrongAllowed = new Set(allowedWrongFeedbacks(landmark));
+      const content = legacyLevelContent(landmark);
+      const corpus = new Set(levelCorpus(landmark.title, content));
+      const sequence = deriveLevelSequence(regionId, landmark, 'l3', content);
+      const wrongAllowed = new Set(allowedWrongFeedbacks(content));
 
       // Exact composite forms only — no startsWith/endsWith loopholes.
       const allowedExact = new Set<string>([
         ...corpus,
         ...framing,
         ...wrongAllowed,
-        `${FACTORY_FRAMING.scenarioPromptPrefix} ${landmark.example}`,
-        `${FACTORY_FRAMING.checkPromptPrefix}${landmark.quiz.question}`,
-        `${landmark.hook}${FACTORY_FRAMING.recapPromptSuffix}`,
+        `${FACTORY_FRAMING.scenarioPromptPrefix} ${content.example}`,
+        `${FACTORY_FRAMING.checkPromptPrefix}${content.assessment.question}`,
+        `${content.hook}${FACTORY_FRAMING.recapPromptSuffix}`,
       ]);
 
       for (const beat of sequence.beats) {
@@ -307,10 +322,10 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
   it('is deterministic and rotates correct-option slots across the factory set', () => {
     const slots = new Set<number>();
     for (const key of derivedKeys) {
-      const [regionId, landmarkId] = key.split('/') as [string, string];
+      const [regionId, landmarkId] = key.split('/') as [string, string, string];
       const landmark = landmarkRegistry[regionId]!.find((entry) => entry.id === landmarkId)!;
-      const a = deriveBeatSequence(regionId, landmark);
-      const b = deriveBeatSequence(regionId, landmark);
+      const a = deriveLevelSequence(regionId, landmark, 'l3', legacyLevelContent(landmark));
+      const b = deriveLevelSequence(regionId, landmark, 'l3', legacyLevelContent(landmark));
       expect(a).toEqual(b);
       for (const beat of a.beats) {
         if ('options' in beat) {
@@ -323,6 +338,209 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
     // Across 46 landmarks × 3 choice beats, slots must not collapse to always-0.
     expect(slots.size).toBeGreaterThan(1);
     expect(slots.has(0)).toBe(true);
+  });
+});
+
+describe('arcade level identity (VAL-003, VAL-011, VAL-012, VAL-056)', () => {
+  it('no longer exports the level-blind deriveBeatSequence factory (VAL-011)', () => {
+    expect('deriveBeatSequence' in beatsModule).toBe(false);
+    expect(Object.keys(beatsModule)).not.toContain('deriveBeatSequence');
+  });
+
+  it('keys every sequence by the three-part identity and rejects a two-part lookup', () => {
+    for (const key of listBeatSequenceKeys()) {
+      expect(key.split('/')).toHaveLength(3);
+      expect(['l1', 'l2', 'l3']).toContain(key.split('/')[2]);
+    }
+    expect(hasSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l3' })).toBe(true);
+    // L1/L2 are not registered until their island content is authored (M4–M6).
+    expect(hasSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l1' })).toBe(false);
+    expect(getSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l3' })?.level).toBe('l3');
+  });
+
+  it('exposes exactly three sequences for a fully tiered landmark (VAL-003)', () => {
+    const levels = ['l1', 'l2', 'l3'] as const;
+    const sequences = levels.map((level) =>
+      deriveLevelSequence('fixtures', tieredLandmark, level, tieredLandmark.levels![level]),
+    );
+    expect(sequences).toHaveLength(3);
+    expect(sequences.map((sequence) => sequence.level)).toEqual(['l1', 'l2', 'l3']);
+    // Non-circular: the count comes from the landmark's own declared levels, via
+    // the SAME resolver the registry uses to build its keys — not from the
+    // literal list above.
+    expect([...landmarkLevelSources(tieredLandmark).keys()]).toEqual(['l1', 'l2', 'l3']);
+    expect(landmarkLevelSources(tieredLandmark).size).toBe(3);
+    // A legacy landmark resolves to exactly one level through that same resolver.
+    const legacy = landmarkRegistry.git!.find((entry) => entry.id === 'merge-conflicts')!;
+    expect([...landmarkLevelSources(legacy).keys()]).toEqual(['l3']);
+    expect(new Set(sequences.map((sequence) => sequence.assessment.question)).size).toBe(3);
+    // Legacy landmarks expose only their L3 run during the compatibility window.
+    expect(availableLevels('git', 'merge-conflicts')).toEqual(['l3']);
+  });
+
+  it('requires the tier fields on a canonical landmark (VAL-001)', () => {
+    expect(() => canonicalLandmarkSchema.parse(untieredLandmark)).toThrow();
+    expect(() => landmarkLevelsSchema.parse({ l1: fixtureLevels.l1, l2: fixtureLevels.l2 })).toThrow();
+    expect(() =>
+      canonicalLandmarkSchema.parse({
+        id: tieredLandmark.id,
+        title: tieredLandmark.title,
+        draft: tieredLandmark.draft,
+        levels: tieredLandmark.levels,
+        sources: tieredLandmark.sources,
+      }),
+    ).not.toThrow();
+  });
+
+  it('pins the L3 eight-beat id and type tuple (VAL-056)', () => {
+    for (const key of listBeatSequenceKeys()) {
+      const [regionId, landmarkId, level] = key.split('/') as [string, string, 'l1' | 'l2' | 'l3'];
+      if (level !== 'l3') continue;
+      const sequence = getSequence({ regionId, landmarkId, level })!;
+      expect(sequence.beats.map((beat) => [beat.id, beat.type])).toEqual(
+        L3_SHAPE.map(([id, type]) => [id, type]),
+      );
+      expect(sequence.beats.findIndex((beat) => beat.type === 'check')).toBe(6);
+    }
+  });
+
+  it('rejects an L3 sequence whose beat ids drift from the pin (VAL-056)', () => {
+    const sequence = getSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l3' })!;
+    const drifted = {
+      ...sequence,
+      beats: sequence.beats.map((beat) =>
+        beat.id === 'scenario-default' ? { ...beat, id: 'scenario-drifted' } : beat,
+      ),
+    };
+    expect(() => beatSequenceSchema.parse(drifted)).toThrow(/pinned eight beat/);
+    // An L1 run with the same drift is fine — only L3 is pinned.
+    expect(() => beatSequenceSchema.parse({ ...drifted, level: 'l1' })).not.toThrow();
+  });
+
+  it('REJECTS a foreign fact injected into a derived sequence (VAL-012)', () => {
+    // The schema alone cannot catch this — it has no canonical content to compare
+    // against — so this asserts the enforcement boundary, not just membership.
+    const key = { regionId: 'git', landmarkId: 'merge-conflicts', level: 'l3' } as const;
+    const clean = getSequence(key)!;
+    const landmark = landmarkRegistry.git!.find((entry) => entry.id === 'merge-conflicts')!;
+    const content = legacyLevelContent(landmark);
+
+    expect(sequenceProvenanceViolations(clean, landmark.title, content)).toEqual([]);
+    // A structurally perfect sequence carrying invented copy still parses...
+    const foreignPrompt = {
+      ...clean,
+      beats: clean.beats.map((beat) =>
+        beat.id === 'hook' ? { ...beat, prompt: 'FOREIGN FACT ABSENT FROM CANONICAL CONTENT' } : beat,
+      ),
+    };
+    expect(() => beatSequenceSchema.parse(foreignPrompt)).not.toThrow();
+    // ...and must be rejected by provenance enforcement.
+    expect(sequenceProvenanceViolations(foreignPrompt, landmark.title, content)).toHaveLength(1);
+    expect(() => validateBeatSequences([foreignPrompt])).toThrow(/provenance violations/);
+
+    // Same for an invented option label, an invented feedback string, an
+    // invented reveal card, and an invented recap bullet.
+    const cases = [
+      {
+        name: 'option label',
+        beats: clean.beats.map((beat) =>
+          'options' in beat && beat.id === 'gotcha-trap'
+            ? { ...beat, options: beat.options.map((o, i) => (i === 0 ? { ...o, label: 'invented risk' } : o)) }
+            : beat,
+        ),
+      },
+      {
+        name: 'option feedback',
+        beats: clean.beats.map((beat) =>
+          'options' in beat && beat.id === 'gotcha-trap'
+            ? { ...beat, options: beat.options.map((o, i) => (i === 0 ? { ...o, feedback: 'invented feedback' } : o)) }
+            : beat,
+        ),
+      },
+      {
+        name: 'reveal card',
+        beats: clean.beats.map((beat) =>
+          beat.type === 'reveal' ? { ...beat, cards: ['invented card'] } : beat,
+        ),
+      },
+      {
+        name: 'recap bullet',
+        beats: clean.beats.map((beat) =>
+          beat.type === 'recap' ? { ...beat, bullets: [...beat.bullets.slice(0, -1), 'invented bullet'] } : beat,
+        ),
+      },
+    ];
+    for (const { name, beats } of cases) {
+      const tampered = { ...clean, beats };
+      expect(
+        sequenceProvenanceViolations(tampered, landmark.title, content).length,
+        `${name} leak was not caught`,
+      ).toBeGreaterThan(0);
+      expect(() => validateBeatSequences([tampered]), `${name} leak reached the build`).toThrow(
+        /provenance violations/,
+      );
+    }
+  });
+
+  it('rejects a fact that is canonical for another LEVEL of the same landmark (VAL-012)', () => {
+    // The tier scoping is the whole point: an L2 fact inside an L1 run teaches
+    // something the player has not reached yet, so it is a leak, not a shortcut.
+    const l1 = deriveLevelSequence('fixtures', tieredLandmark, 'l1', fixtureLevels.l1);
+    expect(sequenceProvenanceViolations(l1, tieredLandmark.title, fixtureLevels.l1)).toEqual([]);
+
+    const leaked = {
+      ...l1,
+      beats: l1.beats.map((beat) =>
+        beat.id === 'hook' ? { ...beat, prompt: fixtureLevels.l2.hook } : beat,
+      ),
+    };
+    // Same landmark, real authored copy, wrong tier — still rejected.
+    expect(sequenceProvenanceViolations(leaked, tieredLandmark.title, fixtureLevels.l1)).toHaveLength(1);
+    // And it WOULD pass if the corpus were the whole landmark rather than one level.
+    expect(sequenceProvenanceViolations(leaked, tieredLandmark.title, fixtureLevels.l2)).not.toEqual([]);
+  });
+
+  it('scopes provenance to the level being played, not the whole landmark (VAL-012)', () => {
+    const l1Corpus = new Set(levelCorpus(tieredLandmark.title, fixtureLevels.l1));
+    // An L2-only fact must not validate against the L1 corpus.
+    expect(l1Corpus.has(fixtureLevels.l2.vibe_coder_default)).toBe(false);
+    expect(l1Corpus.has(fixtureLevels.l3.gotchas[0]!)).toBe(false);
+    expect(l1Corpus.has(fixtureLevels.l1.vibe_coder_default)).toBe(true);
+
+    const l1Sequence = deriveLevelSequence('fixtures', tieredLandmark, 'l1', fixtureLevels.l1);
+    for (const beat of l1Sequence.beats) {
+      if (!('options' in beat)) continue;
+      for (const option of beat.options) {
+        expect(l1Corpus.has(option.label), `l1 option leak: ${option.label}`).toBe(true);
+      }
+    }
+  });
+
+  it('carries exactly one assessment per sequence and never the whole landmark quiz set', () => {
+    const l2 = deriveLevelSequence('fixtures', tieredLandmark, 'l2', fixtureLevels.l2);
+    expect(l2.assessment).toEqual(fixtureLevels.l2.assessment);
+    expect(l2.beats.filter((beat) => beat.type === 'check')).toHaveLength(1);
+    expect(() => beatSequenceSchema.parse({ ...l2, assessment: undefined })).toThrow();
+  });
+});
+
+describe('public manifest projection (DATA_MODEL §8)', () => {
+  it('preserves canonical facts through the L3 legacy projection (VAL-008)', () => {
+    for (const [regionId, landmarks] of Object.entries(landmarkRegistry)) {
+      for (const landmark of landmarks) {
+        const content = legacyLevelContent(landmark);
+        expect(content.hook).toBe(landmark.hook);
+        expect(content.definition).toBe(landmark.definition);
+        expect(content.example).toBe(landmark.example);
+        expect(content.vibe_coder_default).toBe(landmark.vibe_coder_default);
+        expect(content.when_to_use).toEqual(landmark.when_to_use);
+        expect(content.gotchas).toEqual(landmark.gotchas);
+        expect(content.tradeoffs).toEqual(landmark.tradeoffs);
+        expect(content.assessment.answer).toBe(landmark.quiz.answer);
+        expect(content.assessment.explanation).toBe(landmark.quiz.explanation);
+        expect(getSequence({ regionId, landmarkId: landmark.id, level: 'l3' })).toBeDefined();
+      }
+    }
   });
 });
 

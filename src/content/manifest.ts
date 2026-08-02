@@ -1,6 +1,12 @@
 import { landmarkRegistry } from './index.ts';
 import { regionMetas } from './regions.ts';
-import { landmarkSchema, manifestSchema, type ContentManifest } from './schema.ts';
+import {
+  landmarkSchema,
+  manifestSchema,
+  publicManifestSchema,
+  type ContentManifest,
+  type PublicContentManifest,
+} from './schema.ts';
 
 export function buildContentManifest(generatedAt: string, version = 1): ContentManifest {
   const seen = new Set<string>();
@@ -27,4 +33,37 @@ export function buildContentManifest(generatedAt: string, version = 1): ContentM
   const manifest = manifestSchema.parse({ version, generatedAt, regions });
   const roundTrip = JSON.parse(JSON.stringify(manifest));
   return manifestSchema.parse(roundTrip);
+}
+
+/** Public manifest byte budgets (DATA_MODEL §8 budget 1). */
+export const PUBLIC_MANIFEST_MAX_RAW_BYTES = 160_000;
+
+/**
+ * Build the public manifest v2 (DATA_MODEL §8): region and map metadata plus a
+ * slim landmark overview. It carries no `levels`, no assessments, no beats, no
+ * answer keys, and no registry inventory — those stay in server-only modules.
+ */
+export function buildPublicContentManifest(generatedAt: string): PublicContentManifest {
+  const source = buildContentManifest(generatedAt);
+  const regions = source.regions.map((region) => ({
+    id: region.id,
+    title: region.title,
+    label: region.label,
+    description: region.description,
+    mapArea: region.mapArea,
+    landmarks: region.landmarks.map((landmark) => ({
+      id: landmark.id,
+      title: landmark.title,
+      draft: landmark.draft,
+    })),
+  }));
+
+  const manifest = publicManifestSchema.parse({ version: 2, generatedAt, regions });
+  const raw = Buffer.byteLength(JSON.stringify(manifest), 'utf8');
+  if (raw > PUBLIC_MANIFEST_MAX_RAW_BYTES) {
+    throw new Error(
+      `Public manifest v2 is ${raw} raw bytes; budget is ${PUBLIC_MANIFEST_MAX_RAW_BYTES}`,
+    );
+  }
+  return publicManifestSchema.parse(JSON.parse(JSON.stringify(manifest)));
 }

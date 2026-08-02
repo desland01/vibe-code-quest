@@ -1,4 +1,4 @@
-import type { Landmark } from '../schema.ts';
+import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
 export const landmark = {
@@ -45,3 +45,42 @@ export const landmark = {
     { url: 'https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches', checked: '2026-07-17' }
   ]
 } satisfies Landmark;
+
+// L1 "SAVE POINTS" (ISSUE-013). Vocabulary tier: push, pull request.
+// Grounding: UGC findings A3 (repos confusion) and A20 ("is this a good,
+// trustworthy repo?" — people cannot tell what a proposed change contains).
+export const l1: LevelContent = {
+  hook: 'Push sends your commits up. A pull request asks to merge.',
+  definition:
+    'Push copies your commits up to GitHub. A pull request asks to join your branch into main. People read it before that happens.',
+  when_to_use: [
+    'Your work is finished and you want it live.',
+    'You want someone to look before it merges.',
+    'Your commits only exist on your own machine.',
+    'The team needs a record of the change.'
+  ],
+  tradeoffs: {
+    pros: [
+      'Pushing puts a copy somewhere besides your laptop.',
+      'A pull request shows exactly what changed.',
+      'Someone can catch a problem before it lands.'
+    ],
+    cons: [
+      'Pushing does not mean anyone has read it.',
+      'A huge pull request is hard to read.'
+    ]
+  },
+  example: 'You made six commits today. GitHub still shows the version from yesterday.',
+  gotchas: [
+    'A commit is not pushed until you push it.',
+    'A pull request is a request, not a merge.',
+    'Approving is not the same as testing.'
+  ],
+  vibe_coder_default: 'Push early. Open a pull request before touching main.',
+  assessment: {
+    question: 'What does pushing do?',
+    options: ['Copies your commits up to GitHub', 'Merges your branch into main', 'Deletes your local files'],
+    answer: 'Copies your commits up to GitHub',
+    explanation: 'Push copies commits up. Merging into main is a separate ask.'
+  }
+};

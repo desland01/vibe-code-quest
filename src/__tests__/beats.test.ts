@@ -29,6 +29,22 @@ import {
 } from '@/content/beats';
 import { L3_SHAPE } from '@/content/beats/schema';
 import { sequenceVoiceViolations, VERDICT_LEADS } from '@/content/beats/voice';
+import { textCoversTerm, ugcTermsForRegion, UGC_TERMS } from '@/content/beats/ugcTerms';
+import { landmark as gitCommits, l1 as gitCommitsL1 } from '@/content/git/commits-as-checkpoints';
+import { landmark as gitBranches, l1 as gitBranchesL1 } from '@/content/git/branches-as-isolation';
+import { landmark as gitPrs, l1 as gitPrsL1 } from '@/content/git/pull-requests-and-review';
+import { landmark as gitMerge, l1 as gitMergeL1 } from '@/content/git/merge-conflicts';
+import { landmark as gitTree, l1 as gitTreeL1 } from '@/content/git/working-tree-hygiene';
+import { landmark as gitRevert, l1 as gitRevertL1 } from '@/content/git/revert-and-recovery';
+
+const gitLevelSources = [
+  { landmark: gitCommits, l1: gitCommitsL1 },
+  { landmark: gitBranches, l1: gitBranchesL1 },
+  { landmark: gitPrs, l1: gitPrsL1 },
+  { landmark: gitMerge, l1: gitMergeL1 },
+  { landmark: gitTree, l1: gitTreeL1 },
+  { landmark: gitRevert, l1: gitRevertL1 },
+];
 import { canonicalLandmarkSchema, landmarkLevelsSchema } from '@/content/schema';
 import { fixtureLevels, tieredLandmark, untieredLandmark } from '@/content/__fixtures__/tiered-landmark';
 import { sequence as pilot } from '@/content/git/beats/commits-as-checkpoints';
@@ -608,6 +624,80 @@ describe('Git reference corpus — L3 (ISSUE-012: VAL-050, VAL-051, VAL-052, VAL
         }
       }
     }
+  });
+});
+
+describe('Git reference corpus — L1 (ISSUE-013: VAL-005, VAL-006, VAL-050-052)', () => {
+  // ISSUE-013 authors the L1 tier; ISSUE-014 authors L2 and only then can wire
+  // `levels`, which the schema requires to carry all three at once. Until that
+  // lands, the authored L1 sources are validated by projecting them through the
+  // same factory the registry uses — the checks are identical, so nothing is
+  // deferred; only the registration is.
+  const GIT_L1 = gitLevelSources.map((entry) => ({
+    ...entry,
+    sequence: deriveLevelSequence('git', entry.landmark, 'l1', entry.l1),
+  }));
+
+  it('authors an L1 source for all six Git landmarks', () => {
+    expect(GIT_L1).toHaveLength(6);
+    expect(GIT_L1.map((entry) => entry.landmark.id).sort()).toEqual(
+      landmarkRegistry.git!.map((landmark) => landmark.id).sort(),
+    );
+  });
+
+  it('uses vocabulary-tier beat types only — no tradeoff beat (VAL-005)', () => {
+    for (const { landmark, sequence } of GIT_L1) {
+      expect(sequence.beats.some((beat) => beat.type === 'tradeoff'), landmark.id).toBe(false);
+      expect(sequence.level).toBe('l1');
+    }
+  });
+
+  it('keeps every L1 claim inside the L1 source, never the L3 tradeoff corpus (VAL-005)', () => {
+    for (const { landmark, l1, sequence } of GIT_L1) {
+      expect(sequenceProvenanceViolations(sequence, landmark.title, l1), landmark.id).toEqual([]);
+    }
+  });
+
+  it('passes the full voice suite with zero violations (VAL-050, VAL-051, VAL-052)', () => {
+    for (const { landmark, sequence } of GIT_L1) {
+      expect(sequenceVoiceViolations(sequence), `git/${landmark.id}/l1`).toEqual([]);
+    }
+  });
+
+  // Coverage, not allowlist: adding a term to ugcTerms.ts makes this fail until
+  // some L1 run on that island teaches it. The research leads the content.
+  it('covers every documented Git UGC term in at least one L1 run (VAL-006)', () => {
+    const prose = GIT_L1.flatMap(({ sequence }) =>
+      sequence.beats.flatMap((beat) => [
+        beat.prompt,
+        beat.hint ?? '',
+        ...('cards' in beat ? beat.cards : []),
+        ...('bullets' in beat ? beat.bullets : []),
+        ...('options' in beat ? beat.options.flatMap((o) => [o.label, o.feedback]) : []),
+      ]),
+    ).join('\n');
+
+    const gitTerms = ugcTermsForRegion('git');
+    expect(gitTerms.length).toBeGreaterThan(0);
+    for (const entry of gitTerms) {
+      expect(textCoversTerm(prose, entry), `UGC term "${entry.term}" (${entry.finding})`).toBe(true);
+    }
+  });
+
+  it('gives every documented term a finding id and a real source URL (VAL-006)', () => {
+    for (const entry of UGC_TERMS) {
+      expect(entry.finding, entry.term).toMatch(/^[A-Z]\d+$/);
+      expect(() => new URL(entry.source)).not.toThrow();
+      expect(entry.source, entry.term).toMatch(/^https:\/\//);
+    }
+  });
+
+  it('matches terms whole-word so a landmark title cannot claim coverage', () => {
+    const branch = UGC_TERMS.find((entry) => entry.term === 'branch')!;
+    expect(textCoversTerm('Branches as isolation', branch)).toBe(true);
+    expect(textCoversTerm('a debranching step', branch)).toBe(false);
+    const commit = UGC_TERMS.find((entry) => entry.term === 'commit')!;
+    expect(textCoversTerm('a real commitment', commit)).toBe(false);
   });
 });
 

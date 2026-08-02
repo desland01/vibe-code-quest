@@ -1,4 +1,4 @@
-import type { Landmark } from '../schema.ts';
+import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
 export const landmark = {
@@ -45,3 +45,42 @@ export const landmark = {
     { url: 'https://git-scm.com/docs/git-rerere', checked: '2026-07-17' }
   ]
 } satisfies Landmark;
+
+// L1 "SAVE POINTS" (ISSUE-013). Vocabulary tier: merge, conflict. Grounding:
+// UGC finding B13 — someone who knows what they want but has "no idea" what
+// the technical process for a major revision even is.
+export const l1: LevelContent = {
+  hook: 'Merging joins two branches. Sometimes it cannot.',
+  definition:
+    'Merging joins the work from one branch into another. Git does it for you when the changes do not overlap. When they do overlap, it stops and asks you.',
+  when_to_use: [
+    'Your branch is finished and main moved on.',
+    'You want two pieces of work in one place.',
+    'Git stopped and printed something about conflicts.',
+    'Your tool asks you to resolve something.'
+  ],
+  tradeoffs: {
+    pros: [
+      'Git merges most changes without asking you.',
+      'A conflict shows you which lines clash.',
+      'You decide what the final version says.'
+    ],
+    cons: [
+      'A conflict stops everything until you fix it.',
+      'Git cannot tell which version is correct.'
+    ]
+  },
+  example: 'You changed the header. Your agent changed the same line. Git will not pick.',
+  gotchas: [
+    'A conflict is not an error you caused.',
+    'Git marks the clashing lines inside the file.',
+    'Picking a side is a choice, not cleanup.'
+  ],
+  vibe_coder_default: 'Merge early, before the two branches drift apart.',
+  assessment: {
+    question: 'What is a merge conflict?',
+    options: ['Two changes to the same lines', 'A bug in Git', 'A deleted branch'],
+    answer: 'Two changes to the same lines',
+    explanation: 'Git stops when two changes touch the same lines. You pick.'
+  }
+};

@@ -1,4 +1,4 @@
-import type { Landmark } from '../schema.ts';
+import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
 export const landmark = {
@@ -46,3 +46,42 @@ export const landmark = {
     { url: 'https://git-scm.com/docs/git-bisect', checked: '2026-07-17' }
   ]
 } satisfies Landmark;
+
+// L1 "SAVE POINTS" (ISSUE-013). Vocabulary tier: revert, undo. Grounding: UGC
+// finding C3 — someone who wiped a repo AND its commit history and was
+// "baffled" at how both went at once. §6.1 rule 4: state the stakes flat.
+export const l1: LevelContent = {
+  hook: 'Undo exists in Git. You have to ask for it.',
+  definition:
+    'A revert is a new commit undoing an older one. The old commit stays in the history. Nothing is erased.',
+  when_to_use: [
+    'Something worked yesterday and does not today.',
+    'Your agent changed something and broke the app.',
+    'You want one file back the way it was.',
+    'You want to undo without losing the record.'
+  ],
+  tradeoffs: {
+    pros: [
+      'The bad change goes away and stays visible.',
+      'You can undo one commit, not all of them.',
+      'Nothing disappears from the history.'
+    ],
+    cons: [
+      'Undoing one commit can break a later one.',
+      'Some Git commands really do delete work.'
+    ]
+  },
+  example: 'Checkout broke this morning. The commit that broke it is already on main.',
+  gotchas: [
+    'Revert and reset are not the same thing.',
+    'Reset and clean can delete unsaved work.',
+    'People have lost years of work this way.'
+  ],
+  vibe_coder_default: 'Revert to undo. Never reset without reading first.',
+  assessment: {
+    question: 'What does a revert do?',
+    options: ['Adds a commit that undoes an old one', 'Erases the old commit', 'Deletes the branch'],
+    answer: 'Adds a commit that undoes an old one',
+    explanation: 'A revert adds a commit. The old one stays in the history.'
+  }
+};

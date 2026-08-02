@@ -1,4 +1,4 @@
-import type { Landmark } from '../schema.ts';
+import type { Landmark, LevelContent } from '../schema.ts';
 
 // Re-voiced for the arcade L3 tier (ISSUE-012, CREATIVE_BIBLE §6).
 // The hook is §6.4 item 7 verbatim. §6.4 item 8's three-sentence rewrite does not
@@ -50,3 +50,42 @@ export const landmark = {
     { url: 'https://git-scm.com/docs/git-worktree', checked: '2026-07-17' }
   ]
 } satisfies Landmark;
+
+// L1 "SAVE POINTS" (ISSUE-013). Vocabulary tier: branch. Grounding: UGC
+// finding B14 — "v0 keeps creating a new git branch each time I deploy",
+// a tool making branch decisions the person never asked for.
+export const l1: LevelContent = {
+  hook: 'A branch is a second copy of the same project.',
+  definition:
+    'A branch is a name for one line of work. Your files sit on whichever branch is open. Switching branches swaps the files.',
+  when_to_use: [
+    'You want to try something without breaking things.',
+    'Two people are working at the same time.',
+    'Your tool made a branch and you noticed.',
+    'You want the old version still sitting there.'
+  ],
+  tradeoffs: {
+    pros: [
+      'You can try an idea and throw it away.',
+      'The main branch keeps working the whole time.',
+      'Two ideas can exist at the same time.'
+    ],
+    cons: [
+      'You have to know which branch you are on.',
+      'Two branches drift apart the longer they sit.'
+    ]
+  },
+  example: 'Your deploy tool made a new branch and you never asked it to.',
+  gotchas: [
+    'Check which branch you are on before working.',
+    'A branch is not a backup of your files.',
+    'Work does not move between branches by itself.'
+  ],
+  vibe_coder_default: 'Keep main working. Do new work on a branch.',
+  assessment: {
+    question: 'What is a branch?',
+    options: ['A name for one line of work', 'A backup of your files', 'A folder on your computer'],
+    answer: 'A name for one line of work',
+    explanation: 'A branch names one line of work. It is not a backup.'
+  }
+};

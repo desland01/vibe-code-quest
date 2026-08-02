@@ -145,11 +145,9 @@ describe('beat sequence schema', () => {
 describe('beat registry (L-002 full factory)', () => {
   it('registers every declared level of every canonical landmark', () => {
     const report = validateBeatSequences();
-    // Every landmark still registers its L3 run alone: Git's authored L1 and L2
-    // sources exist but are not wired into `levels` until ISSUE-015 adds the
-    // resolver that can serve them.
-    expect(report.count).toBe(48);
-    expect(ALL_CANONICAL_KEYS).toHaveLength(48);
+    // 42 legacy landmarks at L3 only, plus the fully tiered Git island at 3 each.
+    expect(report.count).toBe(42 + 18);
+    expect(ALL_CANONICAL_KEYS).toHaveLength(42 + 18);
     expect(report.keys).toEqual(ALL_CANONICAL_KEYS);
     expect(listBeatSequenceKeys()).toEqual(ALL_CANONICAL_KEYS);
 
@@ -207,7 +205,8 @@ describe('L-002 factory derive — structure, mapping, provenance, determinism',
   );
 
   it('derives every non-hand-authored run with the fixed 8-type grammar and unique ids', () => {
-    expect(derivedKeys).toHaveLength(46);
+    // 42 legacy L3 runs + 18 Git runs, minus the two hand-authored overrides.
+    expect(derivedKeys).toHaveLength(42 + 18 - 2);
     for (const { regionId, landmark, level, content } of derived) {
       const sequence = deriveLevelSequence(regionId, landmark, level, content);
       expect(sequence.beats).toHaveLength(8);
@@ -396,9 +395,12 @@ describe('arcade level identity (VAL-003, VAL-011, VAL-012, VAL-056)', () => {
       expect(['l1', 'l2', 'l3']).toContain(key.split('/')[2]);
     }
     expect(hasSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l3' })).toBe(true);
-    // L1/L2 sources are authored for Git but not registered until ISSUE-015.
-    expect(hasSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l1' })).toBe(false);
+    expect(hasSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l1' })).toBe(true);
+    expect(getSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l1' })?.level).toBe('l1');
     expect(getSequence({ regionId: 'git', landmarkId: 'merge-conflicts', level: 'l3' })?.level).toBe('l3');
+    // Islands still inside the L3-only compatibility window register L3 alone.
+    expect(hasSequence({ regionId: 'databases', landmarkId: 'sql', level: 'l3' })).toBe(true);
+    expect(hasSequence({ regionId: 'databases', landmarkId: 'sql', level: 'l1' })).toBe(false);
   });
 
   it('exposes exactly three sequences for a fully tiered landmark (VAL-003)', () => {
@@ -414,11 +416,13 @@ describe('arcade level identity (VAL-003, VAL-011, VAL-012, VAL-056)', () => {
     expect([...landmarkLevelSources(tieredLandmark).keys()]).toEqual(['l1', 'l2', 'l3']);
     expect(landmarkLevelSources(tieredLandmark).size).toBe(3);
     // A legacy landmark resolves to exactly one level through that same resolver.
-    const legacy = landmarkRegistry.git!.find((entry) => entry.id === 'merge-conflicts')!;
+    const legacy = landmarkRegistry.databases!.find((entry) => entry.id === 'sql')!;
     expect([...landmarkLevelSources(legacy).keys()]).toEqual(['l3']);
     expect(new Set(sequences.map((sequence) => sequence.assessment.question)).size).toBe(3);
     // Legacy landmarks expose only their L3 run during the compatibility window.
-    expect(availableLevels('git', 'merge-conflicts')).toEqual(['l3']);
+    expect(availableLevels('databases', 'sql')).toEqual(['l3']);
+    // A fully tiered landmark exposes all three, through the registry itself.
+    expect(availableLevels('git', 'merge-conflicts')).toEqual(['l1', 'l2', 'l3']);
   });
 
   it('requires the tier fields on a canonical landmark (VAL-001)', () => {

@@ -12,7 +12,7 @@ import {
 } from 'react';
 
 import type { Beat, BeatProgressState, BeatSequence } from '@/content/beats/schema';
-import type { Landmark } from '@/content/schema';
+import type { Landmark, LevelId } from '@/content/schema';
 import { recordClientEvent } from '@/components/landmark/clientEvents';
 import {
   canAdvance,
@@ -48,6 +48,8 @@ export type BeatPlayerProps = {
   nextLandmark: { id: string; title: string } | null;
   initialProgress?: BeatProgressState | null;
   regionStampedCount: number;
+  /** Extra HUD furniture (the format switcher) rendered inside the stage. */
+  hud?: React.ReactNode;
 };
 
 const KEY_LABELS = ['A', 'B', 'C', 'D'] as const;
@@ -101,6 +103,17 @@ function actionLabel(beat: Beat): string {
   }
 }
 
+/**
+ * Generic tier labels. The island-specific level NAMES from CREATIVE_BIBLE §2
+ * ("SAVE POINTS", "THE AGENT MADE A BRANCH") are content and belong to the
+ * island content issues; the HUD needs a label that is true for all 48.
+ */
+const LEVEL_LABELS: Record<LevelId, string> = {
+  l1: '1 · VOCAB',
+  l2: '2 · DECISION',
+  l3: '3 · TRADEOFFS',
+};
+
 function nowMs(): number {
   return typeof performance !== 'undefined' ? performance.now() : Date.now();
 }
@@ -115,6 +128,7 @@ export function BeatPlayer({
   nextLandmark,
   initialProgress = null,
   regionStampedCount,
+  hud = null,
 }: BeatPlayerProps) {
   const init = useCallback(() => {
     const base = initialPlayerState(sequence);
@@ -417,31 +431,41 @@ export function BeatPlayer({
   });
 
   return (
+    // ISSUE-015: one fixed, non-scrolling stage. Everything the player can see
+    // or reach during a run lives inside this element — the HUD, the beat card,
+    // the trail, and the avatar corner. `[data-stage]` is the marker the
+    // stage-fit harness (e2e/stage-fit.spec.ts) has been waiting on since
+    // ISSUE-009, and it is the authority for VAL-013/VAL-014: real geometry
+    // inside a real box, not a word count.
     <section
-      className={styles.panel}
+      className={styles.stage}
+      data-stage
+      data-level={sequence.level}
       data-testid="beat-player"
       aria-labelledby="beat-player-title"
     >
-      <p className="region-kicker">
-        {regionTitle} · Landmark {landmarkIndex + 1} of {regionLandmarkCount}
-      </p>
-      <h3 id="beat-player-title" style={{ margin: '0 0 18px', fontFamily: 'var(--font-pixel), monospace' }}>
-        {landmark.title}
-      </h3>
+      <header className={styles.hud} data-stage-region="hud">
+        {/* The stage hides the sub-map chrome, so the way out lives in the HUD. */}
+        <Link className={styles.hudExit} href={`/map/${regionId}`} data-stage-exit>
+          ← Map
+        </Link>
+        <div className={styles.hudTitles}>
+          <p className="region-kicker">
+            {regionTitle} · Landmark {landmarkIndex + 1} of {regionLandmarkCount}
+          </p>
+          <h3 id="beat-player-title" className={styles.hudTitle}>
+            {landmark.title}
+          </h3>
+        </div>
+        <p className={styles.levelChip} data-level-chip>
+          <span className={styles.sr}>Level </span>
+          {LEVEL_LABELS[sequence.level]}
+        </p>
+        {hud}
+      </header>
 
-      <ol className={styles.pips} aria-label={`Beat ${state.displayIndex + 1} of ${sequence.beats.length}`}>
-        {pips.map((pip) => (
-          <li
-            key={pip.id}
-            className={pip.done ? styles.done : pip.current ? styles.current : undefined}
-            aria-current={pip.current ? 'step' : undefined}
-          >
-            <span className={styles.sr}>
-              {pip.done ? 'done' : pip.current ? 'current' : 'upcoming'}
-            </span>
-          </li>
-        ))}
-      </ol>
+      <div className={styles.play} data-stage-region="play">
+      <div className={styles.panel}>
 
       <div
         key={state.displayIndex}
@@ -685,6 +709,29 @@ export function BeatPlayer({
             </div>
           </>
         )}
+      </div>
+      </div>
+      </div>
+
+      {/* The trail: one tile per beat along the stage floor. ISSUE-020 gives the
+          tiles their lantern/patched-board states and stands the avatar on the
+          current one; the avatar corner is ISSUE-017. The slots exist here so
+          the stage geometry is final and the fit harness measures the real box. */}
+      <div className={styles.trail} data-stage-region="trail">
+        <ol className={styles.pips} aria-label={`Beat ${state.displayIndex + 1} of ${sequence.beats.length}`}>
+          {pips.map((pip) => (
+            <li
+              key={pip.id}
+              className={pip.done ? styles.done : pip.current ? styles.current : undefined}
+              aria-current={pip.current ? 'step' : undefined}
+            >
+              <span className={styles.sr}>
+                {pip.done ? 'done' : pip.current ? 'current' : 'upcoming'}
+              </span>
+            </li>
+          ))}
+        </ol>
+        <div className={styles.avatarSlot} data-stage-region="avatar" aria-hidden="true" />
       </div>
     </section>
   );

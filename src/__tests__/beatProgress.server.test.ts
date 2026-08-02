@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   BEAT_PROGRESS_UPSERT_SQL,
-  LANDMARK_PROGRESS_FOR_SHARE_SQL,
+  LANDMARK_PROGRESS_LOCK_SQL,
   computeHighestUnlockedLevel,
   gateLevelWrite,
   isLevelUnlocked,
@@ -301,11 +301,15 @@ describe('hosted level gating (ISSUE-005: VAL-009, VAL-046, VAL-054, VAL-059)', 
     expect(computeHighestUnlockedLevel([done('l1')], ['l1', 'l3'])).toBe('l3');
   });
 
-  it('reads prerequisites with FOR SHARE inside the transaction (VAL-046)', () => {
-    const sql = LANDMARK_PROGRESS_FOR_SHARE_SQL.replace(/\s+/g, ' ').trim();
+  it('reads prerequisites with FOR UPDATE inside the transaction (VAL-046)', () => {
+    const sql = LANDMARK_PROGRESS_LOCK_SQL.replace(/\s+/g, ' ').trim();
     expect(sql).toContain('SELECT level, state');
     expect(sql).toContain('WHERE profile_id = $1 AND region = $2 AND landmark = $3');
-    expect(sql).toContain('FOR SHARE');
+    // FOR UPDATE, not FOR SHARE: the gate is a read-modify-write, and two
+    // concurrent writes from one player deadlocked upgrading a shared lock to
+    // the exclusive one the upsert needs (40P01), losing beats to a 500.
+    expect(sql).toContain('FOR UPDATE');
+    expect(sql).not.toContain('FOR SHARE');
   });
 
   it('validates state against the SELECTED level, not a fixed sequence (VAL-046)', () => {
@@ -318,10 +322,11 @@ describe('hosted level gating (ISSUE-005: VAL-009, VAL-046, VAL-054, VAL-059)', 
     });
     expect(validateBeatStateWrite(l3, state({ furthestBeatIndex: 7 })).ok).toBe(true);
     // A level with no registered sequence is rejected outright rather than
-    // falling back to another level's bounds.
+    // falling back to another level's bounds. Git is fully tiered since
+    // ISSUE-015, so this case comes from an island still in the L3-only window.
     expect(
       validateBeatStateWrite(
-        { regionId: 'git', landmarkId: 'branches-as-isolation', level: 'l1' },
+        { regionId: 'databases', landmarkId: 'sql', level: 'l1' },
         state({ furthestBeatIndex: 1 }),
       ),
     ).toMatchObject({ ok: false, status: 400 });

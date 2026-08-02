@@ -134,9 +134,7 @@ export const l2: LevelContent = {
 // as this landmark gains its lower tiers (ISSUE-014, DATA_MODEL §6 step 1).
 export const l3: LevelContent = legacyLevelContent(base);
 
-// ISSUE-015 flips this one line to `{ ...base, levels: { l1, l2, l3 } }`.
-// Registering L1 and L2 changes which run the landmark page serves, and the
-// page resolver that picks the unlocked level is ISSUE-015's slice — wiring
-// them here would serve L1 from a route that still hard-codes L3 and every
-// write would come back 423 Level locked.
-export const landmark = base satisfies Landmark;
+// All three tiers registered (ISSUE-015). The page resolver now selects the
+// level the player has unlocked, so serving L1 to a new player is correct
+// rather than a 423 from the write gate.
+export const landmark = { ...base, levels: { l1, l2, l3 } } satisfies Landmark;

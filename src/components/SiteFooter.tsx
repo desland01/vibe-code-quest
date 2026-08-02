@@ -9,6 +9,7 @@ export const legalLinks = [
 export function SiteFooter() {
   return (
     <footer
+      data-site-footer
       style={{
         borderTop: '2px solid var(--banner-border)',
         background: 'var(--banner)',

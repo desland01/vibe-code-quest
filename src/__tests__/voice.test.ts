@@ -284,7 +284,11 @@ describe('the manifest build gate (VAL-014b)', () => {
     // mission exists to replace, landmark by landmark. Failing them now would
     // make the build red for the whole mission with nothing actionable.
     const report = validateBeatSequences();
-    expect(report.count).toBe(48);
+    // 42 legacy landmarks register their L3 run alone; Git carries all three
+    // tiers since ISSUE-015, so the registry is 42 + 18.
+    expect(report.count).toBe(42 + 18);
     expect(report.pendingRevoice.length).toBeGreaterThan(0);
+    // Whatever is still pending, none of it is Git — that island is re-voiced.
+    expect(report.pendingRevoice.filter((line) => line.startsWith('git/'))).toEqual([]);
   });
 });

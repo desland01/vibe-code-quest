@@ -136,11 +136,25 @@ export const LEVEL_ORDER = ['l1', 'l2', 'l3'] as const satisfies readonly LevelI
 /** Rows this profile already holds for one landmark, read inside the transaction. */
 export type LevelProgressRow = { level: LevelId; state: unknown };
 
-export const LANDMARK_PROGRESS_FOR_SHARE_SQL = `
+/**
+ * The prerequisite read for a level write.
+ *
+ * `FOR UPDATE`, not `FOR SHARE`. This is a read-modify-write: the same
+ * transaction reads the landmark's level rows, decides whether the write is
+ * unlocked, then upserts one of those rows. `FOR SHARE` lets two concurrent
+ * writes from the SAME player both hold the shared lock and then both try to
+ * upgrade to the exclusive lock the upsert needs — Postgres resolves that by
+ * killing one with `40P01 deadlock detected`, which surfaces as a 500 and a
+ * silently lost beat. Observed, not theorised: a normal playthrough fires
+ * writes fast enough to hit it, and four consecutive beats were dropped.
+ * `FOR UPDATE` serialises those writers, which is what a read-modify-write
+ * wanted in the first place.
+ */
+export const LANDMARK_PROGRESS_LOCK_SQL = `
 SELECT level, state
 FROM progress
 WHERE profile_id = $1 AND region = $2 AND landmark = $3
-FOR SHARE
+FOR UPDATE
 `;
 
 /**
@@ -196,7 +210,7 @@ export type LevelGateResult =
   | { ok: false; status: 423; body: { error: string; requestedLevel: LevelId; highestUnlockedLevel: LevelId } };
 
 /**
- * The hosted gate. Callers MUST pass rows read with `FOR SHARE` inside the same
+ * The hosted gate. Callers MUST pass rows read with `FOR UPDATE` inside the same
  * transaction as the write — a prerequisite read outside the transaction can be
  * overtaken between the check and the upsert.
  */

@@ -254,3 +254,40 @@ body[data-reduced-motion='true'] .region-control:hover, body[data-reduced-motion
   .leaderboard-form-actions { flex-direction: column; align-items: stretch; }
   .leaderboard-form-actions button { width: 100%; }
 }
+
+/* ISSUE-015 — the locked stage takes the whole viewport.
+   The stage itself is `position: fixed`, so nothing it contains contributes
+   document height. These rules remove the height contributed by everything
+   ELSE — the collapsed article, the site footer, the sub-map chrome — because
+   VAL-013 measures `document.body.scrollHeight`, and `overflow: hidden` alone
+   would hide the scrollbar while leaving that number wrong. */
+body:has([data-stage]) {
+  height: 100dvh;
+  overflow: hidden;
+}
+body:has([data-stage]) [data-site-footer] { display: none; }
+.landmark-detail.is-staged {
+  display: contents;
+}
+/* `.sub-map-zoom` runs a scale() entry animation. A transformed ancestor becomes
+   the containing block for `position: fixed`, which silently re-anchors the
+   stage to that box instead of the viewport — the stage still LOOKS mostly
+   right, just inset and clipped. Neutralising the transform is the fix; leaving
+   it and nudging the stage's offsets would have papered over the cause. */
+body:has([data-stage]) .sub-map-zoom {
+  animation: none;
+  transform: none;
+  width: auto;
+  margin: 0;
+}
+/* The stage owns the screen during a run. The map exit lives in the HUD. */
+body:has([data-stage]) .back-to-map,
+body:has([data-stage]) .sub-map-banner,
+body:has([data-stage]) .sub-map-skip-link {
+  display: none;
+}
+body:has([data-stage]) .sub-map-scene {
+  height: 0;
+  overflow: hidden;
+  padding: 0;
+}

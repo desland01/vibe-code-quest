@@ -84,11 +84,11 @@ ON CONFLICT (profile_id, region, landmark, award_key) DO NOTHING
 RETURNING award_key, points
 `;
 
-export const LANDMARK_PROGRESS_FOR_SHARE_SQL_PRE_LEVEL = `
+export const LANDMARK_PROGRESS_LOCK_SQL_PRE_LEVEL = `
 SELECT state
 FROM progress
 WHERE profile_id = $1 AND region = $2 AND landmark = $3
-FOR SHARE
+FOR UPDATE
 `;
 
 /** Every row in a pre-migration database is, by definition, the L3 run. */

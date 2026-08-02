@@ -38,24 +38,27 @@ export function LandmarkView({
 
   const playMode = format === 'lesson' && beats !== null;
 
-  return (
-    <article className="landmark-detail" aria-labelledby="landmark-title">
-      <header className="landmark-detail-header">
-        <div>
-          <p className="region-kicker">Landmark detail</p>
-          <h2 id="landmark-title">{landmark.title}</h2>
-        </div>
-      </header>
-      <FormatSwitcher
-        format={format}
-        regionId={regionId}
-        landmarkId={landmark.id}
-        playLabel={beats !== null}
-      />
-      {format === 'overview' && <OverviewFormat landmark={landmark} />}
-      {playMode && (
+  const switcher = (
+    <FormatSwitcher
+      format={format}
+      regionId={regionId}
+      landmarkId={landmark.id}
+      playLabel={beats !== null}
+    />
+  );
+
+  // ISSUE-015: in play mode the stage IS the page. The document header and the
+  // format switcher move inside it, and the article collapses out of flow, so
+  // the only thing with height is the fixed stage — which is what makes
+  // `document.body.scrollHeight <= window.innerHeight` true (VAL-013) rather
+  // than merely hiding a scrollbar over content that still overflows.
+  if (playMode) {
+    return (
+      <article className="landmark-detail is-staged" aria-labelledby="beat-player-title">
         <BeatPlayer
-          key={`${regionId}/${landmark.id}`}
+          // Three-part identity: keying by region/landmark alone would reuse one
+          // player's state across two levels of the same landmark.
+          key={`${regionId}/${landmark.id}/${beats.sequence.level}`}
           sequence={beats.sequence}
           landmark={landmark}
           regionId={regionId}
@@ -65,8 +68,23 @@ export function LandmarkView({
           nextLandmark={beats.nextLandmark}
           initialProgress={beats.initialProgress}
           regionStampedCount={beats.regionStampedCount}
+          hud={switcher}
         />
-      )}
+        <GuideChat landmark={landmark} regionId={regionId} />
+      </article>
+    );
+  }
+
+  return (
+    <article className="landmark-detail" aria-labelledby="landmark-title">
+      <header className="landmark-detail-header">
+        <div>
+          <p className="region-kicker">Landmark detail</p>
+          <h2 id="landmark-title">{landmark.title}</h2>
+        </div>
+      </header>
+      {switcher}
+      {format === 'overview' && <OverviewFormat landmark={landmark} />}
       {format === 'lesson' && !playMode && (
         <>
           <OverviewFormat landmark={landmark} />

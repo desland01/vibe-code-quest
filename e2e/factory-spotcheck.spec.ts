@@ -39,7 +39,10 @@ async function blockAiApis(page: Page) {
 }
 
 async function openPlayer(page: Page, regionId: string, landmarkId: string) {
-  await page.goto(`/map/${regionId}/${landmarkId}?format=lesson`);
+  // The explicit L3 segment: this spec asserts the DERIVED L3 factory path, and
+  // the bare landmark URL now resolves to whichever level the player is on —
+  // which is L1 for a fresh anonymous visit on a fully tiered island (ISSUE-015).
+  await page.goto(`/map/${regionId}/${landmarkId}/l3?format=lesson`);
   await page.waitForResponse((r) => r.url().includes('/api/session'), { timeout: 15000 }).catch(() => {});
   const player = page.getByTestId('beat-player');
   await expect(player).toBeVisible({ timeout: 15000 });

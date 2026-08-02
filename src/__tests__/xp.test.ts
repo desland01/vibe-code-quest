@@ -182,8 +182,10 @@ describe('per-level XP identity (VAL-034, VAL-035)', () => {
 
   it('returns no awards for a level that has no registered sequence', () => {
     expect(
+      // Git is fully tiered since ISSUE-015, so the unregistered-level case has
+      // to come from an island still inside the L3-only compatibility window.
       deriveXpAwardsForLevel(
-        { regionId: 'git', landmarkId: 'commits-as-checkpoints', level: 'l1' },
+        { regionId: 'databases', landmarkId: 'sql', level: 'l1' },
         stamped,
       ),
     ).toEqual([]);

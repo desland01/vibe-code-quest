@@ -2,15 +2,131 @@
    (designs/comps/engagement-v2/beat-comps.html, evidence/E-002/comp-judgement.md).
    Frozen contract §6: CSS steps() only, reduced-motion fallbacks, no shake/red-flash. */
 
+/* ISSUE-015 — the locked stage (REQ-008, VAL-013/VAL-014).
+   One fixed box, three rows: HUD, play, trail. Nothing outside it during a run.
+
+   Every vertical measurement is clamped against `vh` rather than `vw`, because
+   the failure mode this shell exists to prevent is vertical: at 1024x640 the
+   card, its options, its feedback line and the action row all have to coexist
+   in 640px. Sizing the padding off viewport WIDTH would make the tightest
+   viewport the roomiest, which is exactly backwards. */
+.stage {
+  position: fixed;
+  inset: 0;
+  /* A global stylesheet gives sections vertical margin. On a fixed element with
+     `inset: 0` that margin does not collapse away — it inset the whole stage by
+     26px and shortened it to match, which read as a stray band at the top of
+     every screenshot. */
+  margin: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(6px, 1.4vh, 16px);
+  padding: clamp(10px, 2vh, 22px) clamp(14px, 3vw, 40px);
+  background: var(--paper, #fff8e9);
+  /* Single-axis reflow: 200% text scrolls DOWN, never sideways (VAL-014). */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.hud {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 22px);
+  flex-wrap: wrap;
+}
+.hudTitles { min-width: 0; }
+.hudExit {
+  flex: 0 0 auto;
+  border: 3px solid var(--ink);
+  background: var(--banner);
+  color: var(--ink);
+  text-decoration: none;
+  padding: 6px 12px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-pixel), monospace;
+  font-size: 0.85rem;
+}
+.hudTitle {
+  margin: 0;
+  font-family: var(--font-pixel), monospace;
+  font-size: clamp(1.05rem, 2.4vh, 1.5rem);
+  line-height: 1.15;
+}
+.levelChip {
+  margin: 0;
+  padding: 4px 10px;
+  border: 3px solid var(--ink);
+  background: var(--banner);
+  font-family: var(--font-pixel), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* `min-height: 0` is load-bearing: without it a grid item refuses to shrink
+   below its content and the 1fr row pushes the trail off the bottom. */
+.play {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+/* The guide launcher is a fixed bottom-left button that predates the stage.
+   The trail starts clear of it rather than under it — reserving the space is
+   honest about the collision; moving the launcher would change a control
+   players already know. */
+.trail {
+  padding-left: clamp(52px, 6vw, 72px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(10px, 2vw, 20px);
+}
+/* The avatar corner. Empty until ISSUE-017 fills it — reserved here so the
+   stage geometry the fit harness measures is the final one. */
+.avatarSlot {
+  width: clamp(40px, 7vh, 64px);
+  height: clamp(40px, 7vh, 64px);
+  flex: 0 0 auto;
+}
+
+/* Stage-scoped compression.
+   The page-flow versions of these rules size their padding off viewport WIDTH,
+   which is fine on a scrolling page and wrong inside a locked stage: at
+   1024x640 the widest constraint is the shortest one. Everything vertical is
+   re-clamped against `vh` here so the same card that needs 752px of page gets
+   the 614px the stage actually has. Every interactive minimum stays at 44px —
+   the a11y floor is the one number that does not flex (REQ-022). */
+.stage .beatCard { padding: clamp(12px, 2vh, 28px) clamp(14px, 2.6vw, 28px); }
+.stage .prompt {
+  font-size: clamp(1rem, 2.3vh, 1.45rem);
+  margin: 0 0 clamp(10px, 1.8vh, 20px);
+}
+.stage .agentBubble { margin: 0 0 clamp(14px, 2.4vh, 26px); padding: clamp(8px, 1.4vh, 14px) 18px 4px; }
+.stage .agentBubble .prompt { margin: 0 0 clamp(8px, 1.4vh, 12px); }
+.stage .choices { gap: clamp(6px, 1.2vh, 12px); }
+.stage .choice { min-height: 44px; padding: clamp(6px, 1.1vh, 12px) 16px; }
+.stage .cards { gap: clamp(6px, 1.2vh, 12px); }
+.stage .cards li { padding: clamp(8px, 1.5vh, 14px) 16px; }
+.stage .hint { margin-top: clamp(8px, 1.5vh, 16px); padding: clamp(6px, 1.2vh, 10px) 14px; }
+.stage .feedback { margin-top: clamp(8px, 1.5vh, 16px); padding: clamp(6px, 1.2vh, 12px) 14px; }
+.stage .actions { margin-top: clamp(10px, 1.8vh, 20px); gap: clamp(8px, 1.4vh, 12px); }
+.stage .btn { min-height: 44px; padding: clamp(8px, 1.4vh, 12px) 18px; }
+.stage .btn.back { min-height: 44px; }
+
 .panel {
-  width: min(720px, 100%);
+  width: min(760px, 100%);
+  max-height: 100%;
   border: 4px solid var(--ink);
   background: var(--banner);
   box-shadow: 8px 8px 0 var(--banner-border);
-  padding: clamp(20px, 4vw, 36px);
+  padding: clamp(14px, 2.4vh, 32px) clamp(16px, 3vw, 36px);
 }
 
-.pips { display: flex; gap: 8px; margin: 0 0 22px; list-style: none; padding: 0; }
+.pips { display: flex; gap: 8px; margin: 0; list-style: none; padding: 0; flex-wrap: wrap; }
 .pips li { width: 16px; height: 16px; border: 3px solid var(--ink); background: var(--paper, #fff8e9); }
 .pips li.done { background: var(--region-accent, #d96c6c); }
 .pips li.current { background: var(--ink); outline: 3px solid var(--region-accent, #d96c6c); outline-offset: 2px; }

@@ -26,7 +26,7 @@ type LandmarkScript = {
 
 const PILOT: LandmarkScript = {
   name: 'pilot',
-  url: '/map/git/commits-as-checkpoints?format=lesson',
+  url: '/map/git/commits-as-checkpoints/l3?format=lesson',
   evidenceDir: path.join(EVIDENCE_ROOT, 'E-003'),
   predictPick: /Everything it touched so far/,
   scenarioWrong: /Commit all of it right now/,
@@ -43,7 +43,7 @@ const PILOT: LandmarkScript = {
 
 const TRANSFER: LandmarkScript = {
   name: 'transfer',
-  url: '/map/security/trust-boundaries?format=lesson',
+  url: '/map/security/trust-boundaries/l3?format=lesson',
   evidenceDir: path.join(EVIDENCE_ROOT, 'E-005'),
   predictPick: /At the tool call/,
   scenarioWrong: /Follow document instructions/,
@@ -88,7 +88,43 @@ async function blockAiApis(page: Page) {
   await page.route('**/api/lesson**', (route) => route.abort());
 }
 
+/**
+ * Clear the levels below the one under test, through the real API.
+ *
+ * Since ISSUE-015 a landmark's tiers unlock in order (REQ-006), so a signed-in
+ * player cannot open L3 on a fully tiered island without finishing L1 and L2.
+ * These specs are about the beat grammar, not the gate, so the prerequisites are
+ * satisfied the way a player satisfies them — an accepted progress write per
+ * level, in order — rather than by weakening the gate or deep-linking past it.
+ * On the self-host/anonymous path there is nothing to unlock and every call is a
+ * harmless no-op, which is why this is safe to run unconditionally.
+ */
+async function unlockLowerLevels(page: Page, script: LandmarkScript, target: 'l1' | 'l2' | 'l3') {
+  const order = ['l1', 'l2', 'l3'] as const;
+  for (const level of order.slice(0, order.indexOf(target))) {
+    await page.request.put('/api/progress', {
+      data: {
+        region: script.regionId,
+        landmark: script.landmarkId,
+        level,
+        state: {
+          v: 1,
+          kind: 'beat-sequence',
+          furthestBeatIndex: 7,
+          checked: true,
+          completed: true,
+          stampedAt: new Date().toISOString(),
+        },
+      },
+    });
+  }
+}
+
 async function openPlayer(page: Page, script: LandmarkScript = PILOT) {
+  // A session cookie has to exist before the unlock writes are attributable.
+  await page.goto('/map');
+  await page.waitForResponse((r) => r.url().includes('/api/session'), { timeout: 15000 }).catch(() => {});
+  await unlockLowerLevels(page, script, 'l3');
   await page.goto(script.url);
   await page.waitForResponse((r) => r.url().includes('/api/session'), { timeout: 15000 }).catch(() => {});
   const player = page.getByTestId('beat-player');

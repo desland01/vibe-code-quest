@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-02T20:46:41.432Z",
+  "generatedAt": "2026-08-02T21:44:56.206Z",
   "regions": [
     {
       "id": "languages",
@@ -1811,6 +1811,122 @@
             "answer": "After one coherent change passes review and checks",
             "explanation": "A useful checkpoint holds one outcome you can inspect and recover on its own."
           },
+          "levels": {
+            "l1": {
+              "hook": "A commit is a save point. Git is the save system.",
+              "definition": "A commit is one saved state of your project. The list of them is your commit history. That history is what version control means.",
+              "when_to_use": [
+                "You finished something and it works.",
+                "You are about to try something risky.",
+                "You want to name what you just did.",
+                "You want to get back here later."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "You can go back to any save point.",
+                  "Each commit carries a message you wrote.",
+                  "The history shows what changed and when."
+                ],
+                "cons": [
+                  "A commit saves files, not a working app.",
+                  "One giant commit tells you almost nothing."
+                ]
+              },
+              "example": "Your agent finished the login page and it works. Nothing is saved yet.",
+              "gotchas": [
+                "Nothing is saved until you make the commit.",
+                "A message reading \"update\" tells you nothing later.",
+                "Deleting a repo deletes its commit history too."
+              ],
+              "vibe_coder_default": "Commit every time something works. Write a real message.",
+              "assessment": {
+                "question": "What is a commit?",
+                "options": [
+                  "One saved state of your project",
+                  "A message to your agent",
+                  "A copy of the internet"
+                ],
+                "answer": "One saved state of your project",
+                "explanation": "A commit is one saved state. The list of them is your history."
+              }
+            },
+            "l2": {
+              "hook": "Your agent wants to save. It never said what.",
+              "definition": "Committing is safe. It only saves what is already sitting there. The risk is what gets swept in with it.",
+              "when_to_use": [
+                "Your agent says it is ready to commit.",
+                "You cannot tell what it changed.",
+                "The change touches more files than you expected.",
+                "You want a save point before the next step."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Reading the list first takes about ten seconds.",
+                  "A commit you understand is one you can undo.",
+                  "You find surprise files before they are saved."
+                ],
+                "cons": [
+                  "Reading every change slows the agent down.",
+                  "You will not catch a subtle logic bug."
+                ]
+              },
+              "example": "I finished the login fix. I am going to commit all fourteen changed files now. OK?",
+              "gotchas": [
+                "Fourteen changed files is not one change.",
+                "Agents commit files you never opened.",
+                "A commit is easy to undo. Read it anyway."
+              ],
+              "vibe_coder_default": "Ask it to list the files first.",
+              "assessment": {
+                "question": "Your agent wants to commit fourteen files at once. What now?",
+                "options": [
+                  "Ask which files and why",
+                  "Say yes, commits are reversible",
+                  "Tell it to stop committing"
+                ],
+                "answer": "Ask which files and why",
+                "explanation": "A commit is easy to undo. Knowing what went in is the hard part."
+              }
+            },
+            "l3": {
+              "hook": "A commit is a save point you can go back to.",
+              "definition": "A commit records a snapshot of the whole project. It stores the parent history and a message you write. A focused one gives you a point to inspect, test, compare, or undo.",
+              "when_to_use": [
+                "Your agent finished one change and its checks pass.",
+                "You want a stable point before a risky edit.",
+                "You need to compare new work against known-good.",
+                "You want history that explains why a change exists."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Focused snapshots make generated changes easier to review.",
+                  "History gives you known points for comparison and recovery.",
+                  "Messages keep intent alive past the agent session."
+                ],
+                "cons": [
+                  "Large mixed commits hide unrelated mistakes.",
+                  "Checkpoints still need tests and human review."
+                ]
+              },
+              "example": "Your agent changed a route, a queue, and the tests. The staged diff is sitting there, ready to commit.",
+              "gotchas": [
+                "Review the staged diff before you commit.",
+                "Keep secrets and local env files out of snapshots.",
+                "A clean commit is not proof the code works."
+              ],
+              "vibe_coder_default": "Commit one reviewed, tested task. Split unrelated changes first.",
+              "assessment": {
+                "question": "When should you create an agent-work checkpoint?",
+                "options": [
+                  "After one coherent change passes review and checks",
+                  "Whenever the agent pauses mid-edit",
+                  "After combining several unrelated tasks"
+                ],
+                "answer": "After one coherent change passes review and checks",
+                "explanation": "A useful checkpoint holds one outcome you can inspect and recover on its own."
+              }
+            }
+          },
           "sources": [
             {
               "url": "https://git-scm.com/docs/git-commit",
@@ -1865,6 +1981,122 @@
             ],
             "answer": "Separate branches in separate worktrees",
             "explanation": "Branches separate histories. Worktrees also separate the files each agent edits."
+          },
+          "levels": {
+            "l1": {
+              "hook": "A branch is a second copy of the same project.",
+              "definition": "A branch is a name for one line of work. Your files sit on whichever branch is open. Switching branches swaps the files.",
+              "when_to_use": [
+                "You want to try something without breaking things.",
+                "Two people are working at the same time.",
+                "Your tool made a branch and you noticed.",
+                "You want the old version still sitting there."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "You can try an idea and throw it away.",
+                  "The main branch keeps working the whole time.",
+                  "Two ideas can exist at the same time."
+                ],
+                "cons": [
+                  "You have to know which branch you are on.",
+                  "Two branches drift apart the longer they sit."
+                ]
+              },
+              "example": "Your deploy tool made a new branch and you never asked it to.",
+              "gotchas": [
+                "Check which branch you are on before working.",
+                "A branch is not a backup of your files.",
+                "Work does not move between branches by itself."
+              ],
+              "vibe_coder_default": "Keep main working. Do new work on a branch.",
+              "assessment": {
+                "question": "What is a branch?",
+                "options": [
+                  "A name for one line of work",
+                  "A backup of your files",
+                  "A folder on your computer"
+                ],
+                "answer": "A name for one line of work",
+                "explanation": "A branch names one line of work. It is not a backup."
+              }
+            },
+            "l2": {
+              "hook": "Your tool made a branch. Nobody asked it to.",
+              "definition": "A new branch costs nothing. It only means your work is somewhere else. Losing track of where is the real problem.",
+              "when_to_use": [
+                "Your deploy tool made a branch by itself.",
+                "You cannot find the change you just made.",
+                "Your agent asks to start a new branch.",
+                "The site is not showing your latest work."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Branches are free and easy to delete.",
+                  "Knowing the branch name explains missing work.",
+                  "You can move work to the right branch."
+                ],
+                "cons": [
+                  "Extra branches pile up and confuse you later.",
+                  "The name alone does not say what changed."
+                ]
+              },
+              "example": "I am putting this on a new branch called fix-checkout instead of main. OK?",
+              "gotchas": [
+                "Your live site follows one branch only.",
+                "Work on a branch is not lost, just elsewhere.",
+                "Deleting a branch can delete unmerged work."
+              ],
+              "vibe_coder_default": "Say yes, then ask which branch is live.",
+              "assessment": {
+                "question": "Your tool put the work on a new branch. Why is the site unchanged?",
+                "options": [
+                  "The live site follows a different branch",
+                  "The work was deleted",
+                  "The branch has no files"
+                ],
+                "answer": "The live site follows a different branch",
+                "explanation": "The work exists. It is on a branch your site does not read."
+              }
+            },
+            "l3": {
+              "hook": "Two agents, one folder, zero survivors. Give each its own lane.",
+              "definition": "A branch is a movable name for one history. Separate branches keep agent tasks apart. You can review, combine, or drop each one on its own.",
+              "when_to_use": [
+                "An agent task will change files in the repo.",
+                "Two tasks do not depend on the same code.",
+                "You want to compare two builds before choosing.",
+                "A change needs review before it reaches main."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Each task stays reviewable and easy to drop.",
+                  "The shared branch stays stable while work is open.",
+                  "Two agent attempts can sit side by side."
+                ],
+                "cons": [
+                  "Long-lived branches drift and get harder to combine.",
+                  "Branches do not isolate files in one folder."
+                ]
+              },
+              "example": "One agent builds export while another fixes login. Give each its own branch and its own folder.",
+              "gotchas": [
+                "Branch names do not separate files on disk.",
+                "Start from the current base branch before assigning work.",
+                "Rebase or merge the base before final review."
+              ],
+              "vibe_coder_default": "One short branch per agent task. Worktrees for two.",
+              "assessment": {
+                "question": "What safely isolates two agents working at the same time?",
+                "options": [
+                  "Separate branches in separate worktrees",
+                  "Two branches in one shared folder",
+                  "One branch with different commit messages"
+                ],
+                "answer": "Separate branches in separate worktrees",
+                "explanation": "Branches separate histories. Worktrees also separate the files each agent edits."
+              }
+            }
           },
           "sources": [
             {
@@ -1921,6 +2153,122 @@
             "answer": "The reviewed diff, evidence, and passing checks",
             "explanation": "Approval rests on the change and its evidence, not on confidence or diff size."
           },
+          "levels": {
+            "l1": {
+              "hook": "Push sends your commits up. A pull request asks to merge.",
+              "definition": "Push copies your commits up to GitHub. A pull request asks to join your branch into main. People read it before that happens.",
+              "when_to_use": [
+                "Your work is finished and you want it live.",
+                "You want someone to look before it merges.",
+                "Your commits only exist on your own machine.",
+                "The team needs a record of the change."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Pushing puts a copy somewhere besides your laptop.",
+                  "A pull request shows exactly what changed.",
+                  "Someone can catch a problem before it lands."
+                ],
+                "cons": [
+                  "Pushing does not mean anyone has read it.",
+                  "A huge pull request is hard to read."
+                ]
+              },
+              "example": "You made six commits today. GitHub still shows the version from yesterday.",
+              "gotchas": [
+                "A commit is not pushed until you push it.",
+                "A pull request is a request, not a merge.",
+                "Approving is not the same as testing."
+              ],
+              "vibe_coder_default": "Push early. Open a pull request before touching main.",
+              "assessment": {
+                "question": "What does pushing do?",
+                "options": [
+                  "Copies your commits up to GitHub",
+                  "Merges your branch into main",
+                  "Deletes your local files"
+                ],
+                "answer": "Copies your commits up to GitHub",
+                "explanation": "Push copies commits up. Merging into main is a separate ask."
+              }
+            },
+            "l2": {
+              "hook": "Your agent wants this in main. Right now.",
+              "definition": "Pushing is reversible. Merging into main is where other people start using it. That is the line worth slowing down at.",
+              "when_to_use": [
+                "Your agent offers to merge its own work.",
+                "Nobody else has read the change yet.",
+                "The change touches money, login, or data.",
+                "You are the only person who can say no."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "A pull request costs one extra minute.",
+                  "Someone else may spot what you missed.",
+                  "The change is written down before it lands."
+                ],
+                "cons": [
+                  "Waiting for review slows a fast build.",
+                  "A review is not a guarantee of anything."
+                ]
+              },
+              "example": "Tests pass. I am going to merge this straight into main and skip the pull request. OK?",
+              "gotchas": [
+                "Passing tests is not the same as reviewed.",
+                "Main is what your users actually get.",
+                "Merging is much harder to undo than pushing."
+              ],
+              "vibe_coder_default": "Push it, but open the pull request first.",
+              "assessment": {
+                "question": "Your agent wants to skip the pull request. What do you say?",
+                "options": [
+                  "Push it, but open the request",
+                  "Merge it, the tests passed",
+                  "Delete the branch and restart"
+                ],
+                "answer": "Push it, but open the request",
+                "explanation": "Pushing is cheap to undo. Landing in main is the expensive step."
+              }
+            },
+            "l3": {
+              "hook": "Review the proposal before it becomes shared history.",
+              "definition": "A pull request asks to merge one branch into another. It gives you one place to read the changes. It is evidence, not proof that the work is safe.",
+              "when_to_use": [
+                "An agent change will land on a shared branch.",
+                "Someone else needs to review behavior or security.",
+                "Checks must run before a change can merge.",
+                "The decision needs a durable written record."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Diffs and comments keep review tied to the change.",
+                  "Required checks block known failures from merging.",
+                  "The thread records decisions and requested revisions."
+                ],
+                "cons": [
+                  "Big pull requests overload reviewers and hide risk.",
+                  "Passing checks miss invented assumptions and product mistakes."
+                ]
+              },
+              "example": "Your agent added team invites and changed who is allowed to do what. The diff touches your access rules.",
+              "gotchas": [
+                "Read the code, not just the agent summary.",
+                "Make the author disclose migrations and generated files.",
+                "Re-read changed lines after new commits arrive."
+              ],
+              "vibe_coder_default": "Keep it small, show test evidence, require review.",
+              "assessment": {
+                "question": "What is the strongest basis for approving an agent pull request?",
+                "options": [
+                  "The reviewed diff, evidence, and passing checks",
+                  "A confident summary from the agent",
+                  "A small number of changed files"
+                ],
+                "answer": "The reviewed diff, evidence, and passing checks",
+                "explanation": "Approval rests on the change and its evidence, not on confidence or diff size."
+              }
+            }
+          },
           "sources": [
             {
               "url": "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests",
@@ -1976,6 +2324,122 @@
             "answer": "The intended combined behavior and its tests",
             "explanation": "Resolution has to keep the product contract across both changes."
           },
+          "levels": {
+            "l1": {
+              "hook": "Merging joins two branches. Sometimes it cannot.",
+              "definition": "Merging joins the work from one branch into another. Git does it for you when the changes do not overlap. When they do overlap, it stops and asks you.",
+              "when_to_use": [
+                "Your branch is finished and main moved on.",
+                "You want two pieces of work in one place.",
+                "Git stopped and printed something about conflicts.",
+                "Your tool asks you to resolve something."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Git merges most changes without asking you.",
+                  "A conflict shows you which lines clash.",
+                  "You decide what the final version says."
+                ],
+                "cons": [
+                  "A conflict stops everything until you fix it.",
+                  "Git cannot tell which version is correct."
+                ]
+              },
+              "example": "You changed the header. Your agent changed the same line. Git will not pick.",
+              "gotchas": [
+                "A conflict is not an error you caused.",
+                "Git marks the clashing lines inside the file.",
+                "Picking a side is a choice, not cleanup."
+              ],
+              "vibe_coder_default": "Merge early, before the two branches drift apart.",
+              "assessment": {
+                "question": "What is a merge conflict?",
+                "options": [
+                  "Two changes to the same lines",
+                  "A bug in Git",
+                  "A deleted branch"
+                ],
+                "answer": "Two changes to the same lines",
+                "explanation": "Git stops when two changes touch the same lines. You pick."
+              }
+            },
+            "l2": {
+              "hook": "Your agent hit a conflict. It wants to guess.",
+              "definition": "A conflict means two changes disagree. Git will not choose between them. Whoever chooses needs to know what the code is for.",
+              "when_to_use": [
+                "Your agent says it resolved a conflict.",
+                "Two agents worked on the same file.",
+                "You do not know which version is right.",
+                "The merge touches something you care about."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "An agent can explain both sides quickly.",
+                  "You still decide which behavior you want.",
+                  "Asking first costs you one question."
+                ],
+                "cons": [
+                  "Explaining the intent takes longer than merging.",
+                  "You may not know the answer either."
+                ]
+              },
+              "example": "You and I both changed the price field. I am picking my version. OK?",
+              "gotchas": [
+                "An agent picks what builds, not what is right.",
+                "A resolved conflict can still lose behavior.",
+                "Both sides can be wrong at the same time."
+              ],
+              "vibe_coder_default": "Ask what each side does before you choose.",
+              "assessment": {
+                "question": "Your agent wants to resolve a conflict its own way. What now?",
+                "options": [
+                  "Ask what each version does",
+                  "Let it pick, the code builds",
+                  "Undo both changes"
+                ],
+                "answer": "Ask what each version does",
+                "explanation": "Git stopped because it cannot know the intent. Neither can the agent."
+              }
+            },
+            "l3": {
+              "hook": "A conflict is a design decision, not cleanup.",
+              "definition": "A merge conflict means Git cannot combine two changes. You pick the right result yourself. Then you test it, because either side may be incomplete.",
+              "when_to_use": [
+                "Git stops a merge and marks unmerged paths.",
+                "Two agent tasks changed the same function or schema.",
+                "One branch renamed a file another branch edited.",
+                "A clean merge still joins work from separate tasks."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Markers show what Git cannot safely reconcile.",
+                  "Resolving one creates a deliberate combined result.",
+                  "Merging early reveals bad assumptions early."
+                ],
+                "cons": [
+                  "A clean-looking fix can still break behavior.",
+                  "Stale branches make resolution slower and riskier."
+                ]
+              },
+              "example": "One agent changed the account schema. Another changed the checks that guard it. Both touch the same contract.",
+              "gotchas": [
+                "Read both sides before you accept either one.",
+                "Search for every conflict marker before finishing.",
+                "Run the tests for both tasks after resolving."
+              ],
+              "vibe_coder_default": "Resolve it yourself from the contract, then test.",
+              "assessment": {
+                "question": "What should guide a merge-conflict resolution?",
+                "options": [
+                  "The intended combined behavior and its tests",
+                  "Whichever branch changed the file last",
+                  "The version with fewer lines"
+                ],
+                "answer": "The intended combined behavior and its tests",
+                "explanation": "Resolution has to keep the product contract across both changes."
+              }
+            }
+          },
           "sources": [
             {
               "url": "https://git-scm.com/docs/git-merge",
@@ -2030,6 +2494,122 @@
             ],
             "answer": "Preserve and classify it before editing",
             "explanation": "Unknown work may belong to someone else, so ownership comes before cleanup."
+          },
+          "levels": {
+            "l1": {
+              "hook": "A repo is a folder that remembers everything.",
+              "definition": "A repo is your project folder plus its history. Repository is the long name, and Git keeps that history. Every file in it is saved, changed, or brand new.",
+              "when_to_use": [
+                "You are about to let an agent edit files.",
+                "You do not know what changed since yesterday.",
+                "A tool wrote files you did not ask for.",
+                "You are about to switch branches."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Git can list every file you changed.",
+                  "You choose which changes go into a commit.",
+                  "Ignored files stay out of the history."
+                ],
+                "cons": [
+                  "Checking takes a few seconds every time.",
+                  "A bad ignore rule hides real work."
+                ]
+              },
+              "example": "You open the repo and Git lists nine changed files. You wrote maybe two.",
+              "gotchas": [
+                "Git ignores new files until you add them.",
+                "Deleting the repo deletes the history with it.",
+                "Never throw away changes you did not make."
+              ],
+              "vibe_coder_default": "Look at what changed before you let anything run.",
+              "assessment": {
+                "question": "What is a repo?",
+                "options": [
+                  "A project folder plus its history",
+                  "A website that hosts code",
+                  "A single saved file"
+                ],
+                "answer": "A project folder plus its history",
+                "explanation": "A repo is the folder and the history Git keeps for it."
+              }
+            },
+            "l2": {
+              "hook": "Your agent wants to clean up. Ask what that means.",
+              "definition": "Some cleanup is free. Discarding brand-new files is not. Nothing ever saved them, so nothing can bring them back.",
+              "when_to_use": [
+                "Your agent offers to tidy the folder.",
+                "It wants to discard changes to continue.",
+                "You do not recognise the files it lists.",
+                "Another session may be using this repo."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "A clean tree makes the next step clear.",
+                  "Naming the files first shows you what dies.",
+                  "You can save anything worth keeping first."
+                ],
+                "cons": [
+                  "Listing every file takes an extra step.",
+                  "Some clutter really is safe to remove."
+                ]
+              },
+              "example": "There are nine files in the way here. I am going to discard all of them. OK?",
+              "gotchas": [
+                "New files have no save point at all.",
+                "Discard and delete mean the same thing here.",
+                "Some of those files may not be yours."
+              ],
+              "vibe_coder_default": "Make it list the files before it discards.",
+              "assessment": {
+                "question": "Your agent wants to discard nine files. What do you say?",
+                "options": [
+                  "List them first",
+                  "Go ahead, Git can undo it",
+                  "Discard only the new ones"
+                ],
+                "answer": "List them first",
+                "explanation": "Git can undo a saved change. It cannot undo a file it never saw."
+              }
+            },
+            "l3": {
+              "hook": "Know what is dirty before an agent touches it.",
+              "definition": "Your working tree is every file you have checked out. Each file is tracked, changed, staged, ignored, or untracked. Reading that state stops one task from eating another.",
+              "when_to_use": [
+                "Before you let an agent edit repository files.",
+                "Before you switch branches, merge, or commit.",
+                "After a tool writes caches, migrations, or builds.",
+                "When several sessions share one repository."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "A status check reveals work that needs protecting.",
+                  "Explicit staging keeps commits inside the task scope.",
+                  "Ignore rules cut noise from local build artifacts."
+                ],
+                "cons": [
+                  "The check adds a pause to fast work.",
+                  "Bad ignore rules hide files that belong in history."
+                ]
+              },
+              "example": "An agent starts a Git lesson while an untracked mission file already sits in the tree, owned by nobody.",
+              "gotchas": [
+                "Run status before and after every agent task.",
+                "Never discard unknown changes without finding the owner.",
+                "Check ignore rules so secrets stay untracked."
+              ],
+              "vibe_coder_default": "Check status, keep other work, stage named paths.",
+              "assessment": {
+                "question": "What should an agent do after finding an unrelated untracked file?",
+                "options": [
+                  "Preserve and classify it before editing",
+                  "Delete it to restore a clean tree",
+                  "Include it in the next task commit"
+                ],
+                "answer": "Preserve and classify it before editing",
+                "explanation": "Unknown work may belong to someone else, so ownership comes before cleanup."
+              }
+            }
           },
           "sources": [
             {
@@ -2089,6 +2669,122 @@
             ],
             "answer": "Create a revert commit",
             "explanation": "A revert keeps shared history and records the inverse change for review."
+          },
+          "levels": {
+            "l1": {
+              "hook": "Undo exists in Git. You have to ask for it.",
+              "definition": "A revert is a new commit undoing an older one. The old commit stays in the history. Nothing is erased.",
+              "when_to_use": [
+                "Something worked yesterday and does not today.",
+                "Your agent changed something and broke the app.",
+                "You want one file back the way it was.",
+                "You want to undo without losing the record."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "The bad change goes away and stays visible.",
+                  "You can undo one commit, not all of them.",
+                  "Nothing disappears from the history."
+                ],
+                "cons": [
+                  "Undoing one commit can break a later one.",
+                  "Some Git commands really do delete work."
+                ]
+              },
+              "example": "Checkout broke this morning. The commit that broke it is already on main.",
+              "gotchas": [
+                "Revert and reset are not the same thing.",
+                "Reset and clean can delete unsaved work.",
+                "People have lost years of work this way."
+              ],
+              "vibe_coder_default": "Revert to undo. Never reset without reading first.",
+              "assessment": {
+                "question": "What does a revert do?",
+                "options": [
+                  "Adds a commit that undoes an old one",
+                  "Erases the old commit",
+                  "Deletes the branch"
+                ],
+                "answer": "Adds a commit that undoes an old one",
+                "explanation": "A revert adds a commit. The old one stays in the history."
+              }
+            },
+            "l2": {
+              "hook": "Your agent wants to undo. There are two ways.",
+              "definition": "Revert adds a commit. Reset removes them. Both undo the change, and only one is safe once other people have it.",
+              "when_to_use": [
+                "Your agent offers to undo a bad change.",
+                "The bad commit is already pushed up.",
+                "Other people are working on the same branch.",
+                "You need the change gone right now."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Revert works even after the commit is shared.",
+                  "The record of what happened stays readable.",
+                  "You can revert a revert if you need to."
+                ],
+                "cons": [
+                  "Revert leaves two extra commits in the log.",
+                  "Reset is faster when nothing is shared."
+                ]
+              },
+              "example": "That commit broke checkout. I am going to hard reset the shared branch back. OK?",
+              "gotchas": [
+                "Reset on a shared branch breaks other people.",
+                "Hard reset can delete work nobody saved.",
+                "Fast and safe are not the same here."
+              ],
+              "vibe_coder_default": "Say no. Ask it to revert instead.",
+              "assessment": {
+                "question": "Your agent wants to hard reset a shared branch. What now?",
+                "options": [
+                  "Say no and ask for a revert",
+                  "Let it, the commit was bad",
+                  "Delete the branch"
+                ],
+                "answer": "Say no and ask for a revert",
+                "explanation": "Reset rewrites history other people already have. Revert does not."
+              }
+            },
+            "l3": {
+              "hook": "Back out agent mistakes without erasing the trail.",
+              "definition": "Git has one recovery tool per state. Committed, staged, and working-tree changes each need a different one. A revert adds a new commit that undoes an old one.",
+              "when_to_use": [
+                "An agent commit reached main and broke something.",
+                "You need one file back from a good commit.",
+                "You staged the wrong changes but want the files.",
+                "You need to find where working behavior changed."
+              ],
+              "tradeoffs": {
+                "pros": [
+                  "Reverts keep shared history whole and auditable.",
+                  "Restore can target working-tree or staged content.",
+                  "Bisect narrows a break between good and bad commits."
+                ],
+                "cons": [
+                  "Reverting dependent commits can create conflicts.",
+                  "Reset and clean can destroy uncommitted work."
+                ]
+              },
+              "example": "An agent deploy broke checkout and the tests missed it. The bad commit is already on the shared branch.",
+              "gotchas": [
+                "Check status and save uncommitted work first.",
+                "Do not rewrite history other people already pulled.",
+                "Make the agent name the exact path first."
+              ],
+              "vibe_coder_default": "Revert the bad shared commit. Reset only after review.",
+              "assessment": {
+                "question": "How should you undo a bad commit already on a shared branch?",
+                "options": [
+                  "Create a revert commit",
+                  "Hard-reset the shared branch",
+                  "Delete the changed files manually"
+                ],
+                "answer": "Create a revert commit",
+                "explanation": "A revert keeps shared history and records the inverse change for review."
+              }
+            }
           },
           "sources": [
             {

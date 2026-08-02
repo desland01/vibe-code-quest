@@ -49,6 +49,80 @@ async function visibleFocusables(root: Locator): Promise<Locator[]> {
   return out;
 }
 
+const advance = (page: Page) => page.getByTestId('beat-advance');
+
+/** Show every reveal card. Card count is content, so drive until the control goes. */
+async function showAllCards(page: Page) {
+  const next = page.getByRole('button', { name: /Show next card/ });
+  for (let guard = 0; guard < 4 && (await next.count()) > 0; guard += 1) await next.click();
+}
+
+/**
+ * Pick options until the beat unblocks. A wrong pick leaves the beat blocked
+ * (no advance control), so this reaches the correct answer without the spec
+ * knowing any option text — which keeps the fit harness independent of the copy
+ * it is measuring.
+ */
+async function answerCorrectly(page: Page) {
+  const options = page.locator('[data-option-id]');
+  const count = await options.count();
+  for (let i = 0; i < count; i += 1) {
+    await options.nth(i).click();
+    if ((await advance(page).count()) > 0) return;
+  }
+}
+
+async function pickWrong(page: Page) {
+  const options = page.locator('[data-option-id]');
+  const count = await options.count();
+  for (let i = 0; i < count; i += 1) {
+    await options.nth(i).click();
+    if ((await advance(page).count()) === 0) return; // still blocked ⇒ that was wrong
+  }
+}
+
+/** Walk the pilot L3 run to a named rendered state (VAL-014 render matrix). */
+async function driveToState(page: Page, state: string) {
+  if (state === 'initial render') return;
+
+  await advance(page).click(); // hook → predict
+  if (state === 'wrong-answer feedback shown') {
+    await pickWrong(page);
+    return;
+  }
+  if (state === 'correct-answer feedback shown') {
+    await answerCorrectly(page);
+    return;
+  }
+
+  await answerCorrectly(page);
+  await advance(page).click(); // predict → reveal
+  if (state === 'all reveal cards visible') {
+    await showAllCards(page);
+    return;
+  }
+  await showAllCards(page);
+  await advance(page).click(); // reveal → scenario
+  await answerCorrectly(page);
+  await advance(page).click(); // scenario → gotcha
+  await answerCorrectly(page);
+  await advance(page).click(); // gotcha → default
+  await advance(page).click(); // default → check
+
+  const radios = page.getByRole('radio');
+  const radioCount = await radios.count();
+  for (let i = 0; i < radioCount; i += 1) {
+    await radios.nth(i).check();
+    await page.getByRole('button', { name: 'Check answer' }).click();
+    if ((await advance(page).count()) > 0) break;
+  }
+  if (state === 'check explanation shown') return;
+
+  await advance(page).click(); // check → recap
+  await page.getByTestId('beat-stamp').click();
+  await expect(page.getByTestId('beat-stamp-panel')).toBeVisible();
+}
+
 test.describe('Mode 1 — 100% presentation is one fixed, non-scrolling stage (VAL-013)', () => {
   for (const viewport of VIEWPORTS) {
     test(`no page scroll at ${viewport.name}`, async ({ page }) => {
@@ -179,15 +253,26 @@ test.describe('Render-state matrix — every beat type, every named state (VAL-0
 
       test.skip(
         !(await stageExists(page)),
-        'Locked stage shell not implemented yet — ISSUE-015 adds [data-stage]. ' +
-          'The state driver lands with the shell, since it depends on the shell\'s controls.',
+        'Locked stage shell not implemented yet — ISSUE-015 adds [data-stage].',
       );
+
+      // ISSUE-015 lands the driver ISSUE-009 deferred. Without it all six of
+      // these tests measured the same initial render and reported six passes
+      // for one state — overflow that only appears after a wrong answer is
+      // still overflow, and that is the whole reason this matrix exists.
+      await driveToState(page, state);
 
       const metrics = await page.evaluate(() => ({
         scrollHeight: document.body.scrollHeight,
         innerHeight: window.innerHeight,
+        stageScrollHeight: (document.querySelector('[data-stage]') as HTMLElement).scrollHeight,
+        stageClientHeight: (document.querySelector('[data-stage]') as HTMLElement).clientHeight,
       }));
       expect(metrics.scrollHeight).toBeLessThanOrEqual(metrics.innerHeight);
+      // The page not scrolling is necessary but not sufficient: a stage that
+      // scrolls its own content at 100% is still cutting the player off, and
+      // body-level metrics cannot see it.
+      expect(metrics.stageScrollHeight).toBeLessThanOrEqual(metrics.stageClientHeight + 1);
     });
   }
 

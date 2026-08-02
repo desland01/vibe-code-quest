@@ -7,7 +7,7 @@ import { LEVEL_IDS, type LevelId } from '@/content/beats/schema';
 import { availableLevels } from '@/content/beats';
 import {
   BEAT_PROGRESS_UPSERT_SQL,
-  LANDMARK_PROGRESS_FOR_SHARE_SQL,
+  LANDMARK_PROGRESS_LOCK_SQL,
   gateLevelWrite,
   resolveProgressWrite,
   type LevelProgressRow,
@@ -17,7 +17,7 @@ import { applyXpAwards, getXpTotal } from '@/server/xp';
 import {
   BEAT_PROGRESS_UPSERT_SQL_PRE_LEVEL,
   IMPLICIT_LEVEL,
-  LANDMARK_PROGRESS_FOR_SHARE_SQL_PRE_LEVEL,
+  LANDMARK_PROGRESS_LOCK_SQL_PRE_LEVEL,
   canWriteLevel,
   hasLevelColumn,
 } from '@/server/levelCompatibility';
@@ -160,7 +160,8 @@ export async function PUT(request: Request) {
   // land between the unlock check and the upsert.
   const gated = await withUserTransaction(userId, async (client) => {
     // Steps 3-4: resolve the registry entry, then read every level row for this
-    // landmark with FOR SHARE so the unlock decision cannot be overtaken.
+    // landmark with FOR UPDATE so the unlock decision cannot be overtaken and
+    // two concurrent writes from one player cannot deadlock upgrading the lock.
     const levelled = await hasLevelColumn(client);
     if (!canWriteLevel(level, levelled)) {
       // Pre-migration there is one row per landmark, so an L1/L2 write would
@@ -176,14 +177,14 @@ export async function PUT(request: Request) {
     }
 
     const existing = levelled
-      ? await client.query<LevelProgressRow>(LANDMARK_PROGRESS_FOR_SHARE_SQL, [
+      ? await client.query<LevelProgressRow>(LANDMARK_PROGRESS_LOCK_SQL, [
           userId,
           body.region,
           body.landmark,
         ])
       : {
           rows: (
-            await client.query<{ state: unknown }>(LANDMARK_PROGRESS_FOR_SHARE_SQL_PRE_LEVEL, [
+            await client.query<{ state: unknown }>(LANDMARK_PROGRESS_LOCK_SQL_PRE_LEVEL, [
               userId,
               body.region,
               body.landmark,
@@ -192,7 +193,19 @@ export async function PUT(request: Request) {
         };
 
     // Steps 5-6: compute highest unlock and reject a write above it with 423.
-    const gate = gateLevelWrite(level, existing.rows, availableLevels(body.region, body.landmark));
+    //
+    // The prerequisite chain only counts levels that EXIST — and before 0011
+    // lands, L3 is the only level this table can hold, whatever the content
+    // registry says. Passing the registry's three levels here would gate L3
+    // behind an L1 that can never be recorded, making every fully tiered
+    // landmark unplayable on a pre-migration database. The page resolver clamps
+    // to the same `IMPLICIT_LEVEL` for the same reason, so the level the player
+    // is served is always the level they are allowed to save.
+    const gate = gateLevelWrite(
+      level,
+      existing.rows,
+      levelled ? availableLevels(body.region, body.landmark) : [IMPLICIT_LEVEL],
+    );
     if (!gate.ok) return { locked: gate, rejected: undefined, payload: undefined } as const;
 
     // Step 7: validate the state against the SELECTED sequence's bounds.

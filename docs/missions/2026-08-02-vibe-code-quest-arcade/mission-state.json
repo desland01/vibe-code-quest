@@ -1,0 +1,70 @@
+{
+  "schema": "mission-state-v1",
+  "mission_id": "2026-08-02-vibe-code-quest-arcade",
+  "created_at": "2026-08-02T00:00:00Z",
+  "updated_at": "2026-08-02T02:50:00Z",
+  "phase": "awaiting_approval",
+  "status": "awaiting_approval",
+  "mission_volume": {
+    "duration_estimate": "multi-week; calendar deliberately unstated until M2 proves the vertical slice",
+    "milestone_count": 9,
+    "issue_count": 33
+  },
+  "context_slices": [
+    "repo-cartography (glm-5.2, complete)",
+    "ugc-research (glm-5.2 + live research MCPs, complete)",
+    "creative-bible (fable architect, complete)",
+    "validation-contract (glm-5.2, complete, orchestrator-corrected)",
+    "prd (gpt-5.6-sol high, complete)",
+    "adversarial-review (gpt-5.6-sol high, fresh context, complete)",
+    "eng-review (gpt-5.6-sol high, fresh context, complete)",
+    "data-model (gpt-5.6-sol high, complete)",
+    "issues (glm-5.2, complete)",
+    "issues-validation (glm-4.7 mechanical, complete)",
+    "handoff (gpt-5.6-sol high, complete)"
+  ],
+  "artifact_paths": {
+    "interview": "INTERVIEW.md",
+    "context": "MISSION_CONTEXT.md",
+    "validation_contract": "VALIDATION_CONTRACT.md",
+    "prd": "PRD.md",
+    "issues": "ISSUES.md",
+    "execution_plan": "EXECUTION_PLAN.md",
+    "agent_roster": "AGENT_ROSTER.md",
+    "handoff": "HANDOFF.md",
+    "creative_bible": "CREATIVE_BIBLE.md",
+    "data_model": "DATA_MODEL.md",
+    "amendment": "AMENDMENT-A4.md"
+  },
+  "reviews": {
+    "adversarial": "pass",
+    "issues": "pass",
+    "eng": "pass"
+  },
+  "review_summary": {
+    "adversarial": "18 findings, 5 blocking, all blocking accepted and closed",
+    "eng": "19 findings, 5 blocking, all blocking accepted and closed",
+    "dispositions": "37 total findings: 28 accepted, 9 deferred to execution, 0 open, 0 blocking deferred"
+  },
+  "open_questions": [],
+  "grill": {
+    "status": "closed",
+    "closed_at": "2026-08-02",
+    "owner_confirmation": "Grill closed \u2014 go",
+    "note": "AFK doctrine 2026-07-24: a closed grill IS execution approval. Only the safety floor (spend, deploy, live external mutation, destructive) still stops."
+  },
+  "safety_floor_notes": [
+    "F-005: npm run test:db creates a real Neon branch via scripts/with-neon-branch.mjs when TEST_DATABASE_URL is unset. Named stop condition; preflight required (ISSUE-010).",
+    "ISSUE-001 must apply AMENDMENT-A4 to the frozen 2026-07-19 design contract before any other execution.",
+    "Three owner taste gates batched in M3; content fan-out is blocked until they close."
+  ],
+  "blocked_reason": null,
+  "gate": {
+    "command": "pnpm --dir /Users/thebeast/mission-control-harness mission:validate --mission docs/missions/2026-08-02-vibe-code-quest-arcade",
+    "packet_assertions": "pass \u2014 all mission-artifact assertions clean (state schema, required artifacts, VAL IDs stable, every issue maps to a real REQ+VAL, roster capability table present, handoff STOP line final)",
+    "exit_code": 1,
+    "sole_remaining_failure": "REDACTION_CUSTOMER_PII at docs/missions/2026-08-02-vibe-code-quest-arcade/.constance/delivery-matcher.json:541",
+    "failure_provenance": "Stray Constance store created during planning by a worker running `constance session-start` from the mission directory instead of the repo root. Gitignored (never committable). Not a packet artifact. Contents DIFFER from the canonical store at /Users/thebeast/code-tutor/.constance/, so it is not a safe duplicate to delete.",
+    "owner_decision_required": "Dispose of the stray store (delete / relocate / keep). Not actioned autonomously: raw .constance/ stores are declared OFF-LIMITS in the project CLAUDE.md and deletion of non-duplicate data is destructive."
+  }
+}

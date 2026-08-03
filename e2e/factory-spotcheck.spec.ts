@@ -177,7 +177,7 @@ async function playFactoryLandmark(
   await expect(page.locator('[data-beat-type="check"]')).toBeVisible();
   await page.getByRole('radio', { name: landmark.quiz.answer }).check();
   await page.getByRole('button', { name: 'Check answer' }).click();
-  await expect(page.getByTestId('beat-player').getByRole('status')).toContainText(/Correct|Good call/i);
+  await expect(page.getByTestId('beat-player').getByRole('status')).toContainText(/Yep\./);
   await advance(page);
 
   // 7 recap → stamp

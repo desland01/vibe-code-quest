@@ -36,6 +36,7 @@ import {
   toBeatProgressState,
   writeLocalBeatProgress,
 } from './beatStorage';
+import { splitVerdictLead } from '@/content/beats/voice';
 import { Avatar, type AvatarReaction } from '@/components/Avatar';
 import { useAudio } from '@/audio/useAudio';
 import styles from './beats.module.css';
@@ -77,11 +78,13 @@ function feedbackClass(kind: NonNullable<PlayerState['feedback']>['kind']): stri
   return styles.feedback;
 }
 
-function feedbackLead(kind: NonNullable<PlayerState['feedback']>['kind']): string {
-  if (kind === 'correct') return 'Good call.';
-  if (kind === 'wrong') return 'Not quite.';
-  return 'Noted.';
-}
+// The verdict comes from the feedback line itself, never from a second source.
+// This used to be a `feedbackLead(kind)` helper printed in FRONT of the option's
+// feedback, which already opens with one of the three allowlisted verdicts — so
+// a wrong pick on an ungraded predict beat rendered "Noted. Not that one.", two
+// verdicts disagreeing about one answer, and the check beat rendered
+// "Not quite. Not quite — try again."
+
 
 function actionLabel(beat: Beat): string {
   switch (beat.type) {
@@ -734,7 +737,8 @@ export function BeatPlayer({
 
             {state.feedback && (
               <p className={feedbackClass(state.feedback.kind)} role="status" aria-live="polite">
-                <strong>{feedbackLead(state.feedback.kind)}</strong> {state.feedback.text}
+                <strong>{splitVerdictLead(state.feedback.text).lead}</strong>{' '}
+                {splitVerdictLead(state.feedback.text).body}
                 {beat.type === 'check' && state.feedback.kind === 'correct' && (
                   <> {landmark.quiz.explanation}</>
                 )}

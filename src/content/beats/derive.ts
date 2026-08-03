@@ -19,13 +19,23 @@ export const FACTORY_FRAMING = {
   // real use", "Which move fits best?", the "Prove it:" colon crutch, the
   // trailing "Keep this default close." coach-ism). Framing is not landmark
   // content, so replacing it changes voice without touching a single fact.
-  predictPrompt: 'One of these actually helps. Which?',
-  predictHint: 'One of these survives contact with reality.',
+  // Owner directive 2026-08-03, superseding CREATIVE_BIBLE §6.4 item 1: "One of
+  // these actually helps. Which?" is confusing — it names neither the task nor
+  // what "helps" is measured against, and the player does not yet know whether
+  // they are supposed to already know the answer. They are not: predict runs
+  // BEFORE the reveal and is ungraded. Both facts are now said out loud.
+  predictPrompt: 'Take a guess. Which of these is a real upside?',
+  predictHint: 'The reveal is next. A wrong guess costs nothing.',
   scenarioPromptPrefix: "Here's the spot you're in. What do you do?",
   scenarioHint: 'Pick the safest default here.',
-  gotchaPrompt: 'One of these bites you later. Find it.',
-  gotchaHint: 'Two of these are fine. One is not.',
-  checkHint: 'Trust the default you just locked in.',
+  // The gotcha beat's distractors are drawn from pros and when_to_use, so the
+  // real question is "which one is the warning" — "bites you later" implied a
+  // hazard among hazards, which is not what is on screen.
+  gotchaPrompt: 'One of these is a warning, not a win. Find it.',
+  gotchaHint: 'The others are all upsides.',
+  // The check grades the assessment, which asks about the DEFINITION. Pointing
+  // at the default was pointing at the wrong beat.
+  checkHint: 'Think back to the reveal.',
   // Correct leads. §6.1 rule 8 fixes the verdict vocabulary to three strings;
   // these are the correct-answer lead plus its flat fact.
   predictCorrectLead: 'Noted.',

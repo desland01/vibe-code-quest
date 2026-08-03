@@ -136,13 +136,13 @@ export function playerReducer(sequence: BeatSequence, state: PlayerState, action
       if (action.correct) {
         return {
           ...state,
-          feedback: { kind: 'correct', optionId: 'quiz', text: 'Correct.' },
+          feedback: { kind: 'correct', optionId: 'quiz', text: 'Yep. That is the one.' },
           checked: true,
         };
       }
       return {
         ...state,
-        feedback: { kind: 'wrong', optionId: 'quiz', text: 'Not quite — try again.' },
+        feedback: { kind: 'wrong', optionId: 'quiz', text: 'Not that one. Try again.' },
       };
     }
 

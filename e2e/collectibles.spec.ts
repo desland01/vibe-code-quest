@@ -73,7 +73,7 @@ async function playThroughToRecap(page: Page) {
   await page.getByRole('radio', { name: PILOT.quizAnswer }).check();
   await page.getByRole('button', { name: 'Check answer' }).click();
   await expect(page.getByTestId('beat-player').getByRole('status')).toContainText(
-    /Correct|Good call/i,
+    /Yep\./,
   );
   await advance(page); // check → recap
   await expect(page.getByTestId('beat-stamp')).toBeVisible();

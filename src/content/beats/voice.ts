@@ -41,6 +41,20 @@ export function countWords(text: string): number {
  * A feedback line is budgeted AFTER its verdict lead: the lead is fixed
  * vocabulary and must not eat the author's twelve words.
  */
+/**
+ * Split a feedback line into its verdict lead and the rest.
+ *
+ * The renderer needs this because it used to print its OWN lead in front of the
+ * option's feedback, which already begins with one. On a predict beat that read
+ * "Noted. Not that one." — two verdicts, disagreeing, about one answer.
+ */
+export function splitVerdictLead(feedback: string): { lead: string; body: string } {
+  for (const lead of VERDICT_LEADS) {
+    if (feedback.startsWith(lead)) return { lead, body: feedback.slice(lead.length).trim() };
+  }
+  return { lead: '', body: feedback };
+}
+
 export function stripVerdictLead(feedback: string): string {
   for (const lead of VERDICT_LEADS) {
     if (feedback.startsWith(lead)) return feedback.slice(lead.length).trim();

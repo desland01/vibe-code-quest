@@ -206,7 +206,7 @@ async function playThroughToStamp(
   await noteType('check');
   await page.getByRole('radio', { name: script.quizAnswer }).check();
   await page.getByRole('button', { name: 'Check answer' }).click();
-  await expect(playerStatus(page)).toContainText(/Correct|Good call/i);
+  await expect(playerStatus(page)).toContainText(/Yep\./);
   await advance(page);
 
   // 7 recap → stamp
@@ -357,7 +357,7 @@ test.describe('engagement-v2 BeatPlayer (E-003/E-004)', () => {
     const quizRadio = page.getByRole('radio', { name: PILOT.quizAnswer });
     await focusAndPress(quizRadio, 'Space');
     await focusAndPress(page.getByRole('button', { name: 'Check answer' }));
-    await expect(playerStatus(page)).toContainText(/Correct|Good call/i);
+    await expect(playerStatus(page)).toContainText(/Yep\./);
     await focusAndPress(page.getByTestId('beat-advance')); // → recap
     await expect(page.locator('[data-beat-type="recap"]')).toBeVisible();
 

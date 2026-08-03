@@ -60,6 +60,14 @@ function makeFakeContext() {
     createBufferSource: () =>
       node('bufferSource', { buffer: null, loop: false, start: vi.fn(), stop: vi.fn() }),
     createBiquadFilter: () => node('filter', { type: 'highpass', frequency: fakeParam() }),
+    createDynamicsCompressor: () =>
+      node('compressor', {
+        threshold: fakeParam(),
+        knee: fakeParam(),
+        ratio: fakeParam(),
+        attack: fakeParam(),
+        release: fakeParam(),
+      }),
     createBuffer: (_c: number, length: number) => ({ getChannelData: () => new Float32Array(length) }),
     createPeriodicWave: () => ({}),
     close: vi.fn(),
@@ -192,8 +200,9 @@ describe('AudioEngine contract', () => {
   // hat into one undifferentiated tick. The budget's PURPOSE is that nodes must
   // not accumulate per note, and that is what is asserted: a FIXED graph that
   // does not grow while playing, and zero after stop. The number is recorded in
-  // WORK_LEDGER rather than met by degrading the drum kit.
-  const PERSISTENT_NODES = 10;
+  // WORK_LEDGER rather than met by degrading the drum kit. It became 11 when a
+  // measured 1.41 peak — hard clipping — added a limiter before the speakers.
+  const PERSISTENT_NODES = 11;
 
   it('holds a fixed node graph that never grows while playing, and zero after stop', () => {
     const { ctx } = makeFakeContext();
@@ -214,6 +223,16 @@ describe('AudioEngine contract', () => {
     expect(engine.liveNodeCount()).toBe(0);
     expect(engine.hasScheduler()).toBe(false);
     expect(engine.started).toBe(false);
+  });
+
+  it('puts a limiter between the bus and the speakers', () => {
+    // Measured before it existed: peak 1.41, i.e. 3 dB past full scale, on every
+    // downbeat. A native node, so the fix costs no dependency.
+    const { ctx, created } = makeFakeContext();
+    const engine = new AudioEngine(() => ctx);
+    engine.start();
+    expect(created.filter((kind) => kind === 'compressor')).toHaveLength(1);
+    engine.stop();
   });
 
   it('uses exactly four voices — no fifth channel', () => {

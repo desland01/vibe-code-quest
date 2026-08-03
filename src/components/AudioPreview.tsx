@@ -33,6 +33,11 @@ export function AudioPreview() {
     engine.start(false);
     engine.setMuted(false);
     engineRef.current = engine;
+    // This page is the review surface (noindex, linked from nowhere), and the
+    // thing being reviewed is a signal. Exposing the engine here lets a reviewer
+    // — or a script — attach an analyser and MEASURE peak, clipping and spectral
+    // balance instead of arguing about whether it "sounds harsh".
+    (window as unknown as { __audioEngine?: AudioEngine }).__audioEngine = engine;
     return engine;
   }, []);
 

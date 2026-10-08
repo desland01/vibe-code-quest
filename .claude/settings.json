@@ -9,6 +9,14 @@
             "command": "constance hook session-start"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ \"$CLAUDE_CODE_REMOTE\" = true ] || [ \"$CLAUDE_CODE_ENTRYPOINT\" = claude-code-github-action ]; then echo 'Nautilus floor: before any work, read the part of AGENTS.md at the repository root from <!-- nautilus-floor:start --> to <!-- nautilus-floor:end --> in full and follow it. It holds the rules every agent in this repository follows.'; fi"
+          }
+        ]
       }
     ],
     "PreToolUse": [
